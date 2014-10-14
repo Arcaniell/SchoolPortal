@@ -13,6 +13,7 @@
 			<groupId>lv128</groupId>
 			<artifactId>school-model</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
