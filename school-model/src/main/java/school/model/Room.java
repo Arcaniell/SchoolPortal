@@ -1,9 +1,13 @@
 package school.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Room {
@@ -14,6 +18,8 @@ public class Room {
 	private int roomNumber;
 	@Column
 	private boolean available;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
+	private List<Schedule> schedule;
 
 	public Room() {
 	}
@@ -41,5 +47,13 @@ public class Room {
 	public void setAvailable(boolean available) {
 		this.available = available;
 	}
-	
+
+	public List<Schedule> getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(List<Schedule> schedule) {
+		this.schedule = schedule;
+	}
+
 }
