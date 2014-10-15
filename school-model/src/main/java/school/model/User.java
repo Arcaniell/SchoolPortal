@@ -87,13 +87,6 @@ public class User {
 		this.sex = sex;
 	}
 
-	public String getAdress() {
-		return adress;
-	}
-
-	public void setAdress(String adress) {
-		this.adress = adress;
-	}
 
 	public Date getRegistration() {
 		return registration;
@@ -123,7 +116,6 @@ public class User {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((adress == null) ? 0 : adress.hashCode());
 		result = prime * result
 				+ ((birthday == null) ? 0 : birthday.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
@@ -150,11 +142,6 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (adress == null) {
-			if (other.adress != null)
-				return false;
-		} else if (!adress.equals(other.adress))
-			return false;
 		if (birthday == null) {
 			if (other.birthday != null)
 				return false;
@@ -196,6 +183,8 @@ public class User {
 			return false;
 		return true;
 	}
+
+
 	
 
 }

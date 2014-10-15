@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Group {
+public class Group2 {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +23,9 @@ public class Group {
 	@OneToOne
 	@JoinColumn(name = "teacherId")
 	private Teacher teacher;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "groupId")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
 	private List<Schedule> schedule;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "groupId")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
 	private List<Student> student;
 	private byte number;
 	private char letter;

@@ -18,10 +18,10 @@ public class Student {
 	private User user;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "groupId")
-	private Group primaryGroup;
+	private Group2 group;
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "StudentAdGroupRef", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "groupId"))
-	private List<Group> additionGroups;
+	private List<Group2> additionGroups;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
 	private List<Journal> journal;
 
@@ -51,19 +51,20 @@ public class Student {
 		this.user = user;
 	}
 
-	public Group getPrimaryGroup() {
-		return primaryGroup;
+
+	public Group2 getGroup() {
+		return group;
 	}
 
-	public void setPrimaryGroup(Group primaryGroup) {
-		this.primaryGroup = primaryGroup;
+	public void setGroup(Group2 group) {
+		this.group = group;
 	}
 
-	public List<Group> getAdditionGroups() {
+	public List<Group2> getAdditionGroups() {
 		return additionGroups;
 	}
 
-	public void setAdditionGroups(List<Group> additionGroups) {
+	public void setAdditionGroups(List<Group2> additionGroups) {
 		this.additionGroups = additionGroups;
 	}
 

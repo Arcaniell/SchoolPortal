@@ -24,7 +24,7 @@ public class Teacher {
 	private Salary salary;
 	@OneToOne
 	@JoinColumn(name="id")
-	private Group group;
+	private Group2 group;
 	@OneToOne
 	@JoinColumn(name="id")
 	private User user;
