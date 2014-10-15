@@ -7,30 +7,19 @@
 <hibernate-configuration>
 
 	<session-factory>
-		<property name="eclipse.connection.profile">ProbaHibernate2</property>
-		<!-- property name="connection.url">jdbc:microsoft:sqlserver://localhost:1433;DatabaseName=firsthibernate</property -->
-		<!-- property name="connection.url">jdbc:sqlserver://localhost\SQLEXPRESS;databaseName=proba2</property -->
-		<!-- property name="connection.url">jdbc:sqlserver://streamer2005\tc;DatabaseName=_069_Honey</property -->
-
-		<property name="connection.url">jdbc:mysql://127.0.0.1/bd2</property>
+		<property name="eclipse.connection.profile">school</property>
+		
+		<property name="connection.url">jdbc:mysql://127.0.0.1/SchoolDB</property>
 		<property name="connection.username">root</property>
-		<property name="connection.password"></property>
+		<property name="connection.password">revan</property>
 
-		<property name="hbm2ddl.auto">update</property>
+		<property name="hbm2ddl.auto">create</property>
 		<property name="connection.driver_class">
 			com.mysql.jdbc.Driver
 		</property>
-
-		<!-- property name="connection.driver_class">
-			com.microsoft.sqlserver.jdbc.SQLServerDriver
-		</property-->
 		<property name="dialect">
 			org.hibernate.dialect.MySQLDialect
 		</property>
 
-		<!-- property name="dialect"> org.hibernate.dialect.SQLServerDialect </property -->
-		<mapping resource="com/softserve/edu/entity/Book.hbm.xml" />
-		<mapping resource="com/softserve/edu/entity/Reader.hbm.xml" />
-		<mapping resource="com/softserve/edu/entity/Using.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>
