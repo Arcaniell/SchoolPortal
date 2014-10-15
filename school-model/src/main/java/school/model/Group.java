@@ -61,6 +61,4 @@ public class Group {
 		this.startDate = startDate;
 	}
 	
-	
-
 }
