@@ -3,7 +3,7 @@ package school.model;
 import java.util.List;
 
 import javax.persistence.*;
-
+//commit test
 
 @Entity
 @Table(name = "Student")
