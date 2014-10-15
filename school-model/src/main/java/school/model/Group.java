@@ -1,13 +1,17 @@
 package school.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -19,11 +23,16 @@ public class Group {
 	@OneToOne
 	@JoinColumn(name = "teacherId")
 	private Teacher teacher;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "groupId")
+	private List<Schedule> schedule;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "groupId")
+	private List<Student> student;
 	private byte number;
 	private char letter;
 	private boolean additional;
 	@Column(nullable = false)
 	private Date startDate;
+	
 	public long getId() {
 		return id;
 	}
@@ -35,6 +44,18 @@ public class Group {
 	}
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
+	}
+	public List<Schedule> getSchedule() {
+		return schedule;
+	}
+	public void setSchedule(List<Schedule> schedule) {
+		this.schedule = schedule;
+	}
+	public List<Student> getStudent() {
+		return student;
+	}
+	public void setStudent(List<Student> student) {
+		this.student = student;
 	}
 	public byte getNumber() {
 		return number;
@@ -60,5 +81,4 @@ public class Group {
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-	
 }
