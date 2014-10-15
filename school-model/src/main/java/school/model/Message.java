@@ -5,42 +5,47 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Message {
 	@Id
-	@GeneratedValue
+	@GeneratedValue (strategy=GenerationType.IDENTITY)
 	private long id;
-	private long senderId;
-	private long receiverId;
+	@ManyToOne
+	@JoinColumn(name="sender")
+	private User sender;
+	@ManyToOne
+	@JoinColumn(name="receiver")
+	private User receiver;
 	@Lob
 	private String message;
 	private Date date;
 	@OneToOne (fetch=FetchType.LAZY)
-	@JoinColumn (name = "id")
+	@JoinColumn (name = "messageId")
 	private Message messageId;
-	
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
 	}
-	public long getSenderId() {
-		return senderId;
+	public User getSender() {
+		return sender;
 	}
-	public void setSenderId(long sender_id) {
-		this.senderId = sender_id;
+	public void setSender(User sender) {
+		this.sender = sender;
 	}
-	public long getReceiverId() {
-		return receiverId;
+	public User getReceiver() {
+		return receiver;
 	}
-	public void setReceiverId(long receiver_id) {
-		this.receiverId = receiver_id;
+	public void setReceiver(User receiver) {
+		this.receiver = receiver;
 	}
 	public String getMessage() {
 		return message;
@@ -60,6 +65,4 @@ public class Message {
 	public void setMessageId(Message messageId) {
 		this.messageId = messageId;
 	}
-	
-	
 }
