@@ -2,6 +2,9 @@
 
 target/
 school-web/target/
+school-dao/target/
+school-model/target/
+school-service/target/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
