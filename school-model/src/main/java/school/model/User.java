@@ -17,6 +17,9 @@ import javax.persistence.ManyToMany;
 
 @Entity
 public class User {
+	
+	public static final String FIND_BY_EMAIL_QUERY = "SELECT u FROM User u WHERE u.email = :email";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;

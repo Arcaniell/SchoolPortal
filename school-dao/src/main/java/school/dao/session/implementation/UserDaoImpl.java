@@ -6,20 +6,20 @@ import org.hibernate.Transaction;
 import school.dao.UserDao;
 import school.model.User;
 
-public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
+public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 
-
-	public UserDaoImpl(Class<User> entityClass) {
+	public UserDaoImpl() {
 		super(User.class);
 	}
 
-	public User findByEmail(User user) {
+	public User findByEmail(String email) {
 		Session session = null;
 		User newEntity = null;
 		try {
-			session = HibernateSessionFactory.getSessionFactory().openSession(); 
+			session = HibernateSessionFactory.getSessionFactory().openSession();
 			Transaction transaction = session.beginTransaction();
-			newEntity = (User) session.get(User.class, user.getEmail());
+			newEntity = (User) session.createQuery(User.FIND_BY_EMAIL_QUERY)
+					.setString("email", email).uniqueResult();
 			transaction.commit();
 		} finally {
 			if ((session != null) && (session.isOpen())) {
@@ -28,7 +28,5 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
 		}
 		return newEntity;
 	}
-
-	
 
 }
