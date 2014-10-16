@@ -4,32 +4,32 @@ import java.util.List;
 
 import javax.persistence.*;
 
-
 @Entity
 public class Student {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(unique=true)
 	private int id;
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userId", unique = true, nullable = false)
 	private User user;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "groupId")
 	private Group group;
-	
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "StudentAdGroupRef", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "groupId"))
 	private List<Group> additionGroups;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
 	private List<Journal> journal;
-	
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "StudentParentRef", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "parentId"))
 	private List<Parent> parents;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
 	private List<CourseRequest> courseRequest;
 
@@ -91,6 +91,66 @@ public class Student {
 
 	public void setCourseRequest(List<CourseRequest> courseRequest) {
 		this.courseRequest = courseRequest;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((additionGroups == null) ? 0 : additionGroups.hashCode());
+		result = prime * result
+				+ ((courseRequest == null) ? 0 : courseRequest.hashCode());
+		result = prime * result + ((group == null) ? 0 : group.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((journal == null) ? 0 : journal.hashCode());
+		result = prime * result + ((parents == null) ? 0 : parents.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Student other = (Student) obj;
+		if (additionGroups == null) {
+			if (other.additionGroups != null)
+				return false;
+		} else if (!additionGroups.equals(other.additionGroups))
+			return false;
+		if (courseRequest == null) {
+			if (other.courseRequest != null)
+				return false;
+		} else if (!courseRequest.equals(other.courseRequest))
+			return false;
+		if (group == null) {
+			if (other.group != null)
+				return false;
+		} else if (!group.equals(other.group))
+			return false;
+		if (id != other.id)
+			return false;
+		if (journal == null) {
+			if (other.journal != null)
+				return false;
+		} else if (!journal.equals(other.journal))
+			return false;
+		if (parents == null) {
+			if (other.parents != null)
+				return false;
+		} else if (!parents.equals(other.parents))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		return true;
 	}
 
 }
