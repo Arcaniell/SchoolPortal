@@ -25,7 +25,7 @@ public class Schedule {
 	private List<Journal> journal;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "groupId")
-	private Group2 group;
+	private Group group;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacherId")
 	private Teacher teacher;
@@ -62,10 +62,10 @@ public class Schedule {
 	public void setJournal(List<Journal> journal) {
 		this.journal = journal;
 	}
-	public Group2 getGroup() {
+	public Group getGroup() {
 		return group;
 	}
-	public void setGroup(Group2 group) {
+	public void setGroup(Group group) {
 		this.group = group;
 	}
 	public Teacher getTeacher() {
