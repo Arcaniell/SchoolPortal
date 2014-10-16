@@ -12,7 +12,7 @@ public class Student {
 	private int id;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId", unique = true, nullable = true)
+	@JoinColumn(name = "userId", unique = true, nullable = false)
 	private User user;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
