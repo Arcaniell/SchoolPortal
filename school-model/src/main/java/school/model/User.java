@@ -31,9 +31,10 @@ public class User {
 	private String firstName;
 	@Column(nullable = false, length = 45)
 	private String lastName;
+	@Column (nullable = false)
 	private boolean sex;
+	@Column(nullable = false)
 	private Date registration;
-	private Date birthday;
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "UserRoleRef", joinColumns = { @JoinColumn(name = "userId", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "roleId", nullable = false) })
 	private Set<Role> roles = new HashSet<Role>();
@@ -99,14 +100,6 @@ public class User {
 		this.registration = registration;
 	}
 
-	public Date getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
-
 	public Set<Role> getRoles() {
 		return roles;
 	}
@@ -119,8 +112,6 @@ public class User {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((birthday == null) ? 0 : birthday.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result
 				+ ((firstName == null) ? 0 : firstName.hashCode());
@@ -145,11 +136,6 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (birthday == null) {
-			if (other.birthday != null)
-				return false;
-		} else if (!birthday.equals(other.birthday))
-			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
@@ -186,7 +172,6 @@ public class User {
 			return false;
 		return true;
 	}
-
 
 	
 
