@@ -2,6 +2,7 @@ package school.model;
 
 import java.util.Date;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,16 +19,16 @@ public class Message {
 	@GeneratedValue (strategy=GenerationType.IDENTITY)
 	private long id;
 	@ManyToOne
-	@JoinColumn(name="sender")
+	@JoinColumn(nullable=false, name="sender")
 	private User sender;
 	@ManyToOne
-	@JoinColumn(name="receiver")
+	@JoinColumn(nullable=false, name="receiver")
 	private User receiver;
 	@Lob
 	private String message;
 	private Date date;
 	@OneToOne (fetch=FetchType.LAZY)
-	@JoinColumn (name = "messageId")
+	@JoinColumn (nullable=false, name = "messageId")
 	private Message messageId;
 	public long getId() {
 		return id;
