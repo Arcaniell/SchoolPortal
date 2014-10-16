@@ -13,9 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
-public class Group2 {
+@Table(name = "Groups")
+public class Group {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

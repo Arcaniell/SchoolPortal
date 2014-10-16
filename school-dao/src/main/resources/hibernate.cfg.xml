@@ -10,15 +10,29 @@
 		
 		<property name="connection.url">jdbc:mysql://127.0.0.1/SchoolDB</property>
 		<property name="connection.username">root</property>
-		<property name="connection.password"></property>
+		<property name="connection.password">revan</property>
 
-		<property name="hbm2ddl.auto">create</property>
+		<property name="hbm2ddl.auto">update</property>
 		<property name="connection.driver_class">
 			com.mysql.jdbc.Driver
 		</property>
 		<property name="dialect">
 			org.hibernate.dialect.MySQLDialect
 		</property>
-		
+		<mapping class="school.model.User"/>
+		<mapping class="school.model.Role"/>
+		<mapping class="school.model.CourseRequest"/>
+		<mapping class="school.model.Group"/>
+		<mapping class="school.model.Journal"/>
+		<mapping class="school.model.Lesson"/>
+		<mapping class="school.model.Message"/>
+		<mapping class="school.model.Parent"/>
+		<mapping class="school.model.RoleRequest"/>
+		<mapping class="school.model.Room"/>
+		<mapping class="school.model.Salary"/>
+		<mapping class="school.model.Schedule"/>
+		<mapping class="school.model.Student"/>
+		<mapping class="school.model.Teacher"/>
+		<mapping class="school.model.Subject"/>
 	</session-factory>
 </hibernate-configuration>

@@ -4,7 +4,7 @@ import java.util.List;
 
 
 public interface BaseDao <E>{
-//	E findById(E entity);
+	E findById(long id);
 	void save(E entity);
 	void remove(E entity);
 	E update(E entity);
