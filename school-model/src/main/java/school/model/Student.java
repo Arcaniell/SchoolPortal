@@ -5,31 +5,29 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "Student")
 public class Student {
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique=true)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId", unique = true, nullable = false)
+	@JoinColumn(name = "userId", unique = true)
 	private User user;
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "groupId")
 	private Group group;
-
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "StudentAdGroupRef", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "groupId"))
 	private List<Group> additionGroups;
-
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
 	private List<Journal> journal;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "StudentParentRef", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "parentId"))
 	private List<Parent> parents;
-
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
 	private List<CourseRequest> courseRequest;
 
@@ -52,6 +50,7 @@ public class Student {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
 
 	public Group getGroup() {
 		return group;
