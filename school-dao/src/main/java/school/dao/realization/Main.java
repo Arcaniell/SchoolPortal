@@ -9,5 +9,6 @@ public class Main {
 	public static void main(String[] args) {
 		Session session = HibernateSessionFactory.getSessionFactory().openSession();
 		session.close();
+		HibernateSessionFactory.shutdown();
 	}
 }
