@@ -7,7 +7,7 @@ import org.hibernate.cfg.Configuration;
 
 import school.dao.DaoUser;
 import school.model.CourseRequest;
-import school.model.Group2;
+import school.model.Group;
 import school.model.Journal;
 import school.model.Lesson;
 import school.model.Message;
@@ -35,7 +35,7 @@ public class Main {
             .addPackage("school.model").addAnnotatedClass(User.class)
             .addAnnotatedClass(Role.class)
             .addAnnotatedClass(CourseRequest.class)
-            .addAnnotatedClass(Group2.class)
+            .addAnnotatedClass(Group.class)
             .addAnnotatedClass(Journal.class)
             .addAnnotatedClass(Lesson.class)
             .addAnnotatedClass(Message.class)

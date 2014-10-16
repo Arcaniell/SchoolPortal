@@ -3,31 +3,33 @@ package school.model;
 import java.util.List;
 
 import javax.persistence.*;
-//commit test
+
 
 @Entity
-@Table(name = "Student")
 public class Student {
 	@Id
 	@GeneratedValue
-	@Column(name = "id")
 	private int id;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId", unique = true)
+	@JoinColumn(name = "userId", unique = true, nullable = true)
 	private User user;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "groupId")
-	private Group2 group;
+	private Group group;
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "StudentAdGroupRef", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "groupId"))
-	private List<Group2> additionGroups;
+	private List<Group> additionGroups;
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
 	private List<Journal> journal;
-
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "StudentParentRef", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "parentId"))
 	private List<Parent> parents;
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
 	private List<CourseRequest> courseRequest;
 
@@ -51,20 +53,19 @@ public class Student {
 		this.user = user;
 	}
 
-
-	public Group2 getGroup() {
+	public Group getGroup() {
 		return group;
 	}
 
-	public void setGroup(Group2 group) {
+	public void setGroup(Group group) {
 		this.group = group;
 	}
 
-	public List<Group2> getAdditionGroups() {
+	public List<Group> getAdditionGroups() {
 		return additionGroups;
 	}
 
-	public void setAdditionGroups(List<Group2> additionGroups) {
+	public void setAdditionGroups(List<Group> additionGroups) {
 		this.additionGroups = additionGroups;
 	}
 
