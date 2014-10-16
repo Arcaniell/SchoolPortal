@@ -15,12 +15,13 @@ public class Journal {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(unique = true)
 	private long id;
 	@ManyToOne
-	@JoinColumn(name = "studentId")
+	@JoinColumn(name = "studentId", nullable = false)
 	private Student student;
 	@ManyToOne
-	@JoinColumn(name = "scheduleId")
+	@JoinColumn(name = "scheduleId", nullable = false)
 	private Schedule schedule;
 	private byte mark;
 	private double coefficient;
@@ -64,6 +65,53 @@ public class Journal {
 		this.date = date;
 	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(coefficient);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + mark;
+		result = prime * result
+				+ ((schedule == null) ? 0 : schedule.hashCode());
+		result = prime * result + ((student == null) ? 0 : student.hashCode());
+		return result;
+	}
 	
-
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Journal other = (Journal) obj;
+		if (Double.doubleToLongBits(coefficient) != Double
+				.doubleToLongBits(other.coefficient))
+			return false;
+		if (date == null) {
+			if (other.date != null)
+				return false;
+		} else if (!date.equals(other.date))
+			return false;
+		if (id != other.id)
+			return false;
+		if (mark != other.mark)
+			return false;
+		if (schedule == null) {
+			if (other.schedule != null)
+				return false;
+		} else if (!schedule.equals(other.schedule))
+			return false;
+		if (student == null) {
+			if (other.student != null)
+				return false;
+		} else if (!student.equals(other.student))
+			return false;
+		return true;
+	}
 }
