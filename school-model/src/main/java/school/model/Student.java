@@ -7,11 +7,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Student")
 public class Student {
-	
+
 	@Id
-	@Column(unique=true)
+	@Column(unique = true)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private long id;
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userId", unique = true)
@@ -35,11 +35,11 @@ public class Student {
 
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -50,7 +50,6 @@ public class Student {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
 
 	public Group getGroup() {
 		return group;
@@ -101,7 +100,7 @@ public class Student {
 		result = prime * result
 				+ ((courseRequest == null) ? 0 : courseRequest.hashCode());
 		result = prime * result + ((group == null) ? 0 : group.hashCode());
-		result = prime * result + id;
+		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((journal == null) ? 0 : journal.hashCode());
 		result = prime * result + ((parents == null) ? 0 : parents.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());

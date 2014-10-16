@@ -10,7 +10,7 @@ public class CourseRequest {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true)
-	private int id;
+	private long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "studentId", nullable = false)
@@ -26,11 +26,11 @@ public class CourseRequest {
 
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -63,7 +63,7 @@ public class CourseRequest {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + id;
+		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((student == null) ? 0 : student.hashCode());
 		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
 		return result;
