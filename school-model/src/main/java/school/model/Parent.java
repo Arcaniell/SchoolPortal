@@ -3,8 +3,8 @@ package school.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,12 +17,10 @@ public class Parent {
 	@Id
 	@GeneratedValue (strategy=GenerationType.IDENTITY)
 	private long id;
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId")
+	@OneToOne
+	@JoinColumn(nullable=false, name = "userId")
 	private User userId;
-	private String workplace;
-	private String position;
-	@ManyToMany(mappedBy="parents")
+	@ManyToMany(cascade=CascadeType.ALL, mappedBy="parents")
 	private List<Student> students = new ArrayList<Student>();
 	
 	public long getId() {
@@ -37,22 +35,43 @@ public class Parent {
 	public void setUserId(User userId) {
 		this.userId = userId;
 	}
-	public String getWorkplace() {
-		return workplace;
-	}
-	public void setWorkplace(String workplace) {
-		this.workplace = workplace;
-	}
-	public String getPosition() {
-		return position;
-	}
-	public void setPosition(String position) {
-		this.position = position;
-	}
 	public List<Student> getStudents() {
 		return students;
 	}
 	public void setStudents(List<Student> students) {
 		this.students = students;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result
+				+ ((students == null) ? 0 : students.hashCode());
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Parent other = (Parent) obj;
+		if (id != other.id)
+			return false;
+		if (students == null) {
+			if (other.students != null)
+				return false;
+		} else if (!students.equals(other.students))
+			return false;
+		if (userId == null) {
+			if (other.userId != null)
+				return false;
+		} else if (!userId.equals(other.userId))
+			return false;
+		return true;
 	}
 }
