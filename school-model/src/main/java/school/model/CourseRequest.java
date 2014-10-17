@@ -1,7 +1,6 @@
 package school.model;
 
 import java.util.Date;
-
 import javax.persistence.*;
 
 @Entity
@@ -21,6 +20,8 @@ public class CourseRequest {
 	private Subject subject;
 
 	private Date date;
+
+	private boolean isActive;
 
 	CourseRequest() {
 
@@ -58,12 +59,21 @@ public class CourseRequest {
 		this.date = date;
 	}
 
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + (isActive ? 1231 : 1237);
 		result = prime * result + ((student == null) ? 0 : student.hashCode());
 		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
 		return result;
@@ -84,6 +94,8 @@ public class CourseRequest {
 		} else if (!date.equals(other.date))
 			return false;
 		if (id != other.id)
+			return false;
+		if (isActive != other.isActive)
 			return false;
 		if (student == null) {
 			if (other.student != null)

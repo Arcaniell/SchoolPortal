@@ -2,7 +2,6 @@ package school.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,9 +16,11 @@ public class Parent {
 	@Id
 	@GeneratedValue (strategy=GenerationType.IDENTITY)
 	private long id;
+	
 	@OneToOne
-	@JoinColumn(nullable=false, name = "userId")
+	@JoinColumn(nullable=false, name = "userId", unique=true)
 	private User userId;
+	
 	@ManyToMany(cascade=CascadeType.ALL, mappedBy="parents")
 	private List<Student> students = new ArrayList<Student>();
 	

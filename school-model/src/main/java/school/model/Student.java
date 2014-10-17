@@ -1,7 +1,6 @@
 package school.model;
 
 import java.util.List;
-
 import javax.persistence.*;
 
 @Entity
@@ -14,22 +13,35 @@ public class Student {
 	private long id;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId", unique = true)
+	@JoinColumn(name = "userId", unique = true, nullable= false)
 	private User user;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "groupId")
 	private Group group;
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "StudentAdGroupRef", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "groupId"))
 	private List<Group> additionGroups;
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
 	private List<Journal> journal;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "StudentParentRef", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "parentId"))
 	private List<Parent> parents;
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
 	private List<CourseRequest> courseRequest;
+	
+	private boolean isActive;
+	
+	public boolean isActive() {
+		return isActive;
+	}
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
 	public long getId() {
 		return id;
 	}

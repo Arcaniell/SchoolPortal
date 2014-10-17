@@ -2,31 +2,35 @@ package school.model;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 // check Entities @ documentation, getters&setters alt+shift+s
 @Entity
-@Table(name="Teacher")
 public class Teacher {
+
 	@Id
-	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	@Column(name="rate")
+
 	private int rate;
-	@OneToMany(mappedBy = "teacher")
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
 	private List<Salary> salaries;
-	@OneToOne
-	@JoinColumn(name="userId")
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "userId", nullable = false, unique = true)
 	private User user;
+
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
+	private List<Subject> subject;
 
 	public Teacher() {
 		super();
@@ -64,5 +68,57 @@ public class Teacher {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
+	public List<Subject> getSubject() {
+		return subject;
+	}
+
+	public void setSubject(List<Subject> subject) {
+		this.subject = subject;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + rate;
+		result = prime * result
+				+ ((salaries == null) ? 0 : salaries.hashCode());
+		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Teacher other = (Teacher) obj;
+		if (id != other.id)
+			return false;
+		if (rate != other.rate)
+			return false;
+		if (salaries == null) {
+			if (other.salaries != null)
+				return false;
+		} else if (!salaries.equals(other.salaries))
+			return false;
+		if (subject == null) {
+			if (other.subject != null)
+				return false;
+		} else if (!subject.equals(other.subject))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		return true;
+	}
+
 }

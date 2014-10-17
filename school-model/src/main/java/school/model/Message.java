@@ -1,7 +1,6 @@
 package school.model;
 
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,20 +16,30 @@ public class Message {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+
 	@ManyToOne
-	@JoinColumn(nullable = false, name = "sender")
+	@JoinColumn(nullable = false, name = "senderId")
 	private User sender;
+
 	@ManyToOne
-	@JoinColumn(nullable = false, name = "receiver")
+	@JoinColumn(nullable = false, name = "receiverId")
 	private User receiver;
+
 	@Lob
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private String message;
-	@Column(nullable=false)
+
+	@Column(nullable = false)
 	private Date date;
+
 	@OneToOne
-	@JoinColumn(nullable = false, name = "messageId")
+	@JoinColumn(name = "messageId")
 	private Message messageId;
+
+	public Message() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	public long getId() {
 		return id;
