@@ -1,10 +1,14 @@
 package school.model;
 
 import java.util.Date;
+
 import javax.persistence.*;
 
 @Entity
 public class CourseRequest {
+	public static final String FIND_BY_DATE = "SELECT u FROM CourseRequest u WHERE u.date = :date";
+	public static final String FIND_ARCHIVE = "SELECT u FROM CourseRequest u WHERE u.isActive = :active";
+	public static final String FIND_BY_INTERVAL = "SELECT u FROM CourseRequest u WHERE u.date BETWEEN :from AND :till";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,8 +27,14 @@ public class CourseRequest {
 
 	private boolean isActive;
 
-	CourseRequest() {
+	public String toString() {
+		return "Id = " + id;
 
+	}
+
+	public CourseRequest() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public long getId() {

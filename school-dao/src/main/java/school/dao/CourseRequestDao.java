@@ -6,9 +6,9 @@ import java.util.Set;
 import school.model.CourseRequest;
 
 public interface CourseRequestDao extends BaseDao<CourseRequest> {
-	CourseRequest findByData(Date date);
+	Set<CourseRequest> findByDate(Date date);
 
-	Set<CourseRequest> findBetweenDates(Date from, Date till);
+	Set<CourseRequest> findByInterval(Date from, Date till);
 
 	Set<CourseRequest> findArchived();
 

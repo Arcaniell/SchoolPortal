@@ -1,11 +1,14 @@
 package school.model;
 
 import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "Student")
 public class Student {
+	
+	public static final String FIND_ALL_ARCHIVE = "SELECT u FROM Student u WHERE u.isActive = :active";
 
 	@Id
 	@Column(unique = true)
@@ -35,6 +38,10 @@ public class Student {
 	private List<CourseRequest> courseRequest;
 	
 	private boolean isActive;
+	
+	public String toString(){
+		return "Id = "+ id;		
+	}
 	
 	public boolean isActive() {
 		return isActive;
