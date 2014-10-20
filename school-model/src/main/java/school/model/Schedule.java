@@ -45,7 +45,7 @@ public class Schedule {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "subjectId", nullable = false)
-	private Subject subject;
+	private Course subject;
 
 	public Schedule() {
 		super();
@@ -116,11 +116,11 @@ public class Schedule {
 		this.room = room;
 	}
 
-	public Subject getSubject() {
+	public Course getSubject() {
 		return subject;
 	}
 
-	public void setSubject(Subject subject) {
+	public void setSubject(Course subject) {
 		this.subject = subject;
 	}
 

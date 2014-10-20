@@ -1,6 +1,7 @@
 package school.model;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,7 +31,7 @@ public class Teacher {
 	private User user;
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
-	private List<Subject> subject;
+	private Set<Course> subject;
 
 	public Teacher() {
 		super();
@@ -69,11 +70,11 @@ public class Teacher {
 		this.user = user;
 	}
 
-	public List<Subject> getSubject() {
+	public Set<Course> getSubject() {
 		return subject;
 	}
 
-	public void setSubject(List<Subject> subject) {
+	public void setSubject(Set<Course> subject) {
 		this.subject = subject;
 	}
 

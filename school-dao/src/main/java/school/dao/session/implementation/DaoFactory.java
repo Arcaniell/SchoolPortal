@@ -1,7 +1,6 @@
-package school.dao.realization;
+package school.dao.session.implementation;
 
 import school.dao.session.implementation.*;
-import school.dao.session.implementation.UserDaoImpl;
 
 public class DaoFactory {
 	private CourseRequestDaoImpl courseRequestDaoImpl;

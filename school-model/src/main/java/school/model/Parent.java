@@ -1,7 +1,7 @@
 package school.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +22,7 @@ public class Parent {
 	private User userId;
 	
 	@ManyToMany(cascade=CascadeType.ALL, mappedBy="parents")
-	private List<Student> students = new ArrayList<Student>();
+	private Set<Student> students;
 	
 	public long getId() {
 		return id;
@@ -36,10 +36,10 @@ public class Parent {
 	public void setUserId(User userId) {
 		this.userId = userId;
 	}
-	public List<Student> getStudents() {
+	public Set<Student> getStudents() {
 		return students;
 	}
-	public void setStudents(List<Student> students) {
+	public void setStudents(Set<Student> students) {
 		this.students = students;
 	}
 	@Override

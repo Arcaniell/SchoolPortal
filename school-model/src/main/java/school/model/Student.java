@@ -1,6 +1,7 @@
 package school.model;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -25,14 +26,14 @@ public class Student {
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "StudentAdditionalGroupRef", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "groupId"))
-	private List<Group> additionGroups;
+	private Set<Group> additionGroups;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
 	private List<Journal> journal;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "StudentParentRef", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "parentId"))
-	private List<Parent> parents;
+	private Set<Parent> parents;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
 	private List<CourseRequest> courseRequest;
@@ -67,10 +68,10 @@ public class Student {
 	public void setGroup(Group group) {
 		this.group = group;
 	}
-	public List<Group> getAdditionGroups() {
+	public Set<Group> getAdditionGroups() {
 		return additionGroups;
 	}
-	public void setAdditionGroups(List<Group> additionGroups) {
+	public void setAdditionGroups(Set<Group> additionGroups) {
 		this.additionGroups = additionGroups;
 	}
 	public List<Journal> getJournal() {
@@ -79,10 +80,10 @@ public class Student {
 	public void setJournal(List<Journal> journal) {
 		this.journal = journal;
 	}
-	public List<Parent> getParents() {
+	public Set<Parent> getParents() {
 		return parents;
 	}
-	public void setParents(List<Parent> parents) {
+	public void setParents(Set<Parent> parents) {
 		this.parents = parents;
 	}
 	public List<CourseRequest> getCourseRequest() {

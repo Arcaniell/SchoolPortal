@@ -1,6 +1,7 @@
 package school.model;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,13 +15,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Subject {
+public class Course {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Column(nullable = false)
-	private String subjectId;
+	@Column(nullable = false, length = 45)
+	private String subjectName;
 
 	@Column(nullable = false)
 	private int groupNumber;
@@ -38,8 +39,8 @@ public class Subject {
 	private List<Schedule> schedule;
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "SubjectTeacherRef", joinColumns = @JoinColumn(name = "subjectId"), inverseJoinColumns = @JoinColumn(name = "teacherId"))
-	private List<Teacher> teacher;
+	@JoinTable(name = "CourseTeacherRef", joinColumns = @JoinColumn(name = "subjectId"), inverseJoinColumns = @JoinColumn(name = "teacherId"))
+	private Set<Teacher> teacher;
 
 	public long getId() {
 		return id;
@@ -49,12 +50,12 @@ public class Subject {
 		this.id = id;
 	}
 
-	public String getSubjectId() {
-		return subjectId;
+	public String getSubjectName() {
+		return subjectName;
 	}
 
-	public void setSubjectId(String subjectId) {
-		this.subjectId = subjectId;
+	public void setSubjectName(String subjectName) {
+		this.subjectName = subjectName;
 	}
 
 	public int getGroupNumber() {
@@ -105,11 +106,11 @@ public class Subject {
 		this.schedule = schedule;
 	}
 
-	public List<Teacher> getTeacher() {
+	public Set<Teacher> getTeacher() {
 		return teacher;
 	}
 
-	public void setTeacher(List<Teacher> teacher) {
+	public void setTeacher(Set<Teacher> teacher) {
 		this.teacher = teacher;
 	}
 
@@ -127,7 +128,7 @@ public class Subject {
 		result = prime * result
 				+ ((schedule == null) ? 0 : schedule.hashCode());
 		result = prime * result
-				+ ((subjectId == null) ? 0 : subjectId.hashCode());
+				+ ((subjectName == null) ? 0 : subjectName.hashCode());
 		result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
 		return result;
 	}
@@ -140,7 +141,7 @@ public class Subject {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Subject other = (Subject) obj;
+		Course other = (Course) obj;
 		if (additional != other.additional)
 			return false;
 		if (coeficient != other.coeficient)
@@ -161,10 +162,10 @@ public class Subject {
 				return false;
 		} else if (!schedule.equals(other.schedule))
 			return false;
-		if (subjectId == null) {
-			if (other.subjectId != null)
+		if (subjectName == null) {
+			if (other.subjectName != null)
 				return false;
-		} else if (!subjectId.equals(other.subjectId))
+		} else if (!subjectName.equals(other.subjectName))
 			return false;
 		if (teacher == null) {
 			if (other.teacher != null)

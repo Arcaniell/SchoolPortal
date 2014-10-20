@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Entity
 public class CourseRequest {
+	
 	public static final String FIND_BY_DATE = "SELECT u FROM CourseRequest u WHERE u.date = :date";
 	public static final String FIND_ARCHIVE = "SELECT u FROM CourseRequest u WHERE u.isActive = :active";
 	public static final String FIND_BY_INTERVAL = "SELECT u FROM CourseRequest u WHERE u.date BETWEEN :from AND :till";
@@ -21,7 +22,7 @@ public class CourseRequest {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "subjectId", nullable = false)
-	private Subject subject;
+	private Course subject;
 
 	private Date date;
 
@@ -53,11 +54,11 @@ public class CourseRequest {
 		this.student = student;
 	}
 
-	public Subject getSubject() {
+	public Course getSubject() {
 		return subject;
 	}
 
-	public void setSubject(Subject subject) {
+	public void setSubject(Course subject) {
 		this.subject = subject;
 	}
 
