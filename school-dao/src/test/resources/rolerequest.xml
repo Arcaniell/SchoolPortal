@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<USER id="1" email="testemail1@gmail.com" firstName="Roman" lastName="Petrov" 
+	password="password" registration="2014-10-20 23:06:10" sex="0"/>
+	<USER id="2" email="testemail2@gmail.com" firstName="Bogdan" lastName="Petrov" 
+	password="password" registration="2014-10-20 23:08:10" sex="0"/>
+	<USER id="3" email="testemail3@gmail.com" firstName="Ivan" lastName="Petrovsky" 
+	password="password" registration="2014-10-20 23:09:10" sex="0"/>
+	<ROLE id="1" name="Teacher"/>
+	<ROLE id="2" name="Parent"/>
+	<ROLE id="3" name="Student"/>
+	<ROLE_REQUEST id="1" userId="1" roleId="1" requestDate="2014-10-20 23:08:10"/>
+	<ROLE_REQUEST id="2" userId="1" roleId="2" requestDate="2014-10-20 23:09:10"/>
+	<ROLE_REQUEST id="3" userId="2" roleId="2" requestDate="2014-10-20 23:09:50"/>
+</dataset>  

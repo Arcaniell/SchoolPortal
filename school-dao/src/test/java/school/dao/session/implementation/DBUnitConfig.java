@@ -1,75 +1,48 @@
 package school.dao.session.implementation;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import org.dbunit.DBTestCase;
 import org.dbunit.IDatabaseTester;
 import org.dbunit.JdbcDatabaseTester;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.operation.DatabaseOperation;
 import org.junit.Before;
 
-public class DBUnitConfig extends DBTestCase {
+public abstract class DBUnitConfig extends DBTestCase {
 	protected IDatabaseTester tester;
-	private Properties prop;
-	protected IDataSet beforeData;
-
+	private Properties properties;
 	@Before
 	public void setUp() throws Exception {
-
-		tester = new JdbcDatabaseTester(prop.getProperty("db.driver"),
-		prop.getProperty("db.url"),
-		prop.getProperty("db.username"),
-		prop.getProperty("db.password"));
-
+		tester = new JdbcDatabaseTester(properties.getProperty("db.driver"),
+				properties.getProperty("db.url"),
+				properties.getProperty("db.username"),
+				properties.getProperty("db.password"));
 	}
 
 	public DBUnitConfig(String name) {
-
 		super(name);
-
-		prop = new Properties();
-
+		properties = new Properties();
+		InputStream inputStream = getClass().getClassLoader()
+				.getResourceAsStream("db.config.properties");
 		try {
-
-			prop.load(Thread.currentThread()
-
-			.getContextClassLoader()
-					.getResourceAsStream("db.config.properties"));
-
+			properties.load(inputStream);
+			System.setProperty(
+					PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS,
+					properties.getProperty("db.driver"));
+			System.setProperty(
+					PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL,
+					properties.getProperty("db.url"));
+			System.setProperty(
+					PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME,
+					properties.getProperty("db.username"));
+			System.setProperty(
+					PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD,
+					properties.getProperty("db.password"));
 		} catch (IOException e) {
-
 			e.printStackTrace();
-
 		}
-
-		System.setProperty(
-				PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS,
-				prop.getProperty("db.driver"));
-		System.setProperty(
-				PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL,
-				prop.getProperty("db.url"));
-		System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME,
-		prop.getProperty("db.username"));
-		System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD,
-		prop.getProperty("db.password"));
-
-	}
-
-	@Override
-	protected IDataSet getDataSet() throws Exception {
-
-		return beforeData;
-
-	}
-
-	@Override
-	protected DatabaseOperation getTearDownOperation() throws Exception {
-
-		return DatabaseOperation.DELETE_ALL;
-
 	}
 
 }

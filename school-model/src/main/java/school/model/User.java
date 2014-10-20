@@ -14,8 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "USER")
 public class User {
 	
 	public static final String FIND_BY_EMAIL_QUERY = "SELECT u FROM User u WHERE u.email = :email";
@@ -32,11 +34,11 @@ public class User {
 	@Column(nullable = false, length = 45)
 	private String lastName;
 	@Column (nullable = false)
-	private boolean sex;
+	private byte sex;
 	@Column(nullable = false)
 	private Date registration;
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "UserRoleRef", joinColumns = { @JoinColumn(name = "userId", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "roleId", nullable = false) })
+	@JoinTable(name = "USER_ROLE_REF", joinColumns = { @JoinColumn(name = "userId", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "roleId", nullable = false) })
 	private Set<Role> roles = new HashSet<Role>();
 
 	public User() {
@@ -83,11 +85,11 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public boolean isSex() {
+	public byte isSex() {
 		return sex;
 	}
 
-	public void setSex(boolean sex) {
+	public void setSex(byte sex) {
 		this.sex = sex;
 	}
 
@@ -122,8 +124,7 @@ public class User {
 				+ ((password == null) ? 0 : password.hashCode());
 		result = prime * result
 				+ ((registration == null) ? 0 : registration.hashCode());
-		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
-		result = prime * result + (sex ? 1231 : 1237);
+		result = prime * result + sex;
 		return result;
 	}
 
@@ -163,16 +164,19 @@ public class User {
 				return false;
 		} else if (!registration.equals(other.registration))
 			return false;
-		if (roles == null) {
-			if (other.roles != null)
-				return false;
-		} else if (!roles.equals(other.roles))
-			return false;
 		if (sex != other.sex)
 			return false;
 		return true;
 	}
-
-	
+	public enum SexType{
+		MALE((byte) 0),FEMALE((byte) 1),OTHER((byte) 2);
+		private byte sex;
+		SexType(byte sex){
+			this.sex = sex;
+		}
+		public byte getSex(){
+			return sex;
+		}
+	}
 
 }

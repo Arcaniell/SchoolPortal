@@ -1,91 +1,119 @@
 package school.dao.session.implementation;
 
-import static org.junit.Assert.*;
-
 import java.util.Date;
+import java.util.List;
 
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.dbunit.operation.DatabaseOperation;
+import org.hibernate.Session;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import school.model.Role;
 import school.model.User;
 
-public class UserDaoImplTest {
-	
+public class UserDaoImplTest extends DBUnitConfig{
+
+	public UserDaoImplTest() {
+		super("UserDaoImplTest");
+	}
+
 	private User user;
 	private UserDaoImpl userDaoImpl;
-
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	protected static void setUpBeforeClass() throws Exception {
 	}
-
 	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
+	protected static void tearDownAfterClass() throws Exception {
 		HibernateSessionFactory.shutdown();
 	}
-
+	
 	@Before
 	public void setUp() throws Exception {
-//		beforeData = new FlatXmlDataSetBuilder().build(
-//
-//				 Thread.currentThread().getContextClassLoader()
-//				 .getResourceAsStream("com/devcolibri/entity/person/person-data.xml"));
-//
-//				 tester.setDataSet(beforeData);
-//
-//				 tester.onSetup();
-
-				
-
-		userDaoImpl = new UserDaoImpl();
+		super.setUp();
 		user = new User();
-		user.setEmail("testmail@gmail.com");
+		user.setId(1L);
+		user.setEmail("testemail1@gmail.com");
 		user.setFirstName("Roman");
-		user.setLastName("Romanovsky");
+		user.setLastName("Petrov");
 		user.setPassword("password");
 		user.setRegistration(new Date());
-		Role role1 = new Role();
-		role1.setName("TestRole1");
-		Role role2 = new Role();
-		role2.setName("TestRole2");
-		user.getRoles().add(role1);
-		user.getRoles().add(role2);
+		user.setSex(User.SexType.MALE.getSex());
+		userDaoImpl = new UserDaoImpl();
+		Session session = HibernateSessionFactory.getSessionFactory().openSession();
+		IDataSet userDataSet = getDataSet();
+		DatabaseOperation.CLEAN_INSERT.execute(tester.getConnection(), userDataSet);
+		session.close();
+		  
 	}
-
-	public User testFindByEmail() {
+	@After
+	public void tearDown() throws Exception {
+		Session session = HibernateSessionFactory.getSessionFactory().openSession();
+		IDataSet userDataSet = getDataSet();
+		DatabaseOperation.DELETE_ALL.execute(tester.getConnection(), userDataSet);
+		session.close();
+	}
+	
+	@Override
+	protected IDataSet getDataSet() throws Exception {
+		return new FlatXmlDataSet(this.getClass().getResourceAsStream("/user.xml"));
+	}
+	
+	@Test
+	public void testFindByEmail() {
 		User newUser = userDaoImpl.findByEmail(user.getEmail());
 		Assert.assertEquals(user.getEmail(), newUser.getEmail());
-		return newUser;
+		
 	}
 
-	public void testFindById(User newUser) {
-		newUser = userDaoImpl.findById(newUser.getId());
-		Assert.assertEquals(user.getEmail(), newUser.getEmail());
+	@Test
+	public void testFindById() {
+		User newUser = userDaoImpl.findById(1L);
+		Assert.assertEquals(user.getId(), newUser.getId());		
 	}
 
+	@Test
 	public void testSave() {
-		userDaoImpl.save(user);
+		User newUser = new User();
+		newUser.setEmail("testemail6@gmail.com");
+		newUser.setFirstName("Anna");
+		newUser.setLastName("Petrova");
+		newUser.setPassword("password");
+		newUser.setRegistration(new Date());
+		newUser.setSex(User.SexType.FEMALE.getSex());
+		userDaoImpl.save(newUser);
+		List<User> users = userDaoImpl.findAll();
+		Assert.assertTrue(users.size()>=6);
 	}
 
+	@Test
 	public void testRemove() {
 		userDaoImpl.remove(user);
+		Assert.assertNull(userDaoImpl.findById(1L));
 	}
 
+	@Test
 	public void testUpdate() {
-		///
+		User newUser = userDaoImpl.findById(1L);
+		Assert.assertEquals(user.getEmail(), newUser.getEmail());
+		newUser.setFirstName("Ivan");;
+		newUser = userDaoImpl.update(newUser);
+		Assert.assertNotEquals(user.getFirstName(), newUser.getFirstName());
 	}
 
-	
+	@Test
 	public void testFindAll() {
-		fail("Not yet implemented");
+		List<User> users = userDaoImpl.findAll();
+		Assert.assertTrue(users.size()>=5);
 	}
 	@Test
-	public void test(){
-		testSave();
-		//////
+	public void testUserRoles(){
+		User newUser = userDaoImpl.findById(1L);
+		Assert.assertTrue(newUser.getRoles().size()==2);
 	}
 
 }

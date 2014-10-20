@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 import school.dao.GroupDao;
 import school.model.Group;
 
+	
 public class GroupDaoImpl extends BaseDaoImpl<Group> implements GroupDao {
 
 	private Session session;
