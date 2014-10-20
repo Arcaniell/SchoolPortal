@@ -6,6 +6,10 @@ import javax.persistence.*;
 
 @Entity
 public class CourseRequest {
+	
+	public static final String FIND_BY_DATE = "SELECT u FROM CourseRequest u WHERE u.date = :date";
+	public static final String FIND_ARCHIVE = "SELECT u FROM CourseRequest u WHERE u.isActive = :active";
+	public static final String FIND_BY_INTERVAL = "SELECT u FROM CourseRequest u WHERE u.date BETWEEN :from AND :till";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,12 +22,20 @@ public class CourseRequest {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "subjectId", nullable = false)
-	private Subject subject;
+	private Course subject;
 
 	private Date date;
 
-	CourseRequest() {
+	private boolean isActive;
 
+	public String toString() {
+		return "Id = " + id;
+
+	}
+
+	public CourseRequest() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public long getId() {
@@ -42,11 +54,11 @@ public class CourseRequest {
 		this.student = student;
 	}
 
-	public Subject getSubject() {
+	public Course getSubject() {
 		return subject;
 	}
 
-	public void setSubject(Subject subject) {
+	public void setSubject(Course subject) {
 		this.subject = subject;
 	}
 
@@ -58,12 +70,21 @@ public class CourseRequest {
 		this.date = date;
 	}
 
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + (isActive ? 1231 : 1237);
 		result = prime * result + ((student == null) ? 0 : student.hashCode());
 		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
 		return result;
@@ -84,6 +105,8 @@ public class CourseRequest {
 		} else if (!date.equals(other.date))
 			return false;
 		if (id != other.id)
+			return false;
+		if (isActive != other.isActive)
 			return false;
 		if (student == null) {
 			if (other.student != null)

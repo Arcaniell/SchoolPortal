@@ -11,7 +11,7 @@
 		<property name="connection.url">jdbc:mysql://127.0.0.1/SchoolDB</property>
 		<property name="connection.username">root</property>
 
-		<property name="connection.password">revan</property>
+		<property name="connection.password">raven</property>
 
 		<property name="hbm2ddl.auto">update</property>
 		<property name="connection.driver_class">
@@ -34,6 +34,6 @@
 		<mapping class="school.model.Schedule"/>
 		<mapping class="school.model.Student"/>
 		<mapping class="school.model.Teacher"/>
-		<mapping class="school.model.Subject"/>
+		<mapping class="school.model.Course"/>
 	</session-factory>
 </hibernate-configuration>

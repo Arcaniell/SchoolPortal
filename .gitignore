@@ -1,12 +1,16 @@
 # .gitignore for Maven
 
 target/
+school-web/bin/
 school-web/target/
 school-web/.settings/
+school-dao/bin/
 school-dao/target/
 school-dao/.settings/
+school-model/bin/
 school-model/target/
 school-model/.settings/
+school-service/bin/
 school-service/target/
 school-service/.settings/
 pom.xml.tag
