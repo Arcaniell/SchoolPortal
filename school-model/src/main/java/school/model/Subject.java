@@ -1,6 +1,7 @@
 package school.model;
 
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,34 +17,29 @@ import javax.persistence.OneToMany;
 public class Subject {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	long id;
+	private long id;
 
 	@Column(nullable = false)
-	String subject;
+	private String subjectId;
 
 	@Column(nullable = false)
-	int number;
+	private int groupNumber;
 
-	double coeficient;
+	private int coeficient;
 
-	double price;
+	private int price;
 
-	boolean addition;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "subject")
-	List<CourseRequest> courseRequest;
+	private boolean additional;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "subject")
-	List<Schedule> schedule;
+	private List<CourseRequest> courseRequest;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "subject")
+	private List<Schedule> schedule;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "SubjectTeacherRef", joinColumns = @JoinColumn(name = "subjectId"), inverseJoinColumns = @JoinColumn(name = "teacherId"))
 	private List<Teacher> teacher;
-
-	public Subject() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
 	public long getId() {
 		return id;
@@ -53,44 +49,44 @@ public class Subject {
 		this.id = id;
 	}
 
-	public String getSubject() {
-		return subject;
+	public String getSubjectId() {
+		return subjectId;
 	}
 
-	public void setSubject(String subject) {
-		this.subject = subject;
+	public void setSubjectId(String subjectId) {
+		this.subjectId = subjectId;
 	}
 
-	public int getNumber() {
-		return number;
+	public int getGroupNumber() {
+		return groupNumber;
 	}
 
-	public void setNumber(int number) {
-		this.number = number;
+	public void setGroupNumber(int groupNumber) {
+		this.groupNumber = groupNumber;
 	}
 
-	public double getCoeficient() {
+	public int getCoeficient() {
 		return coeficient;
 	}
 
-	public void setCoeficient(double coeficient) {
+	public void setCoeficient(int coeficient) {
 		this.coeficient = coeficient;
 	}
 
-	public double getPrice() {
+	public int getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 
-	public boolean isAddition() {
-		return addition;
+	public boolean isAdditional() {
+		return additional;
 	}
 
-	public void setAddition(boolean addition) {
-		this.addition = addition;
+	public void setAdditional(boolean additional) {
+		this.additional = additional;
 	}
 
 	public List<CourseRequest> getCourseRequest() {
@@ -121,19 +117,17 @@ public class Subject {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (addition ? 1231 : 1237);
-		long temp;
-		temp = Double.doubleToLongBits(coeficient);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + (additional ? 1231 : 1237);
+		result = prime * result + coeficient;
 		result = prime * result
 				+ ((courseRequest == null) ? 0 : courseRequest.hashCode());
+		result = prime * result + groupNumber;
 		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + number;
-		temp = Double.doubleToLongBits(price);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + price;
 		result = prime * result
 				+ ((schedule == null) ? 0 : schedule.hashCode());
-		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
+		result = prime * result
+				+ ((subjectId == null) ? 0 : subjectId.hashCode());
 		result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
 		return result;
 	}
@@ -147,32 +141,30 @@ public class Subject {
 		if (getClass() != obj.getClass())
 			return false;
 		Subject other = (Subject) obj;
-		if (addition != other.addition)
+		if (additional != other.additional)
 			return false;
-		if (Double.doubleToLongBits(coeficient) != Double
-				.doubleToLongBits(other.coeficient))
+		if (coeficient != other.coeficient)
 			return false;
 		if (courseRequest == null) {
 			if (other.courseRequest != null)
 				return false;
 		} else if (!courseRequest.equals(other.courseRequest))
 			return false;
+		if (groupNumber != other.groupNumber)
+			return false;
 		if (id != other.id)
 			return false;
-		if (number != other.number)
-			return false;
-		if (Double.doubleToLongBits(price) != Double
-				.doubleToLongBits(other.price))
+		if (price != other.price)
 			return false;
 		if (schedule == null) {
 			if (other.schedule != null)
 				return false;
 		} else if (!schedule.equals(other.schedule))
 			return false;
-		if (subject == null) {
-			if (other.subject != null)
+		if (subjectId == null) {
+			if (other.subjectId != null)
 				return false;
-		} else if (!subject.equals(other.subject))
+		} else if (!subjectId.equals(other.subjectId))
 			return false;
 		if (teacher == null) {
 			if (other.teacher != null)
@@ -182,4 +174,5 @@ public class Subject {
 		return true;
 	}
 
+	
 }

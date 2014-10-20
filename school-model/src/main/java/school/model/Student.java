@@ -24,7 +24,7 @@ public class Student {
 	private Group group;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "StudentAdGroupRef", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "groupId"))
+	@JoinTable(name = "StudentAdditionalGroupRef", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "groupId"))
 	private List<Group> additionGroups;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "student")

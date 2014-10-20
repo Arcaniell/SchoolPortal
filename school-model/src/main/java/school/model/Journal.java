@@ -24,7 +24,7 @@ public class Journal {
 	@JoinColumn(name = "scheduleId", nullable = false)
 	private Schedule schedule;
 	private byte mark;
-	private double coefficient;
+	private int coefficient;
 	@Column(nullable = false)
 	private Date date;
 	
@@ -52,10 +52,10 @@ public class Journal {
 	public void setMark(byte mark) {
 		this.mark = mark;
 	}
-	public double getCoefficient() {
+	public int getCoefficient() {
 		return coefficient;
 	}
-	public void setCoefficient(double coefficient) {
+	public void setCoefficient(int coefficient) {
 		this.coefficient = coefficient;
 	}
 	public Date getDate() {
@@ -64,14 +64,11 @@ public class Journal {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(coefficient);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + coefficient;
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + mark;
@@ -80,7 +77,6 @@ public class Journal {
 		result = prime * result + ((student == null) ? 0 : student.hashCode());
 		return result;
 	}
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -90,8 +86,7 @@ public class Journal {
 		if (getClass() != obj.getClass())
 			return false;
 		Journal other = (Journal) obj;
-		if (Double.doubleToLongBits(coefficient) != Double
-				.doubleToLongBits(other.coefficient))
+		if (coefficient != other.coefficient)
 			return false;
 		if (date == null) {
 			if (other.date != null)
@@ -114,4 +109,6 @@ public class Journal {
 			return false;
 		return true;
 	}
+	
+	
 }

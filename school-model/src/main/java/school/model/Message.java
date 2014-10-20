@@ -1,6 +1,7 @@
 package school.model;
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +28,7 @@ public class Message {
 
 	@Lob
 	@Column(nullable = false)
-	private String message;
+	private String text;
 
 	@Column(nullable = false)
 	private Date date;
@@ -35,11 +36,6 @@ public class Message {
 	@OneToOne
 	@JoinColumn(name = "messageId")
 	private Message messageId;
-
-	public Message() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
 	public long getId() {
 		return id;
@@ -65,12 +61,12 @@ public class Message {
 		this.receiver = receiver;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getText() {
+		return text;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	public Date getDate() {
@@ -95,12 +91,12 @@ public class Message {
 		int result = 1;
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((message == null) ? 0 : message.hashCode());
 		result = prime * result
 				+ ((messageId == null) ? 0 : messageId.hashCode());
 		result = prime * result
 				+ ((receiver == null) ? 0 : receiver.hashCode());
 		result = prime * result + ((sender == null) ? 0 : sender.hashCode());
+		result = prime * result + ((text == null) ? 0 : text.hashCode());
 		return result;
 	}
 
@@ -120,11 +116,6 @@ public class Message {
 			return false;
 		if (id != other.id)
 			return false;
-		if (message == null) {
-			if (other.message != null)
-				return false;
-		} else if (!message.equals(other.message))
-			return false;
 		if (messageId == null) {
 			if (other.messageId != null)
 				return false;
@@ -140,6 +131,13 @@ public class Message {
 				return false;
 		} else if (!sender.equals(other.sender))
 			return false;
+		if (text == null) {
+			if (other.text != null)
+				return false;
+		} else if (!text.equals(other.text))
+			return false;
 		return true;
 	}
+
+	
 }

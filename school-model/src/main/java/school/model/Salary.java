@@ -1,6 +1,7 @@
 package school.model;
 
 import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ public class Salary {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	private double sum;
+	private int sum;
 
 	@Temporal(TemporalType.DATE)
 	private Date issueDate;
@@ -34,11 +35,11 @@ public class Salary {
 		this.id = id;
 	}
 
-	public double getSum() {
+	public int getSum() {
 		return sum;
 	}
 
-	public void setSum(double sum) {
+	public void setSum(int sum) {
 		this.sum = sum;
 	}
 
@@ -69,9 +70,7 @@ public class Salary {
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result
 				+ ((issueDate == null) ? 0 : issueDate.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(sum);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + sum;
 		result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
 		return result;
 	}
@@ -92,7 +91,7 @@ public class Salary {
 				return false;
 		} else if (!issueDate.equals(other.issueDate))
 			return false;
-		if (Double.doubleToLongBits(sum) != Double.doubleToLongBits(other.sum))
+		if (sum != other.sum)
 			return false;
 		if (teacher == null) {
 			if (other.teacher != null)
@@ -102,5 +101,5 @@ public class Salary {
 		return true;
 	}
 	
-
+	
 }
