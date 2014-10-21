@@ -9,8 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-@Entity
+@Entity(name = "ROOM")
 public class Room {
+	public static final String FIND_BY_ROOM_NUMBER_QUERY = "SELECT r FROM ROOM r WHERE "
+			+ "r.roomNumber = :roomNumber";
+	public static final String FIND_BY_AVAILABLE_ROOM_QUERY = "SELECT r FROM ROOM r WHERE "
+			+ "r.available = :available";
+	public static final String FIND_BY_ROOM_SIZE_QUERY = "SELECT r FROM ROOM r WHERE "
+			+ "r.size = :size";
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -27,8 +34,7 @@ public class Room {
 	private List<Schedule> schedule;
 
 	public Room() {
-		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public long getId() {

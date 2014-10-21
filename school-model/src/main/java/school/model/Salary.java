@@ -12,8 +12,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity
+@Entity(name="SALARY")
 public class Salary {
+	public static final String FIND_BY_DATE_QUERY = "SELECT s FROM SALARY s WHERE s.isuueDate = :isuueDate";
+	public static final String FIND_BY_PERIOD_QUERY = "SELECT s FROM SALARY s WHERE s.issueDate "
+			+ "BETWEEN :from AND :until";
+	public static final String FIND_BY_TEACHER_ID_QUERY = "SELECT s FROM SALARY s WHERE s.teacherId = teacherId";
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -26,6 +32,10 @@ public class Salary {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacherId", nullable = false)
 	private Teacher teacher;
+
+	public Salary() {
+
+	}
 
 	public long getId() {
 		return id;
@@ -57,10 +67,6 @@ public class Salary {
 
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
-	}
-
-	public Salary() {
-		super();
 	}
 
 	@Override
@@ -100,6 +106,5 @@ public class Salary {
 			return false;
 		return true;
 	}
-	
-	
+
 }
