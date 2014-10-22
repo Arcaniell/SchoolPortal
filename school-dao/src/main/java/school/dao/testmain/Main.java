@@ -2,10 +2,8 @@ package school.dao.testmain;
 
 import java.util.Date;
 
-import org.hibernate.Session;
-
-import school.dao.session.implementation.HibernateSessionFactory;
-import school.dao.session.implementation.UserDaoImpl;
+import school.dao.sessionfactory.implementation.HibernateSessionFactory;
+import school.dao.sessionfactory.implementation.UserDaoImpl;
 import school.model.User;
 
 public class Main {
@@ -22,6 +20,7 @@ public class Main {
 		UserDaoImpl userDaoImpl = new UserDaoImpl();
 		userDaoImpl.save(user);
 		System.out.println(userDaoImpl.findById(1L).getLastName());
+		HibernateSessionFactory.shutdown();
 	}
 
 }

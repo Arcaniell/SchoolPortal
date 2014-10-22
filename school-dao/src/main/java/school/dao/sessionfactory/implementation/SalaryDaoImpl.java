@@ -1,4 +1,4 @@
-package school.dao.session.implementation;
+package school.dao.sessionfactory.implementation;
 
 
 import java.util.Date;

@@ -1,4 +1,4 @@
-package school.dao.session.implementation;
+package school.dao.sessionfactory.implementation;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -15,6 +15,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import school.dao.sessionfactory.implementation.HibernateSessionFactory;
+import school.dao.sessionfactory.implementation.MessageDaoImpl;
 import school.model.Message;
 import school.model.User;
 
@@ -38,7 +40,6 @@ public class MessageDaoImplTest extends DBUnitConfig{
 	
 	@Before
 	public void setUp() throws Exception {
-		super.setUp();
 		User receiver = new User();
 		receiver.setId(1L);
 		User sender = new User();
@@ -53,7 +54,7 @@ public class MessageDaoImplTest extends DBUnitConfig{
 		messageDaoImpl = new MessageDaoImpl();
 		Session session = HibernateSessionFactory.getSessionFactory().openSession();
 		IDataSet messageDataSet = getDataSet();
-		DatabaseOperation.CLEAN_INSERT.execute(tester.getConnection(), messageDataSet);
+		DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester().getConnection(), messageDataSet);
 		session.close();
 		
 	}
@@ -62,7 +63,7 @@ public class MessageDaoImplTest extends DBUnitConfig{
 	public void tearDown() throws Exception {
 		Session session = HibernateSessionFactory.getSessionFactory().openSession();
 		IDataSet messageDataSet = getDataSet();
-		DatabaseOperation.DELETE_ALL.execute(tester.getConnection(), messageDataSet);
+		DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester().getConnection(), messageDataSet);
 		session.close();
 	}
 	

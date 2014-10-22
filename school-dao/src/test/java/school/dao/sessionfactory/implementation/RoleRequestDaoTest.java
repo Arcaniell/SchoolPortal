@@ -1,4 +1,4 @@
-package school.dao.session.implementation;
+package school.dao.sessionfactory.implementation;
 
 import java.util.Date;
 import java.util.List;
@@ -14,6 +14,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import school.dao.sessionfactory.implementation.HibernateSessionFactory;
+import school.dao.sessionfactory.implementation.RoleRequestDaoImpl;
 import school.model.Role;
 import school.model.RoleRequest;
 import school.model.User;
@@ -36,7 +38,6 @@ public class RoleRequestDaoTest extends DBUnitConfig{
 	
 	@Before
 	public void setUp() throws Exception {
-		super.setUp();
 		User user = new User();
 		user.setId(1L);
 		user.setEmail("testemail1@gmail.com");
@@ -56,7 +57,7 @@ public class RoleRequestDaoTest extends DBUnitConfig{
 		roleRequestDaoImpl = new RoleRequestDaoImpl();
 		Session session = HibernateSessionFactory.getSessionFactory().openSession();
 		IDataSet rolerequestDataSet = getDataSet();
-		DatabaseOperation.CLEAN_INSERT.execute(tester.getConnection(), rolerequestDataSet);
+		DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester().getConnection(), rolerequestDataSet);
 		session.close();
 		  
 	}
@@ -64,7 +65,7 @@ public class RoleRequestDaoTest extends DBUnitConfig{
 	public void tearDown() throws Exception {
 		Session session = HibernateSessionFactory.getSessionFactory().openSession();
 		IDataSet rolerequestDataSet = getDataSet();
-		DatabaseOperation.DELETE_ALL.execute(tester.getConnection(), rolerequestDataSet);
+		DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester().getConnection(), rolerequestDataSet);
 		session.close();
 	}
 

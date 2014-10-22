@@ -1,4 +1,4 @@
-package school.dao.session.implementation;
+package school.dao.sessionfactory.implementation;
 
 import java.util.Date;
 import java.util.List;
@@ -14,6 +14,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import school.dao.sessionfactory.implementation.HibernateSessionFactory;
+import school.dao.sessionfactory.implementation.UserDaoImpl;
 import school.model.User;
 
 public class UserDaoImplTest extends DBUnitConfig{
@@ -34,7 +36,6 @@ public class UserDaoImplTest extends DBUnitConfig{
 	
 	@Before
 	public void setUp() throws Exception {
-		super.setUp();
 		user = new User();
 		user.setId(1L);
 		user.setEmail("testemail1@gmail.com");
@@ -46,7 +47,7 @@ public class UserDaoImplTest extends DBUnitConfig{
 		userDaoImpl = new UserDaoImpl();
 		Session session = HibernateSessionFactory.getSessionFactory().openSession();
 		IDataSet userDataSet = getDataSet();
-		DatabaseOperation.CLEAN_INSERT.execute(tester.getConnection(), userDataSet);
+		DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester().getConnection(), userDataSet);
 		session.close();
 		  
 	}
@@ -54,7 +55,7 @@ public class UserDaoImplTest extends DBUnitConfig{
 	public void tearDown() throws Exception {
 		Session session = HibernateSessionFactory.getSessionFactory().openSession();
 		IDataSet userDataSet = getDataSet();
-		DatabaseOperation.DELETE_ALL.execute(tester.getConnection(), userDataSet);
+		DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester().getConnection(), userDataSet);
 		session.close();
 	}
 	

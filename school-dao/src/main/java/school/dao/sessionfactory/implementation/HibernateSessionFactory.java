@@ -1,4 +1,4 @@
-package school.dao.session.implementation;
+package school.dao.sessionfactory.implementation;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -27,6 +27,8 @@ public static SessionFactory getSessionFactory() {
 }
 
 public static void shutdown() {
+	if((getSessionFactory()!=null && (!getSessionFactory().isClosed()))){
     getSessionFactory().close();
+	}
 }
 }
