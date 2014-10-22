@@ -1,7 +1,6 @@
 package school.dao.sessionfactory.implementation;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.dbunit.dataset.IDataSet;
@@ -15,8 +14,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import school.dao.sessionfactory.implementation.HibernateSessionFactory;
-import school.dao.sessionfactory.implementation.MessageDaoImpl;
 import school.model.Message;
 import school.model.User;
 
@@ -92,7 +89,7 @@ public class MessageDaoImplTest extends DBUnitConfig{
 		newMessage.setReceiverId(newReceiver);
 		newMessage.setSenderId(newSender);
 		messageDaoImpl.save(newMessage);
-		Set<Message> users = new HashSet<Message>(messageDaoImpl.findAll());
+		Set<Message> users = messageDaoImpl.findAll();
 		Assert.assertTrue(users.size() == 11);
 	}
 
@@ -113,7 +110,7 @@ public class MessageDaoImplTest extends DBUnitConfig{
 
 	@Test
 	public void testFindAll() {
-		Set<Message> users = new HashSet<Message>(messageDaoImpl.findAll());
+		Set<Message> users = messageDaoImpl.findAll();
 		Assert.assertTrue(users.size() == 10);
 	}
 	

@@ -1,7 +1,7 @@
 package school.dao.sessionfactory.implementation;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -80,13 +80,13 @@ public class BaseDaoImpl <E> implements BaseDao<E>{
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<E> findAll() {
+	public Set<E> findAll() {
 		Session session = null;
-		List<E> entities = new ArrayList<E>();
+		Set<E> entities = new HashSet<E>();
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession(); 
 			Transaction transaction = session.beginTransaction();
-			entities = session.createCriteria(entityClass).list();
+			entities = new HashSet<E>(session.createCriteria(entityClass).list());
 			transaction.commit();
 		} finally {
 			if ((session != null) && (session.isOpen())) {

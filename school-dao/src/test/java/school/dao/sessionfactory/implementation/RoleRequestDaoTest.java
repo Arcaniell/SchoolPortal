@@ -1,7 +1,7 @@
 package school.dao.sessionfactory.implementation;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
@@ -14,8 +14,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import school.dao.sessionfactory.implementation.HibernateSessionFactory;
-import school.dao.sessionfactory.implementation.RoleRequestDaoImpl;
 import school.model.Role;
 import school.model.RoleRequest;
 import school.model.User;
@@ -92,8 +90,8 @@ public class RoleRequestDaoTest extends DBUnitConfig{
 		newRoleRequest.setRole(newRole);
 		newRoleRequest.setRequestDate(new Date());
 		roleRequestDaoImpl.save(newRoleRequest);
-		List<RoleRequest> roleRequests = roleRequestDaoImpl.findAll();
-		Assert.assertTrue(roleRequests.size()>=4);
+		Set<RoleRequest> roleRequests = roleRequestDaoImpl.findAll();
+		Assert.assertTrue(roleRequests.size()==4);
 	}
 
 	@Test
@@ -115,8 +113,8 @@ public class RoleRequestDaoTest extends DBUnitConfig{
 
 	@Test
 	public void testFindAll() {
-		List<RoleRequest> roleRequests = roleRequestDaoImpl.findAll();
-		Assert.assertTrue(roleRequests.size()>=3);
+		Set<RoleRequest> roleRequests = roleRequestDaoImpl.findAll();
+		Assert.assertTrue(roleRequests.size()==3);
 	}
 
 }

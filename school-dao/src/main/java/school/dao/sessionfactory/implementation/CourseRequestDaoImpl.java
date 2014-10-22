@@ -17,6 +17,7 @@ public class CourseRequestDaoImpl extends BaseDaoImpl<CourseRequest> implements
 		super(CourseRequest.class);
 	}
 
+	@SuppressWarnings("unchecked")
 	public Set<CourseRequest> findByInterval(Date from, Date till) {
 		Session session = null;
 		List<CourseRequest> entities = null;
@@ -37,6 +38,7 @@ public class CourseRequestDaoImpl extends BaseDaoImpl<CourseRequest> implements
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public Set<CourseRequest> findArchived() {
 		Session session = null;
 		List<CourseRequest> entities = null;
@@ -55,6 +57,7 @@ public class CourseRequestDaoImpl extends BaseDaoImpl<CourseRequest> implements
 		return new HashSet<CourseRequest>(entities);
 	}
 
+	@SuppressWarnings("unchecked")
 	public Set<CourseRequest> findActive() {
 		Session session = null;
 		List<CourseRequest> entities = null;
@@ -74,6 +77,7 @@ public class CourseRequestDaoImpl extends BaseDaoImpl<CourseRequest> implements
 		return new HashSet<CourseRequest>(entities);
 	}
 
+	@SuppressWarnings("unchecked")
 	public Set<CourseRequest> findByDate(Date date) {
 		Session session = null;
 		List<CourseRequest> entities = null;

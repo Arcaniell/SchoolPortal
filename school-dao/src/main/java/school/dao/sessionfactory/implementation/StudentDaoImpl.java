@@ -15,6 +15,7 @@ public class StudentDaoImpl extends BaseDaoImpl<Student> implements StudentDao {
 		super(Student.class);
 	}
 
+	@SuppressWarnings("unchecked")
 	public Set<Student> findArchived() {
 		Session session = null;
 		List<Student> entities = null;
@@ -33,6 +34,7 @@ public class StudentDaoImpl extends BaseDaoImpl<Student> implements StudentDao {
 		return new HashSet<Student>(entities);
 	}
 
+	@SuppressWarnings("unchecked")
 	public Set<Student> findActive() {
 		Session session = null;
 		List<Student> entities = null;

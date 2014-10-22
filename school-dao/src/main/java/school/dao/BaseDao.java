@@ -1,6 +1,6 @@
 package school.dao;
 
-import java.util.List;
+import java.util.Set;
 
 
 public interface BaseDao <E>{
@@ -8,7 +8,7 @@ public interface BaseDao <E>{
 	void save(E entity);
 	void remove(E entity);
 	E update(E entity);
-	List<E> findAll();
+	Set<E> findAll();
 	
 	
 }
