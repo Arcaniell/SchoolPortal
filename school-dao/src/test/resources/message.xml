@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+    <USER id="1" email="testemail1@gmail.com" firstName="Vladyslav" lastName="Maksymenko" 
+	password="password" registration="2014-10-20 23:06:10" sex="0"/>
+	<USER id="2" email="testemail2@gmail.com" firstName="Roman" lastName="Mudry" 
+	password="password" registration="2014-10-20 23:08:10" sex="0"/>
+	<USER id="3" email="testemail3@gmail.com" firstName="Ihor" lastName="Uksta" 
+	password="password" registration="2014-10-20 23:09:10" sex="0"/>
+	<USER id="4" email="testemail4@gmail.com" firstName="Viktor" lastName="Fedinchuk" 
+	password="password" registration="2014-10-20 23:09:10" sex="0"/>
+	<USER id="5" email="testemail5@gmail.com" firstName="Roman" lastName="Zhereb" 
+	password="password" registration="2014-10-20 23:09:10" sex="0"/>
+	
+	<MESSAGE id="1" text="Text1" receiverId="1" senderId="2" date="2014-10-20 23:06:10" isRead="0"/>
+	<MESSAGE id="2" text="Text2" receiverId="3" senderId="4" date="2014-10-20 23:06:10" isRead="1"/>
+	<MESSAGE id="3" text="Text3" receiverId="5" senderId="1" date="2014-10-20 23:06:10" isRead="0"/>
+	<MESSAGE id="4" text="Text4" receiverId="1" senderId="4" date="2014-10-20 23:06:10" isRead="1"/>
+	<MESSAGE id="5" text="Text5" receiverId="2" senderId="3" date="2014-10-20 23:06:10" isRead="0"/>
+	<MESSAGE id="6" text="Text6" receiverId="2" senderId="1" date="2014-10-20 23:06:10" isRead="1"/>
+	<MESSAGE id="7" text="Text7" receiverId="4" senderId="3" date="2014-10-20 23:06:10" isRead="0"/>
+	<MESSAGE id="8" text="Text8" receiverId="1" senderId="5" date="2014-10-20 23:06:10" isRead="1"/>
+	<MESSAGE id="9" text="Text9" receiverId="4" senderId="1" date="2014-10-20 23:06:10" isRead="0"/>
+	<MESSAGE id="10" text="Text10" receiverId="3" senderId="2" date="2014-10-20 23:06:10" isRead="0"/>
+	
+</dataset>  

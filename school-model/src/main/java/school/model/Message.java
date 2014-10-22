@@ -10,9 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "MESSAGE")
+//@NamedQueries ({@NamedQuery (name = "FIND_BY_RECEIVER", query = "from Message as m where m.receiver = :receiver"),  
+//@NamedQuery (name = "FIND_BY_SENDER", query = "from Message as m where m.sender = :sender")})
 public class Message {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,11 +23,11 @@ public class Message {
 
 	@ManyToOne
 	@JoinColumn(nullable = false, name = "senderId")
-	private User sender;
+	private User senderId;
 
 	@ManyToOne
 	@JoinColumn(nullable = false, name = "receiverId")
-	private User receiver;
+	private User receiverId;
 
 	@Lob
 	@Column(nullable = false)
@@ -32,74 +35,71 @@ public class Message {
 
 	@Column(nullable = false)
 	private Date date;
+	
+	@Column(nullable = false)
+	private boolean isRead;
 
-	@OneToOne
+/*	@OneToOne
 	@JoinColumn(name = "messageId")
-	private Message messageId;
-
+	private Message messageId;*/
+	
+	public static final String SELECT_ALL_MESSAGES_BY_RECEIVERID = "from Message as m where m.receiverId = :receiverId";
+	public static final String SELECT_ALL_MESSAGES_BY_SENDERID = "from Message as m where m.senderId = :senderId";
+	public static final String SELECT_DISTINCT_SENDERS_FOR_RECEIVER = "select distinct senderId from Message as m where m.receiverId = :receiverId";
+	public static final String SELECT_ALL_MESSAGES_WITH_USERS = "from Message as m where m.receiverId in (:users) and m.senderId in (:users)";
+	public static final String GET_COUNT_OF_LETTERS_WITH_USERS = "SELECT COUNT(m) FROM Message m where m.receiverId in (:users) and m.sender in (:users)";
+	public static final String GET_COUNT_OF_NEW_LETTERS_WITH_USERS = "SELECT COUNT(m) FROM Message m where m.receiverId in (:users) and m.sender in (:users) and m.isRead = true";
+	
 	public long getId() {
 		return id;
 	}
-
 	public void setId(long id) {
 		this.id = id;
 	}
-
-	public User getSender() {
-		return sender;
+	public User getSenderId() {
+		return senderId;
 	}
-
-	public void setSender(User sender) {
-		this.sender = sender;
+	public void setSenderId(User senderId) {
+		this.senderId = senderId;
 	}
-
-	public User getReceiver() {
-		return receiver;
+	public User getReceiverId() {
+		return receiverId;
 	}
-
-	public void setReceiver(User receiver) {
-		this.receiver = receiver;
+	public void setReceiverId(User receiverId) {
+		this.receiverId = receiverId;
 	}
-
 	public String getText() {
 		return text;
 	}
-
 	public void setText(String text) {
 		this.text = text;
 	}
-
 	public Date getDate() {
 		return date;
 	}
-
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
-	public Message getMessageId() {
-		return messageId;
+	public boolean isRead() {
+		return isRead;
 	}
-
-	public void setMessageId(Message messageId) {
-		this.messageId = messageId;
+	public void setRead(boolean isRead) {
+		this.isRead = isRead;
 	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + (isRead ? 1231 : 1237);
 		result = prime * result
-				+ ((messageId == null) ? 0 : messageId.hashCode());
+				+ ((receiverId == null) ? 0 : receiverId.hashCode());
 		result = prime * result
-				+ ((receiver == null) ? 0 : receiver.hashCode());
-		result = prime * result + ((sender == null) ? 0 : sender.hashCode());
+				+ ((senderId == null) ? 0 : senderId.hashCode());
 		result = prime * result + ((text == null) ? 0 : text.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -116,20 +116,17 @@ public class Message {
 			return false;
 		if (id != other.id)
 			return false;
-		if (messageId == null) {
-			if (other.messageId != null)
-				return false;
-		} else if (!messageId.equals(other.messageId))
+		if (isRead != other.isRead)
 			return false;
-		if (receiver == null) {
-			if (other.receiver != null)
+		if (receiverId == null) {
+			if (other.receiverId != null)
 				return false;
-		} else if (!receiver.equals(other.receiver))
+		} else if (!receiverId.equals(other.receiverId))
 			return false;
-		if (sender == null) {
-			if (other.sender != null)
+		if (senderId == null) {
+			if (other.senderId != null)
 				return false;
-		} else if (!sender.equals(other.sender))
+		} else if (!senderId.equals(other.senderId))
 			return false;
 		if (text == null) {
 			if (other.text != null)
@@ -138,6 +135,6 @@ public class Message {
 			return false;
 		return true;
 	}
-
+	
 	
 }
