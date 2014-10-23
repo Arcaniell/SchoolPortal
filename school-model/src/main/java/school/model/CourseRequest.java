@@ -5,123 +5,124 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-@Table(name="COURSE_REQUEST")
+@Table(name = "COURSE_REQUEST")
 public class CourseRequest {
-	
-	public static final String FIND_BY_DATE_QUERY = "SELECT u FROM CourseRequest u WHERE u.date = :date";
-	public static final String FIND_ALL_BY_STATUS_QUERY = "SELECT u FROM CourseRequest u WHERE u.isActive = :active";
-	public static final String FIND_BY_INTERVAL_QUERY = "SELECT u FROM CourseRequest u WHERE u.date BETWEEN :from AND :till";
+
+    public static final String FIND_BY_DATE_QUERY = "SELECT u FROM CourseRequest u WHERE u.date = :date";
+    public static final String FIND_ALL_BY_STATUS_QUERY = "SELECT u FROM CourseRequest u WHERE u.isActive = :active";
+    public static final String FIND_BY_INTERVAL_QUERY = "SELECT u FROM CourseRequest u WHERE u.date BETWEEN :from AND :till";
     public static final String FIND_BY_STUDENT_ID_QUERY = "SELECT u FROM CourseRequest u WHERE u.studentId = :id";
-    public static final String FIND_BY_SUBJECT_ID_QUERY = "SELECT u FROM CourseRequest u WHERE u.subjectId = :id";
+    public static final String FIND_BY_SUBJECT_ID_QUERY = "SELECT u FROM CourseRequest u WHERE u.courseId = :id";
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(unique = true)
-	private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true)
+    private long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "studentId", nullable = false)
-	private Student student;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "studentId", nullable = false)
+    private Student student;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "subjectId", nullable = false)
-	private Course subject;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "courseId", nullable = false)
+    private Course course;
 
-	private Date date;
+    private Date date;
 
-	private boolean isActive;
+    private boolean isActive;
 
-	public String toString() {
-		return "Id = " + id;
+    public String toString() {
+        return "Id = " + id;
 
-	}
+    }
 
-	public CourseRequest() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    public CourseRequest() {
+        super();
+    }
 
-	public long getId() {
-		return id;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public Student getStudent() {
-		return student;
-	}
+    public Student getStudent() {
+        return student;
+    }
 
-	public void setStudent(Student student) {
-		this.student = student;
-	}
+    public void setStudent(Student student) {
+        this.student = student;
+    }
 
-	public Course getSubject() {
-		return subject;
-	}
+    public Course getCourse() {
+        return course;
+    }
 
-	public void setSubject(Course subject) {
-		this.subject = subject;
-	}
+    public void setCourse(Course course) {
+        this.course = course;
+    }
 
-	public Date getDate() {
-		return date;
-	}
+    public Date getDate() {
+        return date;
+    }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
-	public boolean isActive() {
-		return isActive;
-	}
+    public boolean isActive() {
+        return isActive;
+    }
 
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + (isActive ? 1231 : 1237);
-		result = prime * result + ((student == null) ? 0 : student.hashCode());
-		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((course == null) ? 0 : course.hashCode());
+        result = prime * result + ((date == null) ? 0 : date.hashCode());
+        result = prime * result + (int) (id ^ (id >>> 32));
+        result = prime * result + (isActive ? 1231 : 1237);
+        result = prime * result + ((student == null) ? 0 : student.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CourseRequest other = (CourseRequest) obj;
-		if (date == null) {
-			if (other.date != null)
-				return false;
-		} else if (!date.equals(other.date))
-			return false;
-		if (id != other.id)
-			return false;
-		if (isActive != other.isActive)
-			return false;
-		if (student == null) {
-			if (other.student != null)
-				return false;
-		} else if (!student.equals(other.student))
-			return false;
-		if (subject == null) {
-			if (other.subject != null)
-				return false;
-		} else if (!subject.equals(other.subject))
-			return false;
-		return true;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        CourseRequest other = (CourseRequest) obj;
+        if (course == null) {
+            if (other.course != null)
+                return false;
+        } else if (!course.equals(other.course))
+            return false;
+        if (date == null) {
+            if (other.date != null)
+                return false;
+        } else if (!date.equals(other.date))
+            return false;
+        if (id != other.id)
+            return false;
+        if (isActive != other.isActive)
+            return false;
+        if (student == null) {
+            if (other.student != null)
+                return false;
+        } else if (!student.equals(other.student))
+            return false;
+        return true;
+    }
+
+   
 
 }

@@ -39,14 +39,14 @@ public class Student {
     private Group group;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "StudentAdditionalGroupRef", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "groupId"))
+    @JoinTable(name = "STUDENT_ADDITION_GROUP_REF", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "groupId"))
     private Set<Group> additionGroups;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
     private List<Journal> journal;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "StudentParentRef", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "parentId"))
+    @JoinTable(name = "STUDENT_PARENT_REF", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "parentId"))
     private Set<Parent> parents;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "student")

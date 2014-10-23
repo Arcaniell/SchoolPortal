@@ -16,7 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Groups")
+@Table(name = "GROUPS")
 public class Group {
 
 	public static final String FIND_BY_ADDITIONAL_QUERY = "SELECT g FROM Groups g WHERE g.additional = :additional";

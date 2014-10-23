@@ -9,8 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="JOURNAL")
 public class Journal {
 
 	public static final String FIND_BY_DATE_QUERY = "SELECT j FROM Journal j WHERE j.date = :date";

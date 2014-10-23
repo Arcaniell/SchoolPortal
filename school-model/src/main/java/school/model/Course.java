@@ -13,15 +13,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="COURSE")
 public class Course {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	@Column(nullable = false, length = 45)
-	private String subjectName;
+	private String courseName;
 
 	@Column(nullable = false)
 	private int groupNumber;
@@ -32,14 +34,14 @@ public class Course {
 
 	private boolean additional;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "subject")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "course")
 	private List<CourseRequest> courseRequest;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "subject")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "course")
 	private List<Schedule> schedule;
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "CourseTeacherRef", joinColumns = @JoinColumn(name = "subjectId"), inverseJoinColumns = @JoinColumn(name = "teacherId"))
+	@JoinTable(name = "COURSE_TEACHER_REF", joinColumns = @JoinColumn(name = "courseId"), inverseJoinColumns = @JoinColumn(name = "teacherId"))
 	private Set<Teacher> teacher;
 
 	public long getId() {
@@ -51,11 +53,11 @@ public class Course {
 	}
 
 	public String getSubjectName() {
-		return subjectName;
+		return courseName;
 	}
 
 	public void setSubjectName(String subjectName) {
-		this.subjectName = subjectName;
+		this.courseName = subjectName;
 	}
 
 	public int getGroupNumber() {
@@ -128,7 +130,7 @@ public class Course {
 		result = prime * result
 				+ ((schedule == null) ? 0 : schedule.hashCode());
 		result = prime * result
-				+ ((subjectName == null) ? 0 : subjectName.hashCode());
+				+ ((courseName == null) ? 0 : courseName.hashCode());
 		result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
 		return result;
 	}
@@ -162,10 +164,10 @@ public class Course {
 				return false;
 		} else if (!schedule.equals(other.schedule))
 			return false;
-		if (subjectName == null) {
-			if (other.subjectName != null)
+		if (courseName == null) {
+			if (other.courseName != null)
 				return false;
-		} else if (!subjectName.equals(other.subjectName))
+		} else if (!courseName.equals(other.courseName))
 			return false;
 		if (teacher == null) {
 			if (other.teacher != null)
