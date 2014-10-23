@@ -3,10 +3,8 @@ package school.dao.sessionfactory.implementation;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Projections;
 
 import school.dao.BaseDao;
 
@@ -88,8 +86,7 @@ public class BaseDaoImpl <E> implements BaseDao<E>{
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession(); 
 			Transaction transaction = session.beginTransaction();
-			Criteria cr = session.createCriteria(entityClass).setProjection(Projections.distinct(Projections.property("id")));
-			entities = cr.list();
+			entities = session.createQuery("from "+entityClass.getSimpleName()).list();
 			transaction.commit();
 		} finally {
 			if ((session != null) && (session.isOpen())) {
