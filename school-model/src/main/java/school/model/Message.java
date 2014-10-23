@@ -43,12 +43,12 @@ public class Message {
 	@JoinColumn(name = "messageId")
 	private Message messageId;*/
 	
-	public static final String SELECT_ALL_MESSAGES_BY_RECEIVERID = "from Message as m where m.receiverId = :receiverId";
-	public static final String SELECT_ALL_MESSAGES_BY_SENDERID = "from Message as m where m.senderId = :senderId";
-	public static final String SELECT_DISTINCT_SENDERS_FOR_RECEIVER = "select distinct senderId from Message as m where m.receiverId = :receiverId";
-	public static final String SELECT_ALL_MESSAGES_WITH_USERS = "from Message as m where m.receiverId in (:users) and m.senderId in (:users)";
-	public static final String GET_COUNT_OF_LETTERS_WITH_USERS = "SELECT COUNT(m) FROM Message m where m.receiverId in (:users) and m.sender in (:users)";
-	public static final String GET_COUNT_OF_NEW_LETTERS_WITH_USERS = "SELECT COUNT(m) FROM Message m where m.receiverId in (:users) and m.sender in (:users) and m.isRead = true";
+	public static final String SELECT_ALL_MESSAGES_BY_RECEIVERID_QUERY = "from Message as m where m.receiverId = :receiverId";
+	public static final String SELECT_ALL_MESSAGES_BY_SENDERID_QUERY = "from Message as m where m.senderId = :senderId";
+	public static final String SELECT_DISTINCT_SENDERS_FOR_RECEIVER_QUERY = "select distinct senderId from Message as m where m.receiverId = :receiverId";
+	public static final String SELECT_ALL_MESSAGES_WITH_USERS_QUERY = "from Message as m where m.receiverId in (:users) and m.senderId in (:users)";
+	public static final String GET_COUNT_OF_LETTERS_WITH_USERS_QUERY = "SELECT COUNT(m) FROM Message m where m.receiverId in (:users) and m.senderId in (:users)";
+	public static final String GET_COUNT_OF_NEW_LETTERS_WITH_USERS_QUERY = "SELECT COUNT(m) FROM Message m where m.receiverId in (:users) and m.senderId in (:users) and m.isRead = true";
 	
 	public long getId() {
 		return id;

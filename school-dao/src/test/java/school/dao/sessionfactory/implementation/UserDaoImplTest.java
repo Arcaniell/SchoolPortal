@@ -1,7 +1,7 @@
 package school.dao.sessionfactory.implementation;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
@@ -85,7 +85,7 @@ public class UserDaoImplTest extends DBUnitConfig{
 		newUser.setRegistration(new Date());
 		newUser.setSex(User.SexType.FEMALE.getSex());
 		userDaoImpl.save(newUser);
-		Set<User> users = userDaoImpl.findAll();
+		List<User> users = userDaoImpl.findAll();
 		Assert.assertTrue(users.size()==6);
 	}
 
@@ -106,7 +106,7 @@ public class UserDaoImplTest extends DBUnitConfig{
 
 	@Test
 	public void testFindAll() {
-		Set<User> users = userDaoImpl.findAll();
+		List<User> users = userDaoImpl.findAll();
 		Assert.assertTrue(users.size()==5);
 	}
 	@Test

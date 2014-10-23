@@ -23,7 +23,7 @@ public class MessageDaoImpl extends BaseDaoImpl<Message> implements MessageDao {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
 			Transaction transaction = session.beginTransaction();	
-			Query query = session.createQuery(Message.SELECT_ALL_MESSAGES_BY_RECEIVERID);
+			Query query = session.createQuery(Message.SELECT_ALL_MESSAGES_BY_RECEIVERID_QUERY);
 			query.setParameter("receiverId", receiverId);
 	        list = query.list();
 			transaction.commit();
@@ -42,8 +42,8 @@ public class MessageDaoImpl extends BaseDaoImpl<Message> implements MessageDao {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
 			Transaction transaction = session.beginTransaction();	
-			Query query = session.createQuery(Message.SELECT_ALL_MESSAGES_WITH_USERS);
-			query.setParameter("users", users);
+			Query query = session.createQuery(Message.SELECT_ALL_MESSAGES_WITH_USERS_QUERY);
+			query.setParameterList("users", users);
 	        list = query.list();
 			transaction.commit();
 		} finally {
@@ -61,7 +61,7 @@ public class MessageDaoImpl extends BaseDaoImpl<Message> implements MessageDao {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
 			Transaction transaction = session.beginTransaction();	
-			Query query = session.createQuery(Message.SELECT_ALL_MESSAGES_BY_SENDERID);
+			Query query = session.createQuery(Message.SELECT_ALL_MESSAGES_BY_SENDERID_QUERY);
 			query.setParameter("senderId", senderId);
 	        list = query.list();
 			transaction.commit();
@@ -74,13 +74,13 @@ public class MessageDaoImpl extends BaseDaoImpl<Message> implements MessageDao {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<User> selectDistincSendersIdForReceiverId(User receiverId) {
+	public List<User> selectDistinctSendersForReceiver(User receiverId) {
 		Session session = null;
 		List<User> list = null;
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
 			Transaction transaction = session.beginTransaction();	
-			Query query = session.createQuery(Message.SELECT_DISTINCT_SENDERS_FOR_RECEIVER);
+			Query query = session.createQuery(Message.SELECT_DISTINCT_SENDERS_FOR_RECEIVER_QUERY);
 			query.setParameter("receiverId", receiverId);
 	        list = query.list();
 			transaction.commit();
@@ -92,15 +92,15 @@ public class MessageDaoImpl extends BaseDaoImpl<Message> implements MessageDao {
 		return list;
 	}
 
-	public long countOfLettersWithUsers(List<User> users) {
+	public int countOfLettersWithUsers(List<User> users) {
 		Session session = null;
-		Long letters = null;
+		Integer letters = null;
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
 			Transaction transaction = session.beginTransaction();	
-			Query query = session.createQuery(Message.GET_COUNT_OF_LETTERS_WITH_USERS);
-			query.setParameter("users", users);
-	        letters = (Long) query.uniqueResult();
+			Query query = session.createQuery(Message.GET_COUNT_OF_LETTERS_WITH_USERS_QUERY);
+			query.setParameterList("users", users);
+	        letters = Integer.valueOf(query.uniqueResult().toString());
 			transaction.commit();
 		} finally {
 			if ((session != null) && (session.isOpen())) {
@@ -110,15 +110,15 @@ public class MessageDaoImpl extends BaseDaoImpl<Message> implements MessageDao {
 		return letters;
 	}
 
-	public long countOfNewMessagesBetweenUsers(List<User> users) {
+	public int countOfNewMessagesBetweenUsers(List<User> users) {
 		Session session = null;
-		Long letters = null;
+		Integer letters = null;
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
 			Transaction transaction = session.beginTransaction();	
-			Query query = session.createQuery(Message.GET_COUNT_OF_NEW_LETTERS_WITH_USERS);
-			query.setParameter("users", users);
-	        letters = (Long) query.uniqueResult();
+			Query query = session.createQuery(Message.GET_COUNT_OF_NEW_LETTERS_WITH_USERS_QUERY);
+			query.setParameterList("users", users);
+	        letters = Integer.valueOf(query.uniqueResult().toString());
 			transaction.commit();
 		} finally {
 			if ((session != null) && (session.isOpen())) {

@@ -9,8 +9,8 @@ public interface MessageDao extends BaseDao<Message> {
 
 	List<Message> findAllMessagesByReceiver(User receiverId);
 	List<Message> findAllMessagesBySender(User senderId);
-	List<User> selectDistincSendersIdForReceiverId(User receiverId);
+	List<User> selectDistinctSendersForReceiver(User receiverId);
 	List<Message> findAllMessagesWithUsers(List<User> users);
-	long countOfLettersWithUsers(List<User> users);
-	long countOfNewMessagesBetweenUsers(List<User> users);
+	int countOfLettersWithUsers(List<User> users);
+	int countOfNewMessagesBetweenUsers(List<User> users);
 }

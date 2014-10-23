@@ -1,7 +1,8 @@
 package school.dao.sessionfactory.implementation;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
@@ -23,6 +24,8 @@ public class MessageDaoImplTest extends DBUnitConfig{
 		super("MessageDaoImplTest");
 	}
 
+	private User receiver;
+	private User sender;
 	private Message message;
 	private MessageDaoImpl messageDaoImpl;
 	
@@ -37,9 +40,10 @@ public class MessageDaoImplTest extends DBUnitConfig{
 	
 	@Before
 	public void setUp() throws Exception {
-		User receiver = new User();
+		super.setUp();
+		receiver = new User();
 		receiver.setId(1L);
-		User sender = new User();
+		sender = new User();
 		sender.setId(2L);
 		message = new Message();
 		message.setId(1L);
@@ -70,26 +74,80 @@ public class MessageDaoImplTest extends DBUnitConfig{
 	}
 	
 	@Test
+	public void testfindAllMessagesByReceiver() {
+		List<Message> set = messageDaoImpl.findAllMessagesByReceiver(receiver);
+		int actual = set.size();
+		int expected = 3;
+		Assert.assertTrue(actual == expected);
+	}
+	
+	@Test
+	public void testfindAllMessagesBySender() {
+		List<Message> set = messageDaoImpl.findAllMessagesBySender(sender);
+		int actual = set.size();
+		int expected = 2;
+		Assert.assertTrue(actual == expected);
+	}
+	
+	@Test
+	public void testFindAllMessagesWithUsers() {
+		List<User> twoUsers = new ArrayList<User>();
+		twoUsers.add(receiver);
+		twoUsers.add(sender);
+		List<Message> set = messageDaoImpl.findAllMessagesWithUsers(twoUsers);
+		int actual = set.size();
+		int expected = 2;
+		Assert.assertTrue(actual == expected);
+	}
+	
+	@Test
+	public void testSelectDistinctSendersForReceiver() {
+		List<User> set = messageDaoImpl.selectDistinctSendersForReceiver(receiver);
+		int expected = 3;
+		int actual = set.size();
+		Assert.assertTrue(actual == expected);
+	}
+	
+	@Test
+	public void testCountOfLettersWithUsers() {
+		List<User> users = new ArrayList<User>();
+		message = messageDaoImpl.findById(7L);
+		receiver = message.getReceiverId();
+		sender = message.getSenderId();
+		users.add(receiver);
+		users.add(sender);
+		int countOfLetters = messageDaoImpl.countOfLettersWithUsers(users);
+		int actual = countOfLetters;
+		int expected = 2;
+		Assert.assertTrue(actual == expected);
+	}
+	
+	@Test
+	public void testCountOfNewMessagesBetweenUsers() {
+		List<User> users = new ArrayList<User>();
+		message = messageDaoImpl.findById(7L);
+		receiver = message.getReceiverId();
+		sender = message.getSenderId();
+		users.add(receiver);
+		users.add(sender);
+		int actual = messageDaoImpl.countOfNewMessagesBetweenUsers(users);
+		int expected = 1;
+		Assert.assertTrue(actual == expected);
+	}
+	
+	@Test
 	public void testFindById() {
 		Message newMessage = messageDaoImpl.findById(1L);
-		Assert.assertEquals(message.getId(), newMessage.getId());
+		long actual = message.getId();
+		long expected = newMessage.getId();
+		Assert.assertEquals(actual, expected);
 	}
 	
 	@Test
 	public void testSave() {
-		User newReceiver = new User();
-		newReceiver.setId(1L);
-		User newSender = new User();
-		newSender.setId(2L);
-		Message newMessage = new Message();
-		newMessage.setId(11L);
-		newMessage.setText("Text");
-		newMessage.setDate(new Date());
-		newMessage.setRead(true);
-		newMessage.setReceiverId(newReceiver);
-		newMessage.setSenderId(newSender);
-		messageDaoImpl.save(newMessage);
-		Set<Message> users = messageDaoImpl.findAll();
+		message.setId(11L);
+		messageDaoImpl.save(message);
+		List<Message> users = messageDaoImpl.findAll();
 		Assert.assertTrue(users.size() == 11);
 	}
 
@@ -105,13 +163,17 @@ public class MessageDaoImplTest extends DBUnitConfig{
 		Assert.assertEquals(message.getText(), newMessage.getText());
 		newMessage.setText("NewText");
 		newMessage = messageDaoImpl.update(newMessage);
-		Assert.assertNotEquals(message.getText(), newMessage.getText());
+		String actual = message.getText();
+		String notExpected = newMessage.getText();
+		Assert.assertNotEquals(actual, notExpected);
 	}
 
 	@Test
 	public void testFindAll() {
-		Set<Message> users = messageDaoImpl.findAll();
-		Assert.assertTrue(users.size() == 10);
+		List<Message> users = messageDaoImpl.findAll();
+		int actual = users.size();
+		int expected = 10;
+		Assert.assertTrue(actual == expected);
 	}
 	
 }
