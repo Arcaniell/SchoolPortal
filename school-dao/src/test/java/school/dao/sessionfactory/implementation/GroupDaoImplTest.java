@@ -11,6 +11,7 @@ import javax.print.attribute.standard.DateTimeAtCompleted;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
+import org.hibernate.Session;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -41,6 +42,9 @@ public class GroupDaoImplTest extends DBUnitConfig {
 
 	@Before
 	public void setUp() throws Exception {
+	    Session session = HibernateSessionFactory.getSessionFactory()
+                .openSession();
+        session.close();
 		super.setUp();
 		groupDaoImpl = new GroupDaoImpl();
 		IDataSet messageDataSet = getDataSet();

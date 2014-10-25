@@ -1,15 +1,11 @@
 package school.dao;
 
-import java.util.Set;
+import java.util.List;
 
 import school.model.Student;
 
 public interface StudentDao extends BaseDao<Student> {
-    Set<Student> findActive();
-
-    Set<Student> findArchived();
-
-    Set<Student> findByGroupId(long id);
+    List<Student> findAllByStatus(boolean value);
 
     Student findByUserId(long id);
 

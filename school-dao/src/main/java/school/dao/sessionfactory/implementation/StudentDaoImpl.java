@@ -1,9 +1,8 @@
 package school.dao.sessionfactory.implementation;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -15,54 +14,25 @@ public class StudentDaoImpl extends BaseDaoImpl<Student> implements StudentDao {
         super(Student.class);
     }
 
-    @SuppressWarnings("unchecked")
-    public Set<Student> findActive() {
-        Session session = null;
-        List<Student> entities = null;
-        try {
-            session = HibernateSessionFactory.getSessionFactory().openSession();
-            Transaction transaction = session.beginTransaction();
-            entities = (List<Student>) session
-                    .createQuery(Student.FIND_ALL_BY_STATUS_QUERY)
-                    .setBoolean("active", true).list();
-            transaction.commit();
-        } finally {
-            if ((session != null) && (session.isOpen())) {
-                session.close();
-            }
-        }
-        return new HashSet<Student>(entities);
+    @Override
+    @Deprecated
+    public void save(Student entity) {
+        // empty method, we can't save student without user
+        // use update instead
+
     }
 
-    @SuppressWarnings("unchecked")
-    public Set<Student> findArchived() {
+    @Override
+    public Student findById(long id) {
         Session session = null;
-        List<Student> entities = null;
+        Student newEntity = null;
         try {
             session = HibernateSessionFactory.getSessionFactory().openSession();
             Transaction transaction = session.beginTransaction();
-            entities = (List<Student>) session
-                    .createQuery(Student.FIND_ALL_BY_STATUS_QUERY)
-                    .setBoolean("active", false).list();
+            newEntity = (Student) session.get(Student.class, id);
             transaction.commit();
-        } finally {
-            if ((session != null) && (session.isOpen())) {
-                session.close();
-            }
-        }
-        return new HashSet<Student>(entities);
-    }
-
-    @SuppressWarnings("unchecked")
-    public Set<Student> findByGroupId(long id) {
-        Session session = null;
-        Set<Student>newEntity = null;
-        try {
-            session = HibernateSessionFactory.getSessionFactory().openSession();
-            Transaction transaction = session.beginTransaction();
-            newEntity = (Set<Student>) session.createQuery(
-                    Student.FIND_BY_GROUP_ID_QUERY).setLong("id", id);
-            transaction.commit();
+            Hibernate.initialize(newEntity.getUser());
+            Hibernate.initialize(newEntity.getGroup());
         } finally {
             if ((session != null) && (session.isOpen())) {
                 session.close();
@@ -77,14 +47,44 @@ public class StudentDaoImpl extends BaseDaoImpl<Student> implements StudentDao {
         try {
             session = HibernateSessionFactory.getSessionFactory().openSession();
             Transaction transaction = session.beginTransaction();
-            newEntity = (Student) session.createQuery(
-                    Student.FIND_BY_USER_ID_QUERY).setLong("id", id);
+            newEntity = (Student) session
+                    .createQuery(Student.FIND_BY_USER_ID_QUERY)
+                    .setLong("id", id).uniqueResult();
             transaction.commit();
+            Hibernate.initialize(newEntity.getUser());
+            Hibernate.initialize(newEntity.getGroup());
+            if (newEntity.getGroup() != null) {
+                Hibernate.initialize(newEntity.getGroup().getSchedule());
+                Hibernate.initialize(newEntity.getGroup().getTeacher());
+            }
+            Hibernate.initialize(newEntity.getAdditionGroups());
+            Hibernate.initialize(newEntity.getCourseRequest());
+            Hibernate.initialize(newEntity.getJournal());
+            Hibernate.initialize(newEntity.getParents());
         } finally {
             if ((session != null) && (session.isOpen())) {
                 session.close();
             }
         }
         return newEntity;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Student> findAllByStatus(boolean value) {
+        Session session = null;
+        List<Student> entities = null;
+        try {
+            session = HibernateSessionFactory.getSessionFactory().openSession();
+            Transaction transaction = session.beginTransaction();
+            entities = (List<Student>) session
+                    .createQuery(Student.FIND_ALL_BY_STATUS_QUERY)
+                    .setBoolean("active", value).list();
+            transaction.commit();
+        } finally {
+            if ((session != null) && (session.isOpen())) {
+                session.close();
+            }
+        }
+        return entities;
     }
 }

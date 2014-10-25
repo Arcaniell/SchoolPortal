@@ -1,8 +1,10 @@
 package school.model;
 
+
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,36 +22,41 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "STUDENT")
 public class Student {
-    
+
     public static final String FIND_ALL_BY_STATUS_QUERY = "SELECT u FROM Student u WHERE u.isActive = :active";
-    public static final String FIND_BY_USER_ID_QUERY = "SELECT u FROM Student u WHERE u.userId = :id";
-    public static final String FIND_BY_GROUP_ID_QUERY = "SELECT u FROM Student u WHERE u.groupId = :id";
+    public static final String FIND_BY_USER_ID_QUERY = "SELECT u FROM Student u WHERE u.user.id = :id";
 
     @Id
     @Column(unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
+            CascadeType.MERGE })
     @JoinColumn(name = "userId", unique = true, nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
+            CascadeType.MERGE })
     @JoinColumn(name = "groupId")
     private Group group;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
+            CascadeType.MERGE })
     @JoinTable(name = "STUDENT_ADDITION_GROUP_REF", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "groupId"))
     private Set<Group> additionGroups;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "student", cascade = {
+            CascadeType.PERSIST, CascadeType.MERGE })
     private List<Journal> journal;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
+            CascadeType.MERGE })
     @JoinTable(name = "STUDENT_PARENT_REF", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "parentId"))
     private Set<Parent> parents;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "student", cascade = {
+            CascadeType.PERSIST, CascadeType.MERGE })
     private List<CourseRequest> courseRequest;
 
     private boolean isActive;
