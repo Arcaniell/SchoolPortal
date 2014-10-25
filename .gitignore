@@ -35,9 +35,9 @@ release.properties
 hs_err_pid*
 
 #Vitya added 
-school-dao/.classpath
-school-dao/.project
-school-model/.classpath
-school-model/.project
+#school-dao/.classpath
+#school-dao/.project
+#school-model/.classpath
+#school-model/.project
 school-model/.settings/org.eclipse.wst.common.component
 
