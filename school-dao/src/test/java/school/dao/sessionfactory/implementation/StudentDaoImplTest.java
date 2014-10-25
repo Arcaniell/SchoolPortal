@@ -53,6 +53,13 @@ public class StudentDaoImplTest extends DBUnitConfig {
                 .getConnection(), getStudent());
         DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester()
                 .getConnection(), getDataSet());
+        DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
+                .getConnection(), getBlank());
+    }
+
+    private IDataSet getBlank() throws DataSetException, IOException {
+        return new FlatXmlDataSet(this.getClass().getResourceAsStream(
+                "/blank.xml"));
     }
 
     @Override
