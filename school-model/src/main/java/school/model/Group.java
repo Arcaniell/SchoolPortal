@@ -19,12 +19,12 @@ import javax.persistence.Table;
 @Table(name = "GROUPS")
 public class Group {
 
-	public static final String FIND_BY_ADDITIONAL_QUERY = "SELECT g FROM Groups g WHERE g.additional = :additional";
-	public static final String FIND_BY_NUMBER_QUERY = "SELECT g FROM Groups g WHERE g.number = :number";
-	public static final String FIND_BY_STARTDATE_QUERY = "SELECT g FROM Groups g WHERE g.startDate = :startDate";
-	public static final String FIND_BY_TEACHER_QUERY = "SELECT g FROM Groups g WHERE g.teacherId = :teacherId";
-	public static final String FIND_BY_NUMBER_LETTER_QUERY = "SELECT g FROM Groups g WHERE g.number = :number AND g.letter LIKE :letter";
-	public static final String FIND_BY_ACTIVE_GROUP_QUERY = "SELECT g FROM Groups g WHERE :actualDate BETWEEN g.startDate and g.endDate";
+	public static final String FIND_BY_STATUS_QUERY = "FROM Group g WHERE g.additional = :additional";
+	public static final String FIND_BY_NUMBER_QUERY = "FROM Group g WHERE g.number = :number";
+	public static final String FIND_BY_STARTDATE_QUERY = "FROM Group g WHERE g.startDate = :startDate";
+	public static final String FIND_BY_TEACHER_QUERY = "FROM Group g WHERE g.teacher.id = :teacherId";
+	public static final String FIND_BY_NUMBER_LETTER_QUERY = "FROM Group g WHERE g.number = :number and g.letter = :letter";
+	public static final String FIND_ALL_ACTIVE_GROUP_QUERY = "FROM Group g WHERE :actualDate BETWEEN g.startDate and g.endDate";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +45,7 @@ public class Group {
 	@Column(nullable = false)
 	private Date startDate;
 	private Date endDate;
-
+	
 	public long getId() {
 		return id;
 	}

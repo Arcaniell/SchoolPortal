@@ -10,7 +10,6 @@ import org.hibernate.Transaction;
 import school.dao.GroupDao;
 import school.model.Group;
 
-	
 public class GroupDaoImpl extends BaseDaoImpl<Group> implements GroupDao {
 
 	private Session session;
@@ -27,7 +26,7 @@ public class GroupDaoImpl extends BaseDaoImpl<Group> implements GroupDao {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
 			Transaction transaction = session.beginTransaction();
 			groups = (List<Group>) session
-					.createQuery(Group.FIND_BY_ADDITIONAL_QUERY)
+					.createQuery(Group.FIND_BY_STATUS_QUERY)
 					.setBoolean("additional", true).list();
 			transaction.commit();
 		} finally {
@@ -44,7 +43,7 @@ public class GroupDaoImpl extends BaseDaoImpl<Group> implements GroupDao {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
 			Transaction transaction = session.beginTransaction();
 			groups = (List<Group>) session
-					.createQuery(Group.FIND_BY_ADDITIONAL_QUERY)
+					.createQuery(Group.FIND_BY_STATUS_QUERY)
 					.setBoolean("additional", false).list();
 			transaction.commit();
 		} finally {
@@ -79,7 +78,7 @@ public class GroupDaoImpl extends BaseDaoImpl<Group> implements GroupDao {
 			Transaction transaction = session.beginTransaction();
 			groups = (List<Group>) session
 					.createQuery(Group.FIND_BY_STARTDATE_QUERY)
-					.setDate("startDate", startDate).list();
+					.setParameter("startDate", startDate).list();
 			transaction.commit();
 		} finally {
 			if ((session != null) && (session.isOpen())) {
@@ -94,7 +93,7 @@ public class GroupDaoImpl extends BaseDaoImpl<Group> implements GroupDao {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
 			Transaction transaction = session.beginTransaction();
 			newGroup = (Group) session.createQuery(Group.FIND_BY_TEACHER_QUERY)
-					.setLong("teacherId", teacherId);
+					.setParameter("teacherId", teacherId).uniqueResult();
 			transaction.commit();
 		} finally {
 			if ((session != null) && (session.isOpen())) {
@@ -110,7 +109,8 @@ public class GroupDaoImpl extends BaseDaoImpl<Group> implements GroupDao {
 			Transaction transaction = session.beginTransaction();
 			newGroup = (Group) session
 					.createQuery(Group.FIND_BY_NUMBER_LETTER_QUERY)
-					.setByte("number", number).setCharacter("letter", letter);
+					.setParameter("number", number)
+					.setParameter("letter", letter).uniqueResult();
 			transaction.commit();
 		} finally {
 			if ((session != null) && (session.isOpen())) {
@@ -126,7 +126,7 @@ public class GroupDaoImpl extends BaseDaoImpl<Group> implements GroupDao {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
 			Transaction transaction = session.beginTransaction();
 			groups = (List<Group>) session
-					.createQuery(Group.FIND_BY_ACTIVE_GROUP_QUERY)
+					.createQuery(Group.FIND_ALL_ACTIVE_GROUP_QUERY)
 					.setDate("actualDate", actualDate).list();
 			transaction.commit();
 		} finally {

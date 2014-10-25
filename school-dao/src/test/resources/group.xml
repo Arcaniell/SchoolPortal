@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<USER id="1" email="testemail1@gmail.com" firstName="Roman"
+		lastName="Petrov" password="password" registration="2013-10-20 23:06:10"
+		sex="0" />
+	<USER id="2" email="testemail2@gmail.com" firstName="Bogdan"
+		lastName="Petrov" password="password" registration="2013-10-20 23:08:10"
+		sex="0" />
+	<USER id="3" email="testemail3@gmail.com" firstName="Ivan"
+		lastName="Petrovsky" password="password" registration="2013-10-20 23:09:10"
+		sex="0" />
+	<USER id="4" email="testemail4@gmail.com" firstName="Petro"
+		lastName="Petrovich" password="password" registration="2013-10-20 23:11:10"
+		sex="0" />
+
+	<TEACHER id="1" rate="5" userId="1" />
+	<TEACHER id="2" rate="5" userId="2" />
+	<TEACHER id="3" rate="5" userId="3" />
+	<TEACHER id="4" rate="5" userId="4" />
+
+	<GROUPS id="1" teacherId="1" number="7" letter="a" additional="FALSE"
+		startDate="2014-9-01 09:00:00" endDate="2015-5-20 15:30:00" />
+	<GROUPS id="2" teacherId="2" number="7" letter="b" additional="FALSE"
+		startDate="2014-9-01 09:00:00" endDate="2015-5-20 15:30:00" />
+	<GROUPS id="3" teacherId="3" number="7" letter="c" additional="FALSE"
+		startDate="2014-9-01 09:00:00" endDate="2015-5-20 15:30:00" />
+	<GROUPS id="4" teacherId="4" number="9" letter="a" additional="TRUE"
+		startDate="2014-10-01 19:00:00" endDate="2014-11-01 21:00:00" />
+</dataset>

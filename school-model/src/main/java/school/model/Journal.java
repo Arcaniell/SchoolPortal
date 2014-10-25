@@ -12,14 +12,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="JOURNAL")
+@Table(name = "JOURNAL")
 public class Journal {
 
 	public static final String FIND_BY_DATE_QUERY = "SELECT j FROM Journal j WHERE j.date = :date";
 	public static final String FIND_BY_INTERVAL_QUERY = "SELECT j FROM Journal j WHERE j.date BETWEEN :from AND :till";
-	public static final String FIND_BY_STUDENT_QUERY = "SELECT j FROM Journal j WHERE j.studentId = :studentId";
-	public static final String FIND_BY_DATE_AND_STUDENT_QUERY = "SELECT j FROM Journal j WHERE j.studentId = :studentId AND j.date = :date";
-	public static final String FIND_BY_INTERVAL_AND_STUDENT_QUERY = "SELECT j FROM Journal j WHERE j.studentId = :studentId AND j.date BETWEEN :from AND :till";
+	public static final String FIND_BY_STUDENT_QUERY = "SELECT j FROM Journal j WHERE j.student.id = :studentId";
+	public static final String FIND_BY_DATE_AND_STUDENT_QUERY = "SELECT j FROM Journal j WHERE j.student.id = :studentId AND j.date = :date";
+	public static final String FIND_BY_INTERVAL_AND_STUDENT_QUERY = "SELECT j FROM Journal j WHERE j.student.id = :studentId AND j.date BETWEEN :from AND :till";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

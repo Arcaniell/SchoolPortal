@@ -20,23 +20,6 @@ public class JournalDaoImpl extends BaseDaoImpl<Journal> implements JournalDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Journal> findByDate(Date date) {
-		try {
-			session = HibernateSessionFactory.getSessionFactory().openSession();
-			Transaction transaction = session.beginTransaction();
-			journals = (List<Journal>) session
-					.createQuery(Journal.FIND_BY_DATE_QUERY)
-					.setDate("date", date).list();
-			transaction.commit();
-		} finally {
-			if ((session != null) && (session.isOpen())) {
-				session.close();
-			}
-		}
-		return new ArrayList<Journal>(journals);
-	}
-
-	@SuppressWarnings("unchecked")
 	public List<Journal> findByInterval(Date from, Date till) {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
@@ -71,24 +54,6 @@ public class JournalDaoImpl extends BaseDaoImpl<Journal> implements JournalDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Journal> findByDateAndStudentId(long studentId, Date date) {
-		try {
-			session = HibernateSessionFactory.getSessionFactory().openSession();
-			Transaction transaction = session.beginTransaction();
-			journals = (List<Journal>) session
-					.createQuery(Journal.FIND_BY_DATE_AND_STUDENT_QUERY)
-					.setLong("studentId", studentId).setDate("date", date)
-					.list();
-			transaction.commit();
-		} finally {
-			if ((session != null) && (session.isOpen())) {
-				session.close();
-			}
-		}
-		return new ArrayList<Journal>(journals);
-	}
-
-	@SuppressWarnings("unchecked")
 	public List<Journal> findByIntervalAndStudentId(long studentId, Date from,
 			Date till) {
 		try {
@@ -106,5 +71,4 @@ public class JournalDaoImpl extends BaseDaoImpl<Journal> implements JournalDao {
 		}
 		return new ArrayList<Journal>(journals);
 	}
-
 }
