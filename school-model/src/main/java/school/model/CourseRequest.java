@@ -8,22 +8,23 @@ import javax.persistence.*;
 @Table(name = "COURSE_REQUEST")
 public class CourseRequest {
 
-    public static final String FIND_BY_DATE_QUERY = "SELECT u FROM CourseRequest u WHERE u.date = :date";
     public static final String FIND_ALL_BY_STATUS_QUERY = "SELECT u FROM CourseRequest u WHERE u.isActive = :active";
     public static final String FIND_BY_INTERVAL_QUERY = "SELECT u FROM CourseRequest u WHERE u.date BETWEEN :from AND :till";
-    public static final String FIND_BY_STUDENT_ID_QUERY = "SELECT u FROM CourseRequest u WHERE u.studentId = :id";
-    public static final String FIND_BY_SUBJECT_ID_QUERY = "SELECT u FROM CourseRequest u WHERE u.courseId = :id";
+    public static final String FIND_BY_STUDENT_ID_QUERY = "SELECT u FROM CourseRequest u WHERE u.student.id = :id";
+    public static final String FIND_BY_SUBJECT_ID_QUERY = "SELECT u FROM CourseRequest u WHERE u.course.id = :id";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true)
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST,
+            CascadeType.MERGE })
     @JoinColumn(name = "studentId", nullable = false)
     private Student student;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST,
+            CascadeType.MERGE })
     @JoinColumn(name = "courseId", nullable = false)
     private Course course;
 

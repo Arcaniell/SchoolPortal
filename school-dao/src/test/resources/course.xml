@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<COURSE id="1" courseName="Math" groupNumber="5" additional="0" coeficient="1" price="0"/>
+	<COURSE id="2" courseName="Physics" groupNumber="4" additional="0" coeficient="1" price="0"/>
+	<COURSE id="3" courseName="English" groupNumber="4" additional="0" coeficient="1" price="0"/>
+	<COURSE id="4" courseName="Philosophy" groupNumber="5" additional="0" coeficient="1" price="0"/>
+	<COURSE id="5" courseName="Programming" groupNumber="5" additional="0" coeficient="1" price="0"/>
+</dataset>  

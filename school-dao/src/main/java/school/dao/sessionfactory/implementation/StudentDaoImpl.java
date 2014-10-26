@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import school.dao.StudentDao;
+import school.model.CourseRequest;
 import school.model.Student;
 
 public class StudentDaoImpl extends BaseDaoImpl<Student> implements StudentDao {
@@ -26,13 +27,20 @@ public class StudentDaoImpl extends BaseDaoImpl<Student> implements StudentDao {
     public Student findById(long id) {
         Session session = null;
         Student newEntity = null;
+        Transaction transaction = null;
         try {
             session = HibernateSessionFactory.getSessionFactory().openSession();
-            Transaction transaction = session.beginTransaction();
+            transaction = session.beginTransaction();
             newEntity = (Student) session.get(Student.class, id);
             transaction.commit();
             Hibernate.initialize(newEntity.getUser());
             Hibernate.initialize(newEntity.getGroup());
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            System.err.println("Failed on query " + "find by id");
+            e.printStackTrace();
         } finally {
             if ((session != null) && (session.isOpen())) {
                 session.close();
@@ -44,9 +52,10 @@ public class StudentDaoImpl extends BaseDaoImpl<Student> implements StudentDao {
     public Student findByUserId(long id) {
         Session session = null;
         Student newEntity = null;
+        Transaction transaction = null;
         try {
             session = HibernateSessionFactory.getSessionFactory().openSession();
-            Transaction transaction = session.beginTransaction();
+            transaction = session.beginTransaction();
             newEntity = (Student) session
                     .createQuery(Student.FIND_BY_USER_ID_QUERY)
                     .setLong("id", id).uniqueResult();
@@ -61,6 +70,13 @@ public class StudentDaoImpl extends BaseDaoImpl<Student> implements StudentDao {
             Hibernate.initialize(newEntity.getCourseRequest());
             Hibernate.initialize(newEntity.getJournal());
             Hibernate.initialize(newEntity.getParents());
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            System.err.println("Failed on query "
+                    + Student.FIND_BY_USER_ID_QUERY);
+            e.printStackTrace();
         } finally {
             if ((session != null) && (session.isOpen())) {
                 session.close();
@@ -72,14 +88,22 @@ public class StudentDaoImpl extends BaseDaoImpl<Student> implements StudentDao {
     @SuppressWarnings("unchecked")
     public List<Student> findAllByStatus(boolean value) {
         Session session = null;
+        Transaction transaction = null;
         List<Student> entities = null;
         try {
             session = HibernateSessionFactory.getSessionFactory().openSession();
-            Transaction transaction = session.beginTransaction();
+            transaction = session.beginTransaction();
             entities = (List<Student>) session
                     .createQuery(Student.FIND_ALL_BY_STATUS_QUERY)
                     .setBoolean("active", value).list();
             transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            System.err.println("Failed on query "
+                    + Student.FIND_ALL_BY_STATUS_QUERY);
+            e.printStackTrace();
         } finally {
             if ((session != null) && (session.isOpen())) {
                 session.close();

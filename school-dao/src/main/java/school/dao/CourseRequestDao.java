@@ -1,20 +1,17 @@
 package school.dao;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import school.model.CourseRequest;
 
 public interface CourseRequestDao extends BaseDao<CourseRequest> {
-    Set<CourseRequest> findActive();
+    List<CourseRequest> findAllByStatus(boolean status);
 
-    Set<CourseRequest> findArchived();
+    List<CourseRequest> findAllByInterval(Date from, Date till);
 
-    Set<CourseRequest> findByDate(Date date);
+    List<CourseRequest> findAllByStudentId(long id);
 
-    Set<CourseRequest> findByInterval(Date from, Date till);
-
-    Set<CourseRequest> findByStudentId(long id);
-
-    Set<CourseRequest> findBySubjectId(long id);
+    List<CourseRequest> findAllBySubjectId(long id);
 }

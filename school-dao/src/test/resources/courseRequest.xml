@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<COURSE_REQUEST id="1" studentId="1" courseId="2" date="2010-10-20 23:11:10" isActive="1" />
+	<COURSE_REQUEST id="2" studentId="1" courseId="1" date="2011-10-20 23:11:10" isActive="0" />
+	<COURSE_REQUEST id="3" studentId="2" courseId="3" date="2012-10-20 23:11:10" isActive="1" />
+	<COURSE_REQUEST id="4" studentId="2" courseId="4" date="2013-10-20 23:11:10" isActive="1" />
+	<COURSE_REQUEST id="5" studentId="3" courseId="1" date="2014-10-20 23:11:10" isActive="0" />
+</dataset>  
