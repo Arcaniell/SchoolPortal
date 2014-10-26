@@ -1,11 +1,12 @@
 package school.dao.sessionfactory.implementation;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
@@ -18,6 +19,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import school.model.Conversation;
+import school.model.Message;
 import school.model.User;
 
 public class ConversationDaoImplTest extends DBUnitConfig{
@@ -42,7 +44,10 @@ public class ConversationDaoImplTest extends DBUnitConfig{
 
 	@Before
 	public void setUp() throws Exception {
-		receiver = new User();
+	    Session session = HibernateSessionFactory.getSessionFactory()
+                .openSession();
+        session.close();
+	    receiver = new User();
 		receiver.setId(1L);
 		receiver.setEmail("testemail1@gmail.com");
 		receiver.setFirstName("Vladyslav");
@@ -68,8 +73,6 @@ public class ConversationDaoImplTest extends DBUnitConfig{
 		
 		conversationDaoImpl = new ConversationDaoImpl();
 		
-		Session session = HibernateSessionFactory.getSessionFactory().openSession();
-		session.close();
         DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
                 .getConnection(), getDataSet());
 	}
@@ -78,17 +81,18 @@ public class ConversationDaoImplTest extends DBUnitConfig{
 	public void tearDown() throws Exception {
         DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester()
                 .getConnection(), getDataSet());
-//        DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
-//                .getConnection(), getBlank());
+        DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
+                .getConnection(), getBlank());
 	}
 
-	@Override
+	private IDataSet getBlank() throws DataSetException, IOException {
+	    return new FlatXmlDataSet(this.getClass().getResourceAsStream(
+                "/blank.xml"));
+    }
+
+    @Override
 	protected IDataSet getDataSet() throws Exception {
 		return new FlatXmlDataSet(this.getClass().getResourceAsStream("/conversation.xml"));
-	}
-	
-	protected IDataSet getBlank() throws Exception {
-		return new FlatXmlDataSet(this.getClass().getResourceAsStream("/messageBlank.xml"));
 	}
 
 	@Test
@@ -108,7 +112,7 @@ public class ConversationDaoImplTest extends DBUnitConfig{
 	}
 	
 	@Test
-	public void testFIndSentConversationsForUser() {
+	public void testSentConversationsForUser() {
 		List<Conversation> actualList = conversationDaoImpl.findSentConversationsForUser(receiver);
 		Conversation conversation5 = conversationDaoImpl.findById(5L);
 		Conversation conversation6 = conversationDaoImpl.findById(6L);
@@ -167,15 +171,33 @@ public class ConversationDaoImplTest extends DBUnitConfig{
 	}
 	
 	@Test
-	public void testFindConversationById() {
+	public void testFindMessagesOfConversation() {
+		
 		Conversation conv = conversationDaoImpl.findById(1L);
-		Assert.assertEquals(conv.getId(), conversation.getId());	
+		
+		List<Message> actualList = conv.getMessages();
+		
+		List<Message> expectedList = new ArrayList<Message>();
+		
+		MessageDaoImpl messageDaoImpl = new MessageDaoImpl();
+		List<Message> messages = messageDaoImpl.findAll();
+		
+		for(Message m:messages) {
+			if(m.getConversationId().getId() == conv.getId()) {
+				expectedList.add(m);
+			}
+		}
+		
+		for(int i = 0; i < actualList.size(); i++) {
+			Assert.assertTrue(actualList.get(i).getId() == expectedList.get(i).getId());
+		}
+		
 	}
 	
 	@Test
-	public void testFindAllConversations() {
-		List<Conversation> clist = conversationDaoImpl.findAll();
-		Assert.assertTrue(clist.size() == 7);
+	public void testFindConversationById() {
+		Conversation conv = conversationDaoImpl.findById(1L);
+		Assert.assertEquals(conv.getId(), conversation.getId());	
 	}
 	
 	@Test
@@ -195,15 +217,4 @@ public class ConversationDaoImplTest extends DBUnitConfig{
 		Assert.assertNull(conversationDaoImpl.findById(1L));
 	}
 	
-	@SuppressWarnings("deprecation")
-	@Test
-	public void testFindDateForConversation() throws ParseException {
-		conversation = conversationDaoImpl.findById(5L);
-		Date actualDate = conversationDaoImpl.findDateForConversation(conversation);
-		Date expectedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-		.parse("2014-10-22 23:09:25");
-		Assert.assertTrue(actualDate.getDate() == expectedDate.getDate());
-		Assert.assertTrue(actualDate.getMonth() == expectedDate.getMonth());
-		Assert.assertTrue(actualDate.getYear() == expectedDate.getYear());
-	}
 }

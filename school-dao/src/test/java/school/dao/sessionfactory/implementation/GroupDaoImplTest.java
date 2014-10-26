@@ -2,11 +2,8 @@ package school.dao.sessionfactory.implementation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import javax.print.attribute.standard.DateTimeAtCompleted;
 
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
@@ -42,9 +39,6 @@ public class GroupDaoImplTest extends DBUnitConfig {
 
 	@Before
 	public void setUp() throws Exception {
-	    Session session = HibernateSessionFactory.getSessionFactory()
-                .openSession();
-        session.close();
 		super.setUp();
 		groupDaoImpl = new GroupDaoImpl();
 		IDataSet messageDataSet = getDataSet();

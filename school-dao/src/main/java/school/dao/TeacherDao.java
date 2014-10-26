@@ -1,11 +1,13 @@
 package school.dao;
 
-import java.util.Set;
+import java.util.List;
 
 import school.model.Teacher;
 
 public interface TeacherDao extends BaseDao<Teacher> {
-    Set<Teacher> findAllByRate(int rate);
+    List<Teacher> findAllByStatus(boolean status);
+
+    List<Teacher> findAllInRateRange(int from, int till);
 
     Teacher findByUserId(long id);
 

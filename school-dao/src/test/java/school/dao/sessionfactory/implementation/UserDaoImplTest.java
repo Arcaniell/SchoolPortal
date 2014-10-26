@@ -45,6 +45,8 @@ public class UserDaoImplTest extends DBUnitConfig{
 		userDaoImpl = new UserDaoImpl();
 		Session session = HibernateSessionFactory.getSessionFactory().openSession();
 		IDataSet userDataSet = getDataSet();
+//        DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
+//                .getConnection(), getBlank());
 		DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester().getConnection(), userDataSet);
 		session.close();
 		  
@@ -60,6 +62,10 @@ public class UserDaoImplTest extends DBUnitConfig{
 	@Override
 	protected IDataSet getDataSet() throws Exception {
 		return new FlatXmlDataSet(this.getClass().getResourceAsStream("/user.xml"));
+	}
+	
+	protected IDataSet getBlank() throws Exception {
+		return new FlatXmlDataSet(this.getClass().getResourceAsStream("/messageBlank.xml"));
 	}
 	
 	@Test

@@ -41,6 +41,8 @@ public class StudentDaoImplTest extends DBUnitConfig {
                 .openSession();
         session.close();
         DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
+                .getConnection(), getBlank());
+        DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
                 .getConnection(), getDataSet());
         DatabaseOperation.INSERT.execute(this.getDatabaseTester()
                 .getConnection(), getStudent());
@@ -89,7 +91,7 @@ public class StudentDaoImplTest extends DBUnitConfig {
         // Checking
         Assert.assertEquals((long) userId, student.getUser().getId());
         Assert.assertEquals((long) groupId, student.getGroup().getId());
-        //Assert.assertEquals((boolean) active, student.isActive());
+        Assert.assertEquals((boolean) active, student.isActive());
     }
 
     @Test

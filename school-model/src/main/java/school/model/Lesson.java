@@ -1,5 +1,4 @@
 package school.model;
-
 import java.util.Date;
 import java.util.List;
 
@@ -7,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -14,80 +14,90 @@ import javax.persistence.Table;
 @Entity
 @Table(name="LESSON")
 public class Lesson {
+	
+	public static final String FIND_BY_START_TIME_QUERY = "SELECT less FROM Lesson less WHERE less.startTime = :startTime";
+	
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-	@Id
-	@GeneratedValue
-	private long id;
+@Column(name="startTime", nullable = false )
+private Date startTime;
 
-	@Column(nullable = false, unique = true)
-	private Date startTime;
+@Column(name="finishTime")
+private Date finishTime;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "lesson")
-	private List<Schedule> listSchedule;
+@OneToMany(fetch = FetchType.LAZY, mappedBy = "lesson")
+private List<Schedule> listSchedule;
 
-	public Lesson() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+public Lesson() {
+	super();
 
-	public long getId() {
-		return id;
-	}
+}
 
-	public void setId(long id) {
-		this.id = id;
-	}
+public void setLesId(Long id){
+	this.id = id;
+}
 
-	public Date getStartTime() {
-		return startTime;
-	}
+//поправ
+public void setLesStartTime(Date startTime){
+	this.startTime = startTime;
+}
 
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
 
-	public List<Schedule> getListSchedule() {
-		return listSchedule;
-	}
 
-	public void setListSchedule(List<Schedule> listSchedule) {
-		this.listSchedule = listSchedule;
-	}
+public Date getLesFinishTime() {
+	return finishTime;
+}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result
-				+ ((listSchedule == null) ? 0 : listSchedule.hashCode());
-		result = prime * result
-				+ ((startTime == null) ? 0 : startTime.hashCode());
-		return result;
-	}
+public void setLesFinishTime(Date finishTime) {
+	this.finishTime = finishTime;
+}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Lesson other = (Lesson) obj;
-		if (id != other.id)
-			return false;
-		if (listSchedule == null) {
-			if (other.listSchedule != null)
-				return false;
-		} else if (!listSchedule.equals(other.listSchedule))
-			return false;
-		if (startTime == null) {
-			if (other.startTime != null)
-				return false;
-		} else if (!startTime.equals(other.startTime))
-			return false;
+public void setListSchedule(List<Schedule> listSchedule){
+	this.listSchedule = listSchedule;
+}
+
+public Long getLesId() {
+    return id;
+}
+
+public Date getLesStartTime(){
+	return startTime;
+}
+
+public List<Schedule> getListSchedule() {
+	return listSchedule;
+}
+
+@Override
+public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((startTime == null) ? 0 : startTime.hashCode());
+	return result;
+}
+
+@Override
+public boolean equals(Object obj) {
+	if (this == obj)
 		return true;
-	}
+	if (obj == null)
+		return false;
+	if (getClass() != obj.getClass())
+		return false;
+	Lesson other = (Lesson) obj;
+	if (startTime == null) {
+		if (other.startTime != null)
+			return false;
+	} else if (!startTime.equals(other.startTime))
+		return false;
+	return true;
+}
+
+
+
+
+
 
 }

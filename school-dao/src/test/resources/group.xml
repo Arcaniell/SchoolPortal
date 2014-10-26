@@ -13,10 +13,10 @@
 		lastName="Petrovich" password="password" registration="2013-10-20 23:11:10"
 		sex="0" />
 
-	<TEACHER id="1" rate="5" userId="1" />
-	<TEACHER id="2" rate="5" userId="2" />
-	<TEACHER id="3" rate="5" userId="3" />
-	<TEACHER id="4" rate="5" userId="4" />
+	<TEACHER id="1" rate="1" userId="1" isActive="0" />
+	<TEACHER id="2" rate="3" userId="2" isActive="0" />
+	<TEACHER id="3" rate="4" userId="3" isActive="1" />
+	<TEACHER id="4" rate="7" userId="4" isActive="0" />
 
 	<GROUPS id="1" teacherId="1" number="7" letter="a" additional="FALSE"
 		startDate="2014-9-01 09:00:00" endDate="2015-5-20 15:30:00" />

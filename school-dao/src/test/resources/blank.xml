@@ -6,4 +6,11 @@
 	<STUDENT />
 	<COURSE />
 	<COURSE_REQUEST />
+	<ROOM />
+	<LESSON />
+	<SCHEDULE />
+	<JOURNAL />
+	<student_addition_group_ref />
+	<CONVERSATION />
+	<Message/>
 </dataset>
