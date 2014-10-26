@@ -3,6 +3,7 @@ package school.model;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,25 +18,48 @@ import javax.persistence.Table;
 @Entity
 @Table(name="TEACHER")
 public class Teacher {
-
+    public static final String FIND_ALL_BY_STATUS_QUERY = "SELECT u FROM Teacher u WHERE u.isActive = :active";
+    public static final String FIND_BY_USER_ID_QUERY = "SELECT u FROM Teacher u WHERE u.user.id = :id";
+    public static final String FIND_RATE_RANGE_QUERY = "SELECT u FROM Teacher u WHERE u.rate BETWEEN :from AND :till";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private int rate;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher", cascade = { CascadeType.PERSIST,
+            CascadeType.MERGE })
     private List<Salary> salaries;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
+            CascadeType.MERGE })
     @JoinColumn(name = "userId", nullable = false, unique = true)
     private User user;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
     private Set<Course> course;
+    
+    private boolean isActive; 
+       
 
     public Teacher() {
         super();
+    }
+
+    public Set<Course> getCourse() {
+        return course;
+    }
+
+    public void setCourse(Set<Course> course) {
+        this.course = course;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
     public long getId() {
@@ -82,11 +106,12 @@ public class Teacher {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + ((course == null) ? 0 : course.hashCode());
         result = prime * result + (int) (id ^ (id >>> 32));
+        result = prime * result + (isActive ? 1231 : 1237);
         result = prime * result + rate;
         result = prime * result
                 + ((salaries == null) ? 0 : salaries.hashCode());
-        result = prime * result + ((course == null) ? 0 : course.hashCode());
         result = prime * result + ((user == null) ? 0 : user.hashCode());
         return result;
     }
@@ -100,7 +125,14 @@ public class Teacher {
         if (getClass() != obj.getClass())
             return false;
         Teacher other = (Teacher) obj;
+        if (course == null) {
+            if (other.course != null)
+                return false;
+        } else if (!course.equals(other.course))
+            return false;
         if (id != other.id)
+            return false;
+        if (isActive != other.isActive)
             return false;
         if (rate != other.rate)
             return false;
@@ -109,11 +141,6 @@ public class Teacher {
                 return false;
         } else if (!salaries.equals(other.salaries))
             return false;
-        if (course == null) {
-            if (other.course != null)
-                return false;
-        } else if (!course.equals(other.course))
-            return false;
         if (user == null) {
             if (other.user != null)
                 return false;
@@ -121,5 +148,7 @@ public class Teacher {
             return false;
         return true;
     }
+
+   
 
 }

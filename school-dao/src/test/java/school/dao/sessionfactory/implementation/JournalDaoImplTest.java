@@ -1,7 +1,9 @@
 package school.dao.sessionfactory.implementation;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
@@ -47,9 +49,16 @@ public class JournalDaoImplTest extends DBUnitConfig {
 		IDataSet messageDataSet = getDataSet();
 		DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester()
 				.getConnection(), messageDataSet);
+		DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
+                .getConnection(), getBlank());
 	}
 
-	@Override
+	private IDataSet getBlank() throws DataSetException, IOException {
+	    return new FlatXmlDataSet(this.getClass().getResourceAsStream(
+                "/blank.xml"));
+    }
+
+    @Override
 	protected IDataSet getDataSet() throws Exception {
 		return new FlatXmlDataSet(this.getClass().getResourceAsStream(
 				"/journal.xml"));

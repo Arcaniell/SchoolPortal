@@ -1,13 +1,16 @@
 package school.dao.sessionfactory.implementation;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
+import org.hibernate.Session;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -41,7 +44,10 @@ public class ConversationDaoImplTest extends DBUnitConfig{
 
 	@Before
 	public void setUp() throws Exception {
-		receiver = new User();
+	    Session session = HibernateSessionFactory.getSessionFactory()
+                .openSession();
+        session.close();
+	    receiver = new User();
 		receiver.setId(1L);
 		receiver.setEmail("testemail1@gmail.com");
 		receiver.setFirstName("Vladyslav");
@@ -75,9 +81,16 @@ public class ConversationDaoImplTest extends DBUnitConfig{
 	public void tearDown() throws Exception {
         DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester()
                 .getConnection(), getDataSet());
+        DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
+                .getConnection(), getBlank());
 	}
 
-	@Override
+	private IDataSet getBlank() throws DataSetException, IOException {
+	    return new FlatXmlDataSet(this.getClass().getResourceAsStream(
+                "/blank.xml"));
+    }
+
+    @Override
 	protected IDataSet getDataSet() throws Exception {
 		return new FlatXmlDataSet(this.getClass().getResourceAsStream("/conversation.xml"));
 	}

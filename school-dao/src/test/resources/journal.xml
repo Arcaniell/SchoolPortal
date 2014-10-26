@@ -26,9 +26,9 @@
 	<STUDENT id="2" userId="2" isActive="0" />
 	<STUDENT id="3" userId="3" groupId="4" isActive="0" />
 
-	<TEACHER id="1" rate="5" userId="4" />
-	<TEACHER id="2" rate="5" userId="5" />
-	<TEACHER id="3" rate="5" userId="6" />
+	<TEACHER id="1" rate="5" userId="4" isActive="0"/>
+	<TEACHER id="2" rate="5" userId="5" isActive="0" />
+	<TEACHER id="3" rate="5" userId="6" isActive="0"/>
 	
 	<ROOM id="1" available="1" roomNumber="10" size="10"/>
 
