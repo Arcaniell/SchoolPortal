@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	
+	<TEACHER id="1" rate="5" userId="1" isActive="0"/>
+	<TEACHER id="2" rate="7" userId="2" isActive="0"/>
+	
+	<USER id="1" email="testemail1@gmail.com" firstName="Roman"
+		lastName="Petrov" password="password" registration="2013-10-20 23:06:10"
+		sex="0" />
+	<USER id="2" email="testemail2@gmail.com" firstName="Bogdan"
+		lastName="Petrov" password="password" registration="2013-10-20 23:08:10"
+		sex="0" />
+	
+	<SALARY id="1" sum="3000" issueDate="2014-10-13" teacherId="1"/>
+	<SALARY id="2" sum="3500" issueDate="2014-11-11" teacherId="1"/>
+	<SALARY id="3" sum="2900" issueDate="2014-12-14" teacherId="2"/>
+	
+</dataset>

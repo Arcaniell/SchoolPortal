@@ -1,8 +1,7 @@
 package school.dao.sessionfactory.implementation;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -34,12 +33,12 @@ public class RoomDaoImpl extends BaseDaoImpl<Room> implements RoomDao{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Set<Room> findByRoomSize(int size) {
-		Set<Room> rooms = new HashSet<Room>();
+	public List<Room> findByRoomSize(int size) {
+		List<Room> rooms = new ArrayList<Room>();
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
 			Transaction transaction = session.beginTransaction();
-			rooms = (Set<Room>) session.createQuery(Room.FIND_BY_ROOM_SIZE_QUERY).
+			rooms = (List<Room>) session.createQuery(Room.FIND_BY_ROOM_SIZE_QUERY).
 					setInteger("size", size).list();
 			transaction.commit();
 		} finally {
@@ -50,12 +49,12 @@ public class RoomDaoImpl extends BaseDaoImpl<Room> implements RoomDao{
 		return rooms;
 	}
 	@SuppressWarnings("unchecked")
-	public Set<Room> findByRoomAvailable(boolean availability) {
-		Set<Room> rooms = new HashSet<Room>();
+	public List<Room> findByRoomAvailable(boolean availability) {
+		List<Room> rooms = new ArrayList<Room>();
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
 			Transaction transaction = session.beginTransaction();
-			rooms = (Set<Room>) session.createQuery(Room.FIND_BY_AVAILABLE_ROOM_QUERY).
+			rooms = (List<Room>) session.createQuery(Room.FIND_BY_AVAILABLE_ROOM_QUERY).
 					setBoolean("available", availability).list();
 			transaction.commit();
 		} finally {

@@ -1,30 +1,32 @@
 package school.dao.sessionfactory.implementation;
 
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import school.dao.SalaryDao;
 import school.model.Salary;
 
 
 public class SalaryDaoImpl extends BaseDaoImpl<Salary> implements SalaryDao{
 	private Session session;
-	private Set<Salary> salaries;
+	private List<Salary> salaries;
 	
 	public SalaryDaoImpl() {
 		super(Salary.class);
 	}
 
 	@SuppressWarnings("unchecked")
-	public Set<Salary> findByDate(Date date) {
+	public List<Salary> findByDate(Date date) {
 		try {
-			salaries = new HashSet<Salary>();
+			salaries = new ArrayList<Salary>();
 			session = HibernateSessionFactory.getSessionFactory().openSession();
 			Transaction transaction = session.beginTransaction();
-			salaries = (Set<Salary>) session
+			salaries = (List<Salary>) session
 					.createQuery(Salary.FIND_BY_DATE_QUERY)
 					.setDate("issueDate", date).list();
 			transaction.commit();
@@ -37,12 +39,12 @@ public class SalaryDaoImpl extends BaseDaoImpl<Salary> implements SalaryDao{
 	}
 
 	@SuppressWarnings("unchecked")
-	public Set<Salary> findByPeriod(Date from, Date until) {
+	public List<Salary> findByPeriod(Date from, Date until) {
 		try {
-			salaries = new HashSet<Salary>();
+			salaries = new ArrayList<Salary>();
 			session = HibernateSessionFactory.getSessionFactory().openSession();
 			Transaction transaction = session.beginTransaction();
-			salaries = (Set<Salary>) session
+			salaries = (List<Salary>) session
 					.createQuery(Salary.FIND_BY_DATE_QUERY)
 					.setDate("from", from).setDate("until", until).list();
 			transaction.commit();
@@ -55,12 +57,12 @@ public class SalaryDaoImpl extends BaseDaoImpl<Salary> implements SalaryDao{
 	}
 
 	@SuppressWarnings("unchecked")
-	public Set<Salary> findByTeacherId(long teacherId) {
+	public List<Salary> findByTeacherId(long teacherId) {
 		try {
-			salaries = new HashSet<Salary>();
+			salaries = new ArrayList<Salary>();
 			session = HibernateSessionFactory.getSessionFactory().openSession();
 			Transaction transaction = session.beginTransaction();
-			salaries = (Set<Salary>) session
+			salaries = (List<Salary>) session
 					.createQuery(Salary.FIND_BY_TEACHER_ID_QUERY)
 					.setLong("teacherId", teacherId).list();
 			transaction.commit();

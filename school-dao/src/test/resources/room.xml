@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+	<ROOM id="1" available="1" roomNumber="110" size="25"/>
+	<ROOM id="2" available="0" roomNumber="112" size="20"/>
+	<ROOM id="3" available="0" roomNumber="114" size="25"/>
+	<ROOM id="4" available="0" roomNumber="210" size="30"/>
+
+</dataset>
