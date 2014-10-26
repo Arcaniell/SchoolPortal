@@ -9,7 +9,6 @@ import org.hibernate.Transaction;
 
 import school.dao.ConversationDao;
 import school.model.Conversation;
-import school.model.Message;
 import school.model.User;
 
 public class ConversationDaoImpl extends BaseDaoImpl<Conversation> implements ConversationDao {
@@ -107,19 +106,27 @@ public class ConversationDaoImpl extends BaseDaoImpl<Conversation> implements Co
         return list;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Conversation> findSentConversationsForUser(User receiver) {
-		List<Conversation> inboxConversations = findInboxConversationsForUser(receiver);
-		List<Conversation> sentConversations = new ArrayList<Conversation>();
-		Next:
-		for(Conversation c : inboxConversations) {
-			for(Message m : c.getMessages()) {
-				if(!m.isFromSender()) {
-					sentConversations.add(c);
-					continue Next;
-				}
-			}
-		}
-		return sentConversations;
+		Session session = null;
+        List<Conversation> list = null;
+        try {
+            session = HibernateSessionFactory.getSessionFactory().openSession();
+            Transaction transaction = session.beginTransaction();
+            list = (List<Conversation>) session.createQuery(Conversation.SELECT_SENT_CONVERSATIONS_QUERY)
+            		.setParameter("receiver", receiver).list();
+            transaction.commit();
+            
+            for(Conversation c : list) {
+            	Hibernate.initialize(c.getMessages());
+            }
+            
+        } finally {
+            if ((session != null) && (session.isOpen())) {
+                session.close();
+            }
+        }
+        return list;
 	}
 	
 	

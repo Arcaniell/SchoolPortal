@@ -1,6 +1,5 @@
 package school.dao.sessionfactory.implementation;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -9,7 +8,6 @@ import java.util.List;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
-import org.hibernate.Session;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -69,10 +67,6 @@ public class ConversationDaoImplTest extends DBUnitConfig{
 		
 		conversationDaoImpl = new ConversationDaoImpl();
 		
-		Session session = HibernateSessionFactory.getSessionFactory()
-				.openSession();
-		session.close();
-		
         DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
                 .getConnection(), getDataSet());
 	}
@@ -81,18 +75,11 @@ public class ConversationDaoImplTest extends DBUnitConfig{
 	public void tearDown() throws Exception {
         DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester()
                 .getConnection(), getDataSet());
-        DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
-                .getConnection(), getConvBlank());
 	}
 
 	@Override
 	protected IDataSet getDataSet() throws Exception {
 		return new FlatXmlDataSet(this.getClass().getResourceAsStream("/conversation.xml"));
-	}
-	
-
-	protected IDataSet getConvBlank() throws Exception, IOException {
-		return new FlatXmlDataSet(this.getClass().getResourceAsStream("/convBlank.xml"));
 	}
 
 	@Test
@@ -137,17 +124,38 @@ public class ConversationDaoImplTest extends DBUnitConfig{
 		}
 	}
 	
-//	@Test
-//	public void testSaveConversation() {
-//		Conversation conv = new Conversation();
-//		conv.setReceiverId(receiver);
-//		conv.setSenderId(sender);
-//		conv.setSubject("SubjectNew");
-//		conversationDaoImpl.save(conv);
-//		List<Conversation> conversations = conversationDaoImpl.findAll();
-//		Assert.assertTrue(conversations.size() == 8);
-//		
-//	}
+	@Test
+	public void testSaveConversation() {
+		User newUser = new User();
+		newUser.setEmail("testemail60@gmail.com");
+		newUser.setFirstName("Anna");
+		newUser.setLastName("Petrova");
+		newUser.setPassword("password");
+		newUser.setRegistration(new Date());
+		newUser.setSex(User.SexType.FEMALE.getSex());
+		
+		User newUser1 = new User();
+		newUser1.setEmail("testemail61@gmail.com");
+		newUser1.setFirstName("Anna");
+		newUser1.setLastName("Petrova");
+		newUser1.setPassword("password");
+		newUser1.setRegistration(new Date());
+		newUser1.setSex(User.SexType.FEMALE.getSex());
+		
+		UserDaoImpl userDaoImpl = new UserDaoImpl();
+		userDaoImpl.save(newUser);
+		userDaoImpl.save(newUser1);
+		
+		Conversation newConversation = new Conversation();
+		newConversation.setSenderId(newUser);
+		newConversation.setReceiverId(newUser1);
+		newConversation.setSubject("SUB");
+		
+		conversationDaoImpl.save(newConversation);
+		
+		List<Conversation> convs = conversationDaoImpl.findAll();
+		Assert.assertTrue(convs.size() == 8);
+	}
 	
 	@Test
 	public void testFindMessagesOfConversation() {

@@ -37,10 +37,10 @@ public class Conversation {
 	public static final String SELECT_INBOX_CONVERSATIONS_QUERY = 
 			"from Conversation c where c.receiverId = :receiver";
 	
-//	public static final String SELECT_SENT_CONVERSATIONS_QUERY = 
-//			"select m.conversationId from Message m "
-//			+ "where m.conversationId in (from Conversation c where c.receiverId = :receiver) "
-//			+ "and m.isFromSender = 0";
+	public static final String SELECT_SENT_CONVERSATIONS_QUERY = 
+			"select m.conversationId from Message m "
+			+ "where m.conversationId in (from Conversation c where c.receiverId = :receiver) "
+			+ "and m.isFromSender = 0";
 	
 	public long getId() {
 		return id;
