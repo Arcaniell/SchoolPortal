@@ -1,22 +1,26 @@
 package school.dao;
 
-import java.util.Set;
+import java.util.List;
 
 import school.model.Course;
 
 public interface CourseDao extends BaseDao<Course> {
-    Set<Course> findAllAdditionCourses();
 
-    Set<Course> findAllByClassLevel(int level);
+	List<Course> findAllAddition();
 
-    Set<Course> findAllByCoeficient(int coeficient);
+	List<Course> findByGroupNumber(int groupNumber);
 
-    Set<Course> findAllByName(String name);
+	List<Course> findByCoefficient(int coefficient);
 
-    Set<Course> findAllByNameAndClassLevel(String name, int level);
+	List<Course> findByCourseName(String courseName);
 
-    Set<Course> findAllByPrice(int price);
+	List<Course> findByCourseNameAndGroupNumber(String courseName,
+			int groupNumber);
 
-    Set<Course> findAllMandatoryCourses();
+	List<Course> findByPrice(int price);
+
+	List<Course> findAllMandatoryCourses();
+
+	List<Course> findByPriceRange(int from, int to);
 
 }

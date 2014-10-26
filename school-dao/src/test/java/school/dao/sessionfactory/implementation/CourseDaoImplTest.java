@@ -1,9 +1,6 @@
 package school.dao.sessionfactory.implementation;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.dbunit.dataset.DataSetException;
@@ -17,15 +14,15 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import school.model.Journal;
+import school.model.Course;
 
-public class JournalDaoImplTest extends DBUnitConfig {
+public class CourseDaoImplTest extends DBUnitConfig {
 
-	private JournalDaoImpl journalDaoImpl;
-	private List<Journal> journals;
+	private CourseDaoImpl courseDaoImpl;
+	private List<Course> courses;
 
-	public JournalDaoImplTest() {
-		super("JournalDaoImplTest");
+	public CourseDaoImplTest() {
+		super("CourseDaoImplTest");
 	}
 
 	@BeforeClass
@@ -40,7 +37,7 @@ public class JournalDaoImplTest extends DBUnitConfig {
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
-		journalDaoImpl = new JournalDaoImpl();
+		courseDaoImpl = new CourseDaoImpl();
 		IDataSet messageDataSet = getDataSet();
 		DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
 				.getConnection(), messageDataSet);
@@ -63,33 +60,55 @@ public class JournalDaoImplTest extends DBUnitConfig {
 	@Override
 	protected IDataSet getDataSet() throws Exception {
 		return new FlatXmlDataSet(this.getClass().getResourceAsStream(
-				"/journal.xml"));
+				"/course.xml"));
 	}
 
 	@Test
-	public void testFindByStudentId() {
-		journals = journalDaoImpl.findByStudentId(1L);
-		Assert.assertTrue(journals.size() == 1);
+	public void testFindByGroupNumber() {
+		courses = courseDaoImpl.findByGroupNumber(5);
+		Assert.assertTrue(courses.size() == 3);
 	}
 
 	@Test
-	public void testFindByInterval() throws ParseException {
-		Date from = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
-				.parse("2014-10-21 09:00:00");
-		Date till = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
-				.parse("2014-10-22 11:00:00");
-		journals = journalDaoImpl.findByInterval(from, till);
-		Assert.assertTrue(journals.size() == 2);
+	public void testFindByCoefficient() {
+		courses = courseDaoImpl.findByCoefficient(1);
+		Assert.assertTrue(courses.size() == 3);
 	}
 
 	@Test
-	public void testFindByIntervalAndStudentId() throws ParseException {
-		Date from = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
-				.parse("2014-10-21 09:00:00");
-		Date till = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
-				.parse("2014-10-22 11:00:00");
-		journals = journalDaoImpl.findByIntervalAndStudentId(1, from, till);
-		Assert.assertTrue(journals.size() == 1);
+	public void testFindCourseName() {
+		courses = courseDaoImpl.findByCourseName("Math");
+		Assert.assertTrue(courses.size() == 2);
+	}
+
+	@Test
+	public void testFindByCourseNameAndGroupNumber() {
+		courses = courseDaoImpl.findByCourseNameAndGroupNumber("Math", 5);
+		Assert.assertTrue(courses.size() == 1);
+	}
+
+	@Test
+	public void testFindByPrice() {
+		courses = courseDaoImpl.findByPrice(2000);
+		Assert.assertTrue(courses.size() == 1);
+	}
+
+	@Test
+	public void testFindAllMandatory() {
+		courses = courseDaoImpl.findAllMandatoryCourses();
+		Assert.assertTrue(courses.size() == 2);
+	}
+
+	@Test
+	public void testFindAllAddition() {
+		courses = courseDaoImpl.findAllAddition();
+		Assert.assertTrue(courses.size() == 3);
+	}
+
+	@Test
+	public void testFindByPriceRange() {
+		courses = courseDaoImpl.findByPriceRange(1000, 1500);
+		Assert.assertTrue(courses.size() == 2);
 	}
 
 }

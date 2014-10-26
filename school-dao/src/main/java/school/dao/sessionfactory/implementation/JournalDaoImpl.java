@@ -12,8 +12,9 @@ import school.model.Journal;
 
 public class JournalDaoImpl extends BaseDaoImpl<Journal> implements JournalDao {
 
-	private Session session;
 	private List<Journal> journals;
+	private Session session;
+	private Transaction transaction;
 
 	public JournalDaoImpl() {
 		super(Journal.class);
@@ -23,7 +24,7 @@ public class JournalDaoImpl extends BaseDaoImpl<Journal> implements JournalDao {
 	public List<Journal> findByInterval(Date from, Date till) {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
-			Transaction transaction = session.beginTransaction();
+			transaction = session.beginTransaction();
 			journals = (List<Journal>) session
 					.createQuery(Journal.FIND_BY_INTERVAL_QUERY)
 					.setParameter("from", from).setParameter("till", till)
@@ -41,7 +42,7 @@ public class JournalDaoImpl extends BaseDaoImpl<Journal> implements JournalDao {
 	public List<Journal> findByStudentId(long studentId) {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
-			Transaction transaction = session.beginTransaction();
+			transaction = session.beginTransaction();
 			journals = (List<Journal>) session
 					.createQuery(Journal.FIND_BY_STUDENT_QUERY)
 					.setParameter("studentId", studentId).list();
@@ -59,7 +60,7 @@ public class JournalDaoImpl extends BaseDaoImpl<Journal> implements JournalDao {
 			Date till) {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
-			Transaction transaction = session.beginTransaction();
+			transaction = session.beginTransaction();
 			journals = (List<Journal>) session
 					.createQuery(Journal.FIND_BY_INTERVAL_AND_STUDENT_QUERY)
 					.setParameter("studentId", studentId)

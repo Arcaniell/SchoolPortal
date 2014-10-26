@@ -16,8 +16,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="COURSE")
+@Table(name = "COURSE")
 public class Course {
+
+	public static final String FIND_BY_STATUS_QUERY = "FROM Course c WHERE c.additional = :additional";
+	public static final String FIND_BY_GROUP_NUMBER_QUERY = "FROM Course c WHERE c.groupNumber = :groupNumber";
+	public static final String FIND_BY_COEFFICIENT_QUERY = "FROM Course c WHERE c.coeficient = :coefficient";
+	public static final String FIND_BY_COURSE_NAME_QUERY = "FROM Course c WHERE c.courseName LIKE :courseName";
+	public static final String FIND_BY_NAME_AND_NUMBER_QUERY = "FROM Course c WHERE c.courseName LIKE :courseName AND c.groupNumber = :groupNumber";
+	public static final String FIND_BY_PRICE_QUERY = "FROM Course c WHERE c.price = :price";
+	public static final String FIND_BY_PRICE_RANGE_QUERY = "FROM Course c WHERE c.price BETWEEN :from AND :to";
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -177,5 +186,4 @@ public class Course {
 		return true;
 	}
 
-	
 }

@@ -12,9 +12,10 @@ import school.model.Group;
 
 public class GroupDaoImpl extends BaseDaoImpl<Group> implements GroupDao {
 
-	private Session session;
 	private Group newGroup;
 	private List<Group> groups;
+	private Session session;
+	private Transaction transaction;
 
 	public GroupDaoImpl() {
 		super(Group.class);
@@ -24,7 +25,7 @@ public class GroupDaoImpl extends BaseDaoImpl<Group> implements GroupDao {
 	public List<Group> findAllAdditional() {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
-			Transaction transaction = session.beginTransaction();
+			transaction = session.beginTransaction();
 			groups = (List<Group>) session
 					.createQuery(Group.FIND_BY_STATUS_QUERY)
 					.setBoolean("additional", true).list();
@@ -41,7 +42,7 @@ public class GroupDaoImpl extends BaseDaoImpl<Group> implements GroupDao {
 	public List<Group> findAllNotAdditional() {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
-			Transaction transaction = session.beginTransaction();
+			transaction = session.beginTransaction();
 			groups = (List<Group>) session
 					.createQuery(Group.FIND_BY_STATUS_QUERY)
 					.setBoolean("additional", false).list();
@@ -58,7 +59,7 @@ public class GroupDaoImpl extends BaseDaoImpl<Group> implements GroupDao {
 	public List<Group> findByNumber(byte number) {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
-			Transaction transaction = session.beginTransaction();
+			transaction = session.beginTransaction();
 			groups = (List<Group>) session
 					.createQuery(Group.FIND_BY_NUMBER_QUERY)
 					.setByte("number", number).list();
@@ -75,7 +76,7 @@ public class GroupDaoImpl extends BaseDaoImpl<Group> implements GroupDao {
 	public List<Group> findByStartDate(Date startDate) {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
-			Transaction transaction = session.beginTransaction();
+			transaction = session.beginTransaction();
 			groups = (List<Group>) session
 					.createQuery(Group.FIND_BY_STARTDATE_QUERY)
 					.setParameter("startDate", startDate).list();
@@ -91,7 +92,7 @@ public class GroupDaoImpl extends BaseDaoImpl<Group> implements GroupDao {
 	public Group findByTeacherId(long teacherId) {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
-			Transaction transaction = session.beginTransaction();
+			transaction = session.beginTransaction();
 			newGroup = (Group) session.createQuery(Group.FIND_BY_TEACHER_QUERY)
 					.setParameter("teacherId", teacherId).uniqueResult();
 			transaction.commit();
@@ -106,7 +107,7 @@ public class GroupDaoImpl extends BaseDaoImpl<Group> implements GroupDao {
 	public Group findByNumberAndLetter(byte number, char letter) {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
-			Transaction transaction = session.beginTransaction();
+			transaction = session.beginTransaction();
 			newGroup = (Group) session
 					.createQuery(Group.FIND_BY_NUMBER_LETTER_QUERY)
 					.setParameter("number", number)
@@ -124,7 +125,7 @@ public class GroupDaoImpl extends BaseDaoImpl<Group> implements GroupDao {
 	public List<Group> findAllActiveGroups(Date actualDate) {
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
-			Transaction transaction = session.beginTransaction();
+			transaction = session.beginTransaction();
 			groups = (List<Group>) session
 					.createQuery(Group.FIND_ALL_ACTIVE_GROUP_QUERY)
 					.setDate("actualDate", actualDate).list();
