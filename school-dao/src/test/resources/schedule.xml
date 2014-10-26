@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<LESSON id="1" startTime="2014-10-23 8:30:00" finishTime="2014-10-23 9:15:00" />
+	<LESSON id="2" startTime="2014-10-23 9:25:00" finishTime="2014-10-23 10:10:00"/>
+	<LESSON id="3" startTime="2014-10-23 10:30:00" finishTime="2014-10-23 11:15:00" />
+	<LESSON id="4" startTime="2014-10-23 11:30:00" finishTime="2014-10-23 12:15:00"/>
+	
+	<USER id="1" email="testemail1@gmail.com" firstName="Roman" lastName="Petrov" 
+	password="password" registration="2014-10-20 23:06:10" sex="0"/>
+	<USER id="2" email="testemail2@gmail.com" firstName="Bogdan" lastName="Petrov" 
+	password="password" registration="2014-10-20 23:08:10" sex="0"/>
+	<USER id="3" email="testemail3@gmail.com" firstName="Ivan" lastName="Petrovsky" 
+	password="password" registration="2014-10-20 23:09:10" sex="0"/>
+	<USER id="4" email="testemail4@gmail.com" firstName="Petro" lastName="Petrovich" 
+	password="password" registration="2014-10-20 23:11:10" sex="0"/>
+	<USER id="5" email="testemail5@gmail.com" firstName="Grigoriy" lastName="PetrovRomanov" 
+	password="password" registration="2014-10-20 23:12:10" sex="0"/>
+	
+	
+	<TEACHER id="1" rate="100000" userId="1" isActive="0"/>
+	<TEACHER id="2" rate="150000" userId="2" isActive="0"/>
+	<TEACHER id="3" rate="120000" userId="3" isActive="0"/>
+	<TEACHER id="4" rate="130000" userId="4" isActive="0"/>
+	
+	<ROOM id="1" available="1" roomNumber="110" size="25"/>
+	<ROOM id="2" available="1" roomNumber="112" size="20"/>
+	<ROOM id="3" available="1" roomNumber="114" size="25"/>
+	<ROOM id="4" available="1" roomNumber="210" size="30"/>
+	
+	<GROUPS id="1" additional="0" letter="A" number="5" startDate="2010-09-01 08:30:00"
+	teacherId="1" endDate="2020-05-31 10:30:00"/>
+	<GROUPS id="2" additional="0" letter="B" number="5" startDate="2010-09-01 08:30:00"
+	teacherId="2" endDate="2020-05-31 10:30:00"/>
+	<GROUPS id="3" additional="1" letter="F" number="6" startDate="2009-09-01 08:30:00"
+	teacherId="3" endDate="2019-05-31 10:30:00"/>
+	<GROUPS id="4" additional="0" letter="A" number="10" startDate="2005-09-01 08:30:00"
+	teacherId="4" endDate="2015-05-31 10:30:00"/>
+
+	
+	<COURSE id="1" additional="0" coeficient="75" courseName="Math" groupNumber="5"
+	price="0"/>
+	<COURSE id="2" additional="0" coeficient="75" courseName="English" groupNumber="5"
+	price="0"/>
+	<COURSE id="3" additional="0" coeficient="75" courseName="Ukrainian" groupNumber="6"
+	price="0"/>
+	<COURSE id="4" additional="0" coeficient="75" courseName="Math" groupNumber="10"
+	price="0"/>
+	
+
+	
+	<SCHEDULE id="1" date="2014-10-23 08:08:10" groupId="1" lessonId="1" teacherId="1" 
+	courseId="1" roomId="1"/>
+	<SCHEDULE id="2" date="2014-10-23 08:08:10" groupId="1" lessonId="2" teacherId="2" 
+	courseId="2" roomId="4"/>
+	<SCHEDULE id="3" date="2014-10-23 08:08:10" groupId="4" lessonId="1" teacherId="3" 
+	courseId="4" roomId="4"/>
+	<SCHEDULE id="4" date="2014-10-23 08:08:10" groupId="3" lessonId="1" teacherId="4" 
+	courseId="3" roomId="2"/>
+	<SCHEDULE id="5" date="2014-10-24 08:08:10" groupId="1" lessonId="1" teacherId="1" 
+	courseId="1" roomId="1"/>
+	<SCHEDULE id="6" date="2014-10-25 08:08:10" groupId="1" lessonId="2" teacherId="2" 
+	courseId="2" roomId="4"/>
+	<SCHEDULE id="7" date="2014-10-25 08:08:10" groupId="4" lessonId="1" teacherId="3"
+	courseId="3" roomId="2"/>
+	<SCHEDULE id="8" date="2014-10-26 08:08:10" groupId="1" lessonId="1" teacherId="1" 
+	courseId="1" roomId="1"/>
+	<SCHEDULE id="9" date="2014-10-26 08:08:10" groupId="1" lessonId="2" teacherId="2" 
+	courseId="2" roomId="4"/>
+	<SCHEDULE id="10" date="2014-10-26 08:08:10" groupId="4" lessonId="1" teacherId="3"
+	courseId="3" roomId="2"/>
+	
+</dataset>  

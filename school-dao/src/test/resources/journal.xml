@@ -41,10 +41,8 @@
 	<GROUPS id="4" teacherId="3" number="9" letter="a" additional="TRUE"
 		startDate="2014-10-01 19:00:00" endDate="2014-11-01 21:00:00" />
 
-	<SCHEDULE id="1" date="2014-10-21 10:00:00" number="2"
-		courseId="1" groupId="1" lessonId="1" roomId="1" teacherId="1" />
-	<SCHEDULE id="2" date="2014-10-22 10:00:00" number="3"
-		courseId="1" groupId="2" lessonId="1" roomId="1" teacherId="2" />
+	<SCHEDULE id="1" date="2014-10-21 10:00:00" courseId="1" groupId="1" lessonId="1" roomId="1" teacherId="1" />
+	<SCHEDULE id="2" date="2014-10-22 10:00:00" courseId="1" groupId="2" lessonId="1" roomId="1" teacherId="2" />
 
 	<JOURNAL id="1" studentId="1" scheduleId="1" mark="10"
 		coefficient="2" date="2014-10-21 10:00:00" />

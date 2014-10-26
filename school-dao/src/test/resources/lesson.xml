@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<LESSON id="1" startTime="2014-10-23 8:30:00" finishTime="2014-10-23 9:15:00" />
+	<LESSON id="2" startTime="2014-10-23 9:25:00" finishTime="2014-10-23 10:10:00"/>
+	<LESSON id="3" startTime="2014-10-23 10:30:00" finishTime="2014-10-23 11:15:00" />
+	<LESSON id="4" startTime="2014-10-23 11:30:00" finishTime="2014-10-23 12:15:00"/>
+	<LESSON id="5" startTime="2014-10-23 12:25:00" finishTime="2014-10-23 13:10:00"/>
+	<LESSON id="6" startTime="2014-10-23 13:20:00" finishTime="2014-10-23 14:05:00"/>
+</dataset>  
