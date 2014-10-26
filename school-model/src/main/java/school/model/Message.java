@@ -14,92 +14,92 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "MESSAGE")
-//@NamedQueries ({@NamedQuery (name = "FIND_BY_RECEIVER", query = "from Message as m where m.receiver = :receiver"),  
-//@NamedQuery (name = "FIND_BY_SENDER", query = "from Message as m where m.sender = :sender")})
 public class Message {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-
+	
 	@ManyToOne
-	@JoinColumn(nullable = false, name = "senderId")
-	private User senderId;
-
-	@ManyToOne
-	@JoinColumn(nullable = false, name = "receiverId")
-	private User receiverId;
-
-	@Lob
+	@JoinColumn(name = "conversationId", nullable = false)
+	private Conversation conversationId;
+	
 	@Column(nullable = false)
+	private boolean isFromSender;
+	
+	@Lob
 	private String text;
 
 	@Column(nullable = false)
-	private Date date;
+	private Date dateTime;
 	
 	@Column(nullable = false)
 	private boolean isRead;
-
-/*	@OneToOne
-	@JoinColumn(name = "messageId")
-	private Message messageId;*/
 	
-	public static final String SELECT_ALL_MESSAGES_BY_RECEIVERID_QUERY = "from Message as m where m.receiverId = :receiverId";
-	public static final String SELECT_ALL_MESSAGES_BY_SENDERID_QUERY = "from Message as m where m.senderId = :senderId";
-	public static final String SELECT_DISTINCT_SENDERS_FOR_RECEIVER_QUERY = "select distinct senderId from Message as m where m.receiverId = :receiverId";
-	public static final String SELECT_ALL_MESSAGES_WITH_USERS_QUERY = "from Message as m where m.receiverId in (:users) and m.senderId in (:users)";
-	public static final String GET_COUNT_OF_LETTERS_WITH_USERS_QUERY = "SELECT COUNT(m) FROM Message m where m.receiverId in (:users) and m.senderId in (:users)";
-	public static final String GET_COUNT_OF_NEW_LETTERS_WITH_USERS_QUERY = "SELECT COUNT(m) FROM Message m where m.receiverId in (:users) and m.senderId in (:users) and m.isRead = true";
+	public static final String FIND_MESSAGES_OF_CONVERSATION_QUERY = "from Message m where m.conversationId = :conversation";
 	
 	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
-	public User getSenderId() {
-		return senderId;
+
+	public Conversation getConversationId() {
+		return conversationId;
 	}
-	public void setSenderId(User senderId) {
-		this.senderId = senderId;
+
+	public void setConversationId(Conversation conversationId) {
+		this.conversationId = conversationId;
 	}
-	public User getReceiverId() {
-		return receiverId;
+
+	public boolean isFromSender() {
+		return isFromSender;
 	}
-	public void setReceiverId(User receiverId) {
-		this.receiverId = receiverId;
+
+	public void setFromSender(boolean isFromSender) {
+		this.isFromSender = isFromSender;
 	}
+
 	public String getText() {
 		return text;
 	}
+
 	public void setText(String text) {
 		this.text = text;
 	}
-	public Date getDate() {
-		return date;
+
+	public Date getDateTime() {
+		return dateTime;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
 	}
+
 	public boolean isRead() {
 		return isRead;
 	}
+
 	public void setRead(boolean isRead) {
 		this.isRead = isRead;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result
+				+ ((conversationId == null) ? 0 : conversationId.hashCode());
+		result = prime * result
+				+ ((dateTime == null) ? 0 : dateTime.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + (isFromSender ? 1231 : 1237);
 		result = prime * result + (isRead ? 1231 : 1237);
-		result = prime * result
-				+ ((receiverId == null) ? 0 : receiverId.hashCode());
-		result = prime * result
-				+ ((senderId == null) ? 0 : senderId.hashCode());
 		result = prime * result + ((text == null) ? 0 : text.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -109,24 +109,21 @@ public class Message {
 		if (getClass() != obj.getClass())
 			return false;
 		Message other = (Message) obj;
-		if (date == null) {
-			if (other.date != null)
+		if (conversationId == null) {
+			if (other.conversationId != null)
 				return false;
-		} else if (!date.equals(other.date))
+		} else if (!conversationId.equals(other.conversationId))
+			return false;
+		if (dateTime == null) {
+			if (other.dateTime != null)
+				return false;
+		} else if (!dateTime.equals(other.dateTime))
 			return false;
 		if (id != other.id)
 			return false;
+		if (isFromSender != other.isFromSender)
+			return false;
 		if (isRead != other.isRead)
-			return false;
-		if (receiverId == null) {
-			if (other.receiverId != null)
-				return false;
-		} else if (!receiverId.equals(other.receiverId))
-			return false;
-		if (senderId == null) {
-			if (other.senderId != null)
-				return false;
-		} else if (!senderId.equals(other.senderId))
 			return false;
 		if (text == null) {
 			if (other.text != null)
