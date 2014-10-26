@@ -1,6 +1,7 @@
 package school.dao.sessionfactory.implementation;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Hibernate;
@@ -127,6 +128,24 @@ public class ConversationDaoImpl extends BaseDaoImpl<Conversation> implements Co
             }
         }
         return list;
+	}
+
+	public Date findDateForConversation(Conversation conversation) {
+		Session session = null;
+        Date date = null;
+        try {
+            session = HibernateSessionFactory.getSessionFactory().openSession();
+            Transaction transaction = session.beginTransaction();
+            date = (Date) session.createQuery(Conversation.SELECT_DATE_FOR_CONVERSATION_QUERY)
+            		.setParameter("conversation", conversation).uniqueResult();
+            transaction.commit();
+            
+        } finally {
+            if ((session != null) && (session.isOpen())) {
+                session.close();
+            }
+        }
+        return date;
 	}
 	
 	
