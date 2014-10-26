@@ -42,6 +42,9 @@ public class Conversation {
 			+ "where m.conversationId in (from Conversation c where c.receiverId = :receiver) "
 			+ "and m.isFromSender = 0";
 	
+	public static final String SELECT_DATE_FOR_CONVERSATION_QUERY = 
+			"select max(m.dateTime) from Message m where m.conversationId = :conversation";
+	
 	public long getId() {
 		return id;
 	}

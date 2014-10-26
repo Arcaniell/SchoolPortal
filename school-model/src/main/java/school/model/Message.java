@@ -18,25 +18,26 @@ public class Message {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "conversationId", nullable = false)
 	private Conversation conversationId;
-	
+
 	@Column(nullable = false)
 	private boolean isFromSender;
-	
+
 	@Lob
 	private String text;
 
 	@Column(nullable = false)
 	private Date dateTime;
-	
+
 	@Column(nullable = false)
 	private boolean isRead;
-	
-	public static final String FIND_MESSAGES_OF_CONVERSATION_QUERY = "from Message m where m.conversationId = :conversation";
-	
+
+	public static final String FIND_MESSAGES_OF_CONVERSATION_QUERY = 
+			"from Message m where m.conversationId = :conversation order by m.dateTime asc";
+
 	public long getId() {
 		return id;
 	}
@@ -132,6 +133,5 @@ public class Message {
 			return false;
 		return true;
 	}
-	
-	
+
 }
