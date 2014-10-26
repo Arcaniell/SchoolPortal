@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+	<USER id="1" email="testemail1@gmail.com" firstName="Roman"
+		lastName="Petrov" password="password" registration="2013-10-20 23:06:10"
+		sex="0" />
+	<USER id="2" email="testemail2@gmail.com" firstName="Bogdan"
+		lastName="Petrov" password="password" registration="2013-10-20 23:08:10"
+		sex="0" />
+	<USER id="3" email="testemail3@gmail.com" firstName="Ivan"
+		lastName="Petrovsky" password="password" registration="2013-10-20 23:09:10"
+		sex="0" />
+	<USER id="4" email="testemail4@gmail.com" firstName="Petro"
+		lastName="Petrovich" password="password" registration="2013-10-20 23:11:10"
+		sex="0" />
+	<USER id="5" email="testemail5@gmail.com" firstName="Ivan"
+		lastName="Petrovsky" password="password" registration="2013-10-20 23:09:10"
+		sex="0" />
+	<USER id="6" email="testemail6@gmail.com" firstName="Ivan"
+		lastName="Petrovsky" password="password" registration="2013-10-20 23:09:10"
+		sex="0" />
+	<COURSE id="1" courseName="Math" groupNumber="5" additional="0"
+		coeficient="1" price="10" />
+
+	<STUDENT id="1" userId="1" isActive="0" />
+	<STUDENT id="2" userId="2" isActive="0" />
+	<STUDENT id="3" userId="3" groupId="4" isActive="0" />
+
+	<TEACHER id="1" rate="5" userId="4" />
+	<TEACHER id="2" rate="5" userId="5" />
+	<TEACHER id="3" rate="5" userId="6" />
+	
+	<ROOM id="1" available="1" roomNumber="10" size="10"/>
+
+	<LESSON id="1" startTime="2014-11-01 10:00:00" />
+
+	<GROUPS id="1" teacherId="1" number="7" letter="a" additional="FALSE"
+		startDate="2014-09-01 09:00:00" endDate="2015-05-20 15:30:00" />
+	<GROUPS id="2" teacherId="2" number="7" letter="b" additional="FALSE"
+		startDate="2014-09-01 09:00:00" endDate="2015-05-20 15:30:00" />
+	<GROUPS id="4" teacherId="3" number="9" letter="a" additional="TRUE"
+		startDate="2014-10-01 19:00:00" endDate="2014-11-01 21:00:00" />
+
+	<SCHEDULE id="1" date="2014-10-21 10:00:00" number="2"
+		courseId="1" groupId="1" lessonId="1" roomId="1" teacherId="1" />
+	<SCHEDULE id="2" date="2014-10-22 10:00:00" number="3"
+		courseId="1" groupId="2" lessonId="1" roomId="1" teacherId="2" />
+
+	<JOURNAL id="1" studentId="1" scheduleId="1" mark="10"
+		coefficient="2" date="2014-10-21 10:00:00" />
+	<JOURNAL id="2" studentId="2" scheduleId="2" mark="10"
+		coefficient="2" date="2014-10-22 10:00:00" />
+
+	<student_addition_group_ref studentId="3"
+		groupId="4" />
+
+
+</dataset>
