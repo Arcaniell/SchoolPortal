@@ -1,7 +1,6 @@
 package school.dao.sessionfactory.implementation;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -19,15 +18,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import school.model.Conversation;
-import school.model.Message;
 import school.model.User;
 
 public class ConversationDaoImplTest extends DBUnitConfig{
 
 	private Conversation conversation;
 	private ConversationDaoImpl conversationDaoImpl;
+	private UserDaoImpl userDaoImpl;
 	private User receiver;
-	private User sender;
 
 	public ConversationDaoImplTest() {
 		super("ConversationDaoImplTest");
@@ -47,30 +45,9 @@ public class ConversationDaoImplTest extends DBUnitConfig{
 	    Session session = HibernateSessionFactory.getSessionFactory()
                 .openSession();
         session.close();
-	    receiver = new User();
-		receiver.setId(1L);
-		receiver.setEmail("testemail1@gmail.com");
-		receiver.setFirstName("Vladyslav");
-		receiver.setLastName("Maksymenko");
-		receiver.setPassword("password");
-		receiver.setRegistration(new Date());
-		receiver.setSex(User.SexType.MALE.getSex());
-				
-		sender = new User();
-		sender.setId(2L);
-		sender.setEmail("testemail2@gmail.com");
-		sender.setFirstName("Roman");
-		sender.setLastName("Mudry");
-		sender.setPassword("password");
-		sender.setRegistration(new Date());
-		sender.setSex(User.SexType.MALE.getSex());
-		
+        
+        userDaoImpl = new UserDaoImpl();	
 		conversation = new Conversation();
-		conversation.setId(1L);
-		conversation.setReceiverId(receiver);
-		conversation.setSenderId(sender);
-		conversation.setSubject("Subject1");
-		
 		conversationDaoImpl = new ConversationDaoImpl();
 		
         DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
@@ -97,6 +74,7 @@ public class ConversationDaoImplTest extends DBUnitConfig{
 
 	@Test
 	public void testFindInboxConversationsForUser() {
+		receiver = userDaoImpl.findById(1L);
 		List<Conversation> actualList = conversationDaoImpl.findInboxConversationsForUser(receiver);
 		Conversation conversation1 = conversationDaoImpl.findById(1L);
 		Conversation conversation3 = conversationDaoImpl.findById(3L);
@@ -113,6 +91,7 @@ public class ConversationDaoImplTest extends DBUnitConfig{
 	
 	@Test
 	public void testSentConversationsForUser() {
+		receiver = userDaoImpl.findById(1L);
 		List<Conversation> actualList = conversationDaoImpl.findSentConversationsForUser(receiver);
 		Conversation conversation5 = conversationDaoImpl.findById(5L);
 		Conversation conversation6 = conversationDaoImpl.findById(6L);
@@ -126,6 +105,7 @@ public class ConversationDaoImplTest extends DBUnitConfig{
 	
 	@Test
 	public void testFindSenderNameFromConversation() {
+		receiver = userDaoImpl.findById(1L);
 		List<Conversation> actualList = conversationDaoImpl.findInboxConversationsForUser(receiver);
 		
 		List<Conversation> expectedList = Arrays.asList(conversationDaoImpl.findById(1L), 
@@ -155,7 +135,6 @@ public class ConversationDaoImplTest extends DBUnitConfig{
 		newUser1.setRegistration(new Date());
 		newUser1.setSex(User.SexType.FEMALE.getSex());
 		
-		UserDaoImpl userDaoImpl = new UserDaoImpl();
 		userDaoImpl.save(newUser);
 		userDaoImpl.save(newUser1);
 		
@@ -171,33 +150,9 @@ public class ConversationDaoImplTest extends DBUnitConfig{
 	}
 	
 	@Test
-	public void testFindMessagesOfConversation() {
-		
-		Conversation conv = conversationDaoImpl.findById(1L);
-		
-		List<Message> actualList = conv.getMessages();
-		
-		List<Message> expectedList = new ArrayList<Message>();
-		
-		MessageDaoImpl messageDaoImpl = new MessageDaoImpl();
-		List<Message> messages = messageDaoImpl.findAll();
-		
-		for(Message m:messages) {
-			if(m.getConversationId().getId() == conv.getId()) {
-				expectedList.add(m);
-			}
-		}
-		
-		for(int i = 0; i < actualList.size(); i++) {
-			Assert.assertTrue(actualList.get(i).getId() == expectedList.get(i).getId());
-		}
-		
-	}
-	
-	@Test
 	public void testFindConversationById() {
 		Conversation conv = conversationDaoImpl.findById(1L);
-		Assert.assertEquals(conv.getId(), conversation.getId());	
+		Assert.assertEquals(conv.getId(), 1L);	
 	}
 	
 	@Test
