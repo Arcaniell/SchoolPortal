@@ -2,6 +2,7 @@ package school.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -9,15 +10,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity(name="SALARY")
+@Entity
+@Table(name="SALARY")
 public class Salary {
-	public static final String FIND_BY_DATE_QUERY = "SELECT s FROM SALARY s WHERE s.issueDate = :issueDate";
-	public static final String FIND_BY_PERIOD_QUERY = "SELECT s FROM SALARY s WHERE s.issueDate "
-			+ "BETWEEN :from AND :until";
-	public static final String FIND_BY_TEACHER_ID_QUERY = "SELECT s FROM SALARY s WHERE s.teacherId = teacherId";
+	public static final String FIND_BY_DATE_QUERY = "SELECT u FROM Salary u WHERE u.issueDate = :issueDate";
+	public static final String FIND_BY_PERIOD_QUERY = "SELECT u FROM Salary u WHERE u.issueDate BETWEEN :from AND :until";
+	public static final String FIND_BY_TEACHER_ID_QUERY = "SELECT u FROM Salary u WHERE u.teacher.id = :id";
 
 
 	@Id
@@ -29,7 +31,8 @@ public class Salary {
 	@Temporal(TemporalType.DATE)
 	private Date issueDate;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
+            CascadeType.MERGE })
 	@JoinColumn(name = "teacherId", nullable = false)
 	private Teacher teacher;
 

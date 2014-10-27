@@ -1,6 +1,5 @@
 package school.dao.sessionfactory.implementation;
 
-import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,7 +17,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import school.model.Group;
 import school.model.Room;
 
 public class RoomDaoImplTest extends DBUnitConfig {
@@ -46,7 +44,7 @@ public class RoomDaoImplTest extends DBUnitConfig {
 				.openSession();
 		roomDaoImpl = new RoomDaoImpl();
 		DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
-				.getConnection(), getDataSet());
+				.getConnection(), getBlank());
 		DatabaseOperation.INSERT.execute(this.getDatabaseTester()
 				.getConnection(), getDataSet());
 		session.close();
@@ -72,7 +70,7 @@ public class RoomDaoImplTest extends DBUnitConfig {
 
 	@Test
 	public void testFindByRoomNumber() {
-		room = roomDaoImpl.findByRoomNumber(1);
+		room = roomDaoImpl.findByRoomNumber(110);
 		Assert.assertEquals(1L, room.getId());
 	}
 	

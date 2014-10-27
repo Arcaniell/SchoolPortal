@@ -25,76 +25,93 @@ import school.model.Salary;
 
 public class SalaryDaoImplTest extends DBUnitConfig {
 
-	private SalaryDaoImpl salaryDaoImpl;
-	private Salary salary;
-	private List<Salary> salaries;
+    private SalaryDaoImpl salaryDaoImpl;
+    private Salary salary;
+    private List<Salary> salaries;
 
-	public SalaryDaoImplTest() {
-		super("SalaryDaoImplTest");
-		// TODO Auto-generated constructor stub
-	}
+    public SalaryDaoImplTest() {
+        super("SalaryDaoImplTest");
+        // TODO Auto-generated constructor stub
+    }
 
-	@BeforeClass
-	protected void setUpBeforeClass() throws Exception {
-	}
+    @BeforeClass
+    protected void setUpBeforeClass() throws Exception {
+    }
 
-	@AfterClass
-	protected void tearDownAfterClass() throws Exception {
-		HibernateSessionFactory.shutdown();
-	}
+    @AfterClass
+    protected void tearDownAfterClass() throws Exception {
+        HibernateSessionFactory.shutdown();
+    }
 
-	@Before
-	public void setUp() throws Exception {
-		Session session = HibernateSessionFactory.getSessionFactory()
-				.openSession();
-		salaryDaoImpl = new SalaryDaoImpl();
-		DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
-				.getConnection(), getDataSet());
-		DatabaseOperation.INSERT.execute(this.getDatabaseTester()
-				.getConnection(), getDataSet());
-		session.close();
-	}
+    @Before
+    public void setUp() throws Exception {
+        Session session = HibernateSessionFactory.getSessionFactory()
+                .openSession();
+        session.close();
+        salaryDaoImpl = new SalaryDaoImpl();
+        DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
+                .getConnection(), getBlank());
+        DatabaseOperation.INSERT.execute(this.getDatabaseTester()
+                .getConnection(), getGroup());
+        DatabaseOperation.INSERT.execute(this.getDatabaseTester()
+                .getConnection(), getSalary());
 
-	@After
-	public void tearDown() throws Exception {
-		DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
-				.getConnection(), getBlank());
-	}
+    }
 
-	private IDataSet getBlank() throws DataSetException, IOException {
-		return new FlatXmlDataSet(this.getClass().getResourceAsStream(
-				"/blank.xml"));
-	}
+    private IDataSet getSalary() throws DataSetException, IOException {
+        return new FlatXmlDataSet(this.getClass().getResourceAsStream(
+                "/salary.xml"));
+    }
 
-	@Override
-	protected IDataSet getDataSet() throws DataSetException,
-			FileNotFoundException, IOException {
-		return new FlatXmlDataSet(this.getClass().getResourceAsStream(
-				"/salary.xml"));
-	}
+    private IDataSet getGroup() throws DataSetException, IOException {
+        return new FlatXmlDataSet(this.getClass().getResourceAsStream(
+                "/group.xml"));
+    }
 
-	@Test
-	public void testFindByDate() throws ParseException {
-		Date date = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
-				.parse("2014-10-13 18:00:00");
-		salaries = salaryDaoImpl.findByDate(date);
-		Assert.assertTrue(salaries.size() == 1);
-	}
-	
-	@Test
-	public void testFindByPeriod() throws ParseException {
-		Date dateFrom = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
-				.parse("2014-10-10 18:00:00");
-		Date dateUntil = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
-				.parse("2014-12-10 18:00:00");
-		salaries = salaryDaoImpl.findByPeriod(dateFrom, dateUntil);
-		Assert.assertTrue(salaries.size() == 2);
-	}
-	
-	@Test
-	public void testFindByTeacherId() {
-		salaries = salaryDaoImpl.findByTeacherId(1L);
-		Assert.assertTrue(salaries.size() == 2);
-	}
+    @After
+    public void tearDown() throws Exception {
+        DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester()
+                .getConnection(), getSalary());
+        DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester()
+                .getConnection(), getGroup());
+        DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
+                .getConnection(), getBlank());
+    }
+
+    private IDataSet getBlank() throws DataSetException, IOException {
+        return new FlatXmlDataSet(this.getClass().getResourceAsStream(
+                "/blank.xml"));
+    }
+
+    @Override
+    @Deprecated
+    protected IDataSet getDataSet() throws DataSetException,
+            FileNotFoundException, IOException {
+        return null;
+    }
+
+    @Test
+    public void testFindByDate() throws ParseException {
+        Date date = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
+                .parse("2014-10-13 18:00:00");
+        salaries = salaryDaoImpl.findByDate(date);
+        Assert.assertTrue(salaries.size() == 1);
+    }
+
+    @Test
+    public void testFindByPeriod() throws ParseException {
+        Date dateFrom = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
+                .parse("2014-10-10 18:00:00");
+        Date dateUntil = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
+                .parse("2014-12-10 18:00:00");
+        salaries = salaryDaoImpl.findByPeriod(dateFrom, dateUntil);
+        Assert.assertTrue(salaries.size() == 2);
+    }
+
+    @Test
+    public void testFindByTeacherId() {
+        salaries = salaryDaoImpl.findByTeacherId(1L);
+        Assert.assertTrue(salaries.size() == 2);
+    }
 
 }

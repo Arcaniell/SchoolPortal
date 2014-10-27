@@ -45,7 +45,7 @@ public class SalaryDaoImpl extends BaseDaoImpl<Salary> implements SalaryDao{
 			session = HibernateSessionFactory.getSessionFactory().openSession();
 			Transaction transaction = session.beginTransaction();
 			salaries = (List<Salary>) session
-					.createQuery(Salary.FIND_BY_DATE_QUERY)
+					.createQuery(Salary.FIND_BY_PERIOD_QUERY)
 					.setDate("from", from).setDate("until", until).list();
 			transaction.commit();
 		} finally {
@@ -64,7 +64,7 @@ public class SalaryDaoImpl extends BaseDaoImpl<Salary> implements SalaryDao{
 			Transaction transaction = session.beginTransaction();
 			salaries = (List<Salary>) session
 					.createQuery(Salary.FIND_BY_TEACHER_ID_QUERY)
-					.setLong("teacherId", teacherId).list();
+					.setLong("id", teacherId).list();
 			transaction.commit();
 		} finally {
 			if ((session != null) && (session.isOpen())) {
