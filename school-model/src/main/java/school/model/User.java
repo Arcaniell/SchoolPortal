@@ -21,6 +21,8 @@ import javax.persistence.Table;
 public class User {
 	
 	public static final String FIND_BY_EMAIL_QUERY = "SELECT u FROM User u WHERE u.email = :email";
+	public static final String FIND_BY_EMAIL_AND_PASSWORD_QUERY = 
+			"SELECT u FROM User u WHERE u.email = :email and u.password = :password";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

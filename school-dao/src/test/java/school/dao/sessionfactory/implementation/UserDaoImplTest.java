@@ -74,7 +74,11 @@ public class UserDaoImplTest extends DBUnitConfig{
 		Assert.assertEquals(user.getEmail(), newUser.getEmail());
 		
 	}
-
+	@Test
+	public void testFindByEmailAndPassword() {
+		User newUser = userDaoImpl.findByEmailAndPassword(user.getEmail(), user.getPassword());
+		Assert.assertEquals(user.getEmail(), newUser.getEmail());	
+	}
 	@Test
 	public void testFindById() {
 		User newUser = userDaoImpl.findById(1L);
