@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Table(name="LESSON")
 public class Lesson {
 	
-	public static final String FIND_BY_START_TIME_QUERY = "SELECT less FROM Lesson less WHERE less.startTime = :startTime";
+public static final String FIND_BY_START_TIME_QUERY = "SELECT less FROM Lesson less WHERE less.startTime = :startTime";
 	
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,11 +39,10 @@ public void setLesId(Long id){
 	this.id = id;
 }
 
-//поправ
+
 public void setLesStartTime(Date startTime){
 	this.startTime = startTime;
 }
-
 
 
 public Date getLesFinishTime() {

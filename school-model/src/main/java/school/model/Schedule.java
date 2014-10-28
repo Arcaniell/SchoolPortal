@@ -25,7 +25,10 @@ public class Schedule {
 	public static final String FIND_BY_ROOM_QUERY = "SELECT sch FROM Schedule sch WHERE sch.room = :room";
 	public static final String FIND_BY_TEACHER_QUERY = "SELECT sch FROM Schedule sch WHERE sch.teacher = :teacher";
 	public static final String FIND_BY_LESSON_QUERY = "SELECT sch FROM Schedule sch WHERE sch.lesson = :lesson";
-	
+	public static final String FIND_BY_TEACHER_GROUP_INTERVAL_QUERY = "SELECT sch FROM Schedule sch WHERE sch.teacher.id = :teacherId AND sch.group.id = :groupId AND sch.date  BETWEEN :from AND :till";
+	public static final String FIND_BY_TEACHER_ROOM_INTERVAL_QUERY = "SELECT sch FROM Schedule sch WHERE sch.teacher.id = :teacherId AND sch.room.id = :roomId AND sch.date  BETWEEN :from AND :till";
+	public static final String FIND_BY_GROUP_ROOM_INTERVAL_QUERY = "SELECT sch FROM Schedule sch WHERE sch.group.id = :groupId AND sch.room.id = :roomId AND sch.date  BETWEEN :from AND :till";
+	public static final String FIND_BY_TEACHER_GROUP_ROOM_INTERVAL_QUERY = "SELECT sch FROM Schedule sch WHERE sch.teacher.id = :teacherId AND sch.group.id = :groupId AND sch.room.id =:roomId AND sch.date  BETWEEN :from AND :till";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +44,6 @@ public class Schedule {
 	@JoinColumn(nullable = false, name = "groupId")
 	private Group group;
 	
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false, name = "teacherId")
 	private Teacher teacher;
@@ -53,13 +55,11 @@ public class Schedule {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false, name = "roomId")
 	private Room room;
-	
-//nullable = false,
-	
+		
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false, name = "courseId")
 	private Course course;
-	//добрих хтось змінив
+	
 	
 	public Schedule() {
 		super();
@@ -109,15 +109,15 @@ public class Schedule {
 	public void setRoom(Room room) {
 		this.room = room;
 	}
-	//WTF
+	
 	public Course getCourse() {
 		return course;
 	}
-	//wtf
+	
 	public void setCourse(Course course) {
 		this.course = course;
 	}
-//wtf
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -133,7 +133,7 @@ public class Schedule {
 		return result;
 	}
 
-	//WTF
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

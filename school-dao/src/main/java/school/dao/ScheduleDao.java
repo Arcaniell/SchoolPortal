@@ -19,8 +19,8 @@ List<Schedule> findByRoom (Room room);
 List<Schedule> findByTeacher (Teacher teacher);
 List<Schedule> findByDates (Date from, Date till);
 List<Schedule> findByLesson (Lesson lesson);
-List<Schedule> findByTeacherGroup (Teacher teacher, Group group, Date from, Date till);
-List<Schedule> findByTeacherRoom (Teacher teacher, Room room, Date from, Date till);
-List<Schedule> findByGroupRoom (Group group, Room room, Date from, Date till);
-List<Schedule> findByTeacherGroupRoom (Teacher teacher, Group group, Room room, Date from, Date till);
+List<Schedule> findByTeacherGroupInterval (long teacherId, long groupId, Date from, Date till);
+List<Schedule> findByTeacherRoomInterval (long teacherId, long roomId, Date from, Date till);
+List<Schedule> findByGroupRoomInterval (long groupId, long roomId, Date from, Date till);
+List<Schedule> findByTeacherGroupRoomInterval (long teacherId, long groupId, long roomId, Date from, Date till);
 }

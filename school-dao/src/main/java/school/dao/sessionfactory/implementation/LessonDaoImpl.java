@@ -16,15 +16,15 @@ public class LessonDaoImpl extends BaseDaoImpl<Lesson> implements LessonDao {
 		super(Lesson.class);
 	}
 	
-	
-	public Lesson findByStartTime(Date date) {
+
+	public Lesson findByStartTime(Date startTime) {
 		Session session = null;
 		Lesson newEntity = null;
 		try {
 			session = HibernateSessionFactory.getSessionFactory().openSession();
 			Transaction transaction = session.beginTransaction();
 			newEntity = (Lesson) session.createQuery(Lesson.FIND_BY_START_TIME_QUERY)
-					.setDate("date", date).uniqueResult();
+					.setParameter("startTime", startTime).uniqueResult();
 			transaction.commit();
 		} finally {
 			if ((session != null) && (session.isOpen())) {

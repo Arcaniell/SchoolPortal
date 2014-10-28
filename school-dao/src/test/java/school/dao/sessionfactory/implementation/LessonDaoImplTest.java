@@ -1,7 +1,9 @@
 package school.dao.sessionfactory.implementation;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 
 
 import org.dbunit.dataset.IDataSet;
@@ -28,9 +30,13 @@ public class LessonDaoImplTest extends DBUnitConfig {
 
 	private Lesson lesson;
 	private LessonDaoImpl lessonDaoImpl;
+	private Date dateN;
+	private Date dateStart;
+	private Date dateFinish;
 	
 	@BeforeClass
 	protected static void setUpBeforeClass() throws Exception {
+		
 	}
 	
 	@AfterClass
@@ -40,11 +46,19 @@ public class LessonDaoImplTest extends DBUnitConfig {
 	
 	@Before
 	public void setUp() throws Exception {
+		
+		String str2 = "2014-10-23 12:20:00.0";
+		dateFinish = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(str2);
+		String str1 = "2014-10-23 11:30:00.0";
+		dateStart = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(str1);
+		
 		lesson = new Lesson();
 		lesson.setLesId(1L);
+		String str = "2014-10-23 08:30:00.0";
+		dateN = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(str);
+		lesson.setLesStartTime(dateN);
+		lesson.setLesFinishTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse("2014-10-23 09:15:00.0"));
 		
-		//need fixing
-		lesson.setLesStartTime(new Date(10,23,2014,8,30,00));
 		lessonDaoImpl = new LessonDaoImpl();
 		Session session = HibernateSessionFactory.getSessionFactory().openSession();
 		IDataSet lessonDataSet = getDataSet();
@@ -75,10 +89,9 @@ public class LessonDaoImplTest extends DBUnitConfig {
 	@Test
 	public void testSave() {
 		Lesson newLesson = new Lesson();
-			
-		//need fixing
-		newLesson.setLesStartTime(new Date(10,23,2014,11,30,00));
-		newLesson.setLesFinishTime(new Date(10,23,2014,12,20,00));
+
+		newLesson.setLesStartTime(dateStart);
+		newLesson.setLesFinishTime(dateFinish);
 		lessonDaoImpl = new LessonDaoImpl();
 		lessonDaoImpl.save(newLesson);
 		List<Lesson> lessons = lessonDaoImpl.findAll();
@@ -93,15 +106,12 @@ public class LessonDaoImplTest extends DBUnitConfig {
 		Assert.assertNull(lessonDaoImpl.findById(1L));
 	}
 
-	@SuppressWarnings("deprecation")
+
 	@Test
 	public void testUpdate() {
 		Lesson newLesson = lessonDaoImpl.findById(1L);
-		Assert.assertEquals(lesson.getLesStartTime().getHours(), newLesson.getLesStartTime().getHours());
-		Assert.assertEquals(lesson.getLesStartTime().getMinutes(), newLesson.getLesStartTime().getMinutes());
-		
-		//need fixing
-		lesson.setLesStartTime(new Date(10,23,2014,13,20,00));;
+		Assert.assertEquals(lesson.getLesStartTime(), newLesson.getLesStartTime());
+		lesson.setLesStartTime(dateStart);;
 		newLesson = lessonDaoImpl.update(newLesson);
 		Assert.assertNotEquals(lesson.getLesStartTime(), newLesson.getLesStartTime());
 	
@@ -111,6 +121,12 @@ public class LessonDaoImplTest extends DBUnitConfig {
 	public void testFindAll() {
 		List<Lesson> lessons = lessonDaoImpl.findAll();
 		Assert.assertTrue(lessons.size() == 6);;
+	}
+	
+	@Test
+	public void testFindByStartTime() {
+		Lesson newLesson = lessonDaoImpl.findByStartTime(lesson.getLesStartTime());
+		Assert.assertEquals( lesson, newLesson);
 	}
 	
 }

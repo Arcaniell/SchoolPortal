@@ -1,15 +1,10 @@
 package school.dao.sessionfactory.implementation;
 
-
 import java.util.Date;
-
 import java.util.List;
-
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
-import org.hibernate.criterion.Restrictions;
 
 import school.dao.ScheduleDao;
 import school.model.Group;
@@ -25,7 +20,6 @@ public ScheduleDaoImpl() {
 	super(Schedule.class);
 	}
 	
-	
 @SuppressWarnings("unchecked")
 public List<Schedule> findByDates(Date from, Date till) {
 	Session session = null;
@@ -34,7 +28,7 @@ public List<Schedule> findByDates(Date from, Date till) {
 		session = HibernateSessionFactory.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
 		entities = (List<Schedule>) session.createQuery(Schedule.FIND_BY_DATES_QUERY)
-				.setDate("from", from).setDate("till", till).list();
+				.setParameter("from", from).setParameter("till", till).list();
 		transaction.commit();
 	} finally {
 		if ((session != null) && (session.isOpen())) {
@@ -43,8 +37,6 @@ public List<Schedule> findByDates(Date from, Date till) {
 	}
 	return entities;
 	}
-	
-
 	
 @SuppressWarnings("unchecked")
 public	List<Schedule> findByGroup (Group group){
@@ -64,7 +56,6 @@ public	List<Schedule> findByGroup (Group group){
 	return entities;
 	} 
 
-
 @SuppressWarnings("unchecked")
 public	List<Schedule> findByCourse (Course course){
 	Session session = null;
@@ -82,7 +73,6 @@ public	List<Schedule> findByCourse (Course course){
 	}
 	return entities;
 	}
-
 
 @SuppressWarnings("unchecked")
 public	List<Schedule> findByRoom (Room room){
@@ -138,95 +128,104 @@ public List<Schedule> findByLesson (Lesson lesson){
 	return entities;
 	}
 	
-//add Projection
-
 @SuppressWarnings("unchecked")
-public List<Schedule> findByTeacherGroup (Teacher teacher, Group group, Date from, Date till) {
+public List<Schedule> findByTeacherGroupInterval(long teacherId, long groupId, Date from, Date till) {
+
+
 	Session session = null;
 	List<Schedule> entities = null;
 	try {
 		session = HibernateSessionFactory.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		entities = (List<Schedule>) session.createCriteria(Schedule.class)
-	    .add( Restrictions.eq("teacherId", teacher.getId()) )
-	    .add( Restrictions.eq("groupId", group.getId()))
-	    .add(Restrictions.between("date", from, till))
-	    .list();
+		entities = (List<Schedule>) session
+				.createQuery(Schedule.FIND_BY_TEACHER_GROUP_INTERVAL_QUERY)
+				.setParameter("teacherId", teacherId)
+				.setParameter("groupId", groupId)
+				.setParameter("from", from)
+				.setParameter("till", till)
+				.list();
 		transaction.commit();
-	} finally {
+		} finally {
 			if ((session != null) && (session.isOpen())) {
 				session.close();
 			}
+		}
+		return entities;
 	}
-	return entities;
-	
-}
 
 @SuppressWarnings("unchecked")
-public List<Schedule> findByTeacherRoom (Teacher teacher, Room room, Date from, Date till) {
+public List<Schedule> findByTeacherRoomInterval(long teacherId, long roomId,
+		Date from, Date till) {
+
 	Session session = null;
 	List<Schedule> entities = null;
 	try {
 		session = HibernateSessionFactory.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		entities = (List<Schedule>) session.createCriteria(Schedule.class)
-	    .add( Restrictions.eq("teacherId", teacher.getId()) )
-	    .add( Restrictions.eq("roomId", room.getId()))
-	    .add(Restrictions.between("date", from, till))
-	    .list();
-		transaction.commit();	
-	} finally {
-			if ((session != null) && (session.isOpen())) {
-				session.close();
-			}
-	}
-	return entities;
-	
-}
-
-@SuppressWarnings("unchecked")
-public List<Schedule> findByGroupRoom (Group group, Room room, Date from, Date till) {
-	Session session = null;
-	List<Schedule> entities = null;
-	try {
-		session = HibernateSessionFactory.getSessionFactory().openSession();
-		Transaction transaction = session.beginTransaction();
-		entities = (List<Schedule>) session.createCriteria(Schedule.class)
-	    .add( Restrictions.eq("groupId", group.getId()) )
-	    .add( Restrictions.eq("roomId", room.getId()))
-	    .add(Restrictions.between("date", from, till))
-	    .list();
+		entities = (List<Schedule>) session
+				.createQuery(Schedule.FIND_BY_TEACHER_ROOM_INTERVAL_QUERY)
+				.setParameter("teacherId", teacherId)
+				.setParameter("roomId", roomId)
+				.setParameter("from", from)
+				.setParameter("till", till)
+				.list();
 		transaction.commit();
-	} finally {
+		} finally {
 			if ((session != null) && (session.isOpen())) {
 				session.close();
 			}
-	}
-	return entities;
-	
+		}
+		return entities;
 }
 
 @SuppressWarnings("unchecked")
-public List<Schedule> findByTeacherGroupRoom (Teacher teacher, Group group, Room room, Date from, Date till) {
+public List<Schedule> findByGroupRoomInterval(long groupId, long roomId,
+		Date from, Date till) {
+
 	Session session = null;
 	List<Schedule> entities = null;
 	try {
 		session = HibernateSessionFactory.getSessionFactory().openSession();
 		Transaction transaction = session.beginTransaction();
-		entities = (List<Schedule>) session.createCriteria(Schedule.class)
-	    .add( Restrictions.eq("teacherId", teacher.getId()) )
-	    .add( Restrictions.eq("groupId", group.getId()))
-	    .add( Restrictions.eq("roomId", room.getId()))
-	    .add(Restrictions.between("date", from, till))
-	    .list();
+		entities = (List<Schedule>) session
+				.createQuery(Schedule.FIND_BY_GROUP_ROOM_INTERVAL_QUERY)
+				.setParameter("groupId", groupId)
+				.setParameter("roomId", roomId)
+				.setParameter("from", from)
+				.setParameter("till", till)
+				.list();
 		transaction.commit();
-	} finally {
+		} finally {
 			if ((session != null) && (session.isOpen())) {
 				session.close();
 			}
-	}
-	return entities;
-	
+		}
+		return entities;
 }
 
+@SuppressWarnings("unchecked")
+public List<Schedule> findByTeacherGroupRoomInterval(long teacherId,
+		long groupId, long roomId, Date from, Date till) {
+	
+	Session session = null;
+	List<Schedule> entities = null;
+	try {
+		session = HibernateSessionFactory.getSessionFactory().openSession();
+		Transaction transaction = session.beginTransaction();
+		entities = (List<Schedule>) session
+				.createQuery(Schedule.FIND_BY_TEACHER_GROUP_ROOM_INTERVAL_QUERY)
+				.setParameter("teacherId", teacherId)
+				.setParameter("groupId", groupId)
+				.setParameter("roomId", roomId)
+				.setParameter("from", from)
+				.setParameter("till", till)
+				.list();
+		transaction.commit();
+		} finally {
+			if ((session != null) && (session.isOpen())) {
+				session.close();
+			}
+		}
+		return entities;
+}
 }
