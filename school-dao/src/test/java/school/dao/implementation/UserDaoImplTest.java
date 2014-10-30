@@ -56,7 +56,7 @@ public class UserDaoImplTest extends DBUnitConfig {
 	@Override
 	protected IDataSet getDataSet() throws Exception {
 		return new FlatXmlDataSet(this.getClass().getResourceAsStream(
-				"/user.xml"));
+				"/xml-data-sets/user.xml"));
 	}
 
 	@Test

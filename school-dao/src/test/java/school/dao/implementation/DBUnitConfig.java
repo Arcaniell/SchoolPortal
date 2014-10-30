@@ -13,7 +13,7 @@ public abstract class DBUnitConfig extends DBTestCase {
 		super(name);
 		Properties properties = new Properties();
 		InputStream inputStream = getClass().getClassLoader()
-				.getResourceAsStream("db.config.properties");
+				.getResourceAsStream("META-INF/db.config.properties");
 		try {
 			properties.load(inputStream);
 			System.setProperty(
