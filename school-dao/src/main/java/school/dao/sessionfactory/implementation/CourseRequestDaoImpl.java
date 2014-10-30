@@ -1,17 +1,13 @@
 package school.dao.sessionfactory.implementation;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import school.dao.CourseRequestDao;
 import school.model.CourseRequest;
-import school.model.Student;
 
 public class CourseRequestDaoImpl extends BaseDaoImpl<CourseRequest> implements
         CourseRequestDao {

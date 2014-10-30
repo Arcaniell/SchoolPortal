@@ -6,19 +6,19 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>school-service</artifactId>
-  
   <dependencies>
-   	<dependency>
-  		<groupId>lv128</groupId>
-  		<artifactId>school-model</artifactId>
-  		<version>0.0.1-SNAPSHOT</version>
-  		<scope>provided</scope>
-  	</dependency>
   	<dependency>
-  		<groupId>lv128</groupId>
-  		<artifactId>school-dao</artifactId>
-  		<version>0.0.1-SNAPSHOT</version>
-  		<scope>provided</scope>
-  	</dependency>
+			<groupId>lv128</groupId>
+			<artifactId>school-dao</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
   </dependencies>
+	<build>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
+	</build>
 </project>

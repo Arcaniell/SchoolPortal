@@ -1,0 +1,38 @@
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://java.sun.com/xml/ns/persistence
+        http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="primary" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>school.model.User</class>
+		<class>school.model.Role</class>
+		<class>school.model.CourseRequest</class>
+		<class>school.model.Group</class>
+		<class>school.model.Journal</class>
+		<class>school.model.Lesson</class>
+		<class>school.model.Message</class>
+		<class>school.model.Parent</class>
+		<class>school.model.RoleRequest</class>
+		<class>school.model.Room</class>
+		<class>school.model.Salary</class>
+		<class>school.model.Schedule</class>
+		<class>school.model.Student</class>
+		<class>school.model.Teacher</class>
+		<class>school.model.Course</class>
+		<class>school.model.Conversation</class>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.connection.show_sql" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+			<property name="hibernate.jdbc.use_scrollable_resultset"
+				value="false" />
+			<property name="hibernate.connection.username" value="root" />
+			<property name="hibernate.connection.password" value="revan" />
+
+			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/SchoolTestDB" />
+		</properties>
+
+	</persistence-unit>
+</persistence>

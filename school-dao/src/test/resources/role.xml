@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<ROLE id="1" name="Teacher"/>
+	<ROLE id="2" name="Parent"/>
+	<ROLE id="3" name="Head Teacher"/>
+	<ROLE id="4" name="Director"/>
+	<ROLE id="5" name="Student"/>
+	<ROLE id="6" name="Admin"/>
+</dataset>  

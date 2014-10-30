@@ -1,5 +1,7 @@
 package school.service;
 
-public class UserService {
-	
+import school.model.User;
+
+public interface UserService {
+	User createUser(User user);
 }

@@ -54,16 +54,14 @@ public class RoleRequestDaoTest extends DBUnitConfig{
 		roleRequest.setRequestDate(new Date());
 		roleRequestDaoImpl = new RoleRequestDaoImpl();
 		Session session = HibernateSessionFactory.getSessionFactory().openSession();
-		IDataSet rolerequestDataSet = getDataSet();
-		DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester().getConnection(), rolerequestDataSet);
+		DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester().getConnection(), getDataSet());
 		session.close();
 		  
 	}
 	@After
 	public void tearDown() throws Exception {
 		Session session = HibernateSessionFactory.getSessionFactory().openSession();
-		IDataSet rolerequestDataSet = getDataSet();
-		DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester().getConnection(), rolerequestDataSet);
+		DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester().getConnection(), getDataSet());
 		session.close();
 	}
 

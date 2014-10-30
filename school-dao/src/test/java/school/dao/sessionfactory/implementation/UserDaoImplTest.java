@@ -44,28 +44,20 @@ public class UserDaoImplTest extends DBUnitConfig{
 		user.setSex(User.SexType.MALE.getSex());
 		userDaoImpl = new UserDaoImpl();
 		Session session = HibernateSessionFactory.getSessionFactory().openSession();
-		IDataSet userDataSet = getDataSet();
-//        DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
-//                .getConnection(), getBlank());
-		DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester().getConnection(), userDataSet);
+		DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester().getConnection(), getDataSet());
 		session.close();
 		  
 	}
 	@After
 	public void tearDown() throws Exception {
 		Session session = HibernateSessionFactory.getSessionFactory().openSession();
-		IDataSet userDataSet = getDataSet();
-		DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester().getConnection(), userDataSet);
+		DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester().getConnection(), getDataSet());
 		session.close();
 	}
 	
 	@Override
 	protected IDataSet getDataSet() throws Exception {
 		return new FlatXmlDataSet(this.getClass().getResourceAsStream("/user.xml"));
-	}
-	
-	protected IDataSet getBlank() throws Exception {
-		return new FlatXmlDataSet(this.getClass().getResourceAsStream("/messageBlank.xml"));
 	}
 	
 	@Test

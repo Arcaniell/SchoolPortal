@@ -14,16 +14,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "USER")
 public class User {
-	
+	public static final String FIND_BY_EMAIL = "User.findByEmail";
 	public static final String FIND_BY_EMAIL_QUERY = "SELECT u FROM User u WHERE u.email = :email";
-	public static final String FIND_BY_EMAIL_AND_PASSWORD_QUERY = 
-			"SELECT u FROM User u WHERE u.email = :email and u.password = :password";
-	
+	public static final String FIND_BY_EMAIL_AND_PASSWORD = "User.findByEmailAndPassword";
+	public static final String FIND_BY_EMAIL_AND_PASSWORD_QUERY = "SELECT u FROM User u WHERE u.email = :email and u.password = :password";
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -35,7 +37,7 @@ public class User {
 	private String firstName;
 	@Column(nullable = false, length = 45)
 	private String lastName;
-	@Column (nullable = false)
+	@Column(nullable = false)
 	private byte sex;
 	@Column(nullable = false)
 	private Date registration;
@@ -94,7 +96,6 @@ public class User {
 	public void setSex(byte sex) {
 		this.sex = sex;
 	}
-
 
 	public Date getRegistration() {
 		return registration;
@@ -170,13 +171,16 @@ public class User {
 			return false;
 		return true;
 	}
-	public enum SexType{
-		MALE((byte) 0),FEMALE((byte) 1),OTHER((byte) 2);
+
+	public enum SexType {
+		MALE((byte) 0), FEMALE((byte) 1), OTHER((byte) 2);
 		private byte sex;
-		SexType(byte sex){
+
+		SexType(byte sex) {
 			this.sex = sex;
 		}
-		public byte getSex(){
+
+		public byte getSex() {
 			return sex;
 		}
 	}

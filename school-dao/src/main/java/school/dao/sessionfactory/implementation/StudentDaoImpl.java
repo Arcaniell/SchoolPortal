@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import school.dao.StudentDao;
-import school.model.CourseRequest;
 import school.model.Student;
 
 public class StudentDaoImpl extends BaseDaoImpl<Student> implements StudentDao {
