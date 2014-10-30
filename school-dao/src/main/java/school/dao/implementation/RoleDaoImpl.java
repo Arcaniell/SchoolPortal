@@ -1,9 +1,12 @@
 package school.dao.implementation;
 
+import org.springframework.stereotype.Repository;
+
 import school.dao.RoleDao;
 import school.model.Role;
 
-public class RoleDaoImpl extends BaseDaoImpl<Role> implements RoleDao{
+@Repository
+public class RoleDaoImpl extends BaseDaoImpl<Role, Integer> implements RoleDao{
 
 	public RoleDaoImpl() {
 		super(Role.class);

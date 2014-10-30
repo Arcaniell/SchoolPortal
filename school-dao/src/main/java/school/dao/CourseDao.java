@@ -4,7 +4,7 @@ import java.util.List;
 
 import school.model.Course;
 
-public interface CourseDao extends BaseDao<Course> {
+public interface CourseDao extends BaseDao<Course, Long> {
 
 	List<Course> findAllAddition();
 

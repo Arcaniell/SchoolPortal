@@ -12,7 +12,7 @@ import school.model.Schedule;
 import school.model.Course;
 import school.model.Teacher;
 
-public interface ScheduleDao extends BaseDao<Schedule> {
+public interface ScheduleDao extends BaseDao<Schedule, Long> {
 List<Schedule> findByGroup (Group group); 
 List<Schedule> findByCourse (Course course);
 List<Schedule> findByRoom (Room room);

@@ -3,6 +3,7 @@ package school.dao.implementation;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import school.dao.BaseDao;
 
 
-public abstract class BaseDaoImpl<E> implements BaseDao<E>{
+public abstract class BaseDaoImpl<E, N extends Number> implements BaseDao<E, N>{
 	private Class<E> entityClass;
 	
 	public BaseDaoImpl(Class<E> entityClass) {
@@ -22,10 +23,15 @@ public abstract class BaseDaoImpl<E> implements BaseDao<E>{
 	EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
-	public E findById(long id) {
+	@Transactional
+	public E findById(N id) {
+		try{
 		return (E) entityManager.createQuery("select e from "+entityClass.getSimpleName()
 				+" e where e.id = :id")
 				.setParameter("id", id).getSingleResult();
+		}catch(NoResultException e){
+			return null;
+		}
 	}
 	@Transactional
 	public void save(E entity) {
@@ -42,6 +48,7 @@ public abstract class BaseDaoImpl<E> implements BaseDao<E>{
 	}
 
 	@SuppressWarnings("unchecked")
+	@Transactional
 	public List<E> findAll() {
 		return entityManager.createQuery("from "+entityClass.getSimpleName()).getResultList();
 	}

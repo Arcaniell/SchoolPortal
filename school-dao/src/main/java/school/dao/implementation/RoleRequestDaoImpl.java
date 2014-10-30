@@ -1,9 +1,12 @@
 package school.dao.implementation;
 
+import org.springframework.stereotype.Repository;
+
 import school.dao.RoleRequestDao;
 import school.model.RoleRequest;
 
-public class RoleRequestDaoImpl extends BaseDaoImpl<RoleRequest> implements RoleRequestDao{
+@Repository
+public class RoleRequestDaoImpl extends BaseDaoImpl<RoleRequest, Long> implements RoleRequestDao{
 
 	public RoleRequestDaoImpl() {
 		super(RoleRequest.class);

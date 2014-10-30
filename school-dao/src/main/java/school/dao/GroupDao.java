@@ -5,7 +5,7 @@ import java.util.List;
 
 import school.model.Group;
 
-public interface GroupDao extends BaseDao<Group>{
+public interface GroupDao extends BaseDao<Group, Long>{
 
 	List<Group> findAllAdditional();
 	List<Group> findAllNotAdditional();

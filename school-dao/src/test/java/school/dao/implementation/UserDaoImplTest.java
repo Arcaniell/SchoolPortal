@@ -13,13 +13,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import school.dao.UserDao;
 import school.model.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/META-INF/dao-context.xml"})
+@TestExecutionListeners( { DependencyInjectionTestExecutionListener.class })
 public class UserDaoImplTest extends DBUnitConfig {
 
 	public UserDaoImplTest() {
@@ -86,12 +89,11 @@ public class UserDaoImplTest extends DBUnitConfig {
 		User newUser = userDao.findById(1L);
 		Assert.assertEquals(user.getEmail(), newUser.getEmail());
 		newUser.setFirstName("Ivan");
-		;
 		newUser = userDao.update(newUser);
 		Assert.assertNotEquals(user.getFirstName(), newUser.getFirstName());
 	}
 
-	@Test
+	@Test()
 	public void testFindAll() {
 		List<User> users = userDao.findAll();
 		Assert.assertTrue(users.size() == 5);

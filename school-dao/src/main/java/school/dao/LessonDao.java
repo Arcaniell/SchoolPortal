@@ -6,7 +6,7 @@ import school.model.Lesson;
 
 
 
-public interface LessonDao extends BaseDao<Lesson> {
+public interface LessonDao extends BaseDao<Lesson, Long> {
 
 	Lesson findByStartTime (Date date);
 

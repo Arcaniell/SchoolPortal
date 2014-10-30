@@ -20,7 +20,7 @@ public class Room {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private int id;
 
 	@Column(nullable = false)
 	private int roomNumber;
@@ -37,11 +37,11 @@ public class Room {
 		
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

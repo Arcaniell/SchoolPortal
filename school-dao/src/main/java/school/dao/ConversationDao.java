@@ -6,7 +6,7 @@ import java.util.List;
 import school.model.Conversation;
 import school.model.User;
 
-public interface ConversationDao extends BaseDao<Conversation> {
+public interface ConversationDao extends BaseDao<Conversation, Long> {
 	List<Conversation> findInboxConversationsForUser(User receiver);
 	List<Conversation> findSentConversationsForUser(User receiver);
 	Date findDateForConversation(Conversation conversation);
