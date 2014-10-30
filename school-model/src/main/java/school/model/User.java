@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "USER")
 @NamedQueries({
-	@NamedQuery(name = User.FIND_BY_EMAIL, query = User.FIND_BY_EMAIL),
+	@NamedQuery(name = User.FIND_BY_EMAIL, query = User.FIND_BY_EMAIL_QUERY),
 	@NamedQuery(name = User.FIND_BY_EMAIL_AND_PASSWORD, query = User.FIND_BY_EMAIL_AND_PASSWORD_QUERY) })
 public class User {
 	public static final String FIND_BY_EMAIL = "User.findByEmail";
