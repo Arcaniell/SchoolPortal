@@ -1,5 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF8"
+	pageEncoding="UTF8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <img class="logo"
-	src="<%out.println(request.getContextPath());%>/img/logo.png" />
+	src="<c:url value="/resources/img/logo.png" />" />
 <div class="profile-info">Lora Palmer</div>
 <div class="internal-buttons">
 	<ul class="nav nav-sidebar">

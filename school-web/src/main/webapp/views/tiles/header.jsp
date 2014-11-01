@@ -3,14 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<!-- 
-<h1>
-	<spring:message code="label.welcome" />
-</h1>
-<h1>
-	<a href="?lang=en">en</a> | <a href="?lang=ua">ua</a> | <a
-		href="?lang=ru">ru</a>
-</h1> -->
+
 <ul class="crumbs">
 	<li class="first"><a href="#" style="z-index: 9;"><span></span>Home</a>
 	</li>
@@ -25,8 +18,8 @@
 		EN <span class="caret"></span>
 	</button>
 	<ul class="dropdown-menu" role="menu">
-		<li><a href="#">EN</a></li>
-		<li><a href="#">RU</a></li>
-		<li><a href="#">UA</a></li>
+		<li><a href="?lang=en">en</a></li>
+		<li><a href="?lang=ua">ua</a></li>
+		<li><a href="?lang=ru">ru</a></li>
 	</ul>
 </div>

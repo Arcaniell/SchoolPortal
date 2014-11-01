@@ -12,17 +12,19 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><tiles:getAsString name="title" /></title>
 	<!-- OUR LOCAL CSS -->
-	<link rel="stylesheet" href="<%out.println(request.getContextPath());%>/css/main.css">
+	<link href="<c:url value="/resources/css/main.css" />"
+	rel="stylesheet">
 	<!-- BOOTSTRAP -->
-	<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-	<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+	<link href="<c:url value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" />"
+	rel="stylesheet">
+	<link href="<c:url value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css" />"
+	rel="stylesheet">
 	<!-- JQUERY -->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript"
+	src="<c:url value="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" />"></script>
 	<!-- BOOTSTRAP JS -->
-	<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+	src="<c:url value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js" />"></script>
 </head>
 <body>
 	<div class="header">
