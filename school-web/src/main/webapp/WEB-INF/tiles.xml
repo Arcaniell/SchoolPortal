@@ -7,10 +7,11 @@
 	<definition name="base.definition" template="/views/layout.jsp">
 		<put-attribute name="header" value="/views/tiles/header.jsp" />
 		<put-attribute name="sidebar" value="/views/tiles/sidebar.jsp" />
-		<put-attribute name="main_content" value="" />
+		<put-attribute name="main_content" value="/views/tiles/main_content.jsp" />
 	</definition>
 	
 	<definition name="home" extends="base.definition">
+		<put-attribute name="title" value="Home page" />
 		<put-attribute name="main_content" value="/views/home/home.jsp" />
 	</definition>
 	

@@ -1,0 +1,135 @@
+body{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-decoration: none;
+	font-size: 14px;
+	color: #428bca;
+}
+.header {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	height: 40px;
+	margin: 5px;
+	min-width: 800px;
+}
+
+.sidebar {
+	position: absolute;
+	left: 0;
+	top: 50px;
+	width: 200px;
+	border: 1px solid #eee;
+	border-bottom: 1px solid white;
+}
+.content {
+	position: absolute;
+	left: 205px;
+	top: 50px;
+	min-width: 595px;
+	border: 1px solid #eee;
+	border-bottom: 1px solid white;
+}
+
+
+.profile-info {
+	text-align: center;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-decoration: none;
+	font-size: 14px;
+	color: #428bca;
+	padding: 10px;
+}
+.logo {
+	width: 120px;
+	height: 120px;
+	padding:10px;
+	border: 1px solid #eee;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 3px;
+	border-top: 1px solid white;
+	
+}
+.nav li {
+	text-align: center;
+}
+.nav .active {
+	background: #eee;
+}
+
+.crumbs {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	height: 40px;
+	float: left;
+}
+
+.crumbs li {
+	display: inline;
+}
+.crumbs li.first {
+	padding-left: 8px;
+}
+.crumbs li a, .crumbs li a:link, .crumbs li a:visited {
+	height: 40px;
+	display: block;
+	float: left;
+	margin-left: -13px;
+	padding-top: 10px;
+	padding-right: 20px;
+	padding-left: 30px;
+	position: relative;
+	text-decoration: none;
+}
+.crumbs li.first a {
+	background-image: url('../img/crumbs_logo.png');
+	background-repeat: no-repeat;
+	background-position: 100% -10px;
+	position: relative;
+	padding-left: 70px;
+}
+.crumbs li a {
+	background-image: url('../img/crumbs.png');
+	background-repeat: no-repeat;
+	background-position: 100% -10px;
+	position: relative;
+}
+.crumbs li a:hover {
+	background-position: 100% -70px;
+	cursor: pointer;
+}
+.crumbs li a:active {
+	background-position: 100% -130px;
+}
+.crumbs li.first a span {
+	height: 40px;
+	width: 3px;
+	border-left: 1px solid #d9d9d9;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+.header .btn {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-decoration: none;
+	font-size: 14px;
+	color: #428bca;
+	position: relative;
+	float: right;
+	width: 80px;
+}
+
+.header .btn-group {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-decoration: none;
+	font-size: 14px;
+	color: #428bca;
+	position: relative;
+	float: right;
+	margin-right: 5px;
+}
+.text{
+	margin:10px;
+}

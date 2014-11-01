@@ -29,7 +29,7 @@
 			<property name="hibernate.jdbc.use_scrollable_resultset"
 				value="false" />
 			<property name="hibernate.connection.username" value="root" />
-			<property name="hibernate.connection.password" value="revan" />
+			<property name="hibernate.connection.password" value="root" />
 
 			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/SchoolTestDB" />
 		</properties>
