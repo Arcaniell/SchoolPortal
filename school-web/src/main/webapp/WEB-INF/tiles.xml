@@ -15,4 +15,10 @@
 		<put-attribute name="main_content" value="/views/home/home.jsp" />
 	</definition>
 	
+	<definition name="journal" extends="base.definition">
+		<put-attribute name="header" value="/views/journal/jheader.jsp" />
+		<put-attribute name="title" value="Journal"/>
+		<put-attribute name="main_content" value="/views/journal/journal.jsp"/>
+	</definition>
+	
 </tiles-definitions>

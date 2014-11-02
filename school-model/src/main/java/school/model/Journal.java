@@ -9,18 +9,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "JOURNAL")
+@NamedQueries({
+		@NamedQuery(name = Journal.FIND_BY_INTERVAL, query = "SELECT j FROM Journal j WHERE j.date BETWEEN :from AND :till"),
+		@NamedQuery(name = Journal.FIND_BY_STUDENT, query = "SELECT j FROM Journal j WHERE j.student.id = :studentId"),
+		@NamedQuery(name = Journal.FIND_BY_INTERVAL_AND_STUDENT, query = "SELECT j FROM Journal j WHERE j.student.id = :studentId AND j.date BETWEEN :from AND :till"), })
 public class Journal {
 
-	public static final String FIND_BY_DATE_QUERY = "SELECT j FROM Journal j WHERE j.date = :date";
-	public static final String FIND_BY_INTERVAL_QUERY = "SELECT j FROM Journal j WHERE j.date BETWEEN :from AND :till";
-	public static final String FIND_BY_STUDENT_QUERY = "SELECT j FROM Journal j WHERE j.student.id = :studentId";
-	public static final String FIND_BY_DATE_AND_STUDENT_QUERY = "SELECT j FROM Journal j WHERE j.student.id = :studentId AND j.date = :date";
-	public static final String FIND_BY_INTERVAL_AND_STUDENT_QUERY = "SELECT j FROM Journal j WHERE j.student.id = :studentId AND j.date BETWEEN :from AND :till";
-	
+	public static final String FIND_BY_INTERVAL = "Journal.findByInterval";
+	public static final String FIND_BY_STUDENT = "Journal.findByStudentId";
+	public static final String FIND_BY_INTERVAL_AND_STUDENT = "Journal.findByIntervalAndStudentId";
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true)
@@ -131,5 +135,4 @@ public class Journal {
 		return true;
 	}
 
-	
 }
