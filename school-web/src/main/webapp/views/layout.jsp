@@ -21,7 +21,7 @@
 	rel="stylesheet">
 	<!-- JQUERY -->
 	<script type="text/javascript"
-	src="<c:url value="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" />"></script>
+	src="<c:url value="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" />"></script>
 	<!-- BOOTSTRAP JS -->
 	<script type="text/javascript"
 	src="<c:url value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js" />"></script>
