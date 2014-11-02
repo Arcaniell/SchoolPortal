@@ -15,7 +15,8 @@
 <div class="btn-group">
 	<button type="button" class="btn btn-default dropdown-toggle"
 		data-toggle="dropdown">
-		EN <span class="caret"></span>
+		<spring:message code="label.lang" />
+		<span class="caret"></span>
 	</button>
 	<ul class="dropdown-menu" role="menu">
 		<li><a href="?lang=en">en</a></li>
