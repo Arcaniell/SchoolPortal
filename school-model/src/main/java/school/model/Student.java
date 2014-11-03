@@ -37,12 +37,12 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
+    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST,
             CascadeType.MERGE })
     @JoinColumn(name = "userId", unique = true, nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST,
             CascadeType.MERGE })
     @JoinColumn(name = "groupId")
     private Group group;
