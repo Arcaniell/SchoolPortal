@@ -31,7 +31,6 @@
 </head>
 <body>
 	<div class="header">
-		<%-- <tiles:insertAttribute name="header" /> --%>
 		<%@ taglib uri="http://tiles.apache.org/tags-tiles-extras"
 			prefix="tilesx"%>
 
