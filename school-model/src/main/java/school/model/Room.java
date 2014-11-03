@@ -1,21 +1,34 @@
 package school.model;
 
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-@Entity(name = "ROOM")
+@Entity
+@Table(name = "ROOM")
+@NamedQueries({
+	@NamedQuery(name = Room.FIND_BY_AVAILABLE_ROOM, query = Room.FIND_BY_AVAILABLE_ROOM_QUERY),
+	@NamedQuery(name = Room.FIND_BY_ROOM_NUMBER, query = Room.FIND_BY_ROOM_NUMBER_QUERY),
+	@NamedQuery(name = Room.FIND_BY_ROOM_SIZE, query = Room.FIND_BY_ROOM_SIZE_QUERY)
+})
 public class Room {
-	public static final String FIND_BY_ROOM_NUMBER_QUERY = "SELECT r FROM ROOM r WHERE "
+	public static final String FIND_BY_ROOM_NUMBER = "Room.findByRoomNumber";
+	public static final String FIND_BY_ROOM_NUMBER_QUERY = "SELECT r FROM Room r WHERE "
 			+ "r.roomNumber = :roomNumber";
-	public static final String FIND_BY_AVAILABLE_ROOM_QUERY = "SELECT r FROM ROOM r WHERE "
+	public static final String FIND_BY_AVAILABLE_ROOM = "Room.findByAvailableRoom";
+	public static final String FIND_BY_AVAILABLE_ROOM_QUERY = "SELECT r FROM Room r WHERE "
 			+ "r.available = :available";
-	public static final String FIND_BY_ROOM_SIZE_QUERY = "SELECT r FROM ROOM r WHERE "
+	public static final String FIND_BY_ROOM_SIZE = "Room.findByRoomSize";
+	public static final String FIND_BY_ROOM_SIZE_QUERY = "SELECT r FROM Room r WHERE "
 			+ "r.size = :size";
 
 	@Id
