@@ -10,11 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "MESSAGE")
+@NamedQuery(name = "Message.FIND_MESSAGES", 
+query = "from Message m where m.conversationId = :conversation order by m.dateTime asc")
 public class Message {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -34,9 +38,6 @@ public class Message {
 
 	@Column(nullable = false)
 	private boolean isRead;
-
-	public static final String FIND_MESSAGES_OF_CONVERSATION_QUERY = 
-			"from Message m where m.conversationId = :conversation order by m.dateTime asc";
 
 	public long getId() {
 		return id;

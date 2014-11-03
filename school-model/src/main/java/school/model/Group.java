@@ -11,20 +11,30 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "GROUPS")
+@NamedQueries({
+		@NamedQuery(name = Group.FIND_BY_STATUS, query = Group.FIND_BY_STATUS_QUERY),
+		@NamedQuery(name = Group.FIND_BY_NUMBER, query = "FROM Group g WHERE g.number = :number"),
+		@NamedQuery(name = Group.FIND_BY_STARTDATE, query = "FROM Group g WHERE g.startDate = :startDate"),
+		@NamedQuery(name = Group.FIND_BY_TEACHER, query = "FROM Group g WHERE g.teacher.id = :teacherId"),
+		@NamedQuery(name = Group.FIND_BY_NUMBER_LETTER, query = "FROM Group g WHERE g.number = :number and g.letter = :letter"),
+		@NamedQuery(name = Group.FIND_ALL_ACTIVE_GROUP, query = "FROM Group g WHERE :actualDate BETWEEN g.startDate and g.endDate"), })
 public class Group {
 
+	public static final String FIND_BY_STATUS = "Group.findByStatus";
 	public static final String FIND_BY_STATUS_QUERY = "FROM Group g WHERE g.additional = :additional";
-	public static final String FIND_BY_NUMBER_QUERY = "FROM Group g WHERE g.number = :number";
-	public static final String FIND_BY_STARTDATE_QUERY = "FROM Group g WHERE g.startDate = :startDate";
-	public static final String FIND_BY_TEACHER_QUERY = "FROM Group g WHERE g.teacher.id = :teacherId";
-	public static final String FIND_BY_NUMBER_LETTER_QUERY = "FROM Group g WHERE g.number = :number and g.letter = :letter";
-	public static final String FIND_ALL_ACTIVE_GROUP_QUERY = "FROM Group g WHERE :actualDate BETWEEN g.startDate and g.endDate";
+	public static final String FIND_BY_NUMBER = "Group.findByNumber";
+	public static final String FIND_BY_STARTDATE = "Group.findByStartDate";
+	public static final String FIND_BY_TEACHER = "Group.findByTeacherId";
+	public static final String FIND_BY_NUMBER_LETTER = "Group.findByNumberAndLetter";
+	public static final String FIND_ALL_ACTIVE_GROUP = "Group.findAllActiveGroups";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +55,7 @@ public class Group {
 	@Column(nullable = false)
 	private Date startDate;
 	private Date endDate;
-	
+
 	public long getId() {
 		return id;
 	}

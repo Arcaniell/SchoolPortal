@@ -10,12 +10,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "CONVERSATION")
+@NamedQueries({
+		@NamedQuery(name = "Conversation.INBOX_QUERY", query = "from Conversation c "
+				+ "where c.receiverId = :receiver"),
+		@NamedQuery(name = "Conversation.SENT_QUERY", query = "select m.conversationId from Message m "
+				+ "where m.conversationId in (from Conversation c where c.receiverId = :receiver) "
+				+ "and m.isFromSender = 0"),
+		@NamedQuery(name = "Conversation.FIND_DATE", query = "select max(m.dateTime) "
+				+ "from Message m where m.conversationId = :conversation") })
 public class Conversation {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -33,22 +44,11 @@ public class Conversation {
 
 	@Column(nullable = false, length = 100)
 	private String subject;
-	
-	public static final String SELECT_INBOX_CONVERSATIONS_QUERY = 
-			"from Conversation c where c.receiverId = :receiver";
-	
-	public static final String SELECT_SENT_CONVERSATIONS_QUERY = 
-			"select m.conversationId from Message m "
-			+ "where m.conversationId in (from Conversation c where c.receiverId = :receiver) "
-			+ "and m.isFromSender = 0";
-	
-	public static final String SELECT_DATE_FOR_CONVERSATION_QUERY = 
-			"select max(m.dateTime) from Message m where m.conversationId = :conversation";
-	
+
 	public long getId() {
 		return id;
 	}
-	
+
 	public void setId(long id) {
 		this.id = id;
 	}
