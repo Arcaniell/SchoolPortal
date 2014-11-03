@@ -1,6 +1,5 @@
 package school.model;
 
-
 import java.util.List;
 import java.util.Set;
 
@@ -15,14 +14,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "STUDENT")
+@NamedQueries({
+        @NamedQuery(name = Student.FIND_ALL_BY_STATUS, query = Student.FIND_ALL_BY_STATUS_QUERY),
+        @NamedQuery(name = Student.FIND_BY_USER_ID, query = Student.FIND_BY_USER_ID_QUERY)
+        })
 public class Student {
-
+    public static final String FIND_ALL_BY_STATUS = "Student.findAllByStatus";
+    public static final String FIND_BY_USER_ID = "Student.findByUserId";
     public static final String FIND_ALL_BY_STATUS_QUERY = "SELECT u FROM Student u WHERE u.isActive = :active";
     public static final String FIND_BY_USER_ID_QUERY = "SELECT u FROM Student u WHERE u.user.id = :id";
 

@@ -11,13 +11,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TEACHER")
+@Table(name = "TEACHER")
+@NamedQueries({
+        @NamedQuery(name = Teacher.FIND_ALL_BY_STATUS, query = Teacher.FIND_ALL_BY_STATUS_QUERY),
+        @NamedQuery(name = Teacher.FIND_BY_USER_ID, query = Teacher.FIND_BY_USER_ID_QUERY),
+        @NamedQuery(name = Teacher.FIND_RATE_RANGE, query = Teacher.FIND_RATE_RANGE_QUERY) 
+        })
 public class Teacher {
+    public static final String FIND_ALL_BY_STATUS = "Teacher.findAllByStatus";
+    public static final String FIND_BY_USER_ID = "Teacher.findByUserId";
+    public static final String FIND_RATE_RANGE = "Teacher.findRateRange";
     public static final String FIND_ALL_BY_STATUS_QUERY = "SELECT u FROM Teacher u WHERE u.isActive = :active";
     public static final String FIND_BY_USER_ID_QUERY = "SELECT u FROM Teacher u WHERE u.user.id = :id";
     public static final String FIND_RATE_RANGE_QUERY = "SELECT u FROM Teacher u WHERE u.rate BETWEEN :from AND :till";
@@ -27,8 +37,8 @@ public class Teacher {
 
     private int rate;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher", cascade = { CascadeType.PERSIST,
-            CascadeType.MERGE })
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher", cascade = {
+            CascadeType.PERSIST, CascadeType.MERGE })
     private List<Salary> salaries;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
@@ -38,9 +48,8 @@ public class Teacher {
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
     private Set<Course> course;
-    
-    private boolean isActive; 
-       
+
+    private boolean isActive;
 
     public Teacher() {
         super();
@@ -148,7 +157,5 @@ public class Teacher {
             return false;
         return true;
     }
-
-   
 
 }
