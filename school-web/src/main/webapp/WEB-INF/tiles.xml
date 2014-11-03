@@ -5,7 +5,6 @@
 
 <tiles-definitions>
 	<definition name="base.definition" template="/views/layout.jsp">
-		<put-attribute name="header" value="/views/tiles/header.jsp" />
 		<put-attribute name="sidebar" value="/views/tiles/sidebar.jsp" />
 		<put-attribute name="main_content" value="" />
 	</definition>
@@ -16,9 +15,9 @@
 	</definition>
 	
 	<definition name="journal" extends="base.definition">
-		<put-attribute name="header" value="/views/journal/jheader.jsp" />
 		<put-attribute name="title" value="Journal"/>
 		<put-attribute name="main_content" value="/views/journal/journal.jsp"/>
+		<put-attribute name="current" value="journal" />
 	</definition>
 	
 </tiles-definitions>
