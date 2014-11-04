@@ -68,7 +68,7 @@ public class TeacherDaoImplTest extends DBUnitConfig {
 
    @Test
     public void testByUserId() throws Exception {
-        /* // get students table
+        // get students table
         IDataSet databaseDataSet = getConnection().createDataSet();
         ITable actualTable = databaseDataSet.getTable("TEACHER");
         // tacking teacher with user id = 3
@@ -79,11 +79,11 @@ public class TeacherDaoImplTest extends DBUnitConfig {
         Teacher teacher = teacherDaoImpl.findByUserId(3);
         Assert.assertEquals(teacher.getUser().getId(), userId);
         Assert.assertEquals(teacher.getRate(), rate);
-        Assert.assertEquals(teacher.isActive(), isActive);*/
-       Assert.assertEquals(true, true);
+        Assert.assertEquals(teacher.isActive(), isActive);
+       /* Assert.assertEquals(true, true);*/
     }
 
-   /* @Test
+   @Test
     public void testFindAllByStatus() throws Exception {
         // tacking all active teachers, must be 1
         List<Teacher> activeTeacher = (List<Teacher>) teacherDaoImpl
@@ -100,6 +100,6 @@ public class TeacherDaoImplTest extends DBUnitConfig {
                 .findAllInRateRange(2, 5);
         Assert.assertEquals(rangeTeacher.size(), 2);
 
-    }*/
+    }/* */
 
 }
