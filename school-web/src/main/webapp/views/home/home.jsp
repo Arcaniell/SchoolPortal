@@ -10,4 +10,7 @@
 	<a href="?lang=en">en</a> | <a href="?lang=ua">ua</a> | <a
 		href="?lang=ru">ru</a>
 </h1>
+<form action="journal/ss" method="get">
+	<input type="text" name="name"> <input type="submit">
+</form>
 

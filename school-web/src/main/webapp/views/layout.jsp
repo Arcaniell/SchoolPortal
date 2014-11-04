@@ -37,10 +37,10 @@
 		<tilesx:useAttribute name="current" />
 
 		<ul class="crumbs">
-			<li class="first"><a href="#" style="z-index: 9;"><span></span>Home</a></li>
+			<li class="first"><a href="home" style="z-index: 9;"><span></span>Home</a></li>
 			<li class="${current == 'profile' ? '' : 'hidden'}"><a href="#"
 				style="z-index: 8;">My profile</a></li>
-			<li class="${current == 'journal' ? '' : 'hidden'}"><a href="#"
+			<li class="${current == 'journal' ? '' : 'hidden'}"><a href="journal"
 				style="z-index: 7;">Journal</a></li>
 			<li class="${current == 'messages' ? '' : 'hidden'}"><a href="#"
 				style="z-index: 6;">Messages</a></li>

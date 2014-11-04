@@ -13,4 +13,8 @@ public interface JournalService {
 
 	List<Journal> findByIntervalAndStudentId(long studentId, Date from,
 			Date till);
+
+	List<Journal> findAll();
+
+	Journal findById(Long id);
 }

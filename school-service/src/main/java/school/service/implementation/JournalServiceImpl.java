@@ -19,7 +19,9 @@ public class JournalServiceImpl implements JournalService {
 
 	@Transactional
 	public List<Journal> findByInterval(Date from, Date till) {
+		System.out.println(journalDao.findById(1L).getMark());
 		return journalDao.findByInterval(from, till);
+
 	}
 
 	@Transactional
@@ -31,6 +33,16 @@ public class JournalServiceImpl implements JournalService {
 	public List<Journal> findByIntervalAndStudentId(long studentId, Date from,
 			Date till) {
 		return journalDao.findByIntervalAndStudentId(studentId, from, till);
+	}
+
+	@Transactional
+	public List<Journal> findAll() {
+		return journalDao.findAll();
+	}
+
+	@Transactional
+	public Journal findById(Long id) {
+		return journalDao.findById(id);
 	}
 
 }

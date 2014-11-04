@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF8"
 	pageEncoding="UTF8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<div class="profile-info">Lora Palmer</div>
 <img class="logo"
 	src="<c:url value="/resources/img/logo.png" />" />
-<div class="profile-info">Lora Palmer</div>
 <div class="internal-buttons">
 	<ul class="nav nav-sidebar">
 		<li class="active"><a href="#">Profile</a></li>
