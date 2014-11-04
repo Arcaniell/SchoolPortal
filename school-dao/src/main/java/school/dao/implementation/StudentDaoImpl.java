@@ -4,12 +4,8 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
-
-import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
-
 import school.dao.StudentDao;
-import school.model.Group;
 import school.model.Student;
 
 @Repository
@@ -23,12 +19,16 @@ public class StudentDaoImpl extends BaseDaoImpl<Student, Long> implements
     @Transactional
     public Student findById(long id) {
         try {
-            Student student = (Student) entityManager
-                    .createQuery(
-                            "select e from " + Student.class.getSimpleName()
-                                    + " e where e.id = :id")
-                    .setParameter("id", (Long) id).getSingleResult();
-            return student;
+            if (entityManager != null) {
+                return (Student) entityManager
+                        .createQuery(
+                                "select e from "
+                                        + Student.class.getSimpleName()
+                                        + " e where e.id = :id")
+                        .setParameter("id", (Long) id).getSingleResult();
+            } else {
+                return null;
+            }
         } catch (NoResultException e) {
             return null;
         }
@@ -45,9 +45,13 @@ public class StudentDaoImpl extends BaseDaoImpl<Student, Long> implements
     @SuppressWarnings("unchecked")
     public List<Student> findAllByStatus(boolean value) {
         try {
-            return (List<Student>) entityManager
-                    .createNamedQuery(Student.FIND_ALL_BY_STATUS)
-                    .setParameter("active", value).getResultList();
+            if (entityManager != null) {
+                return (List<Student>) entityManager
+                        .createNamedQuery(Student.FIND_ALL_BY_STATUS)
+                        .setParameter("active", value).getResultList();
+            } else {
+                return null;
+            }
         } catch (NoResultException e) {
             return null;
         }
@@ -56,9 +60,13 @@ public class StudentDaoImpl extends BaseDaoImpl<Student, Long> implements
     @Transactional
     public Student findByUserId(long id) {
         try {
-            return (Student) entityManager
-                    .createNamedQuery(Student.FIND_BY_USER_ID)
-                    .setParameter("id", id).getSingleResult();
+            if (entityManager != null) {
+                return (Student) entityManager
+                        .createNamedQuery(Student.FIND_BY_USER_ID)
+                        .setParameter("id", id).getSingleResult();
+            } else {
+                return null;
+            }
         } catch (NoResultException e) {
             return null;
         }
