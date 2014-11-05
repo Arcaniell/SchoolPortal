@@ -8,18 +8,21 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="LESSON")
+@NamedQuery(name = Lesson.FIND_BY_START_TIME, query = Lesson.FIND_BY_START_TIME_QUERY)
 public class Lesson {
-	
+
+public static final String FIND_BY_START_TIME = "Lesson.findByStartTime";
 public static final String FIND_BY_START_TIME_QUERY = "SELECT less FROM Lesson less WHERE less.startTime = :startTime";
 	
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+private Long id;
 
 @Column(name="startTime", nullable = false )
 private Date startTime;
