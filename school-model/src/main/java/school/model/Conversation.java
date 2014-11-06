@@ -19,10 +19,9 @@ import javax.persistence.Table;
 @Table(name = "CONVERSATION")
 @NamedQueries({
 		@NamedQuery(name = "Conversation.INBOX_QUERY", query = "from Conversation c "
-				+ "where c.receiverId = :receiver"),
-		@NamedQuery(name = "Conversation.SENT_QUERY", query = "select m.conversationId from Message m "
-				+ "where m.conversationId in (from Conversation c where c.receiverId = :receiver) "
-				+ "and m.isFromSender = 0"),
+				+ "where c.receiverId = :receiver or (c.senderId = :receiver and c.isAnswered = 1)"),
+		@NamedQuery(name = "Conversation.SENT_QUERY", query = "from Conversation c "
+				+ "where c.senderId = :sender or (c.receiverId = :sender and c.isAnswered = 1)"),
 		@NamedQuery(name = "Conversation.FIND_DATE", query = "select max(m.dateTime) "
 				+ "from Message m where m.conversationId = :conversation") })
 public class Conversation {
@@ -44,6 +43,8 @@ public class Conversation {
 
 	@Column(nullable = false, length = 100)
 	private String subject;
+	
+	private boolean isAnswered;
 
 	public long getId() {
 		return id;
@@ -85,11 +86,20 @@ public class Conversation {
 		this.subject = subject;
 	}
 
+	public boolean isAnswered() {
+		return isAnswered;
+	}
+
+	public void setAnswered(boolean isAnswered) {
+		this.isAnswered = isAnswered;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + (isAnswered ? 1231 : 1237);
 		result = prime * result
 				+ ((messages == null) ? 0 : messages.hashCode());
 		result = prime * result
@@ -110,6 +120,8 @@ public class Conversation {
 			return false;
 		Conversation other = (Conversation) obj;
 		if (id != other.id)
+			return false;
+		if (isAnswered != other.isAnswered)
 			return false;
 		if (messages == null) {
 			if (other.messages != null)

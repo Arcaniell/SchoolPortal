@@ -12,7 +12,19 @@ body{
 	height: 40px;
 	margin: 5px;
 	min-width: 800px;
+	
 }
+
+.header ul {
+	margin:0;
+	padding:0;
+}
+
+.header li {
+	margin:0;
+	padding:0;
+}
+
 
 .sidebar {
 	position: absolute;
@@ -31,6 +43,7 @@ body{
 	min-width: 595px;
 	border: 1px solid #eee;
 	border-bottom: 1px solid white;
+	padding:10px;
 }
 
 
@@ -54,16 +67,10 @@ body{
 	border-top: 1px solid white;
 	
 }
-.nav li {
-	text-align: center;
-}
-.nav .active {
-	background: #eee;
-}
 
 .crumbs {
-	margin-top: 0px;
-	margin-bottom: 0px;
+ 	margin-top: 0px;
+	margin-bottom: 5px; 
 	height: 40px;
 	float: left;
 }
