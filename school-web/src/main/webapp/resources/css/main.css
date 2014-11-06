@@ -15,16 +15,9 @@ body{
 	
 }
 
-.header ul {
-	margin:0;
-	padding:0;
+.nav li {
+	text-align: center;
 }
-
-.header li {
-	margin:0;
-	padding:0;
-}
-
 
 .sidebar {
 	position: absolute;
@@ -70,7 +63,7 @@ body{
 
 .crumbs {
  	margin-top: 0px;
-	margin-bottom: 5px; 
+	margin-bottom: 0px; 
 	height: 40px;
 	float: left;
 }
