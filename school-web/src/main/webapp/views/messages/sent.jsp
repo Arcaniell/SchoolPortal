@@ -12,14 +12,11 @@
 </ul>
 <table class="tablem">
 	<tbody>
-		<c:set value="${firstNames}" var="fname" />
-		<c:set value="${lastNames}" var="lname" />
-		<c:set value="${dates}" var="dates" />
-		<c:forEach items="${conversations}" var="conversation" varStatus="i">
+		<c:forEach items="${conversationsDto}" var="conversation">
 			<tr>
-				<td class="name">${fname[i.index]} ${lname[i.index]}</td>
+				<td class="name">${conversation.firstName} ${conversation.lastName}</td>
 				<td class="subject">${conversation.subject}</td>
-				<td class="date">${dates[i.index]}</td>
+				<td class="date">${conversation.date}</td>
 			</tr>
 		</c:forEach>
 	</tbody>
