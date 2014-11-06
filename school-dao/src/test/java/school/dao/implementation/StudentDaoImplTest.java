@@ -94,7 +94,7 @@ public class StudentDaoImplTest extends DBUnitConfig {
     @Test
     public void testRemove() throws Exception {
         // looking for student and delete
-        Student student = studentDaoImpl.findById(1);
+        Student student = studentDaoImpl.findById(1L);
         studentDaoImpl.remove(student);
         // get students table and counting rows
         // must be 4-1=3
@@ -105,7 +105,7 @@ public class StudentDaoImplTest extends DBUnitConfig {
 
     @Test
     public void testUpdate() throws Exception {
-        Student student = studentDaoImpl.findById(2);
+        Student student = studentDaoImpl.findById(2L);
         Boolean actual = !student.isActive();
         student.setActive(!student.isActive());
         // upload user to DB

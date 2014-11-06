@@ -3,8 +3,10 @@ package school.dao.implementation;
 import java.util.List;
 
 import javax.persistence.NoResultException;
-import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import school.dao.StudentDao;
 import school.model.Student;
 
@@ -14,24 +16,6 @@ public class StudentDaoImpl extends BaseDaoImpl<Student, Long> implements
 
     public StudentDaoImpl() {
         super(Student.class);
-    }
-
-    @Transactional
-    public Student findById(long id) {
-        try {
-            if (entityManager != null) {
-                return (Student) entityManager
-                        .createQuery(
-                                "select e from "
-                                        + Student.class.getSimpleName()
-                                        + " e where e.id = :id")
-                        .setParameter("id", (Long) id).getSingleResult();
-            } else {
-                return null;
-            }
-        } catch (NoResultException e) {
-            return null;
-        }
     }
 
     @Override
