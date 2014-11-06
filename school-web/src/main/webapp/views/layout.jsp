@@ -28,6 +28,10 @@
 <!-- BOOTSTRAP JS -->
 <script type="text/javascript"
 	src="<c:url value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js" />"></script>
+<!-- DATAPICKER -->
+<link
+	href="<c:url value="https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />"
+	rel="stylesheet">
 </head>
 <body>
 	<div class="header">
