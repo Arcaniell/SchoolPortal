@@ -16,24 +16,6 @@ public class StudentDaoImpl extends BaseDaoImpl<Student, Long> implements
         super(Student.class);
     }
 
-    @Transactional
-    public Student findById(long id) {
-        try {
-            if (entityManager != null) {
-                return (Student) entityManager
-                        .createQuery(
-                                "select e from "
-                                        + Student.class.getSimpleName()
-                                        + " e where e.id = :id")
-                        .setParameter("id", (Long) id).getSingleResult();
-            } else {
-                return null;
-            }
-        } catch (NoResultException e) {
-            return null;
-        }
-    }
-
     @Override
     public void save(Student entity) {
         // empty method, we can't save student without user
