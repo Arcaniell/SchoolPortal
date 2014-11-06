@@ -3,8 +3,10 @@ package school.dao.implementation;
 import java.util.List;
 
 import javax.persistence.NoResultException;
-import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import school.dao.StudentDao;
 import school.model.Student;
 

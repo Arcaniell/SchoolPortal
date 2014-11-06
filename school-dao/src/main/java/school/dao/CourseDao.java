@@ -6,7 +6,7 @@ import school.model.Course;
 
 public interface CourseDao extends BaseDao<Course, Long> {
 
-	List<Course> findAllAddition();
+	List<Course> findAllByStatus(boolean status);
 
 	List<Course> findByGroupNumber(int groupNumber);
 
@@ -16,10 +16,6 @@ public interface CourseDao extends BaseDao<Course, Long> {
 
 	List<Course> findByCourseNameAndGroupNumber(String courseName,
 			int groupNumber);
-
-	List<Course> findByPrice(int price);
-
-	List<Course> findAllMandatoryCourses();
 
 	List<Course> findByPriceRange(int from, int to);
 
