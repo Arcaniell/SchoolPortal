@@ -1,6 +1,5 @@
 package school.dao.implementation;
 
-import java.util.Date;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,11 +37,10 @@ public class MessageDaoImplTest extends DBUnitConfig {
 	private MessageDao messageDao;
 	
 	private Conversation conversation;
-	private Message message;
 
 	@Before
 	public void setUp() throws Exception {
-		message = new Message();
+
 		conversation = new Conversation();
 		
         DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
@@ -59,63 +57,19 @@ public class MessageDaoImplTest extends DBUnitConfig {
 	protected IDataSet getDataSet() throws Exception {
 		return new FlatXmlDataSet(this.getClass().getResourceAsStream("/xml-data-sets/conversation.xml"));
 	}
-
-	@Test
-	public void testSaveMessage() {
-		conversation = conversationDao.findById(1L);
-		message.setConversationId(conversation);
-		message.setDateTime(new Date());
-		message.setFromSender(true);
-		message.setRead(false);
-		message.setText("OLOLO");
-		messageDao.save(message);
-		List<Message> mList = messageDao.findAll();
-		Assert.assertTrue(mList.size() == 11);
-	}
-	
-	@Test
-	public void testUpdateMessage() {
-		message = messageDao.findById(1L);
-		Message secondMessage = messageDao.findById(1L);
-		Assert.assertEquals(message.getText(), secondMessage.getText());
-		message.setText("NewTestText");
-		messageDao.update(message);
-		message = messageDao.findById(1L);
-		Assert.assertNotEquals(message.getText(), secondMessage.getText());
-	}
-	
-	@Test
-	public void testRemoveMessage() {
-		List<Message> firstList = messageDao.findAll();
-		Assert.assertTrue(firstList.size() == 10);
-		message = messageDao.findById(1L);
-		messageDao.remove(message);
-		firstList = messageDao.findAll();
-		Assert.assertFalse(firstList.size() == 9);
-	}
-	
-	@Test
-	public void testFindById() {
-		message = messageDao.findById(1L);
-		Assert.assertTrue(message.getId() == 1L);
-	}
-	
-	@Test
-	public void testFindAll() {
-		List<Message> mList = messageDao.findAll();
-		Assert.assertTrue(mList.size() == 10);
-	}
 	
 	@Test
 	public void testFindMessagesOfConversation() {
 		
 		conversation = conversationDao.findById(5L);
 		List<Message> actualMessages = messageDao.findMessagesOfConversation(conversation);
-		Message message1 = messageDao.findById(5L);
-		Message message2 = messageDao.findById(8L);
-		List<Message> expectedMessages = Arrays.asList(message1, message2);
-		Assert.assertTrue(actualMessages.get(0).getId() == message1.getId());
-		Assert.assertTrue(actualMessages.get(1).getId() == message2.getId());
+		Message message5 = messageDao.findById(5L);
+		Message message8 = messageDao.findById(8L);
+		Message message7 = messageDao.findById(7L);
+		List<Message> expectedMessages = Arrays.asList(message8, message7, message5);
+		Assert.assertTrue(actualMessages.get(0).getId() == expectedMessages.get(0).getId());
+		Assert.assertTrue(actualMessages.get(1).getId() == expectedMessages.get(1).getId());
+		Assert.assertTrue(actualMessages.get(2).getId() == expectedMessages.get(2).getId());
 		for(int i = 0; i < actualMessages.size(); i++) {
 			Assert.assertTrue(actualMessages.get(i).getId() == expectedMessages.get(i).getId());
 		}

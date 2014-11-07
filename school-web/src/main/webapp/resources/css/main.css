@@ -12,6 +12,11 @@ body{
 	height: 40px;
 	margin: 5px;
 	min-width: 800px;
+	
+}
+
+.nav li {
+	text-align: center;
 }
 
 .sidebar {
@@ -31,6 +36,7 @@ body{
 	min-width: 595px;
 	border: 1px solid #eee;
 	border-bottom: 1px solid white;
+	padding:10px;
 }
 
 
@@ -54,16 +60,10 @@ body{
 	border-top: 1px solid white;
 	
 }
-.nav li {
-	text-align: center;
-}
-.nav .active {
-	background: #eee;
-}
 
 .crumbs {
-	margin-top: 0px;
-	margin-bottom: 0px;
+ 	margin-top: 0px;
+	margin-bottom: 0px; 
 	height: 40px;
 	float: left;
 }

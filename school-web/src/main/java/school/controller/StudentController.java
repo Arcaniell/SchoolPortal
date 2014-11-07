@@ -18,14 +18,16 @@ public class StudentController {
 
     @RequestMapping(value = "groups")
     public ModelAndView getGroups(Model model) {
+        List<Group> groups = student.getStudentGoupsByUserId(144);
+        if(groups==null){
+            return new ModelAndView("home");
+        }
         int session = 1;
         if (session == 1) {
-            List<Group> groups = student.getStudentGoupsByUserId(144);
             model.addAttribute("Message", groups);
             return new ModelAndView("groups-student");
         }
         if (session == 2) {
-            List<Group> groups = student.getStudentGoupsByUserId(144);
             model.addAttribute("Message", groups);
             return new ModelAndView("groups-teacher");
         }

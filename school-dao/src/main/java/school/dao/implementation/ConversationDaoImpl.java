@@ -34,11 +34,11 @@ public class ConversationDaoImpl extends BaseDaoImpl<Conversation, Long>
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public List<Conversation> findSentConversationsForUser(User receiver) {
+	public List<Conversation> findSentConversationsForUser(User sender) {
 		try {
 			return (List<Conversation>) entityManager
 					.createNamedQuery("Conversation.SENT_QUERY")
-					.setParameter("receiver", receiver).getResultList();
+					.setParameter("sender", sender).getResultList();
 		} catch (NoResultException e) {
 			return null;
 		}

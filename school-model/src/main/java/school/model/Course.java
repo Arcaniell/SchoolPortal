@@ -48,6 +48,14 @@ public class Course {
     @Column(nullable = false, length = 45)
     private String courseName;
 
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
     @Column(nullable = false)
     private int groupNumber;
 
