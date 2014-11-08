@@ -1,6 +1,7 @@
 package school.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +20,18 @@ public class CourseController {
 
     @RequestMapping(value = "courses")
     public ModelAndView getCourses(Model model) {
-        List<Course> courses;
-        if (course != null) {
-            courses = course.getCourseByNumber(6);
-            if (courses != null) {
-                model.addAttribute("courses", courses);
-                return new ModelAndView("courses-student");
-            }
-        }
-        courses = new ArrayList<Course>();
-        model.addAttribute("courses", courses);
+        List<Course> coursesSet = new ArrayList<Course>();
+        Date from = new Date(0);
+        from.setYear(114);
+        from.setMonth(6);
+        from.setMonth(1);
+        Date till = new Date(0);
+        till.setYear(114);
+        till.setMonth(10);
+        from.setMonth(1);
+        coursesSet = course.getCourseByUserIdAndDataRange(300, from, till);
+        model.addAttribute("courses", coursesSet);
         return new ModelAndView("courses-student");
+
     }
 }

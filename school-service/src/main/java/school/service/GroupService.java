@@ -4,7 +4,7 @@ import java.util.List;
 
 import school.model.Group;
 
-public interface StudentService {
+public interface GroupService {
 
     List<Group> getStudentGoupsByUserId(long id);
 

@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import school.model.Group;
-import school.service.StudentService;
+import school.service.GroupService;
 
 @Controller
-public class StudentController {
+public class GroupController {
     @Autowired
-    StudentService student;
+    GroupService student;
 
     @RequestMapping(value = "groups")
     public ModelAndView getGroups(Model model) {

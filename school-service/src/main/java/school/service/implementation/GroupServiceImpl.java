@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 import school.dao.StudentDao;
 import school.model.Group;
 import school.model.Student;
-import school.service.StudentService;
+import school.service.GroupService;
 
 @Service
-public class StudentServiceImpl implements StudentService {
+public class GroupServiceImpl implements GroupService {
     @Autowired
     StudentDao studentDaoImpl;
 

@@ -1,11 +1,14 @@
 package school.dao.implementation;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.NoResultException;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
 
 import school.dao.CourseDao;
 import school.model.Course;
@@ -38,17 +41,13 @@ public class CourseDaoImpl extends BaseDaoImpl<Course, Long> implements
     @SuppressWarnings("unchecked")
     @Override
     @Transactional
-    public List<Course> findByGroupNumber(int groupNumber) {
-        try {
-            if (entityManager != null) {
-                return (List<Course>) entityManager
-                        .createNamedQuery(Course.FIND_BY_GROUP_NUMBER)
-                        .setParameter("groupNumber", groupNumber)
-                        .getResultList();
-            } else {
-                return null;
-            }
-        } catch (NoResultException e) {
+    public List<Course> findByGroupNumber(int groupNumber)
+            throws NoResultException, MySQLSyntaxErrorException {
+        if (entityManager != null) {
+            return (List<Course>) entityManager
+                    .createNamedQuery(Course.FIND_BY_GROUP_NUMBER)
+                    .setParameter("groupNumber", groupNumber).getResultList();
+        } else {
             return null;
         }
     }
@@ -117,6 +116,27 @@ public class CourseDaoImpl extends BaseDaoImpl<Course, Long> implements
                 return (List<Course>) entityManager
                         .createNamedQuery(Course.FIND_BY_PRICE_RANGE)
                         .setParameter("from", from).setParameter("to", to)
+                        .getResultList();
+            } else {
+                return null;
+            }
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @Transactional
+    public List<Course> findByGroupIdAndDataRange(long groupId, Date from,
+            Date till) {
+        try {
+            if (entityManager != null) {
+                return (List<Course>) entityManager
+                        .createNamedQuery(
+                                Course.FIND_BY_GROUP_ID_AND_DATA_RANGE)
+                        .setParameter("groupId", groupId)
+                        .setParameter("from", from).setParameter("till", till)
                         .getResultList();
             } else {
                 return null;
