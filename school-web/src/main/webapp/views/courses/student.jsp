@@ -1,21 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
 <div align="center" class="text">
-	<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 	<h2>
 		<spring:message code="course.data" />
 	</h2>
-	<p>
-		<spring:message code="course.data.from" />
-		<input type="text" class="datepicker">
-		<spring:message code="course.data.till" />
-		<input type="text" class="datepicker">
-		<button type="button" class="btn btn-default">
-			<spring:message code="course.btn.show" />
-		</button>
-	</p>
+	<form method="POST" action="courses">
+		<p>
+			<spring:message code="course.data.from" />
+			<input name="dateFrom" value="${dateFrom}" type="text" class="datepicker">
+			<spring:message code="course.data.till" />
+			<input name="dateTill" value="${dateTill}" type="text" class="datepicker">
+			<button type="submit" class="btn btn-default">
+				<spring:message code="course.btn.show" />
+			</button>
+		</p>
+	</form>
 	<table class="table table-hover">
 		<thead>
 			<tr>
@@ -32,8 +35,8 @@
 					<td>${element.courseName}</td>
 					<td>${element.groupNumber}</td>
 					<td>${element.additional}</td>
-					<td>Sep 1</td>
-					<td>Dec 27</td>
+					<td>${dateFrom}</td>
+					<td>${dateTill}</td>
 				</tr>
 			</c:forEach>
 		</tbody>

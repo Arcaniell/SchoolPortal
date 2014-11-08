@@ -6,5 +6,5 @@ import java.util.List;
 import school.model.Course;
 
 public interface CourseService {
-    List<Course> getCourseByUserIdAndDataRange(int id, Date from, Date till);
+    List<Course> getCourseByUserIdAndDataRange(long id, Date from, Date till);
 }
