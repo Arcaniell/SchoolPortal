@@ -10,8 +10,13 @@ body{
 	right: 0;
 	top: 0;
 	height: 40px;
-	margin: 5px;
+	margin: 2px;
 	min-width: 800px;
+	
+}
+
+.nav li {
+	text-align: center;
 }
 
 .sidebar {
@@ -26,9 +31,12 @@ body{
 	position: absolute;
 	left: 205px;
 	top: 50px;
+	right: 0;
+	bottom :0;
 	min-width: 595px;
 	border: 1px solid #eee;
 	border-bottom: 1px solid white;
+	padding:10px;
 }
 
 
@@ -48,20 +56,12 @@ body{
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-	border-radius: 3px;
-	border-top: 1px solid white;
-	
-}
-.nav li {
-	text-align: center;
-}
-.nav .active {
-	background: #eee;
+	border-radius: 3px;	
 }
 
 .crumbs {
-	margin-top: 0px;
-	margin-bottom: 0px;
+ 	margin-top: 0px;
+	margin-bottom: 0px; 
 	height: 40px;
 	float: left;
 }

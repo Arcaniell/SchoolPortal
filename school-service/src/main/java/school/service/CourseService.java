@@ -1,0 +1,14 @@
+package school.service;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.security.access.annotation.Secured;
+
+import school.model.Course;
+
+public interface CourseService {
+
+    @Secured("ROLE_TEACHER")
+    List<Course> getCourseByUserIdAndDataRange(int id, Date from, Date till);
+}

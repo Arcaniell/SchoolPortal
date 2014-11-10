@@ -2,7 +2,6 @@ package school.dao.implementation;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 import org.dbunit.dataset.DataSetException;
@@ -10,16 +9,12 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
-import org.hibernate.Session;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -27,15 +22,14 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 
 import school.dao.StudentDao;
 import school.model.Student;
-import school.model.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/META-INF/dao-context.xml" })
+@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class })
 public class StudentDaoImplTest extends DBUnitConfig {
+    Student student;
     @Autowired
     StudentDao studentDaoImpl;
-    Student student;
-    User user;
 
     public StudentDaoImplTest() {
         super("StudentDaoImplTest");
@@ -54,12 +48,10 @@ public class StudentDaoImplTest extends DBUnitConfig {
 
     @After
     public void tearDown() throws Exception {
-        /*
-         * DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester()
-         * .getConnection(), getStudent());
-         * DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester()
-         * .getConnection(), getDataSet());
-         */
+        DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester()
+                .getConnection(), getStudent());
+        DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester()
+                .getConnection(), getDataSet());
         DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
                 .getConnection(), getBlank());
     }
@@ -102,7 +94,7 @@ public class StudentDaoImplTest extends DBUnitConfig {
     @Test
     public void testRemove() throws Exception {
         // looking for student and delete
-        Student student = studentDaoImpl.findById(1);
+        Student student = studentDaoImpl.findById(1L);
         studentDaoImpl.remove(student);
         // get students table and counting rows
         // must be 4-1=3
@@ -110,10 +102,10 @@ public class StudentDaoImplTest extends DBUnitConfig {
         ITable actualTable = databaseDataSet.getTable("STUDENT");
         Assert.assertEquals(actualTable.getRowCount(), 3);
     }
-    
+
     @Test
     public void testUpdate() throws Exception {
-        Student student =studentDaoImpl.findById(2);
+        Student student = studentDaoImpl.findById(2L);
         Boolean actual = !student.isActive();
         student.setActive(!student.isActive());
         // upload user to DB
@@ -122,7 +114,7 @@ public class StudentDaoImplTest extends DBUnitConfig {
         IDataSet databaseDataSet = getConnection().createDataSet();
         ITable actualTable = databaseDataSet.getTable("STUDENT");
         Boolean real = (Boolean) actualTable.getValue(1, "isActive");
-        Assert.assertEquals(real,actual);
+        Assert.assertEquals(real, actual);
     }
 
     @Test
@@ -133,6 +125,7 @@ public class StudentDaoImplTest extends DBUnitConfig {
         ITable actualTable = databaseDataSet.getTable("STUDENT");
         Assert.assertEquals(actualTable.getRowCount(), 4);
     }
+
     @Test
     public void testByUserId() throws Exception {
         // get students table
@@ -144,6 +137,7 @@ public class StudentDaoImplTest extends DBUnitConfig {
         Student student = studentDaoImpl.findByUserId(3);
         Assert.assertEquals(studentId, student.getId());
     }
+
     @Test
     public void testFindAllByStatus() {
         // tacking all active students, must be 1

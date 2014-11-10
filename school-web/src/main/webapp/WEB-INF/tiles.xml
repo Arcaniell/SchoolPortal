@@ -5,20 +5,47 @@
 
 <tiles-definitions>
 	<definition name="base.definition" template="/views/layout.jsp">
+		<put-attribute name="header" value="/views/tiles/header.jsp" />
 		<put-attribute name="sidebar" value="/views/tiles/sidebar.jsp" />
 		<put-attribute name="main_content" value="" />
 	</definition>
-	
+
 	<definition name="home" extends="base.definition">
 		<put-attribute name="title" value="Home page" />
 		<put-attribute name="main_content" value="/views/home/home.jsp" />
-		<put-attribute name="current" value="home" />
 	</definition>
 	
+	<definition name="siginfailure" extends="base.definition">
+		<put-attribute name="title" value="Home page" />
+		<put-attribute name="main_content" value="/views/home/siginfailure.jsp" />
+	</definition>
+
 	<definition name="journal" extends="base.definition">
-		<put-attribute name="title" value="Journal"/>
-		<put-attribute name="main_content" value="/views/journal/journal.jsp"/>
+		<put-attribute name="title" value="Journal" />
+		<put-attribute name="main_content" value="/views/journal/journal.jsp" />
 		<put-attribute name="current" value="journal" />
 	</definition>
 	
+	<definition name="groups-*" extends="base.definition">
+		<put-attribute name="title" value="Group page" />
+		<put-attribute name="main_content" value="/views/groups/{1}.jsp" />
+		<put-attribute name="current" value="group" />
+	</definition>
+	
+	<definition name="courses-*" extends="base.definition">
+		<put-attribute name="title" value="Courses page" />
+		<put-attribute name="main_content" value="/views/courses/{1}.jsp" />
+		<put-attribute name="current" value="group" />
+	</definition>
+
+	<definition name="inbox" extends="base.definition">
+		<put-attribute name="title" value="Messages" />
+		<put-attribute name="main_content" value="/views/messages/inbox.jsp" />
+	</definition>
+
+	<definition name="sent" extends="base.definition">
+		<put-attribute name="title" value="Messages" />
+		<put-attribute name="main_content" value="/views/messages/sent.jsp" />
+	</definition>
+
 </tiles-definitions>

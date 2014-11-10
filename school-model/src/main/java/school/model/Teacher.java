@@ -41,7 +41,7 @@ public class Teacher {
             CascadeType.PERSIST, CascadeType.MERGE })
     private List<Salary> salaries;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
+    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST,
             CascadeType.MERGE })
     @JoinColumn(name = "userId", nullable = false, unique = true)
     private User user;

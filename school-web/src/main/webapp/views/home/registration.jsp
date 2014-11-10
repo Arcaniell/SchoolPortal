@@ -34,20 +34,21 @@
 						</tr>
 					</table>
 					<div align="center">
-					<table>
-						<tr><td>
-						<input type="submit" class="btn btn-default"
-						value="<spring:message code="label.enter"/>" />
-						</td></tr>
-					</table>
-						
-						
-					
+						<table>
+							<tr>
+								<td><input type="submit" class="btn btn-default"
+									value="<spring:message code="label.enter"/>" /></td>
+							</tr>
+						</table>
+
+
+
 					</div>
-					
+
 				</form>
 			</div>
 
 		</div>
 	</div>
 </div>
+

@@ -47,10 +47,10 @@ public class Student {
     @JoinColumn(name = "groupId")
     private Group group;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST,
             CascadeType.MERGE })
     @JoinTable(name = "STUDENT_ADDITION_GROUP_REF", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "groupId"))
-    private Set<Group> additionGroups;
+    private List<Group> additionGroups;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "student", cascade = {
             CascadeType.PERSIST, CascadeType.MERGE })
@@ -104,11 +104,13 @@ public class Student {
         this.group = group;
     }
 
-    public final Set<Group> getAdditionGroups() {
+  
+
+    public List<Group> getAdditionGroups() {
         return additionGroups;
     }
 
-    public final void setAdditionGroups(final Set<Group> additionGroups) {
+    public void setAdditionGroups(List<Group> additionGroups) {
         this.additionGroups = additionGroups;
     }
 
@@ -141,7 +143,7 @@ public class Student {
     }
 
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result
@@ -150,6 +152,7 @@ public class Student {
                 + ((courseRequest == null) ? 0 : courseRequest.hashCode());
         result = prime * result + ((group == null) ? 0 : group.hashCode());
         result = prime * result + (int) (id ^ (id >>> 32));
+        result = prime * result + (isActive ? 1231 : 1237);
         result = prime * result + ((journal == null) ? 0 : journal.hashCode());
         result = prime * result + ((parents == null) ? 0 : parents.hashCode());
         result = prime * result + ((user == null) ? 0 : user.hashCode());
@@ -157,63 +160,51 @@ public class Student {
     }
 
     @Override
-    public final boolean equals(final Object obj) {
-        if (this == obj) {
+    public boolean equals(Object obj) {
+        if (this == obj)
             return true;
-        }
-        if (obj == null) {
+        if (obj == null)
             return false;
-        }
-        if (getClass() != obj.getClass()) {
+        if (getClass() != obj.getClass())
             return false;
-        }
         Student other = (Student) obj;
         if (additionGroups == null) {
-            if (other.additionGroups != null) {
+            if (other.additionGroups != null)
                 return false;
-            }
-        } else if (!additionGroups.equals(other.additionGroups)) {
+        } else if (!additionGroups.equals(other.additionGroups))
             return false;
-        }
         if (courseRequest == null) {
-            if (other.courseRequest != null) {
+            if (other.courseRequest != null)
                 return false;
-            }
-        } else if (!courseRequest.equals(other.courseRequest)) {
+        } else if (!courseRequest.equals(other.courseRequest))
             return false;
-        }
         if (group == null) {
-            if (other.group != null) {
+            if (other.group != null)
                 return false;
-            }
-        } else if (!group.equals(other.group)) {
+        } else if (!group.equals(other.group))
             return false;
-        }
-        if (id != other.id) {
+        if (id != other.id)
             return false;
-        }
+        if (isActive != other.isActive)
+            return false;
         if (journal == null) {
-            if (other.journal != null) {
+            if (other.journal != null)
                 return false;
-            }
-        } else if (!journal.equals(other.journal)) {
+        } else if (!journal.equals(other.journal))
             return false;
-        }
         if (parents == null) {
-            if (other.parents != null) {
+            if (other.parents != null)
                 return false;
-            }
-        } else if (!parents.equals(other.parents)) {
+        } else if (!parents.equals(other.parents))
             return false;
-        }
         if (user == null) {
-            if (other.user != null) {
+            if (other.user != null)
                 return false;
-            }
-        } else if (!user.equals(other.user)) {
+        } else if (!user.equals(other.user))
             return false;
-        }
         return true;
     }
+
+   
 
 }

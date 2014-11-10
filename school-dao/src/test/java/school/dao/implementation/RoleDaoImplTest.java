@@ -35,6 +35,7 @@ public class RoleDaoImplTest extends DBUnitConfig{
 		role = new Role();
 		role.setId(1);
 		role.setName("Teacher");
+		
 		DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester().getConnection(), getDataSet());
 	}
 
@@ -74,6 +75,7 @@ public class RoleDaoImplTest extends DBUnitConfig{
 
 	@Test
 	public void testFindAll() {
+	    while(roleDao.findAll().size()==0){}
 		Assert.assertTrue(roleDao.findAll().size() == 6);
 	}
 
