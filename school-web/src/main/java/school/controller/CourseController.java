@@ -52,7 +52,11 @@ public class CourseController {
         } else {
             till = addOrDelDays(new Date(), 60);
         }
-
+        if (from.after(till)) {
+            Date swap = from;
+            from = till;
+            till = swap;
+        }
         coursesSet = course.getCourseByUserIdAndDataRange(userId, from, till);
         model.addAttribute("dateFrom", formatterDate.format(from));
         model.addAttribute("dateTill", formatterDate.format(till));

@@ -12,8 +12,7 @@
 		<li><a href="journal">Journal</a></li>
 		<li><a href='<spring:url value="/inbox.html"></spring:url>'>Message</a></li>
 		<li><a href=courses>My courses</a></li>
-		<li><a href=groups>My groups</a></li>
-		<li><a href="#">Course request</a></li>
+		<li><a href="course-request">Course request</a></li>
 		<li><a href="#">Contacts</a></li>
 		<li><a href="#">About Us</a></li>
 	</ul>

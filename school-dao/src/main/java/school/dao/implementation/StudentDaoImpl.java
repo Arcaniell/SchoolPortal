@@ -26,6 +26,23 @@ public class StudentDaoImpl extends BaseDaoImpl<Student, Long> implements
     }
 
     @Transactional
+    @Override
+    public Student findById(long id) {
+        try {
+            Student student = (Student) entityManager
+                    .createQuery(
+                            "select e from " + Student.class.getSimpleName()
+                                    + " e where e.id = :id")
+                    .setParameter("id", id).getSingleResult();
+            student.getUser().getId();
+            student.getGroup().getId();
+            return student;
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @Transactional
     @SuppressWarnings("unchecked")
     public List<Student> findAllByStatus(boolean value) {
         try {

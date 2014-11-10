@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-
+<link href="<c:url value="/resources/css/course.css" />"
+	rel="stylesheet">
 <div align="center" class="text">
 
 	<h2>
