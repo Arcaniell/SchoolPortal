@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<NEWS id="1" title="News1" body="Some text" information="1"/>
+	<NEWS id="2" title="News2" body="Some text" information="1"/>
+	<NEWS id="3" title="News3" body="Some text" information="1"/>
+	<NEWS id="4" title="News4" body="Some text" information="0"/>
+	<NEWS id="5" title="News5" body="Some text" information="0"/>
+</dataset>  
