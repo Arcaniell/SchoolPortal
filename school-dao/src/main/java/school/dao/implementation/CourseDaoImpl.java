@@ -22,7 +22,6 @@ public class CourseDaoImpl extends BaseDaoImpl<Course, Long> implements
     }
 
     @SuppressWarnings("unchecked")
-    @Override
     @Transactional
     public List<Course> findAllByStatus(boolean status) {
         try {
@@ -39,7 +38,6 @@ public class CourseDaoImpl extends BaseDaoImpl<Course, Long> implements
     }
 
     @SuppressWarnings("unchecked")
-    @Override
     @Transactional
     public List<Course> findByGroupNumber(int groupNumber)
             throws NoResultException, MySQLSyntaxErrorException {
@@ -53,7 +51,6 @@ public class CourseDaoImpl extends BaseDaoImpl<Course, Long> implements
     }
 
     @SuppressWarnings("unchecked")
-    @Override
     @Transactional
     public List<Course> findByCoefficient(int coefficient) {
         try {
@@ -71,7 +68,6 @@ public class CourseDaoImpl extends BaseDaoImpl<Course, Long> implements
     }
 
     @SuppressWarnings("unchecked")
-    @Override
     @Transactional
     public List<Course> findByCourseName(String courseName) {
         try {
@@ -88,7 +84,6 @@ public class CourseDaoImpl extends BaseDaoImpl<Course, Long> implements
     }
 
     @SuppressWarnings("unchecked")
-    @Override
     @Transactional
     public List<Course> findByCourseNameAndGroupNumber(String courseName,
             int groupNumber) {
@@ -108,7 +103,6 @@ public class CourseDaoImpl extends BaseDaoImpl<Course, Long> implements
     }
 
     @SuppressWarnings("unchecked")
-    @Override
     @Transactional
     public List<Course> findByPriceRange(int from, int to) {
         try {
@@ -126,7 +120,6 @@ public class CourseDaoImpl extends BaseDaoImpl<Course, Long> implements
     }
 
     @SuppressWarnings("unchecked")
-    @Override
     @Transactional
     public List<Course> findByGroupIdAndDataRange(long groupId, Date from,
             Date till) {
