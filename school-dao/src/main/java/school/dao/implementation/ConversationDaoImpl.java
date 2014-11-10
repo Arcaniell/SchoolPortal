@@ -26,7 +26,9 @@ public class ConversationDaoImpl extends BaseDaoImpl<Conversation, Long>
 		try {
 			return (List<Conversation>) entityManager
 					.createNamedQuery("Conversation.INBOX_QUERY")
-					.setParameter("receiver", receiver).getResultList();
+					.setParameter("receiver", receiver)
+					.setParameter("isAnswered", Boolean.TRUE)
+					.getResultList();
 		} catch (NoResultException e) {
 			return null;
 		}
@@ -38,7 +40,9 @@ public class ConversationDaoImpl extends BaseDaoImpl<Conversation, Long>
 		try {
 			return (List<Conversation>) entityManager
 					.createNamedQuery("Conversation.SENT_QUERY")
-					.setParameter("sender", sender).getResultList();
+					.setParameter("sender", sender)
+					.setParameter("isAnswered", Boolean.TRUE)
+					.getResultList();
 		} catch (NoResultException e) {
 			return null;
 		}

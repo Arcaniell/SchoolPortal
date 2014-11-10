@@ -10,7 +10,6 @@ public class RoleDaoImpl extends BaseDaoImpl<Role, Integer> implements RoleDao{
 
 	public RoleDaoImpl() {
 		super(Role.class);
-		// TODO Auto-generated constructor stub
 	}
 
 }

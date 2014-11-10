@@ -9,7 +9,6 @@
 		<module>school-dao</module>
 		<module>school-web</module>
 		<module>school-service</module>
-		<module>school-model</module>
 	</modules>
 	<dependencies>
 		<dependency>
@@ -26,6 +25,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.2</version>
+				<goals>install</goals>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>

@@ -5,6 +5,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@ page session="false"%>
 <body>
 	<div class="header">
@@ -19,15 +20,20 @@
 				href='<spring:url value="/inbox.html"></spring:url>'
 				style="z-index: 6;">Messages</a></li>
 		</ul>
-
-		<!-- <button class="btn btn-default" data-toggle="modal" data-target="#myModal">
-   Log in
-</button> -->
-		<!-- Large modal -->
+		
+		<sec:authorize access="isAnonymous()">
+		
 		<button class="btn btn-default" data-toggle="modal"
 			data-target="#logIn">
 			<spring:message code="label.enter" />
 		</button>
+		
+</sec:authorize>
+<sec:authorize access="isAuthenticated()">
+<a class="btn btn-default" href="<c:url value="/j_spring_security_logout"/>"><spring:message code="label.logout"/></a>
+</sec:authorize>
+
+		
 
 		<div class="btn-group">
 			<button type="button" class="btn btn-default dropdown-toggle"

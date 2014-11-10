@@ -18,7 +18,6 @@ public class GroupServiceImpl implements GroupService {
 
     public List<Group> getStudentGoupsByUserId(long id) {
         Student student = studentDaoImpl.findByUserId(id);
-        System.out.println("Student Dao Impl is "+studentDaoImpl);
         if (student == null) {
             return null;
         }

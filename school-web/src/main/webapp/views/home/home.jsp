@@ -3,14 +3,93 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<h1>
-	<spring:message code="label.welcome" />
-</h1>
-<h1>
-	<a href="?lang=en">en</a> | <a href="?lang=ua">ua</a> | <a
-		href="?lang=ru">ru</a>
-</h1>
-<form action="journal/ss" method="get">
-	<input type="text" name="name"> <input type="submit">
-</form>
 
+<div>
+	<div class="home">
+		<div align="center">
+		
+<c:if test="${pageContext.request.userPrincipal.name != null}">
+		<p>
+			Welcome : ${pageContext.request.userPrincipal.name} 
+		</p>
+	</c:if>
+			<img class="home_image"
+				src="<c:url value="/resources/img/school.jpg" />" />
+		</div>
+		<div class="news">
+			<table class="table table-hover">
+				<c:forEach items="${newsList}" var="news">
+					<c:if test="${news.information == false }">
+						<tr>
+							<td>
+								<div>
+									<img
+										src="<c:url value="/resources/img/news/news${news.id}.jpg" />" />
+								</div>
+							</td>
+							<td>
+								<div>
+									<h3>${news.title}</h3>
+								</div>
+								<p>${news.body}</p>
+							</td>
+						</tr>
+					</c:if>
+				</c:forEach>
+			</table>
+		</div>
+	</div>
+
+
+	<div class="home_info">
+		<table class="table table-hover">
+			<c:forEach items="${newsList}" var="news">
+				<c:if test="${news.information == true }">
+					<tr data-toggle="modal" data-dismiss="modal"
+						data-target="#news${news.id}">
+						<td>
+							<div>
+								<img
+									src="<c:url value="/resources/img/news/news${news.id}.jpg" />" />
+							</div>
+						</td>
+						<td>
+							<div>
+								<h5>${news.title}</h5>
+
+
+
+								<div id="news${news.id}" class="modal" tabindex="-1"
+									role="dialog">
+									<div class="modal-dialog">
+										<div class="modal-content" align="center">
+											<div class="modal-header">
+												<button type="button" class="close">×</button>
+												<h3 class="modal-title">${news.title}</h3>
+											</div>
+											<div class="modal-body">
+												<div>
+													<img
+														src="<c:url value="/resources/img/news/news${news.id}.jpg" />" />
+												</div>
+												<div>
+													<p>${news.body}</p>
+												</div>
+
+
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+
+							</div>
+						</td>
+					</tr>
+
+				</c:if>
+			</c:forEach>
+		</table>
+	</div>
+</div>

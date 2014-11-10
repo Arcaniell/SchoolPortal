@@ -14,6 +14,11 @@
 		<put-attribute name="title" value="Home page" />
 		<put-attribute name="main_content" value="/views/home/home.jsp" />
 	</definition>
+	
+	<definition name="siginfailure" extends="base.definition">
+		<put-attribute name="title" value="Home page" />
+		<put-attribute name="main_content" value="/views/home/siginfailure.jsp" />
+	</definition>
 
 	<definition name="journal" extends="base.definition">
 		<put-attribute name="title" value="Journal" />

@@ -14,6 +14,7 @@
 <title><tiles:getAsString name="title" /></title>
 <!-- OUR LOCAL CSS -->
 <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/home.css" />" rel="stylesheet">
 <!-- BOOTSTRAP -->
 <link
 	href="<c:url value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" />"
