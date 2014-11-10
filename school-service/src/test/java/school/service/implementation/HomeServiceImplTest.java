@@ -1,38 +1,34 @@
 package school.service.implementation;
 
-import static org.junit.Assert.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
+import school.dao.NewsDao;
+import school.model.News;
 import school.service.HomeService;
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(locations = {"classpath:/META-INF/service-context.xml"})
-//@TestExecutionListeners( { DependencyInjectionTestExecutionListener.class })
+@RunWith(MockitoJUnitRunner.class)
 public class HomeServiceImplTest {
 
-//	@Autowired
-//	HomeService homeService;
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
+	@Mock
+	private NewsDao newsDao;
+	@InjectMocks
+	private HomeService homeService = new HomeServiceImpl();
 
 	@Test
 	public void testFindAllNews() {
-//		Assert.assertNotNull(homeService.findAllNews().size() == 0);
+		 List<News> expected = new ArrayList<News>();
+		 Mockito.when(newsDao.findAll()).thenReturn(expected);
+		 List<News> actual = homeService.findAllNews();
+		 Assert.assertEquals(expected, actual);
 	}
 
 }
