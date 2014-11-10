@@ -18,10 +18,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "CONVERSATION")
 @NamedQueries({
-		@NamedQuery(name = "Conversation.INBOX_QUERY", query = "from Conversation c "
-				+ "where c.receiverId = :receiver or (c.senderId = :receiver and c.isAnswered = 1)"),
-		@NamedQuery(name = "Conversation.SENT_QUERY", query = "from Conversation c "
-				+ "where c.senderId = :sender or (c.receiverId = :sender and c.isAnswered = 1)"),
+		@NamedQuery(name = "Conversation.INBOX_QUERY", query = "SELECT c from Conversation c "
+				+ "where c.receiverId = :receiver or (c.senderId = :receiver and c.isAnswered = :isAnswered)"),
+		@NamedQuery(name = "Conversation.SENT_QUERY", query = "SELECT c from Conversation c "
+				+ "where c.senderId = :sender or (c.receiverId = :sender and c.isAnswered = :isAnswered)"),
 		@NamedQuery(name = "Conversation.FIND_DATE", query = "select max(m.dateTime) "
 				+ "from Message m where m.conversationId = :conversation") })
 public class Conversation {

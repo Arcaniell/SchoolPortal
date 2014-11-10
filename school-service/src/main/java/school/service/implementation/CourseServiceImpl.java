@@ -22,7 +22,7 @@ public class CourseServiceImpl implements CourseService {
     StudentDao studentDao;
 
     @Override
-    public List<Course> getCourseByUserIdAndDataRange(int id, Date from,
+    public List<Course> getCourseByUserIdAndDataRange(long id, Date from,
             Date till) {
         Student student = studentDao.findByUserId(id);
         if (student == null) {

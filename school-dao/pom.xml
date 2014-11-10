@@ -9,11 +9,7 @@
 	<artifactId>school-dao</artifactId>
 	<dependencies>
 
-		<dependency>
-			<groupId>lv128</groupId>
-			<artifactId>school-model</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+		
 
 		<dependency>
 			<groupId>org.dbunit</groupId>
@@ -34,6 +30,7 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.6</version>
 		</dependency>
+		
 
 		<dependency>
 			<groupId>org.hibernate</groupId>

@@ -9,7 +9,6 @@
 		<module>school-dao</module>
 		<module>school-web</module>
 		<module>school-service</module>
-		<module>school-model</module>
 	</modules>
 	<dependencies>
 		<dependency>

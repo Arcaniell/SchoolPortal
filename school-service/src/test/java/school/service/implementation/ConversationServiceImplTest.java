@@ -19,29 +19,29 @@ import school.dao.ConversationDao;
 import school.model.Conversation;
 import school.service.ConversationService;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/META-INF/service-context.xml"})
-@TestExecutionListeners( { DependencyInjectionTestExecutionListener.class })
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(locations = {"classpath:/META-INF/service-context.xml"})
+//@TestExecutionListeners( { DependencyInjectionTestExecutionListener.class })
 public class ConversationServiceImplTest {
 	
-	@Autowired
-	private ConversationService conversationService;
-	
-	private Conversation conversation1;
-	private Conversation conversation2;
-	private Conversation conversation3;
-	private List<Conversation> conversations;
-	
-	@Autowired
-	private ConversationDao conversatinDao;
-	
-	@Before
-	public void setUp() throws Exception {
-		conversation1 = conversatinDao.findById(1L);
-		conversation2 = conversatinDao.findById(2L);
-		conversation3 = conversatinDao.findById(3L);
-		conversations = Arrays.asList(conversation1, conversation2, conversation3);
-	}
+//	@Autowired
+//	private ConversationService conversationService;
+//	
+//	private Conversation conversation1;
+//	private Conversation conversation2;
+//	private Conversation conversation3;
+//	private List<Conversation> conversations;
+//	
+//	@Autowired
+//	private ConversationDao conversatinDao;
+//	
+//	@Before
+//	public void setUp() throws Exception {
+//		conversation1 = conversatinDao.findById(1L);
+//		conversation2 = conversatinDao.findById(2L);
+//		conversation3 = conversatinDao.findById(3L);
+//		conversations = Arrays.asList(conversation1, conversation2, conversation3);
+//	}
 
 	@After
 	public void tearDown() throws Exception {

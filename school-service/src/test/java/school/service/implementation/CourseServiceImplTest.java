@@ -15,12 +15,12 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import school.model.Course;
 import school.service.CourseService;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/META-INF/service-context.xml"})
-@TestExecutionListeners( { DependencyInjectionTestExecutionListener.class })
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(locations = {"classpath:/META-INF/service-context.xml"})
+//@TestExecutionListeners( { DependencyInjectionTestExecutionListener.class })
 public class CourseServiceImplTest {
-    @Autowired
-    CourseService courseService;
+//    @Autowired
+//    CourseService courseService;
     @Test
     public void testCreateUser() {
 //        Date from=new Date(0);

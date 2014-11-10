@@ -21,15 +21,15 @@ import javax.persistence.Table;
 @Table(name = "GROUPS")
 @NamedQueries({
 		@NamedQuery(name = Group.FIND_BY_STATUS, query = Group.FIND_BY_STATUS_QUERY),
-		@NamedQuery(name = Group.FIND_BY_NUMBER, query = "FROM Group g WHERE g.number = :number"),
-		@NamedQuery(name = Group.FIND_BY_STARTDATE, query = "FROM Group g WHERE g.startDate = :startDate"),
-		@NamedQuery(name = Group.FIND_BY_TEACHER, query = "FROM Group g WHERE g.teacher.id = :teacherId"),
-		@NamedQuery(name = Group.FIND_BY_NUMBER_LETTER, query = "FROM Group g WHERE g.number = :number and g.letter = :letter"),
-		@NamedQuery(name = Group.FIND_ALL_ACTIVE_GROUP, query = "FROM Group g WHERE :actualDate BETWEEN g.startDate and g.endDate"), })
+		@NamedQuery(name = Group.FIND_BY_NUMBER, query = "SELECT g FROM Group g WHERE g.number = :number"),
+		@NamedQuery(name = Group.FIND_BY_STARTDATE, query = "SELECT g FROM Group g WHERE g.startDate = :startDate"),
+		@NamedQuery(name = Group.FIND_BY_TEACHER, query = "SELECT g FROM Group g WHERE g.teacher.id = :teacherId"),
+		@NamedQuery(name = Group.FIND_BY_NUMBER_LETTER, query = "SELECT g FROM Group g WHERE g.number = :number and g.letter = :letter"),
+		@NamedQuery(name = Group.FIND_ALL_ACTIVE_GROUP, query = "SELECT g FROM Group g WHERE :actualDate BETWEEN g.startDate and g.endDate"), })
 public class Group {
 
 	public static final String FIND_BY_STATUS = "Group.findByStatus";
-	public static final String FIND_BY_STATUS_QUERY = "FROM Group g WHERE g.additional = :additional";
+	public static final String FIND_BY_STATUS_QUERY = "SELECT g FROM Group g WHERE g.additional = :additional";
 	public static final String FIND_BY_NUMBER = "Group.findByNumber";
 	public static final String FIND_BY_STARTDATE = "Group.findByStartDate";
 	public static final String FIND_BY_TEACHER = "Group.findByTeacherId";

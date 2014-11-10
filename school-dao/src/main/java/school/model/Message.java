@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "MESSAGE")
 @NamedQuery(name = "Message.FIND_MESSAGES", 
-query = "from Message m where m.conversationId = :conversation order by m.dateTime desc")
+query = "select m from Message m where m.conversationId = :conversation order by m.dateTime desc")
 public class Message {
 
 	@Id
