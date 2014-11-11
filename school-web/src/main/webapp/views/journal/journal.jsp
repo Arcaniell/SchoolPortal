@@ -36,7 +36,7 @@
 			</th>
 			<th></th>
 		</tr>
-		<form method="POST" action="journal/submit">
+		<form method="POST" action="journal">
 			<tr>
 				<th>
 					<div>
@@ -84,7 +84,10 @@
 				</th>
 				<th><div>
 						<select name="subject" value="${subject}" class="form-control">
-							<option><spring:message code="journal.all" /></option>
+							<c:forEach items="${teacherSchedules}" var="schedule">
+								<option>${schedule.course.courseName}
+									${schedule.course.groupNumber}</option>
+							</c:forEach>
 						</select>
 					</div></th>
 				<th><button class="btn btn-default" type="submit">

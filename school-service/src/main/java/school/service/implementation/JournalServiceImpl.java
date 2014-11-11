@@ -2,6 +2,7 @@ package school.service.implementation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.TreeSet;
 
 import javax.inject.Inject;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,10 +20,16 @@ import school.dao.GroupDao;
 import school.dao.JournalDao;
 import school.dao.ScheduleDao;
 import school.dao.StudentDao;
+import school.dao.TeacherDao;
+import school.dao.UserDao;
+import school.dto.JournalTeacherDto;
+import school.model.Course;
 import school.model.Group;
 import school.model.Journal;
 import school.model.Schedule;
 import school.model.Student;
+import school.model.Teacher;
+import school.model.User;
 import school.service.JournalService;
 
 @Service
@@ -35,16 +43,10 @@ public class JournalServiceImpl implements JournalService {
 	private GroupDao groupDao;
 	@Inject
 	private StudentDao studentDao;
-
-	@Transactional
-	public List<Journal> findByInterval(Date from, Date till) {
-		return journalDao.findByInterval(from, till);
-	}
-
-	@Transactional
-	public List<Journal> findByStudentId(long studentId) {
-		return journalDao.findByStudentId(studentId);
-	}
+	@Inject
+	private TeacherDao teacherDao;
+	@Inject
+	UserDao userDao;
 
 	@Transactional
 	public List<Journal> findByIntervalAndStudentId(long studentId, Date from,
@@ -52,16 +54,40 @@ public class JournalServiceImpl implements JournalService {
 		return journalDao.findByIntervalAndStudentId(studentId, from, till);
 	}
 
-	// @Transactional
-	// public List<Group> findByNumber(byte number) {
-	// return groupDao.findByNumber(number);
-	// }
-
 	@Transactional
 	public Group findByNumberAndLetter(byte number, char letter) {
 		return groupDao.findByNumberAndLetter(number, letter);
 	}
 
+	@Transactional
+	public List<Schedule> getSchedulesByTeacherId(Teacher teacher) {
+		return scheduleDao.findByTeacher(teacher);
+	}
+
+	@Transactional
+	public Teacher getTeacherByUserId(long userId) {
+		return teacherDao.findByUserId(userId);
+	}
+
+	@Transactional
+	public JournalTeacherDto getTeacherInfo(long userId) {
+
+		Teacher teacher = teacherDao.findByUserId(userId);
+		List<Schedule> schedules = scheduleDao.findByTeacher(teacher);
+
+		Set<Course> teacherCourses = new TreeSet<Course>();
+		Set<Group> teacherGroups = new TreeSet<Group>();
+
+		for (Schedule schedule : schedules) {
+			teacherCourses.add(schedule.getCourse());
+			teacherGroups.add(schedule.getGroup());
+		}
+
+		return new JournalTeacherDto(teacher.getId(), getWholeUserName(userId),
+				teacherCourses, teacherGroups);
+	}
+
+	@Secured("ROLE_TEACHER")
 	@Transactional
 	public Set<Date> getDates(String dateFrom, String dateTo)
 			throws ParseException {
@@ -99,4 +125,10 @@ public class JournalServiceImpl implements JournalService {
 		}
 		return map;
 	}
+
+	private String getWholeUserName(long userId) {
+		User user = userDao.findById(userId);
+		return user.getFirstName() + " " + user.getLastName();
+	}
+
 }
