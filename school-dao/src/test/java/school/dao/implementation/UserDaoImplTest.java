@@ -42,7 +42,7 @@ public class UserDaoImplTest extends DBUnitConfig {
 		user.setLastName("Petrov");
 		user.setPassword("password");
 		user.setRegistration(new Date());
-		user.setSex(User.SexType.MALE.getSex());
+		user.setSex(User.SexType.MALE);
 		DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
 				.getConnection(), getDataSet());
 	}
@@ -73,7 +73,7 @@ public class UserDaoImplTest extends DBUnitConfig {
 		newUser.setLastName("Petrova");
 		newUser.setPassword("password");
 		newUser.setRegistration(new Date());
-		newUser.setSex(User.SexType.FEMALE.getSex());
+		newUser.setSex(User.SexType.FEMALE);
 		userDao.save(newUser);
 		List<User> users = userDao.findAll();
 		Assert.assertTrue(users.size() == 6);
