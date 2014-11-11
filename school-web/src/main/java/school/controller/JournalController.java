@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import school.dto.JournalTeacherDto;
 import school.model.Journal;
+import school.model.Role;
 import school.model.Schedule;
 import school.model.Teacher;
 import school.service.JournalService;
@@ -27,16 +30,13 @@ public class JournalController {
 	private JournalService journalService;
 
 	@RequestMapping(value = "journal")
-	public String index(Principal user, Model model) {
+	public String index(Principal user, Model model, HttpServletRequest request) {
 
-		Teacher teacher = journalService.getTeacherByUserId(Long.parseLong(user
-				.getName()));
-
-		List<Schedule> teacherSchedules = journalService
-				.getSchedulesByTeacherId(teacher);
-
-		model.addAttribute("teacherSchedules", teacherSchedules);
-
+		JournalTeacherDto teacher = journalService.getTeacherInfo(Long
+				.parseLong(user.getName()));
+		// if (request.isUserInRole(Role.Secured.TEACHER)) {
+		model.addAttribute("teacher", teacher);
+		// }
 		return "journal";
 	}
 
