@@ -26,4 +26,6 @@ public interface CourseDao extends BaseDao<Course, Long> {
 
     List<Course> findByGroupIdAndDataRange(long groupId, Date from, Date till);
 
+    List<Course> findAllByStatusAndYear(boolean status, int year);
+
 }

@@ -26,10 +26,11 @@ import javax.persistence.Table;
         @NamedQuery(name = Course.FIND_BY_NAME_AND_NUMBER, query = Course.FIND_BY_NAME_AND_NUMBER_QUERY),
         @NamedQuery(name = Course.FIND_BY_PRICE_RANGE, query = Course.FIND_BY_PRICE_RANGE_QUERY),
         @NamedQuery(name = Course.FIND_BY_STATUS, query = Course.FIND_BY_STATUS_QUERY),
-        @NamedQuery(name = Course.FIND_BY_GROUP_ID_AND_DATA_RANGE, query = Course.FIND_BY_GROUP_ID_AND_DATA_RANGE_QUERY) 
-        })
+        @NamedQuery(name = Course.FIND_BY_GROUP_ID_AND_DATA_RANGE, query = Course.FIND_BY_GROUP_ID_AND_DATA_RANGE_QUERY),
+        @NamedQuery(name = Course.FIND_BY_STATUS_AND_YEAR, query = Course.FIND_BY_STATUS_AND_YEAR_QUERY) })
 public class Course {
     public static final String FIND_BY_STATUS = "Course.findAllByStatus";
+    public static final String FIND_BY_STATUS_AND_YEAR = "Course.findAllByStatusAndYear";
     public static final String FIND_BY_GROUP_NUMBER = "Course.findAllByGroupNumber";
     public static final String FIND_BY_COEFFICIENT = "Course.findAllByCoeficient";
     public static final String FIND_BY_COURSE_NAME = "Course.findAllByCourseName";
@@ -37,7 +38,8 @@ public class Course {
     public static final String FIND_BY_PRICE_RANGE = "Course.findAllByPriceRange";
     public static final String FIND_BY_GROUP_ID_AND_DATA_RANGE = "Course.findByGroupIdAndDataRange";
 
-    public static final String FIND_BY_STATUS_QUERY = "SELECT c FROM Course c WHERE c.additional = :active";
+    public static final String FIND_BY_STATUS_QUERY = "SELECT DISTINCT c FROM Course c WHERE c.additional = :active";
+    public static final String FIND_BY_STATUS_AND_YEAR_QUERY = "SELECT DISTINCT c FROM Course c WHERE c.additional = :active AND c.groupNumber = :year";
     public static final String FIND_BY_GROUP_NUMBER_QUERY = "SELECT c FROM Course c WHERE c.groupNumber = :groupNumber";
     public static final String FIND_BY_COEFFICIENT_QUERY = "SELECT c FROM Course c WHERE c.coeficient = :coefficient";
     public static final String FIND_BY_COURSE_NAME_QUERY = "SELECT c FROM Course c WHERE c.courseName LIKE :courseName";

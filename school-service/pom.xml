@@ -9,6 +9,11 @@
 	<artifactId>school-service</artifactId>
 	<dependencies>
 		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
 			<groupId>lv128</groupId>
 			<artifactId>school-dao</artifactId>
 			<version>0.0.1-SNAPSHOT</version>

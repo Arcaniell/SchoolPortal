@@ -21,7 +21,7 @@ public class CourseRequest {
     public static final String FIND_ALL_BY_STATUS_QUERY = "SELECT u FROM CourseRequest u WHERE u.isActive = :active";
     public static final String FIND_BY_INTERVAL_QUERY = "SELECT u FROM CourseRequest u WHERE u.date BETWEEN :from AND :till";
     public static final String FIND_BY_STUDENT_ID_QUERY = "SELECT u FROM CourseRequest u WHERE u.student.id = :id";
-    public static final String FIND_BY_SUBJECT_ID_QUERY = "SELECT u FROM CourseRequest u WHERE u.course.id = :id";
+    public static final String FIND_BY_SUBJECT_ID_QUERY = "SELECT DISTINCT u FROM CourseRequest u WHERE u.course.id = :id";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
