@@ -37,17 +37,17 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST,
+    @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
             CascadeType.MERGE })
     @JoinColumn(name = "userId", unique = true, nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST,
+    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
             CascadeType.MERGE })
     @JoinColumn(name = "groupId")
     private Group group;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST,
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
             CascadeType.MERGE })
     @JoinTable(name = "STUDENT_ADDITION_GROUP_REF", joinColumns = @JoinColumn(name = "studentId"), inverseJoinColumns = @JoinColumn(name = "groupId"))
     private List<Group> additionGroups;

@@ -1,104 +1,124 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<table style="border: 0">
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
+<script src="<c:url value="https://code.jquery.com/jquery-1.10.2.js" />"></script>
+<script
+	src="<c:url value="https://code.jquery.com/ui/1.11.2/jquery-ui.js" />"></script>
+<script src="<c:url value="/resources/js/journal.js" />"
+	type="text/javascript"></script>
+
+<link href="<c:url value="/resources/css/journal.css" />"
+	rel="stylesheet">
+
+<table class="table table-condensed">
 	<tbody>
 		<tr>
-			<th style="padding: 10px 10px;">
-				<h4>Date</h4> <b style="margin-left: 2px;">from:</b>
-				<div class="btn-group btn-group-sm">
-					<input type="date" style="margin: 1px 2px; text-align: left;"
-						class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-						size="10">
-					<ul class="dropdown-menu">
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else here</a></li>
-					</ul>
-				</div> <br> <b style="margin-left: 20px;">to:</b>
-				<div class="btn-group btn-group-sm">
-					<input type="date" style="margin: 1px 2px; text-align: left;"
-						class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-						size="10">
-					<ul class="dropdown-menu" type="disc">
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else hesre</a></li>
-					</ul>
-				</div>
+			<th>
+				<h4>
+					<spring:message code="journal.date" />
+				</h4>
 			</th>
-			<th style="padding: 10px 10px;">
-				<h4>Group</h4> <b style="margin-left: 2px;">number:</b>
-				<div class="btn-group btn-group-sm">
-					<input type="search" style="margin: 1px 1px; text-align: left;"
-						class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-						size="10">
-					<ul class="dropdown-menu">
-						<li><a href="#">5</a></li>
-						<li><a href="#">6</a></li>
-						<li><a href="#">7</a></li>
-						<li><a href="#">8</a></li>
-						<li><a href="#">9</a></li>
-						<li><a href="#">10</a></li>
-					</ul>
-				</div> <br> <b style="margin-left: 19px;">letter:</b>
-				<div class="btn-group btn-group-sm">
-					<input type="search" style="margin: 1px 1px; text-align: left;"
-						class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-						size="10">
-					<ul class="dropdown-menu">
-						<li value="a"><a href="a">a</a></li>
-						<li value="b"><a href="#">b</a></li>
-						<li value="c"><a href="#">c</a></li>
-						<li value="d"><a href="#">c</a></li>
-					</ul>
-				</div>
+			<th>
+				<h4>
+					<spring:message code="journal.group" />
+				</h4>
 			</th>
-			<th style="padding: 10px 10px; padding-bottom: 42px;">
-				<h4>Quarter Mark</h4>
-				<div class="btn-group btn-group-sm">
-					<input type="search" style="margin: 1px 1px; text-align: left;"
-						class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-						size="15">
-					<ul class="dropdown-menu">
-						<li><a href="#">first</a></li>
-						<li><a href="#">second</a></li>
-						<li><a href="#">third</a></li>
-						<li><a href="#">fourth</a></li>
-					</ul>
-				</div>
+			<th>
+				<h4>
+					<spring:message code="journal.student" />
+				</h4>
 			</th>
-			<th style="padding: 10px 10px; padding-bottom: 42px;">
-				<h4>Subject</h4>
-				<div class="btn-group btn-group-sm">
-					<input type="search" style="margin: 1px 1px; text-align: left;"
-						class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-						size="30">
-					<ul class="dropdown-menu">
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else here</a></li>
-					</ul>
-				</div>
+			<th>
+				<h4>
+					<spring:message code="journal.subject" />
+				</h4>
 			</th>
-			<th style="padding: 10px 10px; padding-bottom: 42px;">
-				<h4>Student</h4>
-				<div class="btn-group btn-group-sm">
-					<input type="search" style="margin: 1px 1px; text-align: left;"
-						class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-						size="30">
-					<ul class="dropdown-menu">
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else here</a></li>
-					</ul>
-				</div>
-			</th>
+			<th></th>
 		</tr>
+		<form method="POST" action="journal/submit">
+			<tr>
+				<th>
+					<div>
+						<b> <spring:message code="journal.date.from" /> <input
+							name="dateFrom" value="${dateFrom}" type="text"
+							placeholder="<spring:message code="journal.date.from"/>"
+							class="datepicker form-control-small"> <spring:message
+								code="journal.date.to" /> <input name="dateTo"
+							value="${dateTo}" type="text"
+							placeholder="<spring:message code="journal.date.to"/>"
+							class="datepicker form-control-small"></b>
+					</div>
+
+				</th>
+				<th>
+					<div>
+						<b> <spring:message code="journal.group.number" /> <select
+							name="groupNumber" value="${groupNumber}"
+							class="form-control-small" placeholder="number">
+								<option>5</option>
+								<option>6</option>
+								<option>7</option>
+								<option>8</option>
+								<option>9</option>
+								<option>10</option>
+								<option>11</option>
+						</select> <spring:message code="journal.group.letter" /> <select
+							name="groupLetter" value="${groupLetter}"
+							class="form-control-small">
+								<option><spring:message code="journal.all" /></option>
+								<option>A</option>
+								<option>B</option>
+								<option>C</option>
+								<option>D</option>
+						</select>
+						</b>
+					</div>
+				</th>
+				<th>
+					<div>
+						<select name="student" value="${student}" class="form-control">
+							<option><spring:message code="journal.all" /></option>
+						</select>
+					</div>
+				</th>
+				<th><div>
+						<select name="subject" value="${subject}" class="form-control">
+							<option><spring:message code="journal.all" /></option>
+						</select>
+					</div></th>
+				<th><button class="btn btn-default" type="submit">
+						<spring:message code="journal.submit" />
+					</button></th>
+			</tr>
+		</form>
 	</tbody>
 </table>
 
 
-<h3>Journals</h3>
-<%=request.getAttribute("name")%>
 
-
+<c:if test="${!empty scheduleDates}">
+	<table id="docTable" class="table table-striped table-bordered">
+		<tr>
+			<th><spring:message code="journal.student" /></th>
+			<c:forEach items="${scheduleDates}" var="date">
+				<th><fmt:formatDate value="${date}" pattern="dd.MM.yy" /></th>
+			</c:forEach>
+		</tr>
+		<c:forEach items="${studentMarks}" var="student">
+			<tr>
+				<th>${student.key}</th>
+				<c:forEach items="${scheduleDates}" var="date">
+					<td><c:forEach items="${student.value}" var="journal">
+							<c:if test="${date == journal.date}">
+								<c:out value="${journal.mark}"></c:out>
+							</c:if>
+							<c:if test="${date ne journal.date}">
+								<c:out value=" "></c:out>
+							</c:if>
+						</c:forEach></td>
+				</c:forEach>
+			</tr>
+		</c:forEach>
+	</table>
+</c:if>

@@ -4,9 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.NoResultException;
-import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import school.dao.CourseRequestDao;
 import school.model.CourseRequest;
@@ -17,6 +17,24 @@ public class CourseRequestImpl extends BaseDaoImpl<CourseRequest, Long>
 
     public CourseRequestImpl() {
         super(CourseRequest.class);
+    }
+
+    @Transactional
+    @Override
+    public CourseRequest findById(long id) {
+        try {
+            CourseRequest courseRequest= (CourseRequest) entityManager
+                    .createQuery(
+                            "select e from "
+                                    + CourseRequest.class.getSimpleName()
+                                    + " e where e.id = :id")
+                    .setParameter("id", id).getSingleResult();
+            courseRequest.getStudent().getId();
+            courseRequest.getCourse().getId();
+            return courseRequest;
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Transactional

@@ -11,4 +11,6 @@ public interface TeacherDao extends BaseDao<Teacher, Long> {
 
     Teacher findByUserId(long id);
 
+    Teacher findById(long id);
+
 }

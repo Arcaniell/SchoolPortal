@@ -1,15 +1,20 @@
 package school.controller;
 
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import javax.inject.Inject;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import school.model.Journal;
 import school.service.JournalService;
 
 @Controller
@@ -23,12 +28,21 @@ public class JournalController {
 		return "journal";
 	}
 
-	@RequestMapping(value = "journal/ss", method = RequestMethod.GET)
-	public String listJournals(@RequestParam("name") String param, Model model) {
-		model.addAttribute("name",
-				Byte.toString(journalService.findById(1L).getMark()));
-		// model.addAttribute("name",param);
+	@RequestMapping(value = "/journal/submit", method = RequestMethod.POST)
+	public String getByGroup(@RequestParam(value = "dateFrom") String dateFrom,
+			@RequestParam(value = "dateTo") String dateTo,
+			@RequestParam(value = "groupNumber") String groupNumber,
+			@RequestParam(value = "groupLetter") String groupLetter, Model model)
+			throws ParseException {
+
+		Set<Date> dates = journalService.getDates(dateFrom, dateTo);
+
+		Map<Long, List<Journal>> map = journalService.getStudentsWithMarks(
+				groupNumber, groupLetter);
+
+		model.addAttribute("studentMarks", map);
+		model.addAttribute("scheduleDates", dates);
+
 		return "journal";
 	}
-
 }
