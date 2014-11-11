@@ -78,7 +78,6 @@ public class JournalServiceImpl implements JournalService {
 		for (Schedule schedule : schedules) {
 			dates.add(schedule.getDate());
 		}
-
 		return dates;
 	}
 
@@ -93,7 +92,7 @@ public class JournalServiceImpl implements JournalService {
 
 		List<Student> students = group.getStudent();
 		Map<Long, List<Journal>> map = new HashMap<Long, List<Journal>>();
-		
+
 		for (Student student : students) {
 			map.put(student.getId(),
 					journalDao.findByStudentId(student.getId()));

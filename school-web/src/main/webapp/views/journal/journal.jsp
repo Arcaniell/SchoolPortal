@@ -1,5 +1,6 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <script src="<c:url value="https://code.jquery.com/jquery-1.10.2.js" />"></script>
 <script
@@ -14,16 +15,24 @@
 	<tbody>
 		<tr>
 			<th>
-				<h4>Date</h4>
+				<h4>
+					<spring:message code="journal.date" />
+				</h4>
 			</th>
 			<th>
-				<h4>Group</h4>
+				<h4>
+					<spring:message code="journal.group" />
+				</h4>
 			</th>
 			<th>
-				<h4>Student</h4>
+				<h4>
+					<spring:message code="journal.student" />
+				</h4>
 			</th>
 			<th>
-				<h4>Subject</h4>
+				<h4>
+					<spring:message code="journal.subject" />
+				</h4>
 			</th>
 			<th></th>
 		</tr>
@@ -31,17 +40,21 @@
 			<tr>
 				<th>
 					<div>
-						<b> from: <input name="dateFrom" value="${dateFrom}"
-							type="text" placeholder="From"
-							class="datepicker form-control-small"> to:<input
-							name="dateTo" value="${dateTo}" type="text" placeholder="To"
+						<b> <spring:message code="journal.date.from" /> <input
+							name="dateFrom" value="${dateFrom}" type="text"
+							placeholder="<spring:message code="journal.date.from"/>"
+							class="datepicker form-control-small"> <spring:message
+								code="journal.date.to" /> <input name="dateTo"
+							value="${dateTo}" type="text"
+							placeholder="<spring:message code="journal.date.to"/>"
 							class="datepicker form-control-small"></b>
 					</div>
 
 				</th>
 				<th>
 					<div>
-						<b> number: <select name="groupNumber" value="${groupNumber}"
+						<b> <spring:message code="journal.group.number" /> <select
+							name="groupNumber" value="${groupNumber}"
 							class="form-control-small" placeholder="number">
 								<option>5</option>
 								<option>6</option>
@@ -50,9 +63,10 @@
 								<option>9</option>
 								<option>10</option>
 								<option>11</option>
-						</select> letter: <select name="groupLetter" value="${groupLetter}"
+						</select> <spring:message code="journal.group.letter" /> <select
+							name="groupLetter" value="${groupLetter}"
 							class="form-control-small">
-								<option>All</option>
+								<option><spring:message code="journal.all" /></option>
 								<option>A</option>
 								<option>B</option>
 								<option>C</option>
@@ -64,16 +78,18 @@
 				<th>
 					<div>
 						<select name="student" value="${student}" class="form-control">
-							<option>All</option>
+							<option><spring:message code="journal.all" /></option>
 						</select>
 					</div>
 				</th>
 				<th><div>
 						<select name="subject" value="${subject}" class="form-control">
-							<option>All</option>
+							<option><spring:message code="journal.all" /></option>
 						</select>
 					</div></th>
-				<th><button class="btn btn-default" type="submit">Submit</button></th>
+				<th><button class="btn btn-default" type="submit">
+						<spring:message code="journal.submit" />
+					</button></th>
 			</tr>
 		</form>
 	</tbody>
@@ -84,9 +100,9 @@
 <c:if test="${!empty scheduleDates}">
 	<table id="docTable" class="table table-striped table-bordered">
 		<tr>
-			<th>Student</th>
+			<th><spring:message code="journal.student" /></th>
 			<c:forEach items="${scheduleDates}" var="date">
-				<th>${date}</th>
+				<th><fmt:formatDate value="${date}" pattern="dd.MM.yy" /></th>
 			</c:forEach>
 		</tr>
 		<c:forEach items="${studentMarks}" var="student">
