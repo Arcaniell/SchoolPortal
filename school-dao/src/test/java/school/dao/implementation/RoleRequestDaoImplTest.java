@@ -44,7 +44,7 @@ public class RoleRequestDaoImplTest extends DBUnitConfig{
 		user.setLastName("Petrov");
 		user.setPassword("password");
 		user.setRegistration(new Date());
-		user.setSex(User.SexType.MALE.getSex());
+		user.setSex(User.SexType.MALE);
 		Role role = new Role();
 		role.setId(1);
 		role.setName("Teacher");

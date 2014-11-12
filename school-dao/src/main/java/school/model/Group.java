@@ -1,5 +1,6 @@
 package school.model;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +27,7 @@ import javax.persistence.Table;
 		@NamedQuery(name = Group.FIND_BY_TEACHER, query = "SELECT g FROM Group g WHERE g.teacher.id = :teacherId"),
 		@NamedQuery(name = Group.FIND_BY_NUMBER_LETTER, query = "SELECT g FROM Group g WHERE g.number = :number and g.letter = :letter"),
 		@NamedQuery(name = Group.FIND_ALL_ACTIVE_GROUP, query = "SELECT g FROM Group g WHERE :actualDate BETWEEN g.startDate and g.endDate"), })
-public class Group {
+public class Group implements Comparable<Group> {
 
 	public static final String FIND_BY_STATUS = "Group.findByStatus";
 	public static final String FIND_BY_STATUS_QUERY = "SELECT g FROM Group g WHERE g.additional = :additional";
@@ -204,6 +205,16 @@ public class Group {
 		} else if (!teacher.equals(other.teacher))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(Group group) {
+		if (this.number < group.getNumber()) {
+			return -1;
+		} else if (this.number > group.getNumber()) {
+			return 1;
+		}
+		return 0;
 	}
 
 }
