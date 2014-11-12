@@ -26,11 +26,6 @@
 			</th>
 			<th>
 				<h4>
-					<spring:message code="journal.student" />
-				</h4>
-			</th>
-			<th>
-				<h4>
 					<spring:message code="journal.subject" />
 				</h4>
 			</th>
@@ -40,46 +35,41 @@
 			<tr>
 				<th>
 					<div>
-						<b> <spring:message code="journal.date.from" /> <input
-							name="dateFrom" value="${dateFrom}" type="text"
+						<spring:message code="journal.date.from" />
+						<input name="dateFrom" value="${dateFrom}" type="text"
 							placeholder="<spring:message code="journal.date.from"/>"
-							class="datepicker form-control-small"> <spring:message
-								code="journal.date.to" /> <input name="dateTo"
-							value="${dateTo}" type="text"
+							class="datepicker form-control-middle">
+						<spring:message code="journal.date.to" />
+						<input name="dateTo" value="${dateTo}" type="text"
 							placeholder="<spring:message code="journal.date.to"/>"
-							class="datepicker form-control-small"></b>
+							class="datepicker form-control-middle">
 					</div>
 
 				</th>
 				<th>
 					<div>
-						<b> <spring:message code="journal.group.number" /> <select
-							name="groupNumber" value="${groupNumber}"
-							class="form-control-small" placeholder="number">
-								<c:forEach items="${teacher.groups}" var="group">
-									<option>${group.number}</option>
-								</c:forEach>
-						</select> <spring:message code="journal.group.letter" /> <select
-							name="groupLetter" value="${groupLetter}"
+						<spring:message code="journal.group.number" />
+						<select name="groupNumber" value="${groupNumber}"
 							class="form-control-small">
-								<c:forEach items="${teacher.groups}" var="group">
-									<option>${group.letter}</option>
-								</c:forEach>
+							<c:forEach items="${teacher.groupNumbers}" var="groupNumber">
+								<option>${groupNumber}</option>
+							</c:forEach>
 						</select>
-						</b>
-					</div>
-				</th>
-				<th>
-					<div>
-						<select name="student" value="${student}" class="form-control">
+						<spring:message code="journal.group.letter" />
+						<select name="groupLetter" value="${groupLetter}"
+							class="form-control-small">
 							<option><spring:message code="journal.all" /></option>
+							<c:forEach items="${teacher.groupLetters}" var="groupLetter">
+								<option>${groupLetter}</option>
+							</c:forEach>
 						</select>
 					</div>
 				</th>
 				<th><div>
-						<select name="subject" value="${subject}" class="form-control">
+						<select name="course" class="form-control">
 							<c:forEach items="${teacher.courses}" var="course">
-								<option>${course.courseName}${course.groupNumber}</option>
+								<option value="${course.id}">${course.courseName }
+									${course.groupNumber}</option>
 							</c:forEach>
 						</select>
 					</div></th>
@@ -101,16 +91,13 @@
 				<th><fmt:formatDate value="${date}" pattern="dd.MM.yy" /></th>
 			</c:forEach>
 		</tr>
-		<c:forEach items="${studentMarks}" var="student">
+		<c:forEach items="${studentDtos}" var="student">
 			<tr>
-				<th>${student.key}</th>
+				<th>${student.name}</th>
 				<c:forEach items="${scheduleDates}" var="date">
-					<td><c:forEach items="${student.value}" var="journal">
-							<c:if test="${date == journal.date}">
-								<c:out value="${journal.mark}"></c:out>
-							</c:if>
-							<c:if test="${date ne journal.date}">
-								<c:out value=" "></c:out>
+					<td><c:forEach items="${student.marks}" var="journal">
+							<c:if test="${date == journal.key}">
+								<c:out value="${journal.value}"></c:out>
 							</c:if>
 						</c:forEach></td>
 				</c:forEach>
