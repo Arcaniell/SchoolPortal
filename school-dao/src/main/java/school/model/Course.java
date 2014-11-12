@@ -26,10 +26,11 @@ import javax.persistence.Table;
         @NamedQuery(name = Course.FIND_BY_NAME_AND_NUMBER, query = Course.FIND_BY_NAME_AND_NUMBER_QUERY),
         @NamedQuery(name = Course.FIND_BY_PRICE_RANGE, query = Course.FIND_BY_PRICE_RANGE_QUERY),
         @NamedQuery(name = Course.FIND_BY_STATUS, query = Course.FIND_BY_STATUS_QUERY),
-        @NamedQuery(name = Course.FIND_BY_GROUP_ID_AND_DATA_RANGE, query = Course.FIND_BY_GROUP_ID_AND_DATA_RANGE_QUERY) 
-        })
-public class Course {
+        @NamedQuery(name = Course.FIND_BY_GROUP_ID_AND_DATA_RANGE, query = Course.FIND_BY_GROUP_ID_AND_DATA_RANGE_QUERY),
+        @NamedQuery(name = Course.FIND_BY_STATUS_AND_YEAR, query = Course.FIND_BY_STATUS_AND_YEAR_QUERY) })
+public class Course implements Comparable<Course> {
     public static final String FIND_BY_STATUS = "Course.findAllByStatus";
+    public static final String FIND_BY_STATUS_AND_YEAR = "Course.findAllByStatusAndYear";
     public static final String FIND_BY_GROUP_NUMBER = "Course.findAllByGroupNumber";
     public static final String FIND_BY_COEFFICIENT = "Course.findAllByCoeficient";
     public static final String FIND_BY_COURSE_NAME = "Course.findAllByCourseName";
@@ -37,7 +38,8 @@ public class Course {
     public static final String FIND_BY_PRICE_RANGE = "Course.findAllByPriceRange";
     public static final String FIND_BY_GROUP_ID_AND_DATA_RANGE = "Course.findByGroupIdAndDataRange";
 
-    public static final String FIND_BY_STATUS_QUERY = "SELECT c FROM Course c WHERE c.additional = :active";
+    public static final String FIND_BY_STATUS_QUERY = "SELECT DISTINCT c FROM Course c WHERE c.additional = :active";
+    public static final String FIND_BY_STATUS_AND_YEAR_QUERY = "SELECT DISTINCT c FROM Course c WHERE c.additional = :active AND c.groupNumber = :year";
     public static final String FIND_BY_GROUP_NUMBER_QUERY = "SELECT c FROM Course c WHERE c.groupNumber = :groupNumber";
     public static final String FIND_BY_COEFFICIENT_QUERY = "SELECT c FROM Course c WHERE c.coeficient = :coefficient";
     public static final String FIND_BY_COURSE_NAME_QUERY = "SELECT c FROM Course c WHERE c.courseName LIKE :courseName";
@@ -51,14 +53,6 @@ public class Course {
 
     @Column(nullable = false, length = 45)
     private String courseName;
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
 
     @Column(nullable = false)
     private int groupNumber;
@@ -87,12 +81,12 @@ public class Course {
         this.id = id;
     }
 
-    public String getSubjectName() {
+    public String getCourseName() {
         return courseName;
     }
 
-    public void setSubjectName(String subjectName) {
-        this.courseName = subjectName;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
     public int getGroupNumber() {
@@ -158,14 +152,14 @@ public class Course {
         result = prime * result + (additional ? 1231 : 1237);
         result = prime * result + coeficient;
         result = prime * result
+                + ((courseName == null) ? 0 : courseName.hashCode());
+        result = prime * result
                 + ((courseRequest == null) ? 0 : courseRequest.hashCode());
         result = prime * result + groupNumber;
         result = prime * result + (int) (id ^ (id >>> 32));
         result = prime * result + price;
         result = prime * result
                 + ((schedule == null) ? 0 : schedule.hashCode());
-        result = prime * result
-                + ((courseName == null) ? 0 : courseName.hashCode());
         result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
         return result;
     }
@@ -183,6 +177,11 @@ public class Course {
             return false;
         if (coeficient != other.coeficient)
             return false;
+        if (courseName == null) {
+            if (other.courseName != null)
+                return false;
+        } else if (!courseName.equals(other.courseName))
+            return false;
         if (courseRequest == null) {
             if (other.courseRequest != null)
                 return false;
@@ -199,17 +198,22 @@ public class Course {
                 return false;
         } else if (!schedule.equals(other.schedule))
             return false;
-        if (courseName == null) {
-            if (other.courseName != null)
-                return false;
-        } else if (!courseName.equals(other.courseName))
-            return false;
         if (teacher == null) {
             if (other.teacher != null)
                 return false;
         } else if (!teacher.equals(other.teacher))
             return false;
         return true;
+    }
+
+    @Override
+    public int compareTo(Course course) {
+        if (this.groupNumber < course.getGroupNumber()) {
+            return -1;
+        } else if (this.groupNumber > course.getGroupNumber()) {
+            return 1;
+        }
+        return this.courseName.compareTo(course.getCourseName());
     }
 
 }

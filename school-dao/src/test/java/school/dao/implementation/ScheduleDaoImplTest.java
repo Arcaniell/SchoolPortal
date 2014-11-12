@@ -64,7 +64,7 @@ public class ScheduleDaoImplTest extends DBUnitConfig{
 		String oldstringReg = "2001-09-01 08:08:10.0";
 		Date dateReg = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(oldstringReg);
 		user.setRegistration(dateReg);
-		user.setSex(User.SexType.MALE.getSex());
+		user.setSex(User.SexType.MALE);
 		Teacher teacher = new Teacher();
 		teacher.setId(1L);
 		teacher.setRate(100000);
@@ -93,7 +93,7 @@ public class ScheduleDaoImplTest extends DBUnitConfig{
 		course.setId(1L);
 		course.setAdditional(false);
 		course.setCoeficient(75);
-		course.setSubjectName("Math");
+		course.setCourseName("Math");
 		course.setGroupNumber(5);
 		course.setPrice(0);
 		Room room = new Room();

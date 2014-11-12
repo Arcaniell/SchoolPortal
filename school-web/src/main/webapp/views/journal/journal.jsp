@@ -36,7 +36,7 @@
 			</th>
 			<th></th>
 		</tr>
-		<form method="POST" action="journal/submit">
+		<form method="POST" action="journal">
 			<tr>
 				<th>
 					<div>
@@ -56,21 +56,15 @@
 						<b> <spring:message code="journal.group.number" /> <select
 							name="groupNumber" value="${groupNumber}"
 							class="form-control-small" placeholder="number">
-								<option>5</option>
-								<option>6</option>
-								<option>7</option>
-								<option>8</option>
-								<option>9</option>
-								<option>10</option>
-								<option>11</option>
+								<c:forEach items="${teacher.groups}" var="group">
+									<option>${group.number}</option>
+								</c:forEach>
 						</select> <spring:message code="journal.group.letter" /> <select
 							name="groupLetter" value="${groupLetter}"
 							class="form-control-small">
-								<option><spring:message code="journal.all" /></option>
-								<option>A</option>
-								<option>B</option>
-								<option>C</option>
-								<option>D</option>
+								<c:forEach items="${teacher.groups}" var="group">
+									<option>${group.letter}</option>
+								</c:forEach>
 						</select>
 						</b>
 					</div>
@@ -84,7 +78,9 @@
 				</th>
 				<th><div>
 						<select name="subject" value="${subject}" class="form-control">
-							<option><spring:message code="journal.all" /></option>
+							<c:forEach items="${teacher.courses}" var="course">
+								<option>${course.courseName}${course.groupNumber}</option>
+							</c:forEach>
 						</select>
 					</div></th>
 				<th><button class="btn btn-default" type="submit">

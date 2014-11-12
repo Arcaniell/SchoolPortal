@@ -23,7 +23,6 @@
 	<definition name="journal" extends="base.definition">
 		<put-attribute name="title" value="Journal" />
 		<put-attribute name="main_content" value="/views/journal/journal.jsp" />
-		<put-attribute name="current" value="journal" />
 	</definition>
 
 	<definition name="groups-*" extends="base.definition">

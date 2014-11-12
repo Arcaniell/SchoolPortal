@@ -174,18 +174,10 @@ public class User {
 			return false;
 		return true;
 	}
-
-	public enum SexType {
-		MALE((byte) 0), FEMALE((byte) 1), OTHER((byte) 2);
-		private byte sex;
-
-		SexType(byte sex) {
-			this.sex = sex;
-		}
-
-		public byte getSex() {
-			return sex;
-		}
+	public class SexType{
+		public static final byte MALE = (byte) 0;
+		public static final byte FEMALE = (byte) 1;
+		public static final byte OTHER = (byte) 2;
 	}
 
 }
