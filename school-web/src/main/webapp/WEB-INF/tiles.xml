@@ -14,7 +14,7 @@
 		<put-attribute name="title" value="Home page" />
 		<put-attribute name="main_content" value="/views/home/home.jsp" />
 	</definition>
-	
+
 	<definition name="siginfailure" extends="base.definition">
 		<put-attribute name="title" value="Home page" />
 		<put-attribute name="main_content" value="/views/home/siginfailure.jsp" />
@@ -25,19 +25,19 @@
 		<put-attribute name="main_content" value="/views/journal/journal.jsp" />
 		<put-attribute name="current" value="journal" />
 	</definition>
-	
+
 	<definition name="groups-*" extends="base.definition">
 		<put-attribute name="title" value="Group page" />
 		<put-attribute name="main_content" value="/views/groups/{1}.jsp" />
 		<put-attribute name="current" value="group" />
 	</definition>
-	
+
 	<definition name="courses-*" extends="base.definition">
 		<put-attribute name="title" value="Courses page" />
 		<put-attribute name="main_content" value="/views/courses/{1}.jsp" />
 		<put-attribute name="current" value="group" />
 	</definition>
-	
+
 	<definition name="course-request-*" extends="base.definition">
 		<put-attribute name="title" value="Course request page" />
 		<put-attribute name="main_content" value="/views/course-request/{1}.jsp" />
@@ -45,13 +45,45 @@
 	</definition>
 
 	<definition name="inbox" extends="base.definition">
-		<put-attribute name="title" value="Messages" />
+		<put-attribute name="title" value="Conversations" />
 		<put-attribute name="main_content" value="/views/messages/inbox.jsp" />
 	</definition>
 
 	<definition name="sent" extends="base.definition">
-		<put-attribute name="title" value="Messages" />
+		<put-attribute name="title" value="Conversations" />
 		<put-attribute name="main_content" value="/views/messages/sent.jsp" />
+	</definition>
+
+	<definition name="inboxEmpty" extends="base.definition">
+		<put-attribute name="title" value="Conversations" />
+		<put-attribute name="main_content" value="/views/messages/inboxEmpty.jsp" />
+	</definition>
+
+	<definition name="sentEmpty" extends="base.definition">
+		<put-attribute name="title" value="Conversations" />
+		<put-attribute name="main_content" value="/views/messages/sentEmpty.jsp" />
+	</definition>
+
+	<definition name="inboxMessages" extends="base.definition">
+		<put-attribute name="title" value="Messages" />
+		<put-attribute name="main_content" value="/views/messages/inboxMessages.jsp" />
+	</definition>
+
+	<definition name="inboxMessagesEmpty" extends="base.definition">
+		<put-attribute name="title" value="Messages" />
+		<put-attribute name="main_content"
+			value="/views/messages/inboxMessagesEmpty.jsp" />
+	</definition>
+
+	<definition name="sentMessages" extends="base.definition">
+		<put-attribute name="title" value="Messages" />
+		<put-attribute name="main_content" value="/views/messages/sentMessages.jsp" />
+	</definition>
+
+	<definition name="sentMessagesEmpty" extends="base.definition">
+		<put-attribute name="title" value="Messages" />
+		<put-attribute name="main_content"
+			value="/views/messages/sentMessagesEmpty.jsp" />
 	</definition>
 
 </tiles-definitions>
