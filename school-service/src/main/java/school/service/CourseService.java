@@ -9,6 +9,9 @@ import school.model.Course;
 import school.model.Role;
 
 public interface CourseService {
-    @Secured(Role.Secured.TEACHER)
+    // @Secured("ROLE_TEACHER")
     List<Course> getCourseByUserIdAndDataRange(long id, Date from, Date till);
+
+    List<Course> findAllByStatusAndYear(boolean status, int year, long userId);
+
 }

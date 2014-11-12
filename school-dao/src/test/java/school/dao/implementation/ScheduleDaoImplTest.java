@@ -93,7 +93,7 @@ public class ScheduleDaoImplTest extends DBUnitConfig{
 		course.setId(1L);
 		course.setAdditional(false);
 		course.setCoeficient(75);
-		course.setSubjectName("Math");
+		course.setCourseName("Math");
 		course.setGroupNumber(5);
 		course.setPrice(0);
 		Room room = new Room();

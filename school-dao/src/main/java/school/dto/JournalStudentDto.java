@@ -1,20 +1,20 @@
 package school.dto;
 
-import java.util.List;
+import java.util.Date;
+import java.util.Map;
 
-import school.model.Journal;
-
-public class JournalStudentDto {
+public class JournalStudentDto implements Comparable<JournalStudentDto> {
 
 	private long studentId;
 	private String name;
-	private List<Journal> marks;
+	private Map<Date, String> marks;
 
 	public JournalStudentDto() {
 
 	}
 
-	public JournalStudentDto(long studentId, String name, List<Journal> marks) {
+	public JournalStudentDto(long studentId, String name,
+			Map<Date, String> marks) {
 		this.studentId = studentId;
 		this.name = name;
 		this.marks = marks;
@@ -36,12 +36,17 @@ public class JournalStudentDto {
 		this.name = name;
 	}
 
-	public List<Journal> getMarks() {
+	public Map<Date, String> getMarks() {
 		return marks;
 	}
 
-	public void setMarks(List<Journal> marks) {
+	public void setMarks(Map<Date, String> marks) {
 		this.marks = marks;
+	}
+
+	@Override
+	public int compareTo(JournalStudentDto journalStudentDto) {
+		return this.name.compareTo(journalStudentDto.getName());
 	}
 
 	@Override

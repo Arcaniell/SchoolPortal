@@ -36,19 +36,23 @@ public class JournalController {
 	}
 
 	@RequestMapping(value = "journal", method = RequestMethod.POST)
-	public String getByGroup(@RequestParam(value = "dateFrom") String dateFrom,
+	public String getByGroup(Principal user,
+			@RequestParam(value = "dateFrom") String dateFrom,
 			@RequestParam(value = "dateTo") String dateTo,
 			@RequestParam(value = "groupNumber") String groupNumber,
 			@RequestParam(value = "groupLetter") String groupLetter,
-			@RequestParam(value = "course") String course, Model model)
-			throws ParseException {
+			@RequestParam(value = "course") String course, Model model,
+			HttpServletRequest request) throws ParseException {
 
 		Set<Date> dates = journalService.getDates(dateFrom, dateTo);
 		Set<JournalStudentDto> studentDtos = journalService.getStudentsInfo(
 				groupNumber, groupLetter, course, dateFrom, dateTo);
+		JournalTeacherDto teacherDto = journalService.getTeacherInfo(Long
+				.parseLong(user.getName()));
 
 		model.addAttribute("studentDtos", studentDtos);
 		model.addAttribute("scheduleDates", dates);
+		model.addAttribute("teacher", teacherDto);
 
 		return "journal";
 	}

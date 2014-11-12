@@ -39,6 +39,22 @@ public class CourseDaoImpl extends BaseDaoImpl<Course, Long> implements
 
     @SuppressWarnings("unchecked")
     @Transactional
+    public List<Course> findAllByStatusAndYear(boolean status,int year) {
+        try {
+            if (entityManager != null) {
+                return (List<Course>) entityManager
+                        .createNamedQuery(Course.FIND_BY_STATUS_AND_YEAR)
+                        .setParameter("active", status).setParameter("year", year).getResultList();
+            } else {
+                return null;
+            }
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Transactional
     public List<Course> findByGroupNumber(int groupNumber)
             throws NoResultException, MySQLSyntaxErrorException {
         if (entityManager != null) {

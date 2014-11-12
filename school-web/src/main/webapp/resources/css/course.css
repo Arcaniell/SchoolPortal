@@ -4,3 +4,22 @@
 	font-size: 14px;
 	color: #428bca;
 }
+/*course request*/
+.modal-title {
+	text-align: center;
+}
+.modal-body {
+	width: 100%;
+	text-align: center;
+}
+
+.modal-footer .btn {
+	display: block;
+	margin: 0 auto;
+
+}
+.modal-content .btn{
+	padding-left: 30px;
+	padding-right: 30px;
+	weight:100%;
+}

@@ -1,6 +1,5 @@
 package school.model;
 
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -214,7 +213,8 @@ public class Group implements Comparable<Group> {
 		} else if (this.number > group.getNumber()) {
 			return 1;
 		}
-		return 0;
+		return Character.toString(this.letter).compareTo(
+				Character.toString(group.getLetter()));
 	}
 
 }
