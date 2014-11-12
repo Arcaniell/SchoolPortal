@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <link href="<c:url value="/resources/css/course.css" />"
 	rel="stylesheet">
 <link href="<c:url value="/resources/css/bootstrap-select.min.css" />"
@@ -14,7 +15,7 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">×</button>
-					<h3 class="modal-title">Course request</h3>
+					<h3 class="modal-title"><spring:message code="course.request" /></h3>
 				</div>
 				<form action="course-request/request" method="post">
 					<div class="modal-body">
@@ -26,7 +27,7 @@
 					</div>
 					<div class="modal-footer">
 						<button name="courserequest" type="submit" class="btn btn-default">
-							Request for a new course</button>
+							<spring:message code="course.request.btn.request.for.new" /></button>
 					</div>
 				</form>
 			</div>
@@ -42,15 +43,19 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">×</button>
-						<h3 class="modal-title">Are you sure want to leave this
-							course/courses?</h3>
+						<h3 class="modal-title">
+							<spring:message code="course.request.delete.msg" />
+						</h3>
 					</div>
 					<div class="modal-body">
 
 						<button name="yes" type="submit" class="btn btn-default">
-							Yes</button>
+							<spring:message code="course.request.btn.yes" />
+						</button>
 						<button name="no" type="button" data-dismiss="modal"
-							class="btn btn-default">No</button>
+							class="btn btn-default">
+							<spring:message code="course.request.btn.no" />
+						</button>
 
 					</div>
 				</div>
@@ -59,20 +64,24 @@
 		<!-- COURSE DELETE MODAL -->
 		<p>
 			<button type="button" class="btn btn-default" data-toggle="modal"
-				data-target=".course_request_modal">Request new</button>
+				data-target=".course_request_modal">
+				<spring:message code="course.request.btn.request.new" />
+			</button>
 			<button type="button" class="btn btn-default" data-toggle="modal"
-				data-target=".course_delete_modal">Leave course</button>
+				data-target=".course_delete_modal">
+				<spring:message code="course.request.btn.delete.request" />
+			</button>
 		</p>
 		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th><input value="justSomeLongMockValueForFormProcessing"
 						type="checkbox" id="select-all"></th>
-					<th>Course</th>
-					<th>Year</th>
-					<th>Members</th>
-					<th>Date of request</th>
-					<th>Status</th>
+					<th><spring:message code="course.table.Name" /></th>
+					<th><spring:message code="course.table.Year" /></th>
+					<th><spring:message code="course.request.members" /></th>
+					<th><spring:message code="course.request.date" /></th>
+					<th><spring:message code="course.request.status" /></th>
 				</tr>
 			</thead>
 			<tbody>
