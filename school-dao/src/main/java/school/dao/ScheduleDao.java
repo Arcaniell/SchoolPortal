@@ -6,10 +6,8 @@ import java.util.List;
 
 
 import school.model.Group;
-import school.model.Lesson;
 import school.model.Room;
 import school.model.Schedule;
-import school.model.Course;
 import school.model.Teacher;
 
 public interface ScheduleDao extends BaseDao<Schedule, Long> {

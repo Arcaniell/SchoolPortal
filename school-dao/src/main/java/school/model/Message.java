@@ -2,6 +2,7 @@ package school.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,20 +11,26 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "MESSAGE")
-@NamedQuery(name = "Message.FIND_MESSAGES", 
-query = "select m from Message m where m.conversationId = :conversation order by m.dateTime desc")
+@NamedQueries({
+		@NamedQuery(name = "Message.FIND_RECEIVERS_MESSAGES", query = "SELECT m from Message m "
+				+ "where m.conversationId = :conversation "
+				+ "and m.isDeletedReceiver = false order by m.dateTime asc"),
+		@NamedQuery(name = "Message.FIND_SENDERS_MESSAGES", query = "SELECT m from Message m "
+				+ "where m.conversationId = :conversation "
+				+ "and m.isDeletedSender = false order by m.dateTime asc") })
 public class Message {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "conversationId", nullable = false)
 	private Conversation conversationId;
 
@@ -38,6 +45,12 @@ public class Message {
 
 	@Column(nullable = false)
 	private boolean isRead;
+
+	@Column(nullable = false)
+	private boolean isDeletedReceiver;
+
+	@Column(nullable = false)
+	private boolean isDeletedSender;
 
 	public long getId() {
 		return id;
@@ -87,6 +100,22 @@ public class Message {
 		this.isRead = isRead;
 	}
 
+	public boolean isDeletedReceiver() {
+		return isDeletedReceiver;
+	}
+
+	public void setDeletedReceiver(boolean isDeletedReceiver) {
+		this.isDeletedReceiver = isDeletedReceiver;
+	}
+
+	public boolean isDeletedSender() {
+		return isDeletedSender;
+	}
+
+	public void setDeletedSender(boolean isDeletedSender) {
+		this.isDeletedSender = isDeletedSender;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -96,6 +125,8 @@ public class Message {
 		result = prime * result
 				+ ((dateTime == null) ? 0 : dateTime.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + (isDeletedReceiver ? 1231 : 1237);
+		result = prime * result + (isDeletedSender ? 1231 : 1237);
 		result = prime * result + (isFromSender ? 1231 : 1237);
 		result = prime * result + (isRead ? 1231 : 1237);
 		result = prime * result + ((text == null) ? 0 : text.hashCode());
@@ -123,6 +154,10 @@ public class Message {
 			return false;
 		if (id != other.id)
 			return false;
+		if (isDeletedReceiver != other.isDeletedReceiver)
+			return false;
+		if (isDeletedSender != other.isDeletedSender)
+			return false;
 		if (isFromSender != other.isFromSender)
 			return false;
 		if (isRead != other.isRead)
@@ -134,5 +169,4 @@ public class Message {
 			return false;
 		return true;
 	}
-
 }

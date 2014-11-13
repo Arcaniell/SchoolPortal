@@ -62,11 +62,11 @@ public class MessageDaoImplTest extends DBUnitConfig {
 	public void testFindMessagesOfConversation() {
 		
 		conversation = conversationDao.findById(5L);
-		List<Message> actualMessages = messageDao.findMessagesOfConversation(conversation);
+		List<Message> actualMessages = messageDao.findReceiversMessagesOfConversation(conversation);
 		Message message5 = messageDao.findById(5L);
 		Message message8 = messageDao.findById(8L);
 		Message message7 = messageDao.findById(7L);
-		List<Message> expectedMessages = Arrays.asList(message8, message7, message5);
+		List<Message> expectedMessages = Arrays.asList(message5, message7, message8);
 		Assert.assertTrue(actualMessages.get(0).getId() == expectedMessages.get(0).getId());
 		Assert.assertTrue(actualMessages.get(1).getId() == expectedMessages.get(1).getId());
 		Assert.assertTrue(actualMessages.get(2).getId() == expectedMessages.get(2).getId());

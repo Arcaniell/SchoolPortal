@@ -8,36 +8,82 @@
 	<div class="modal-dialog">
 		<br> <br> <br> <br> <br> <br> <br>
 		<br>
-		<div class="modal-content" align="center" style="overflow: auto;">
-			<div class="modal-header">
+		<div class="modal-content" align="center">
+
+			<div class="modal-body">
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">×</button>
-				<h4 class="modal-title">
+				<h3 class="modal-title">
 					<spring:message code="label.registration" />
-				</h4>
-			</div>
-			<div class="modal-body">
-
+				</h3>
 				<form action="" method="post">
-					<table>
+					<table class="table all_in_one_line">
 						<tr>
-							<td><label class="control-label" for="j_username"><spring:message
-										code="label.username" /></label></td>
-							<td><input class="input" id="j_username" name="j_username"
-								size="20" maxlength="50" type="text" /></td>
-						</tr>
-						<tr>
-							<td><label for="j_password"><spring:message
-										code="label.password" /></label></td>
-							<td><input class="input" id="j_password" name="j_password"
-								size="20" maxlength="50" type="password" /></td>
+							<td><table>
+									<tr>
+										<td colspan="2"><h4>
+												<spring:message code="label.registration.data" />
+											</h4></td>
+									</tr>
+									<tr>
+
+										<td><label class="control-label"><spring:message
+													code="label.registration.name" /></label></td>
+
+										<td><input class="registration_names" type="text"
+											placeholder="<spring:message code="label.firstname" />" /> <input
+											class="registration_names" type="text"
+											placeholder="<spring:message code="label.lastname" />" /></td>
+
+									</tr>
+									<tr>
+										<td><label class="control-label"><spring:message
+													code="label.email" /></label></td>
+										<td><input type="text" class="registration_data"></td>
+									</tr>
+									<tr>
+										<td><label class="control-label"><spring:message
+													code="label.createapassword" /></label></td>
+										<td><input type="password" class="registration_data"></td>
+									</tr>
+									<tr>
+										<td><label class="control-label"><spring:message
+													code="label.confirmapassword" /></label></td>
+										<td><input type="password" class="registration_data"></td>
+									</tr>
+
+								</table></td>
+
+
+
+
+							<td><table>
+									<tr>
+										<td><h4 align="center">
+												<spring:message code="label.registration.type" />
+											</h4></td>
+									</tr>
+									<tr>
+										<td><input type="radio" checked="checked" name="role">
+											<label class="control-label"><spring:message
+													code="label.student" /></label></td>
+									</tr>
+									<tr>
+										<td><input type="radio" name="role"> <label
+											class="control-label"><spring:message
+													code="label.parent" /></label></td>
+
+									</tr>
+
+								</table></td>
 						</tr>
 					</table>
 					<div align="center">
 						<table>
 							<tr>
 								<td><input type="submit" class="btn btn-default"
-									value="<spring:message code="label.enter"/>" /></td>
+									class="signup_bitton"
+									value="<spring:message code="label.signup"/>" /></td>
 							</tr>
 						</table>
 

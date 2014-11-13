@@ -4,15 +4,17 @@
 <%@ page session="true"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
+
+<script src="<c:url value="/resources/js/home.js" />"
+	type="text/javascript"></script>
+
 <div>
 	<div class="home">
 		<div align="center">
-		
-<c:if test="${pageContext.request.userPrincipal.name != null}">
-		<p>
-			Welcome : ${pageContext.request.userPrincipal.name} 
-		</p>
-	</c:if>
+
+			<c:if test="${pageContext.request.userPrincipal.name != null}">
+				<p>Welcome : ${pageContext.request.userPrincipal.name}</p>
+			</c:if>
 			<img class="home_image"
 				src="<c:url value="/resources/img/school.jpg" />" />
 		</div>
@@ -40,8 +42,9 @@
 		</div>
 	</div>
 
-
 	<div class="home_info">
+		<input type="button" class="hidehomeinfo" value="&uarr;"> <input
+			type="button" class="showhomeinfo" value="&darr;">
 		<table class="table table-hover">
 			<c:forEach items="${newsList}" var="news">
 				<c:if test="${news.information == true }">

@@ -1,4 +1,4 @@
-.news {	
+.news {
 	
 }
 
@@ -11,15 +11,28 @@
 .news p {
 	width: 500px;
 }
-.home{
-	position:absolute; 
-	left:10%;
+
+.home {
+	position: absolute;
+	left: 10%;
 }
+
 .home_image {
 	width: 90%;
 	height: 200px;
 	margin: 5px;
 	border-radius: 100px;
+}
+
+.hidehomeinfo {
+	font-size: 1em;
+	padding: 5px;
+}
+
+.showhomeinfo {
+	font-size: 1em;
+	padding: 5px;
+	display: none;
 }
 
 .home_info {
@@ -34,11 +47,33 @@
 	right: 0px;
 	padding-left: 5px;
 }
+
 .home_info img {
 	width: 50px;
 	height: 50px;
 }
-.home_info tbody tr:hover > td {
-  cursor: pointer;
-  color: black;
+
+.home_info tbody tr:hover>td {
+	cursor: pointer;
+	color: black;
+}
+
+.padding_right{
+	padding-right: 20px;
+}
+
+.all_in_one_line{
+	white-space: nowrap;
+}
+
+.registration_names{
+	width: 87px;
+}
+
+.registration_data{
+	width: 178px;
+}
+
+.signup_bitton{
+	width: 140px;
 }

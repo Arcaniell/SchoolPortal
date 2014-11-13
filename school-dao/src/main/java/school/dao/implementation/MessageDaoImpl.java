@@ -1,5 +1,6 @@
 package school.dao.implementation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -21,12 +22,37 @@ public class MessageDaoImpl extends BaseDaoImpl<Message, Long> implements
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public List<Message> findMessagesOfConversation(Conversation conversation) {
+	public List<Message> findReceiversMessagesOfConversation(
+			Conversation conversation) {
+		List<Message> list = new ArrayList<Message>();
 		try {
-			return (List<Message>) entityManager.createNamedQuery("Message.FIND_MESSAGES")
+			List<Message> mList = (List<Message>) entityManager
+					.createNamedQuery("Message.FIND_RECEIVERS_MESSAGES")
 					.setParameter("conversation", conversation).getResultList();
+			if (mList != null) {
+				return mList;
+			}
 		} catch (NoResultException e) {
-			return null;
+			e.printStackTrace();
 		}
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<Message> findSendersMessagesOfConversation(
+			Conversation conversation) {
+		List<Message> list = new ArrayList<Message>();
+		try {
+			List<Message> mList = (List<Message>) entityManager
+					.createNamedQuery("Message.FIND_SENDERS_MESSAGES")
+					.setParameter("conversation", conversation).getResultList();
+			if (mList != null) {
+				return mList;
+			}
+		} catch (NoResultException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 }

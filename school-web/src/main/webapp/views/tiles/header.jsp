@@ -23,9 +23,9 @@
 		
 		<sec:authorize access="isAnonymous()">
 		
-		<button class="btn btn-default" data-toggle="modal"
+		<button id="loginButton" class="btn btn-default" data-toggle="modal"
 			data-target="#logIn">
-			<spring:message code="label.enter" />
+			<spring:message code="label.login" />
 		</button>
 		
 </sec:authorize>
@@ -42,9 +42,9 @@
 				<span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu" role="menu">
-				<li><a href="?lang=en">en</a></li>
-				<li><a href="?lang=ua">ua</a></li>
-				<li><a href="?lang=ru">ru</a></li>
+				<li><a href="?lang=en">English</a></li>
+				<li><a href="?lang=ua">Українська</a></li>
+				<li><a href="?lang=ru">Русский</a></li>
 			</ul>
 		</div>
 
