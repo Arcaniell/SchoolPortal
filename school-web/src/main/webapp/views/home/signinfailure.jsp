@@ -4,4 +4,8 @@
 <%@ page session="true"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
-<h1>Sign in failure</h1>
+<jsp:include page="/views/home/home.jsp" />
+
+<script type="text/javascript">
+	$("#loginButton").click();
+</script>
