@@ -22,6 +22,7 @@ import school.service.CourseService;
 
 @Controller
 public class CourseController {
+    private final int TWO_MONTHS_IN_DAYS = 60;
     @Autowired
     CourseService course;
 
@@ -38,10 +39,12 @@ public class CourseController {
             try {
                 from = formatterDate.parse(dateFrom);
             } catch (ParseException e) {
-                from = addOrDelDays(new Date(), -60);
+                from = ControllersUtil.addOrDelDays(new Date(),
+                        -TWO_MONTHS_IN_DAYS);
             }
         } else {
-            from = addOrDelDays(new Date(), -60);
+            from = ControllersUtil
+                    .addOrDelDays(new Date(), -TWO_MONTHS_IN_DAYS);
         }
 
         Date till = null;
@@ -49,10 +52,11 @@ public class CourseController {
             try {
                 till = formatterDate.parse(dateTill);
             } catch (ParseException e) {
-                till = addOrDelDays(new Date(), 60);
+                till = ControllersUtil.addOrDelDays(new Date(),
+                        TWO_MONTHS_IN_DAYS);
             }
         } else {
-            till = addOrDelDays(new Date(), 60);
+            till = ControllersUtil.addOrDelDays(new Date(), TWO_MONTHS_IN_DAYS);
         }
         if (from.after(till)) {
             Date swap = from;
@@ -67,10 +71,4 @@ public class CourseController {
 
     }
 
-    private static Date addOrDelDays(Date fch, int days) {
-        Calendar cal = new GregorianCalendar();
-        cal.setTimeInMillis(fch.getTime());
-        cal.add(Calendar.DATE, days);
-        return new Date(cal.getTimeInMillis());
-    }
 }

@@ -84,4 +84,15 @@ public class GroupDaoImpl extends BaseDaoImpl<Group, Long> implements GroupDao {
 		}
 	}
 
+    @Override
+    public Group findByCourseId(long courseId) {
+        try {
+            return (Group) entityManager
+                    .createNamedQuery(Group.FIND_BY_COURSE)
+                    .setParameter("courseId", courseId).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
 }

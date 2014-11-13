@@ -12,9 +12,9 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+import school.dto.CourseRequestTeacherDTO;
 import school.service.CourseRequestService;
 import school.service.CourseService;
-
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/META-INF/service-context.xml" })
@@ -34,16 +34,24 @@ public class CourseServiceImplTest {
          * System.out.println(course.getCourseName()); }
          */
 
-       /* List<CourseRequestDto> list = courseRequestService
-                .findRequestsByUserId(155L);
-        if (list != null) {
-            for (CourseRequestDto courseRequestDto : list) {
-                System.out.println(courseRequestDto.getCourseName());
-            }
-        }*/
-        //courseRequestService.addCourseRequest(155L, 17L);
-        //courseRequestService.removeRequest(90L);
-        
+        /*
+         * List<CourseRequestDto> list = courseRequestService
+         * .findRequestsByUserId(155L); if (list != null) { for
+         * (CourseRequestDto courseRequestDto : list) {
+         * System.out.println(courseRequestDto.getCourseName()); } }
+         */
+        // courseRequestService.addCourseRequest(155L, 17L);
+        // courseRequestService.removeRequest(90L);
+        /*
+         * List<CourseRequestTeacherDTO> requests = courseRequestService
+         * .showAllRequests(); for (CourseRequestTeacherDTO
+         * courseRequestTeacherDTO : requests) {
+         * System.out.println(courseRequestTeacherDTO.getName());
+         * System.out.println(courseRequestTeacherDTO.getSize());
+         * System.out.println(courseRequestTeacherDTO.getId()); }
+         */
+        //courseRequestService.altDeleteAllRequestsWithCourseId(73L);
+        courseRequestService.formGroupAndCloseRequests(74L,new Date(),new Date());
         Assert.assertNotNull(44);
 
     }

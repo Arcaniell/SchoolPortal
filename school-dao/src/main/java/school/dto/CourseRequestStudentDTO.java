@@ -2,7 +2,7 @@ package school.dto;
 
 import java.util.Date;
 
-public class CourseRequestDto {
+public class CourseRequestStudentDTO {
     private long id;
     private String courseName;
     private int courseYear;

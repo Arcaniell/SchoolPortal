@@ -81,7 +81,6 @@
 					<th><spring:message code="course.table.Year" /></th>
 					<th><spring:message code="course.request.members" /></th>
 					<th><spring:message code="course.request.date" /></th>
-					<th><spring:message code="course.request.status" /></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -93,8 +92,6 @@
 						<td>${element.courseYear}</td>
 						<td>${element.members}</td>
 						<td>${element.dateOfRequest}</td>
-						<td>${element.active}</td>
-
 					</tr>
 				</c:forEach>
 			</tbody>

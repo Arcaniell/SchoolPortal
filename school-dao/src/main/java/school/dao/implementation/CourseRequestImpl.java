@@ -23,7 +23,7 @@ public class CourseRequestImpl extends BaseDaoImpl<CourseRequest, Long>
     @Override
     public CourseRequest findById(long id) {
         try {
-            CourseRequest courseRequest= (CourseRequest) entityManager
+            CourseRequest courseRequest = (CourseRequest) entityManager
                     .createQuery(
                             "select e from "
                                     + CourseRequest.class.getSimpleName()
@@ -94,7 +94,7 @@ public class CourseRequestImpl extends BaseDaoImpl<CourseRequest, Long>
         try {
             if (entityManager != null) {
                 return (List<CourseRequest>) entityManager
-                        .createNamedQuery(CourseRequest.FIND_BY_SUBJECT_ID)
+                        .createNamedQuery(CourseRequest.FIND_BY_COURSE_ID)
                         .setParameter("id", id).getResultList();
             } else {
                 return null;
@@ -102,6 +102,44 @@ public class CourseRequestImpl extends BaseDaoImpl<CourseRequest, Long>
         } catch (NoResultException e) {
             return null;
         }
+    }
+
+    @Transactional
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<CourseRequest> findByCourseIdAndStatus(long courseId,
+            boolean status) {
+        try {
+            if (entityManager != null) {
+                return (List<CourseRequest>) entityManager
+                        .createNamedQuery(
+                                CourseRequest.FIND_BY_COURSE_ID_AND_STATUS)
+                        .setParameter("id", courseId)
+                        .setParameter("active", status).getResultList();
+            } else {
+                return null;
+            }
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @Transactional
+    @SuppressWarnings("unchecked")
+    @Override
+    public int deleteAllByCourseId(long id) {
+        try {
+            if (entityManager != null) {
+                return entityManager
+                        .createNamedQuery(
+                                CourseRequest.DELETE_ALL_WITH_COURSE_ID)
+                        .setParameter("id", id).executeUpdate();
+            }
+            return 0;
+        } catch (NoResultException e) {
+            return 0;
+        }
+
     }
 
 }

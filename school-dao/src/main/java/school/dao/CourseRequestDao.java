@@ -15,4 +15,9 @@ public interface CourseRequestDao extends BaseDao<CourseRequest, Long> {
     List<CourseRequest> findAllBySubjectId(long id);
 
     CourseRequest findById(long id);
+
+    List<CourseRequest> findByCourseIdAndStatus(long courseId, boolean status);
+
+    int deleteAllByCourseId(long id);
+
 }

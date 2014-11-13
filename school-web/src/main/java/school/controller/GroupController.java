@@ -20,7 +20,7 @@ public class GroupController {
 
     @RequestMapping(value = "groups")
     public ModelAndView getGroups(Model model) {
-        List<Group> groups = student.getStudentGoupsByUserId(144);
+        List<Group> groups = student.getStudentGoupsByUserId(155);
         if(groups==null){
             return new ModelAndView("home");
         }

@@ -10,18 +10,23 @@ import javax.persistence.*;
         @NamedQuery(name = CourseRequest.FIND_ALL_BY_STATUS, query = CourseRequest.FIND_ALL_BY_STATUS_QUERY),
         @NamedQuery(name = CourseRequest.FIND_BY_INTERVAL, query = CourseRequest.FIND_BY_INTERVAL_QUERY),
         @NamedQuery(name = CourseRequest.FIND_BY_STUDENT_ID, query = CourseRequest.FIND_BY_STUDENT_ID_QUERY),
-        @NamedQuery(name = CourseRequest.FIND_BY_SUBJECT_ID, query = CourseRequest.FIND_BY_SUBJECT_ID_QUERY) 
-        })
+        @NamedQuery(name = CourseRequest.FIND_BY_COURSE_ID, query = CourseRequest.FIND_BY_COURSE_ID_QUERY),
+        @NamedQuery(name = CourseRequest.FIND_BY_COURSE_ID_AND_STATUS, query = CourseRequest.FIND_BY_COURSE_ID_AND_STATUS_QUERY),
+        @NamedQuery(name = CourseRequest.DELETE_ALL_WITH_COURSE_ID, query = CourseRequest.DELETE_ALL_WITH_COURSE_ID_QUERY) })
 public class CourseRequest {
 
     public static final String FIND_ALL_BY_STATUS = "CourseRequest.findAllByStatus";
     public static final String FIND_BY_INTERVAL = "CourseRequest.findByInterval";
     public static final String FIND_BY_STUDENT_ID = "CourseRequest.findByStudentId";
-    public static final String FIND_BY_SUBJECT_ID = "CourseRequest.findBySubjectId";
+    public static final String FIND_BY_COURSE_ID = "CourseRequest.findBySubjectId";
+    public static final String FIND_BY_COURSE_ID_AND_STATUS = "CourseRequest.findByCourseIdAndStatus";
+    public static final String DELETE_ALL_WITH_COURSE_ID = "CourseRequest.deleteAllByCourseId";
     public static final String FIND_ALL_BY_STATUS_QUERY = "SELECT u FROM CourseRequest u WHERE u.isActive = :active";
     public static final String FIND_BY_INTERVAL_QUERY = "SELECT u FROM CourseRequest u WHERE u.date BETWEEN :from AND :till";
     public static final String FIND_BY_STUDENT_ID_QUERY = "SELECT u FROM CourseRequest u WHERE u.student.id = :id";
-    public static final String FIND_BY_SUBJECT_ID_QUERY = "SELECT DISTINCT u FROM CourseRequest u WHERE u.course.id = :id";
+    public static final String FIND_BY_COURSE_ID_QUERY = "SELECT DISTINCT u FROM CourseRequest u WHERE u.course.id = :id";
+    public static final String FIND_BY_COURSE_ID_AND_STATUS_QUERY = "SELECT DISTINCT u FROM CourseRequest u WHERE u.course.id = :id AND u.isActive = :active";
+    public static final String DELETE_ALL_WITH_COURSE_ID_QUERY = "DELETE FROM CourseRequest u WHERE u.course.id = :id";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

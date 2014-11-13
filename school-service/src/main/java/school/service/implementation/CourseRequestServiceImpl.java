@@ -11,26 +11,35 @@ import org.springframework.stereotype.Service;
 import school.dao.CourseDao;
 import school.dao.CourseRequestDao;
 import school.dao.StudentDao;
-import school.dto.CourseRequestDto;
+import school.dto.CourseRequestStudentDTO;
+import school.dto.CourseRequestTeacherDTO;
 import school.model.Course;
 import school.model.CourseRequest;
 import school.model.Student;
 import school.service.CourseRequestService;
+import school.service.GroupService;
 
+/**
+ * @author Blowder
+ */
 @Service
 public class CourseRequestServiceImpl implements CourseRequestService {
+    private final boolean ADDITIONAL_GROUP_FLAG = true;
+    private final boolean COURSE_REQUEST_ACTIVE_FLAG = true;
     @Autowired
     CourseRequestDao courseRequestDao;
     @Autowired
     CourseDao courseDao;
     @Autowired
     StudentDao studentDao;
+    @Autowired
+    GroupService groupService;
 
     @Override
-    public List<CourseRequestDto> findRequestsByUserId(long id) {
+    public List<CourseRequestStudentDTO> findRequestsByUserId(long id) {
         SimpleDateFormat formatterDate = new SimpleDateFormat("MM/dd/yyyy");
 
-        ArrayList<CourseRequestDto> dtoList = new ArrayList<CourseRequestDto>();
+        ArrayList<CourseRequestStudentDTO> listCourseRequestsDTO = new ArrayList<CourseRequestStudentDTO>();
         if (studentDao == null || courseRequestDao == null) {
             return null;
         }
@@ -43,7 +52,7 @@ public class CourseRequestServiceImpl implements CourseRequestService {
             return null;
         }
         for (CourseRequest courseRequest : requests) {
-            CourseRequestDto courseRequestDto = new CourseRequestDto();
+            CourseRequestStudentDTO courseRequestDto = new CourseRequestStudentDTO();
             courseRequestDto.setId(courseRequest.getId());
             Course course = courseRequest.getCourse();
             if (course != null) {
@@ -54,21 +63,21 @@ public class CourseRequestServiceImpl implements CourseRequestService {
             }
             courseRequestDto.setDateOfRequest(formatterDate
                     .format(courseRequest.getDate()));
-            courseRequestDto.setActive(courseRequest.isActive());
             // courseRequestDao
-            dtoList.add(courseRequestDto);
+            listCourseRequestsDTO.add(courseRequestDto);
         }
-        return dtoList;
+        return listCourseRequestsDTO;
     }
 
     @Override
     public void addCourseRequest(long userId, long courseId) {
         CourseRequest courseRequest = new CourseRequest();
-        Course course = courseDao.findById(courseId); 
+        Course course = courseDao.findById(courseId);
         course.setAdditional(true);
         Student student = studentDao.findByUserId(userId);
         courseRequest.setStudent(student);
         courseRequest.setCourse(course);
+        courseRequest.setActive(COURSE_REQUEST_ACTIVE_FLAG);
         courseRequest.setDate(new Date());
         courseRequestDao.update(courseRequest);
     }
@@ -81,6 +90,49 @@ public class CourseRequestServiceImpl implements CourseRequestService {
                 courseRequestDao.remove(request);
             }
         }
+
+    }
+
+    @Override
+    public List<CourseRequestTeacherDTO> showAllRequests() {
+        List<CourseRequestTeacherDTO> listOfCourseRequests = new ArrayList<CourseRequestTeacherDTO>();
+        List<Course> additionCourses = courseDao
+                .findAllByStatus(ADDITIONAL_GROUP_FLAG);
+        for (Course course : additionCourses) {
+            long idOfCurrentCourse = course.getId();
+            List<CourseRequest> requestsForCurrentCourse = courseRequestDao
+                    .findByCourseIdAndStatus(idOfCurrentCourse,
+                            COURSE_REQUEST_ACTIVE_FLAG);
+            if (requestsForCurrentCourse == null
+                    || requestsForCurrentCourse.size() == 0) {
+                continue;
+            }
+            CourseRequestTeacherDTO currentElementDTO = new CourseRequestTeacherDTO();
+            currentElementDTO.setId(idOfCurrentCourse);
+            currentElementDTO.setName(course.getCourseName());
+            currentElementDTO.setYear(course.getGroupNumber());
+            currentElementDTO.setSize(requestsForCurrentCourse.size());
+            listOfCourseRequests.add(currentElementDTO);
+
+        }
+        return listOfCourseRequests;
+    }
+
+    @Override
+    public void deleteAllRequestsWithCourseId(long id) {
+        courseRequestDao.deleteAllByCourseId(id);
+    }
+
+    @Override
+    public void formGroupAndCloseRequests(long courseId, Date from, Date till) {
+        List<CourseRequest> requestsForCurrentCourse = courseRequestDao
+                .findByCourseIdAndStatus(courseId, COURSE_REQUEST_ACTIVE_FLAG);
+        List<Student> students = new ArrayList<Student>();
+        for (CourseRequest request : requestsForCurrentCourse) {
+            students.add(request.getStudent());
+        }
+        Course course = courseDao.findById(courseId);
+        groupService.createAdditionGroup(students, course, from, till);
 
     }
 }
