@@ -1,0 +1,172 @@
+@CHARSET "UTF-8";
+
+.tablem td {
+	padding-top: 7px;
+	padding-bottom: 7px;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.tablem tr:hover {
+	background: #f5f5f5;
+}
+
+.panel-title {
+	margin-top: 0;
+	margin-bottom: 0;
+	font-size: 16px;
+	color: inherit;
+	display: inline;
+}
+
+.messageDate {
+	float: right;
+}
+
+h1,.h1,h2,.h2,h3,.h3 {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.btn-success {
+	background-image: -webkit-linear-gradient(top, #5cb85c 0, #419641 100%);
+	background-image: -o-linear-gradient(top, #5cb85c 0, #419641 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#5cb85c),
+		to(#419641));
+	background-image: linear-gradient(to bottom, #5cb85c 0, #419641 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5cb85c',
+		endColorstr='#ff419641', GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+	background-repeat: repeat-x;
+	border-color: #3e8f3e;
+}
+
+.panel {
+	margin-bottom: 10px;
+	margin-top: 0px;
+	background-color: #fff;
+	border-radius: 4px;
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+	width: 98%;
+}
+
+.messageUl>li {
+	display: block;
+}
+
+.fixed {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+
+.panel-heading {
+	padding: 5px 15px;
+	border-bottom: 1px solid transparent;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+
+@media ( min-width : 768px) {
+	.form-horizontal .control-label {
+		padding-top: 7px;
+		margin-bottom: 0;
+		text-align: left;
+	}
+}
+
+.badge {
+	display: inline-block;
+	min-width: 10px;
+	padding: 3px 7px;
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 1;
+	color: #428bca;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	background-color: #fff;
+	border: 1px solid #CCCCCC;
+	border-radius: 10px;
+	margin-left: 2px;
+}
+
+#empty {
+	margin: 5px;
+	color: #B7B7B7;
+	font-style: italic;
+}
+
+.name a,.subject a,.date a {
+	width: 100%;
+	display: block;
+	color: #333333;
+}
+
+.name a:hover,.subject a:hover,.date a:hover {
+	text-decoration: none;
+	color: #333333;
+}
+
+.name {
+	padding-left: 10px;
+	text-align: left;
+	width: 36%;
+}
+
+.subject {
+	padding-left: 10px;
+	text-align: left;
+	width: 56%;
+}
+
+.date {
+	text-align: right;
+}
+
+.nav-tabs>li.active>a,.nav-tabs>li.active>a:hover,.nav-tabs>li.active>a:focus
+	{
+	color: #428bca;
+	cursor: default;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-bottom-color: transparent;
+}
+
+.form-group {
+	margin-bottom: 15px;
+	padding-top: 0px;
+}
+
+.mform-group {
+	margin-bottom: 15px;
+	border-top: 1px solid #d8d8d8;
+	padding-top: 10px;
+}
+
+.messageTr {
+	margin: 0;
+	padding: 0;
+}
+
+.messageTd {
+	width: 98%;
+	float: right;
+}
+
+.messageTable {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+#delete {
+	float: right;
+	display: inline-block;
+}
+
+#compose {
+	margin-left: 200px;
+}

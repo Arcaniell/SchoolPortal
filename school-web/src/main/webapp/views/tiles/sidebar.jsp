@@ -13,7 +13,9 @@
 		<sec:authorize access="hasRole('ROLE_TEACHER')">
 			<li><a href="journal">Journal</a></li>
 		</sec:authorize>
-		<li><a href='<spring:url value="/inbox.html"></spring:url>'>Message</a></li>
+		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_PARENT')">
+			<li><a href='<c:url value="/inbox"/>'>Message</a></li>
+		</sec:authorize>
 		<li><a href=courses>My courses</a></li>
 		<li><a href=course-request>Course request</a></li>
 
