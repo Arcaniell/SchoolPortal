@@ -98,7 +98,7 @@ ${parent.name }
 					<th><div>
 							<select name="kid" class="form-control">
 								<c:forEach items="${parent.kids}" var="kid">
-									<option value="${kid.studentId}">${kid.studentName}</option>
+									<option value="${kid.studentId}">${kid.name}</option>
 								</c:forEach>
 							</select>
 						</div></th>
@@ -121,16 +121,13 @@ ${parent.name }
 				<th><fmt:formatDate value="${date}" pattern="dd.MM.yy" /></th>
 			</c:forEach>
 		</tr>
-		<c:forEach items="${studentMarks}" var="student">
+		<c:forEach items="${studentDtos}" var="student">
 			<tr>
-				<th>${student.key}</th>
+				<th>${student.name}</th>
 				<c:forEach items="${scheduleDates}" var="date">
-					<td><c:forEach items="${student.value}" var="journal">
-							<c:if test="${date == journal.date}">
-								<c:out value="${journal.mark}"></c:out>
-							</c:if>
-							<c:if test="${date ne journal.date}">
-								<c:out value=" "></c:out>
+					<td><c:forEach items="${student.marks}" var="mark">
+							<c:if test="${date == mark.key}">
+								<c:out value="${mark.value}"></c:out>
 							</c:if>
 						</c:forEach></td>
 				</c:forEach>
