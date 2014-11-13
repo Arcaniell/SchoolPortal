@@ -2554,5 +2554,3 @@ WHERE
 DELETE FROM `JOURNAL` 
 WHERE
     `id` = '1009';
-
-
