@@ -116,12 +116,12 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule, Long> implements
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<Schedule> findByGroupCourseInterval(long groupId,
-			long courseId, Date from, Date till) {
+			String courseName, Date from, Date till) {
 		try {
 			return (List<Schedule>) entityManager
 					.createNamedQuery(Schedule.FIND_BY_GROUP_COURSE_INTERVAL)
 					.setParameter("groupId", groupId)
-					.setParameter("courseId", courseId)
+					.setParameter("courseName", courseName)
 					.setParameter("from", from).setParameter("till", till)
 					.getResultList();
 		} catch (NoResultException e) {

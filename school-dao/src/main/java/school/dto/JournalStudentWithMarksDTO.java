@@ -3,17 +3,18 @@ package school.dto;
 import java.util.Date;
 import java.util.Map;
 
-public class JournalStudentDto implements Comparable<JournalStudentDto> {
+public class JournalStudentWithMarksDTO implements
+		Comparable<JournalStudentWithMarksDTO> {
 
 	private long studentId;
 	private String name;
 	private Map<Date, String> marks;
 
-	public JournalStudentDto() {
+	public JournalStudentWithMarksDTO() {
 
 	}
 
-	public JournalStudentDto(long studentId, String name,
+	public JournalStudentWithMarksDTO(long studentId, String name,
 			Map<Date, String> marks) {
 		this.studentId = studentId;
 		this.name = name;
@@ -45,7 +46,7 @@ public class JournalStudentDto implements Comparable<JournalStudentDto> {
 	}
 
 	@Override
-	public int compareTo(JournalStudentDto journalStudentDto) {
+	public int compareTo(JournalStudentWithMarksDTO journalStudentDto) {
 		return this.name.compareTo(journalStudentDto.getName());
 	}
 
@@ -67,7 +68,7 @@ public class JournalStudentDto implements Comparable<JournalStudentDto> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		JournalStudentDto other = (JournalStudentDto) obj;
+		JournalStudentWithMarksDTO other = (JournalStudentWithMarksDTO) obj;
 		if (marks == null) {
 			if (other.marks != null)
 				return false;

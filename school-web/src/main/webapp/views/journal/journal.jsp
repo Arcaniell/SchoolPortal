@@ -10,7 +10,7 @@
 
 <link href="<c:url value="/resources/css/journal.css" />"
 	rel="stylesheet">
-
+${parent.name }
 <table class="table table-condensed">
 	<tbody>
 		<tr>
@@ -19,16 +19,23 @@
 					<spring:message code="journal.date" />
 				</h4>
 			</th>
-			<th>
-				<h4>
-					<spring:message code="journal.group" />
-				</h4>
-			</th>
+			<c:if test="${teacher ne null}">
+				<th>
+					<h4>
+						<spring:message code="journal.group" />
+					</h4>
+				</th>
+			</c:if>
 			<th>
 				<h4>
 					<spring:message code="journal.subject" />
 				</h4>
 			</th>
+			<c:if test="${parent ne null}">
+				<th>
+					<h4>Kids</h4>
+				</th>
+			</c:if>
 			<th></th>
 		</tr>
 		<form method="POST" action="journal">
@@ -39,6 +46,7 @@
 						<input name="dateFrom" value="${dateFrom}" type="text"
 							placeholder="<spring:message code="journal.date.from"/>"
 							class="datepicker form-control-middle">
+
 						<spring:message code="journal.date.to" />
 						<input name="dateTo" value="${dateTo}" type="text"
 							placeholder="<spring:message code="journal.date.to"/>"
@@ -46,33 +54,51 @@
 					</div>
 
 				</th>
-				<th>
-					<div>
-						<spring:message code="journal.group.number" />
-						<select name="groupNumber" value="${groupNumber}"
-							class="form-control-small">
-							<c:forEach items="${teacher.groupNumbers}" var="groupNumber">
-								<option>${groupNumber}</option>
-							</c:forEach>
-						</select>
-						<spring:message code="journal.group.letter" />
-						<select name="groupLetter" value="${groupLetter}"
-							class="form-control-small">
-							<option><spring:message code="journal.all" /></option>
-							<c:forEach items="${teacher.groupLetters}" var="groupLetter">
-								<option>${groupLetter}</option>
-							</c:forEach>
-						</select>
-					</div>
-				</th>
+				<c:if test="${teacher ne null}">
+					<th>
+						<div>
+							<spring:message code="journal.group.number" />
+							<select name="groupNumber" class="form-control-small">
+								<c:forEach items="${teacher.groupNumbers}" var="groupNumber">
+									<option>${groupNumber}</option>
+								</c:forEach>
+							</select>
+							<spring:message code="journal.group.letter" />
+							<select name="groupLetter" class="form-control-small">
+								<option><spring:message code="journal.all" /></option>
+								<c:forEach items="${teacher.groupLetters}" var="groupLetter">
+									<option>${groupLetter}</option>
+								</c:forEach>
+							</select>
+						</div>
+					</th>
+				</c:if>
 				<th><div>
 						<select name="course" class="form-control">
 							<c:forEach items="${teacher.courses}" var="course">
-								<option value="${course.id}">${course.courseName }
-									${course.groupNumber}</option>
+								<option value="${course}">${course}</option>
 							</c:forEach>
+							<c:forEach items="${student.studentCourses}" var="studentCourses">
+								<option value="${studentCourses.courseName}">${studentCourses.courseName}</option>
+							</c:forEach>
+							<c:if test="${parent ne null}">
+								<c:forEach items="${parent.kids}" var="kid">
+									<c:forEach items="${kid.studentCourses}" var="studentCourse">
+										<option value="${studentCourse.courseName}">${studentCourse.courseName}</option>
+									</c:forEach>
+								</c:forEach>
+							</c:if>
 						</select>
 					</div></th>
+				<c:if test="${parent ne null}">
+					<th><div>
+							<select name="kid" class="form-control">
+								<c:forEach items="${parent.kids}" var="kid">
+									<option value="${kid.studentId}">${kid.studentName}</option>
+								</c:forEach>
+							</select>
+						</div></th>
+				</c:if>
 				<th><button class="btn btn-default" type="submit">
 						<spring:message code="journal.submit" />
 					</button></th>

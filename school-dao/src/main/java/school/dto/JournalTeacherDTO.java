@@ -2,26 +2,28 @@ package school.dto;
 
 import java.util.Set;
 
-import school.model.Course;
+import school.model.Group;
 
-public class JournalTeacherDto {
+public class JournalTeacherDTO {
 
 	private long teacherId;
 	private String teacherName;
 	private Set<Byte> groupNumbers;
 	private Set<Character> groupLetters;
-	private Set<Course> courses;
+	private Set<Group> groups;
+	private Set<String> courses;
 
-	public JournalTeacherDto() {
+	public JournalTeacherDTO() {
 	}
 
-	public JournalTeacherDto(long teacherId, String teacherName,
+	public JournalTeacherDTO(long teacherId, String teacherName,
 			Set<Byte> groupNumbers, Set<Character> groupLetters,
-			Set<Course> courses) {
+			Set<Group> groups, Set<String> courses) {
 		this.teacherId = teacherId;
 		this.teacherName = teacherName;
 		this.groupNumbers = groupNumbers;
 		this.groupLetters = groupLetters;
+		this.groups = groups;
 		this.courses = courses;
 	}
 
@@ -57,11 +59,19 @@ public class JournalTeacherDto {
 		this.groupLetters = groupLetters;
 	}
 
-	public Set<Course> getCourses() {
+	public Set<Group> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(Set<Group> groups) {
+		this.groups = groups;
+	}
+
+	public Set<String> getCourses() {
 		return courses;
 	}
 
-	public void setCourses(Set<Course> courses) {
+	public void setCourses(Set<String> courses) {
 		this.courses = courses;
 	}
 
@@ -74,6 +84,7 @@ public class JournalTeacherDto {
 				+ ((groupLetters == null) ? 0 : groupLetters.hashCode());
 		result = prime * result
 				+ ((groupNumbers == null) ? 0 : groupNumbers.hashCode());
+		result = prime * result + ((groups == null) ? 0 : groups.hashCode());
 		result = prime * result + (int) (teacherId ^ (teacherId >>> 32));
 		result = prime * result
 				+ ((teacherName == null) ? 0 : teacherName.hashCode());
@@ -88,7 +99,7 @@ public class JournalTeacherDto {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		JournalTeacherDto other = (JournalTeacherDto) obj;
+		JournalTeacherDTO other = (JournalTeacherDTO) obj;
 		if (courses == null) {
 			if (other.courses != null)
 				return false;
@@ -103,6 +114,11 @@ public class JournalTeacherDto {
 			if (other.groupNumbers != null)
 				return false;
 		} else if (!groupNumbers.equals(other.groupNumbers))
+			return false;
+		if (groups == null) {
+			if (other.groups != null)
+				return false;
+		} else if (!groups.equals(other.groups))
 			return false;
 		if (teacherId != other.teacherId)
 			return false;

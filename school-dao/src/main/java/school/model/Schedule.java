@@ -33,7 +33,7 @@ public class Schedule {
 	public static final String FIND_BY_DATES_QUERY = "SELECT sch FROM Schedule sch WHERE sch.date BETWEEN :from AND :till";
 
 	public static final String FIND_BY_GROUP_COURSE_INTERVAL = "Schedule.findByGroupCourseInterval";
-	public static final String FIND_BY_GROUP_COURSE_INTERVAL_QUERY = "SELECT sch FROM Schedule sch WHERE sch.group.id = :groupId AND sch.course.id = :courseId AND sch.date BETWEEN :from AND :till";
+	public static final String FIND_BY_GROUP_COURSE_INTERVAL_QUERY = "SELECT sch FROM Schedule sch WHERE sch.group.id = :groupId AND sch.course.courseName = :courseName AND sch.date BETWEEN :from AND :till";
 
 	public static final String FIND_BY_GROUP = "Schedule.findByGroup";
 	public static final String FIND_BY_GROUP_QUERY = "SELECT sch FROM Schedule sch WHERE sch.group = :group";
