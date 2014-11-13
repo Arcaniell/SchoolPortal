@@ -1,5 +1,7 @@
 package school.dao.implementation;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,43 +22,65 @@ public class ConversationDaoImpl extends BaseDaoImpl<Conversation, Long>
 		super(Conversation.class);
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "finally" })
 	@Transactional
 	public List<Conversation> findInboxConversationsForUser(User receiver) {
+		List<Conversation> list = new ArrayList<Conversation>();
 		try {
-			return (List<Conversation>) entityManager
-					.createNamedQuery("Conversation.INBOX_QUERY")
-					.setParameter("receiver", receiver)
-					.setParameter("isAnswered", Boolean.TRUE)
-					.getResultList();
+			list = (List<Conversation>) entityManager
+					.createNamedQuery("Conversation.INBOX_CONVERSATIONS")
+					.setParameter("receiver", receiver).getResultList();
 		} catch (NoResultException e) {
-			return null;
+			e.printStackTrace();
+		} finally {
+			return list;
 		}
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "finally" })
 	@Transactional
 	public List<Conversation> findSentConversationsForUser(User sender) {
+		List<Conversation> list = new ArrayList<Conversation>();
 		try {
-			return (List<Conversation>) entityManager
-					.createNamedQuery("Conversation.SENT_QUERY")
-					.setParameter("sender", sender)
-					.setParameter("isAnswered", Boolean.TRUE)
-					.getResultList();
+			list = (List<Conversation>) entityManager
+					.createNamedQuery("Conversation.SENT_CONVERSATIONS")
+					.setParameter("sender", sender).getResultList();
 		} catch (NoResultException e) {
-			return null;
+			e.printStackTrace();
+		} finally {
+			return list;
 		}
 	}
 
+	@SuppressWarnings("finally")
 	@Transactional
-	public Date findDateForConversation(Conversation conversation) {
+	public Date findDateForReceiversConversation(Conversation conversation) {
+		Date date = null;
 		try {
-			return (Date) entityManager
-					.createNamedQuery("Conversation.FIND_DATE")
+			date = (Date) entityManager
+					.createNamedQuery("Conversation.FIND_DATE_RECEIVER")
 					.setParameter("conversation", conversation)
 					.getSingleResult();
 		} catch (NoResultException e) {
-			return null;
+			e.printStackTrace();
+		} finally {
+			return date;
+		}
+	}
+
+	@SuppressWarnings("finally")
+	@Transactional
+	public Date findDateForSendersConversation(Conversation conversation) {
+		Date date = null;
+		try {
+			date = (Date) entityManager
+					.createNamedQuery("Conversation.FIND_DATE_SENDER")
+					.setParameter("conversation", conversation)
+					.getSingleResult();
+		} catch (NoResultException e) {
+			e.printStackTrace();
+		} finally {
+			return date;
 		}
 	}
 }

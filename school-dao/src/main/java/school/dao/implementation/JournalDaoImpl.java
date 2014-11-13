@@ -58,12 +58,12 @@ public class JournalDaoImpl extends BaseDaoImpl<Journal, Long> implements
 	}
 
 	@Transactional
-	public Journal findByScheduleAndStudent(long scheduleId, long studentId) {
+	public Journal findByScheduleAndStudent(long studentId, long scheduleId) {
 		try {
 			return (Journal) entityManager
 					.createNamedQuery(Journal.FIND_BY_SCHEDULE_AND_STUDENT)
-					.setParameter("scheduleId", scheduleId)
-					.setParameter("studentId", studentId).getSingleResult();
+					.setParameter("studentId", studentId)
+					.setParameter("scheduleId", scheduleId).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		}

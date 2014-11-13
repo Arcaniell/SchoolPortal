@@ -24,9 +24,9 @@ import school.dao.StudentDao;
 import school.dao.TeacherDao;
 import school.dao.UserDao;
 import school.dto.JournalParentDTO;
-import school.dto.JournalStudentDTO;
+import school.dto.JournalStudentDto;
 import school.dto.JournalStudentWithMarksDTO;
-import school.dto.JournalTeacherDTO;
+import school.dto.JournalTeacherDto;
 import school.model.Course;
 import school.model.Group;
 import school.model.Journal;
@@ -48,9 +48,9 @@ public class JournalServiceImpl implements JournalService {
 	@Inject
 	private UserDao userDao;
 	@Inject
-	private TeacherDao teacherDao;
-	@Inject
 	private StudentDao studentDao;
+	@Inject
+	private TeacherDao teacherDao;
 	@Inject
 	private GroupDao groupDao;
 	@Inject
@@ -58,32 +58,29 @@ public class JournalServiceImpl implements JournalService {
 
 	@Secured(Role.Secured.TEACHER)
 	@Transactional
-	public JournalTeacherDTO getTeacherInfo(String id) {
+	public JournalTeacherDto getTeacherInfo(String id) {
 
 		long userId = Long.parseLong(id);
-
 		Teacher teacher = teacherDao.findByUserId(userId);
 		List<Schedule> schedules = scheduleDao.findByTeacher(teacher);
 
 		Set<Byte> groupNumbers = new TreeSet<Byte>();
 		Set<Character> groupLetters = new TreeSet<Character>();
 		Set<String> courses = new TreeSet<String>();
-		Set<Group> groups = new TreeSet<Group>();
 
 		for (Schedule schedule : schedules) {
 			groupNumbers.add(schedule.getGroup().getNumber());
 			groupLetters.add(schedule.getGroup().getLetter());
 			courses.add(schedule.getCourse().getCourseName());
-			groups.add(schedule.getGroup());
 		}
 
-		return new JournalTeacherDTO(teacher.getId(), getWholeUserName(userId),
-				groupNumbers, groupLetters, groups, courses);
+		return new JournalTeacherDto(teacher.getId(), getWholeUserName(userId),
+				groupNumbers, groupLetters, courses);
 	}
 
 	@Secured({ Role.Secured.STUDENT, Role.Secured.PARENT })
 	@Transactional
-	public JournalStudentDTO getStudentInfo(String id) {
+	public JournalStudentDto getStudentInfo(String id) {
 
 		long userId = Long.parseLong(id);
 
@@ -113,7 +110,7 @@ public class JournalServiceImpl implements JournalService {
 			studentCourses.add(schedule.getCourse());
 		}
 
-		return new JournalStudentDTO(student.getId(), getWholeUserName(userId),
+		return new JournalStudentDto(student.getId(), getWholeUserName(userId),
 				studentGroups, studentCourses);
 	}
 
@@ -126,7 +123,7 @@ public class JournalServiceImpl implements JournalService {
 		Parent parent = parentDao.findByUserId(userId);
 		List<Student> students = parent.getStudents();
 
-		Set<JournalStudentDTO> kids = new TreeSet<JournalStudentDTO>();
+		Set<JournalStudentDto> kids = new TreeSet<JournalStudentDto>();
 		for (Student student : students) {
 			kids.add(getStudentInfo(String.valueOf(student.getUser().getId())));
 		}

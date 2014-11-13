@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import school.dto.JournalParentDTO;
-import school.dto.JournalStudentDTO;
+import school.dto.JournalStudentDto;
 import school.dto.JournalStudentWithMarksDTO;
-import school.dto.JournalTeacherDTO;
+import school.dto.JournalTeacherDto;
 import school.model.Role;
 import school.service.JournalService;
 
@@ -31,13 +31,13 @@ public class JournalController {
 	public String index(Principal user, Model model, HttpServletRequest request) {
 
 		if (request.isUserInRole(Role.Secured.TEACHER)) {
-			JournalTeacherDTO teacherDTO = journalService.getTeacherInfo(user
+			JournalTeacherDto teacherDTO = journalService.getTeacherInfo(user
 					.getName());
 			model.addAttribute("teacher", teacherDTO);
 		}
 
 		if (request.isUserInRole(Role.Secured.STUDENT)) {
-			JournalStudentDTO studentDTO = journalService.getStudentInfo(user
+			JournalStudentDto studentDTO = journalService.getStudentInfo(user
 					.getName());
 			model.addAttribute("student", studentDTO);
 		}
@@ -70,16 +70,15 @@ public class JournalController {
 		model.addAttribute("scheduleDates", dates);
 
 		if (request.isUserInRole(Role.Secured.TEACHER)) {
-			JournalTeacherDTO teacherDTO = journalService.getTeacherInfo(user
+			JournalTeacherDto teacherDTO = journalService.getTeacherInfo(user
 					.getName());
 			model.addAttribute("teacher", teacherDTO);
 		} else if (request.isUserInRole(Role.Secured.STUDENT)) {
-			JournalStudentDTO studentDTO = journalService.getStudentInfo(user
+			JournalStudentDto studentDTO = journalService.getStudentInfo(user
 					.getName());
 			model.addAttribute("student", studentDTO);
 		}
 
 		return "journal";
 	}
-
 }

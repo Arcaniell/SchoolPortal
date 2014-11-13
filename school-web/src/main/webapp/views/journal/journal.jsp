@@ -28,6 +28,11 @@ ${parent.name }
 			</c:if>
 			<th>
 				<h4>
+					<spring:message code="journal.student" />
+				</h4>
+			</th>
+			<th>
+				<h4>
 					<spring:message code="journal.subject" />
 				</h4>
 			</th>
@@ -46,11 +51,10 @@ ${parent.name }
 						<input name="dateFrom" value="${dateFrom}" type="text"
 							placeholder="<spring:message code="journal.date.from"/>"
 							class="datepicker form-control-middle">
-
 						<spring:message code="journal.date.to" />
 						<input name="dateTo" value="${dateTo}" type="text"
 							placeholder="<spring:message code="journal.date.to"/>"
-							class="datepicker form-control-middle">
+							class="datepicker form-control-small">
 					</div>
 
 				</th>
@@ -74,7 +78,7 @@ ${parent.name }
 					</th>
 				</c:if>
 				<th><div>
-						<select name="course" class="form-control">
+						<select name="subject" class="form-control">
 							<c:forEach items="${teacher.courses}" var="course">
 								<option value="${course}">${course}</option>
 							</c:forEach>
@@ -117,13 +121,16 @@ ${parent.name }
 				<th><fmt:formatDate value="${date}" pattern="dd.MM.yy" /></th>
 			</c:forEach>
 		</tr>
-		<c:forEach items="${studentDtos}" var="student">
+		<c:forEach items="${studentMarks}" var="student">
 			<tr>
-				<th>${student.name}</th>
+				<th>${student.key}</th>
 				<c:forEach items="${scheduleDates}" var="date">
-					<td><c:forEach items="${student.marks}" var="journal">
-							<c:if test="${date == journal.key}">
-								<c:out value="${journal.value}"></c:out>
+					<td><c:forEach items="${student.value}" var="journal">
+							<c:if test="${date == journal.date}">
+								<c:out value="${journal.mark}"></c:out>
+							</c:if>
+							<c:if test="${date ne journal.date}">
+								<c:out value=" "></c:out>
 							</c:if>
 						</c:forEach></td>
 				</c:forEach>

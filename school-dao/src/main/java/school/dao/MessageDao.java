@@ -6,5 +6,6 @@ import school.model.Conversation;
 import school.model.Message;
 
 public interface MessageDao extends BaseDao<Message, Long> {
-	List<Message> findMessagesOfConversation(Conversation conversation);
+	List<Message> findReceiversMessagesOfConversation(Conversation conversation);
+	List<Message> findSendersMessagesOfConversation(Conversation conversation);
 }

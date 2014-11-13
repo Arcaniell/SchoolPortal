@@ -5,15 +5,15 @@ import java.util.Date;
 import java.util.Set;
 
 import school.dto.JournalParentDTO;
-import school.dto.JournalStudentDTO;
+import school.dto.JournalStudentDto;
 import school.dto.JournalStudentWithMarksDTO;
-import school.dto.JournalTeacherDTO;
+import school.dto.JournalTeacherDto;
 
 public interface JournalService {
 
-	JournalTeacherDTO getTeacherInfo(String userId);
+	JournalTeacherDto getTeacherInfo(String userId);
 
-	JournalStudentDTO getStudentInfo(String userId);
+	JournalStudentDto getStudentInfo(String userId);
 
 	JournalParentDTO getParentInfo(String userId);
 
@@ -22,4 +22,5 @@ public interface JournalService {
 	Set<JournalStudentWithMarksDTO> getStudentsWithMarks(String student,
 			String groupNumber, String groupLetter, String course,
 			String dateFrom, String dateTo) throws ParseException;
+
 }

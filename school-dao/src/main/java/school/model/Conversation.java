@@ -18,12 +18,16 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "CONVERSATION")
 @NamedQueries({
-		@NamedQuery(name = "Conversation.INBOX_QUERY", query = "SELECT c from Conversation c "
-				+ "where c.receiverId = :receiver or (c.senderId = :receiver and c.isAnswered = :isAnswered)"),
-		@NamedQuery(name = "Conversation.SENT_QUERY", query = "SELECT c from Conversation c "
-				+ "where c.senderId = :sender or (c.receiverId = :sender and c.isAnswered = :isAnswered)"),
-		@NamedQuery(name = "Conversation.FIND_DATE", query = "select max(m.dateTime) "
-				+ "from Message m where m.conversationId = :conversation") })
+		@NamedQuery(name = "Conversation.INBOX_CONVERSATIONS", query = "SELECT c FROM Conversation c "
+				+ "WHERE (c.receiverId = :receiver and c.isDeletedReceiver = false) "
+				+ "OR (c.senderId = :receiver AND c.isAnswered = true AND c.isDeletedSender = false)"),
+		@NamedQuery(name = "Conversation.SENT_CONVERSATIONS", query = "SELECT c from Conversation c "
+				+ "where (c.senderId = :sender and c.isDeletedSender = false) "
+				+ "or (c.receiverId = :sender and c.isAnswered = true and c.isDeletedReceiver = false)"),
+		@NamedQuery(name = "Conversation.FIND_DATE_RECEIVER", query = "select max(m.dateTime) "
+				+ "from Message m where m.conversationId = :conversation and m.isDeletedReceiver = false"),
+		@NamedQuery(name = "Conversation.FIND_DATE_SENDER", query = "select max(m.dateTime) "
+				+ "from Message m where m.conversationId = :conversation and m.isDeletedSender = false") })
 public class Conversation {
 
 	@Id
@@ -43,8 +47,15 @@ public class Conversation {
 
 	@Column(nullable = false, length = 100)
 	private String subject;
-	
+
+	@Column(nullable = false)
 	private boolean isAnswered;
+
+	@Column(nullable = false)
+	private boolean isDeletedReceiver;
+
+	@Column(nullable = false)
+	private boolean isDeletedSender;
 
 	public long getId() {
 		return id;
@@ -94,12 +105,30 @@ public class Conversation {
 		this.isAnswered = isAnswered;
 	}
 
+	public boolean isDeletedReceiver() {
+		return isDeletedReceiver;
+	}
+
+	public void setDeletedReceiver(boolean isDeletedReceiver) {
+		this.isDeletedReceiver = isDeletedReceiver;
+	}
+
+	public boolean isDeletedSender() {
+		return isDeletedSender;
+	}
+
+	public void setDeletedSender(boolean isDeletedSender) {
+		this.isDeletedSender = isDeletedSender;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + (isAnswered ? 1231 : 1237);
+		result = prime * result + (isDeletedReceiver ? 1231 : 1237);
+		result = prime * result + (isDeletedSender ? 1231 : 1237);
 		result = prime * result
 				+ ((messages == null) ? 0 : messages.hashCode());
 		result = prime * result
@@ -123,6 +152,10 @@ public class Conversation {
 			return false;
 		if (isAnswered != other.isAnswered)
 			return false;
+		if (isDeletedReceiver != other.isDeletedReceiver)
+			return false;
+		if (isDeletedSender != other.isDeletedSender)
+			return false;
 		if (messages == null) {
 			if (other.messages != null)
 				return false;
@@ -145,5 +178,4 @@ public class Conversation {
 			return false;
 		return true;
 	}
-
 }

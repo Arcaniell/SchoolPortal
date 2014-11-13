@@ -3,6 +3,7 @@ package school.service.implementation;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,10 @@ import school.dao.ConversationDao;
 import school.dao.UserDao;
 import school.dto.ConversationDto;
 import school.model.Conversation;
+import school.model.Message;
 import school.model.User;
 import school.service.ConversationService;
+import school.service.utils.ConversationsUtils;
 
 @Service
 public class ConversationServiceImpl implements ConversationService {
@@ -25,43 +28,110 @@ public class ConversationServiceImpl implements ConversationService {
 	@Autowired
 	private UserDao userDao;
 	private User user;
+	private ConversationsUtils conversationsUtils = new ConversationsUtils();
 
 	@Transactional
-	public List<Conversation> findInbox() {
-		User receiver = userDao.findById(10L);
-		return conversationDao.findInboxConversationsForUser(receiver);
+	public List<Conversation> findInbox(long id) {
+		User receiver = userDao.findById(id);
+		List<Conversation> list = conversationDao
+				.findInboxConversationsForUser(receiver);
+		return list;
 	}
 
 	@Transactional
-	public List<Conversation> findSent() {
-		User sender = userDao.findById(14L);
+	public List<Conversation> findSent(long id) {
+		User sender = userDao.findById(id);
 		List<Conversation> list = conversationDao
 				.findSentConversationsForUser(sender);
 		return list;
 	}
 
 	@Transactional
-	public Conversation findById(Long id) {
-		Conversation conversation = conversationDao.findById(id);
-		return conversation;
+	public List<Date> getDates(List<Conversation> conversations, long id) {
+
+		List<Date> dates = new ArrayList<Date>();
+		Date date;
+		for (Conversation c : conversations) {
+			if (c.getReceiverId().getId() == id) {
+				date = conversationDao.findDateForReceiversConversation(c);
+				if (date != null) {
+					dates.add(date);
+				}
+			} else {
+				date = conversationDao.findDateForSendersConversation(c);
+				if (date != null) {
+					dates.add(date);
+				}
+			}
+		}
+		return dates;
 	}
 
 	@Transactional
-	public List<ConversationDto> constructConversationsDto(
-			List<Conversation> conversations) {
-		List<ConversationDto> conversationsDto = new ArrayList<ConversationDto>();
-		List<String> firstNames = getFirstNames(conversations);
-		List<String> lastNames = getLastNames(conversations);
-		List<String> dates = getDates(conversations);
-		for (int i = 0; i < conversations.size(); i++) {
-			ConversationDto convDto = new ConversationDto();
-			convDto.setFirstName(firstNames.get(i));
-			convDto.setLastName(lastNames.get(i));
-			convDto.setDate(dates.get(i));
-			convDto.setSubject(conversations.get(i).getSubject());
-			conversationsDto.add(convDto);
+	public void deleteConversations(String[] ids, long id) {
+		for (String s : ids) {
+			Conversation conversation = conversationDao.findById(Long
+					.valueOf(s));
+			if (conversation.getReceiverId().getId() == id) {
+				conversation.setDeletedReceiver(true);
+				for(Message m:conversation.getMessages()) {
+					m.setDeletedReceiver(true);
+				}
+			} else {
+				conversation.setDeletedSender(true);
+				for(Message m:conversation.getMessages()) {
+					m.setDeletedSender(true);
+				}
+			}
 		}
-		return conversationsDto;
+	}
+
+	@Transactional
+	public List<ConversationDto> constructInboxConversationsDto(
+			List<Conversation> conversations, long id) {
+		List<ConversationDto> dtos = new ArrayList<ConversationDto>();
+		List<Date> dates = getDates(conversations, id);
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		
+		conversationsUtils.sortConversations(conversations, dates);
+
+		List<String> fNames = getFirstNames(conversations);
+		List<String> lNames = getLastNames(conversations);
+		for (int i = 0; i < conversations.size(); i++) {
+			ConversationDto dto = new ConversationDto();
+			dto.setSubject(conversations.get(i).getSubject());
+			dto.setId(String.valueOf(conversations.get(i).getId()));
+			String date = dateFormat.format(dates.get(i));
+			dto.setDate(date);
+			dto.setFirstName(fNames.get(i));
+			dto.setLastName(lNames.get(i));
+			dtos.add(dto);
+		}
+		return dtos;
+	}
+
+	@Transactional
+	public List<ConversationDto> constructSentConversationsDto(
+			List<Conversation> conversations, long id) {
+		List<ConversationDto> dtos = new ArrayList<ConversationDto>();
+		List<Date> dates = getDates(conversations, id);
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+		conversationsUtils.sortConversations(conversations, dates);
+
+		List<String> fNames = getFirstNames(conversations);
+		List<String> lNames = getLastNames(conversations);
+		for (int i = 0; i < conversations.size(); i++) {
+			ConversationDto dto = new ConversationDto();
+			dto.setSubject(conversations.get(i).getSubject());
+			dto.setId(String.valueOf(conversations.get(i).getId()));
+			String date = dateFormat.format(dates.get(i));
+			dto.setDate(date);
+			dto.setFirstName(fNames.get(i));
+			dto.setLastName(lNames.get(i));
+			dtos.add(dto);
+		}
+		return dtos;
 	}
 
 	@Transactional
@@ -92,18 +162,8 @@ public class ConversationServiceImpl implements ConversationService {
 		return names;
 	}
 
-	@Transactional
-	public List<String> getDates(List<Conversation> conversations) {
-
-		List<String> dates = new ArrayList<String>();
-
-		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		for (Conversation c : conversations) {
-			String date = dateFormat.format(conversationDao
-					.findDateForConversation(c));
-			dates.add(date);
-		}
-		return dates;
+	@Override
+	public Conversation findById(long id) {
+		return conversationDao.findById(id);
 	}
-
 }
