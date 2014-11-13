@@ -9,9 +9,9 @@
 	<http pattern="/css/**" security="none" />
 	
 	<http auto-config="true" use-expressions="true">
-		<form-login login-page="/home"
+		<form-login login-page="/login"
 		login-processing-url="/j_spring_security_check"
-			authentication-failure-url="/signin-failure" default-target-url="/home" />
+			 default-target-url="/home" />
 	</http>
 
 	<authentication-manager>

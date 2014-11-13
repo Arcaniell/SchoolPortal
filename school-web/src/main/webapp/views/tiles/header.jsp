@@ -23,7 +23,7 @@
 		
 		<sec:authorize access="isAnonymous()">
 		
-		<button class="btn btn-default" data-toggle="modal"
+		<button id="loginButton" class="btn btn-default" data-toggle="modal"
 			data-target="#logIn">
 			<spring:message code="label.login" />
 		</button>
