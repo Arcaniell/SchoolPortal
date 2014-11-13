@@ -2,25 +2,26 @@ package school.dto;
 
 import java.util.Set;
 
-import school.model.Course;
-import school.model.Group;
-
 public class JournalTeacherDto {
 
 	private long teacherId;
 	private String teacherName;
-	private Set<Course> courses;
-	private Set<Group> groups;
+	private Set<Byte> groupNumbers;
+	private Set<Character> groupLetters;
+	private Set<String> courses;
 
 	public JournalTeacherDto() {
 	}
 
 	public JournalTeacherDto(long teacherId, String teacherName,
-			Set<Course> courses, Set<Group> groups) {
+			Set<Byte> groupNumbers, Set<Character> groupLetters,
+			Set<String> courses) {
+		super();
 		this.teacherId = teacherId;
 		this.teacherName = teacherName;
+		this.groupNumbers = groupNumbers;
+		this.groupLetters = groupLetters;
 		this.courses = courses;
-		this.groups = groups;
 	}
 
 	public long getTeacherId() {
@@ -39,20 +40,28 @@ public class JournalTeacherDto {
 		this.teacherName = teacherName;
 	}
 
-	public Set<Course> getCourses() {
+	public Set<Byte> getGroupNumbers() {
+		return groupNumbers;
+	}
+
+	public void setGroupNumbers(Set<Byte> groupNumbers) {
+		this.groupNumbers = groupNumbers;
+	}
+
+	public Set<Character> getGroupLetters() {
+		return groupLetters;
+	}
+
+	public void setGroupLetters(Set<Character> groupLetters) {
+		this.groupLetters = groupLetters;
+	}
+
+	public Set<String> getCourses() {
 		return courses;
 	}
 
-	public void setCourses(Set<Course> courses) {
+	public void setCourses(Set<String> courses) {
 		this.courses = courses;
-	}
-
-	public Set<Group> getGroups() {
-		return groups;
-	}
-
-	public void setGroups(Set<Group> groups) {
-		this.groups = groups;
 	}
 
 	@Override
@@ -60,7 +69,10 @@ public class JournalTeacherDto {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((courses == null) ? 0 : courses.hashCode());
-		result = prime * result + ((groups == null) ? 0 : groups.hashCode());
+		result = prime * result
+				+ ((groupLetters == null) ? 0 : groupLetters.hashCode());
+		result = prime * result
+				+ ((groupNumbers == null) ? 0 : groupNumbers.hashCode());
 		result = prime * result + (int) (teacherId ^ (teacherId >>> 32));
 		result = prime * result
 				+ ((teacherName == null) ? 0 : teacherName.hashCode());
@@ -81,10 +93,15 @@ public class JournalTeacherDto {
 				return false;
 		} else if (!courses.equals(other.courses))
 			return false;
-		if (groups == null) {
-			if (other.groups != null)
+		if (groupLetters == null) {
+			if (other.groupLetters != null)
 				return false;
-		} else if (!groups.equals(other.groups))
+		} else if (!groupLetters.equals(other.groupLetters))
+			return false;
+		if (groupNumbers == null) {
+			if (other.groupNumbers != null)
+				return false;
+		} else if (!groupNumbers.equals(other.groupNumbers))
 			return false;
 		if (teacherId != other.teacherId)
 			return false;

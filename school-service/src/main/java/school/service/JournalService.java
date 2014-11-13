@@ -2,33 +2,25 @@ package school.service;
 
 import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
+import school.dto.JournalParentDTO;
+import school.dto.JournalStudentDto;
+import school.dto.JournalStudentWithMarksDTO;
 import school.dto.JournalTeacherDto;
-import school.model.Course;
-import school.model.Group;
-import school.model.Journal;
-import school.model.Schedule;
-import school.model.Teacher;
 
 public interface JournalService {
 
-	List<Journal> findByIntervalAndStudentId(long studentId, Date from,
-			Date till);
+	JournalTeacherDto getTeacherInfo(String userId);
 
-	Group findByNumberAndLetter(byte number, char letter);
+	JournalStudentDto getStudentInfo(String userId);
+
+	JournalParentDTO getParentInfo(String userId);
 
 	Set<Date> getDates(String dateFrom, String dateTo) throws ParseException;
 
-	Map<Long, List<Journal>> getStudentsWithMarks(String groupNumber,
-			String groupLetter);
-
-	List<Schedule> getSchedulesByTeacherId(Teacher teacher);
-
-	Teacher getTeacherByUserId(long userId);
-
-	JournalTeacherDto getTeacherInfo(long userId);
+	Set<JournalStudentWithMarksDTO> getStudentsWithMarks(String student,
+			String groupNumber, String groupLetter, String course,
+			String dateFrom, String dateTo) throws ParseException;
 
 }

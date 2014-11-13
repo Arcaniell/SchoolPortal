@@ -1,6 +1,5 @@
 package school.model;
 
-
 import java.util.Date;
 import java.util.List;
 
@@ -18,87 +17,93 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="SCHEDULE")
+@Table(name = "SCHEDULE")
 @NamedQueries({
-	@NamedQuery(name = Schedule.FIND_BY_DATES, query = Schedule.FIND_BY_DATES_QUERY),
-	@NamedQuery(name = Schedule.FIND_BY_GROUP, query = Schedule.FIND_BY_GROUP_QUERY),
-	@NamedQuery(name = Schedule.FIND_BY_ROOM, query = Schedule.FIND_BY_ROOM_QUERY),
-	@NamedQuery(name = Schedule.FIND_BY_TEACHER, query = Schedule.FIND_BY_TEACHER_QUERY),
-	@NamedQuery(name = Schedule.FIND_BY_TEACHER_INTERVAL, query = Schedule.FIND_BY_TEACHER_INTERVAL_QUERY),
-	@NamedQuery(name = Schedule.FIND_BY_ROOM_INTERVAL, query = Schedule.FIND_BY_ROOM_INTERVAL_QUERY),
-	@NamedQuery(name = Schedule.FIND_BY_GROUP_INTERVAL, query = Schedule.FIND_BY_GROUP_INTERVAL_QUERY)
-	})
-
+		@NamedQuery(name = Schedule.FIND_BY_DATES, query = Schedule.FIND_BY_DATES_QUERY),
+		@NamedQuery(name = Schedule.FIND_BY_GROUP, query = Schedule.FIND_BY_GROUP_QUERY),
+		@NamedQuery(name = Schedule.FIND_BY_ROOM, query = Schedule.FIND_BY_ROOM_QUERY),
+		@NamedQuery(name = Schedule.FIND_BY_TEACHER, query = Schedule.FIND_BY_TEACHER_QUERY),
+		@NamedQuery(name = Schedule.FIND_BY_TEACHER_INTERVAL, query = Schedule.FIND_BY_TEACHER_INTERVAL_QUERY),
+		@NamedQuery(name = Schedule.FIND_BY_ROOM_INTERVAL, query = Schedule.FIND_BY_ROOM_INTERVAL_QUERY),
+		@NamedQuery(name = Schedule.FIND_BY_GROUP_INTERVAL, query = Schedule.FIND_BY_GROUP_INTERVAL_QUERY) })
 public class Schedule {
-	
+
 	public static final String FIND_BY_DATES = "Schedule.findByDates";
 	public static final String FIND_BY_DATES_QUERY = "SELECT sch FROM Schedule sch WHERE sch.date BETWEEN :from AND :till";
-	
+
+	public static final String FIND_BY_GROUP_COURSE_INTERVAL = "Schedule.findByGroupCourseInterval";
+	public static final String FIND_BY_GROUP_COURSE_INTERVAL_QUERY = "SELECT sch FROM Schedule sch WHERE sch.group.id = :groupId AND sch.course.courseName = :courseName AND sch.date BETWEEN :from AND :till";
+
 	public static final String FIND_BY_GROUP = "Schedule.findByGroup";
 	public static final String FIND_BY_GROUP_QUERY = "SELECT sch FROM Schedule sch WHERE sch.group = :group";
-	
+
 	public static final String FIND_BY_ROOM = "Schedule.findByRoom";
 	public static final String FIND_BY_ROOM_QUERY = "SELECT sch FROM Schedule sch WHERE sch.room = :room";
-	
+
 	public static final String FIND_BY_TEACHER = "Schedule.findByTeacher";
 	public static final String FIND_BY_TEACHER_QUERY = "SELECT sch FROM Schedule sch WHERE sch.teacher = :teacher";
-	
+
 	public static final String FIND_BY_TEACHER_INTERVAL = "Schedule.findByTeacherInterval";
 	public static final String FIND_BY_TEACHER_INTERVAL_QUERY = "SELECT sch FROM Schedule sch WHERE sch.teacher.id = :teacherId AND sch.date  BETWEEN :from AND :till";
-	
+
 	public static final String FIND_BY_ROOM_INTERVAL = "Schedule.findByRoomInterval";
 	public static final String FIND_BY_ROOM_INTERVAL_QUERY = "SELECT sch FROM Schedule sch WHERE sch.room.id = :roomId AND sch.date  BETWEEN :from AND :till";
-	
+
 	public static final String FIND_BY_GROUP_INTERVAL = "Schedule.findGroupInterval";
 	public static final String FIND_BY_GROUP_INTERVAL_QUERY = "SELECT sch FROM Schedule sch WHERE sch.group.id = :groupId AND sch.date  BETWEEN :from AND :till";
-	
-	
-	//	public static final String FIND_BY_COURSE_QUERY = "SELECT sch FROM Schedule sch WHERE sch.course = :course";
-//	public static final String FIND_BY_LESSON_QUERY = "SELECT sch FROM Schedule sch WHERE sch.lesson = :lesson";
-//	public static final String FIND_BY_TEACHER_GROUP_INTERVAL_QUERY = "SELECT sch FROM Schedule sch WHERE sch.teacher.id = :teacherId AND sch.group.id = :groupId AND sch.date  BETWEEN :from AND :till";
-//	public static final String FIND_BY_TEACHER_ROOM_INTERVAL_QUERY = "SELECT sch FROM Schedule sch WHERE sch.teacher.id = :teacherId AND sch.room.id = :roomId AND sch.date  BETWEEN :from AND :till";
-//	public static final String FIND_BY_GROUP_ROOM_INTERVAL_QUERY = "SELECT sch FROM Schedule sch WHERE sch.group.id = :groupId AND sch.room.id = :roomId AND sch.date  BETWEEN :from AND :till";
-//	public static final String FIND_BY_TEACHER_GROUP_ROOM_INTERVAL_QUERY = "SELECT sch FROM Schedule sch WHERE sch.teacher.id = :teacherId AND sch.group.id = :groupId AND sch.room.id =:roomId AND sch.date  BETWEEN :from AND :till";
+
+	// public static final String FIND_BY_COURSE_QUERY =
+	// "SELECT sch FROM Schedule sch WHERE sch.course = :course";
+	// public static final String FIND_BY_LESSON_QUERY =
+	// "SELECT sch FROM Schedule sch WHERE sch.lesson = :lesson";
+	// public static final String FIND_BY_TEACHER_GROUP_INTERVAL_QUERY =
+	// "SELECT sch FROM Schedule sch WHERE sch.teacher.id = :teacherId AND sch.group.id = :groupId AND sch.date  BETWEEN :from AND :till";
+	// public static final String FIND_BY_TEACHER_ROOM_INTERVAL_QUERY =
+	// "SELECT sch FROM Schedule sch WHERE sch.teacher.id = :teacherId AND sch.room.id = :roomId AND sch.date  BETWEEN :from AND :till";
+	// public static final String FIND_BY_GROUP_ROOM_INTERVAL_QUERY =
+	// "SELECT sch FROM Schedule sch WHERE sch.group.id = :groupId AND sch.room.id = :roomId AND sch.date  BETWEEN :from AND :till";
+	// public static final String FIND_BY_TEACHER_GROUP_ROOM_INTERVAL_QUERY =
+	// "SELECT sch FROM Schedule sch WHERE sch.teacher.id = :teacherId AND sch.group.id = :groupId AND sch.room.id =:roomId AND sch.date  BETWEEN :from AND :till";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private Date date;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "schedule")
 	private List<Journal> journal;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false, name = "groupId")
 	private Group group;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false, name = "teacherId")
 	private Teacher teacher;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false, name = "lessonId")
 	private Lesson lesson;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false, name = "roomId")
 	private Room room;
-		
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false, name = "courseId")
 	private Course course;
-	
-	
+
 	public Schedule() {
 		super();
-		
+
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -106,44 +111,55 @@ public class Schedule {
 	public Date getDate() {
 		return date;
 	}
+
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
 	public List<Journal> getJournal() {
 		return journal;
 	}
+
 	public void setJournal(List<Journal> journal) {
 		this.journal = journal;
 	}
+
 	public Group getGroup() {
 		return group;
 	}
+
 	public void setGroup(Group group) {
 		this.group = group;
 	}
+
 	public Teacher getTeacher() {
 		return teacher;
 	}
+
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
 	}
+
 	public Lesson getLesson() {
 		return lesson;
 	}
+
 	public void setLesson(Lesson lesson) {
 		this.lesson = lesson;
 	}
+
 	public Room getRoom() {
 		return room;
 	}
+
 	public void setRoom(Room room) {
 		this.room = room;
 	}
-	
+
 	public Course getCourse() {
 		return course;
 	}
-	
+
 	public void setCourse(Course course) {
 		this.course = course;
 	}
@@ -163,7 +179,6 @@ public class Schedule {
 		return result;
 	}
 
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -216,5 +231,4 @@ public class Schedule {
 		return true;
 	}
 
-	
 }
