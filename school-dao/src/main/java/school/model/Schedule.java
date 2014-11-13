@@ -25,7 +25,8 @@ import javax.persistence.Table;
 		@NamedQuery(name = Schedule.FIND_BY_TEACHER, query = Schedule.FIND_BY_TEACHER_QUERY),
 		@NamedQuery(name = Schedule.FIND_BY_TEACHER_INTERVAL, query = Schedule.FIND_BY_TEACHER_INTERVAL_QUERY),
 		@NamedQuery(name = Schedule.FIND_BY_ROOM_INTERVAL, query = Schedule.FIND_BY_ROOM_INTERVAL_QUERY),
-		@NamedQuery(name = Schedule.FIND_BY_GROUP_INTERVAL, query = Schedule.FIND_BY_GROUP_INTERVAL_QUERY) })
+		@NamedQuery(name = Schedule.FIND_BY_GROUP_INTERVAL, query = Schedule.FIND_BY_GROUP_INTERVAL_QUERY),
+		@NamedQuery(name = Schedule.FIND_BY_GROUP_COURSE_INTERVAL, query = Schedule.FIND_BY_GROUP_COURSE_INTERVAL_QUERY), })
 public class Schedule {
 
 	public static final String FIND_BY_DATES = "Schedule.findByDates";
