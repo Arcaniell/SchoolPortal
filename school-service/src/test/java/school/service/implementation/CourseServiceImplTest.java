@@ -51,7 +51,7 @@ public class CourseServiceImplTest {
          * System.out.println(courseRequestTeacherDTO.getId()); }
          */
         //courseRequestService.altDeleteAllRequestsWithCourseId(73L);
-        courseRequestService.formGroupAndCloseRequests(74L,new Date(),new Date());
+        //courseRequestService.formGroupAndCloseRequests(74L,new Date(),new Date());
         Assert.assertNotNull(44);
 
     }
