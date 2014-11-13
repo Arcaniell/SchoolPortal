@@ -13,7 +13,7 @@
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">×</button>
 				<h3 class="modal-title">
-					<spring:message code="label.login" />
+					<spring:message code="label.entrance" />
 				</h3>
 			</div>
 			<div class="modal-body">
@@ -42,7 +42,7 @@
 						<table>
 							<tr>
 								<td><input type="submit" class="btn btn-default"
-									value="<spring:message code="label.enter"/>" /></td>
+									value="<spring:message code="label.login"/>" /></td>
 							</tr>
 						</table>
 					</div>
@@ -56,7 +56,7 @@
 							</td>
 							<td>
 								<button class="btn" data-toggle="modal" class="close"
-									data-dismiss="modal" data-target="#signUp">Sign up</button>
+									data-dismiss="modal" data-target="#signUp"><spring:message code="label.signup"/></button>
 							</td>
 						</tr>
 					</table>
