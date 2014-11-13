@@ -8,7 +8,7 @@
 	<div class="modal-dialog">
 		<br> <br> <br> <br> <br> <br> <br>
 		<br>
-		<div class="modal-content" align="center" style="overflow: auto;">
+		<div class="modal-content" align="center">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">×</button>
@@ -20,14 +20,14 @@
 				<form action="j_spring_security_check" method="post">
 					<table>
 						<tr>
-							<td style="padding-right: 20px;"><label
+							<td class="padding_right"><label
 								class="control-label" for="j_username"><spring:message
 										code="label.email" /></label></td>
 							<td><input class="input" id="j_username" name="j_username"
 								size="20" maxlength="50" type="text" /></td>
 						</tr>
 						<tr>
-							<td style="padding-right: 20px;"><label for="j_password"><spring:message
+							<td class="padding_right"><label for="j_password"><spring:message
 										code="label.password" /></label></td>
 							<td><input class="input" id="j_password" name="j_password"
 								size="20" maxlength="50" type="password" /></td>

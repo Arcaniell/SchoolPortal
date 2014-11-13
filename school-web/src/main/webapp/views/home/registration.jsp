@@ -8,7 +8,7 @@
 	<div class="modal-dialog">
 		<br> <br> <br> <br> <br> <br> <br>
 		<br>
-		<div class="modal-content" align="center" style="overflow: auto;">
+		<div class="modal-content" align="center">
 
 			<div class="modal-body">
 				<button type="button" class="close" data-dismiss="modal"
@@ -17,11 +17,11 @@
 					<spring:message code="label.registration" />
 				</h3>
 				<form action="" method="post">
-					<table class="table" style="white-space: nowrap;">
+					<table class="table all_in_one_line">
 						<tr>
 							<td><table>
 									<tr>
-										<td colspan="2"><h4 align="center">
+										<td colspan="2"><h4>
 												<spring:message code="label.registration.data" />
 											</h4></td>
 									</tr>
@@ -30,26 +30,26 @@
 										<td><label class="control-label"><spring:message
 													code="label.registration.name" /></label></td>
 
-										<td><input style="width: 87px;" type="text"
-											value="<spring:message code="label.firstname" />" /> <input
-											style="width: 87px;" type="text"
-											value="<spring:message code="label.lastname" />" /></td>
+										<td><input class="registration_names" type="text"
+											placeholder="<spring:message code="label.firstname" />" /> <input
+											class="registration_names" type="text"
+											placeholder="<spring:message code="label.lastname" />" /></td>
 
 									</tr>
 									<tr>
 										<td><label class="control-label"><spring:message
 													code="label.email" /></label></td>
-										<td><input type="text"></td>
+										<td><input type="text" class="registration_data"></td>
 									</tr>
 									<tr>
 										<td><label class="control-label"><spring:message
 													code="label.createapassword" /></label></td>
-										<td><input type="password"></td>
+										<td><input type="password" class="registration_data"></td>
 									</tr>
 									<tr>
 										<td><label class="control-label"><spring:message
 													code="label.confirmapassword" /></label></td>
-										<td><input type="password"></td>
+										<td><input type="password" class="registration_data"></td>
 									</tr>
 
 								</table></td>
@@ -81,7 +81,8 @@
 					<div align="center">
 						<table>
 							<tr>
-								<td><input type="submit" class="btn btn-default" style="width: 140px;"
+								<td><input type="submit" class="btn btn-default"
+									class="signup_bitton"
 									value="<spring:message code="label.signup"/>" /></td>
 							</tr>
 						</table>
