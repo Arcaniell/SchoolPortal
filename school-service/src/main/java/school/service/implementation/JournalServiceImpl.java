@@ -14,6 +14,7 @@ import javax.inject.Inject;
 
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import school.dao.GroupDao;
@@ -57,7 +58,7 @@ public class JournalServiceImpl implements JournalService {
 	private ParentDao parentDao;
 
 	@Secured(Role.Secured.TEACHER)
-	@Transactional
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public JournalTeacherDTO getTeacherInfo(String id) {
 
 		long userId = Long.parseLong(id);
@@ -79,7 +80,7 @@ public class JournalServiceImpl implements JournalService {
 	}
 
 	@Secured({ Role.Secured.STUDENT, Role.Secured.PARENT })
-	@Transactional
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public JournalStudentDTO getStudentInfo(String id) {
 
 		long userId = Long.parseLong(id);
@@ -107,7 +108,7 @@ public class JournalServiceImpl implements JournalService {
 	}
 
 	@Secured(Role.Secured.PARENT)
-	@Transactional
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public JournalParentDTO getParentInfo(String id) {
 
 		long userId = Long.parseLong(id);
@@ -127,7 +128,7 @@ public class JournalServiceImpl implements JournalService {
 	@Secured({ Role.Secured.PARENT, Role.Secured.STUDENT, Role.Secured.TEACHER,
 			Role.Secured.HEAD_TEACHER, Role.Secured.DIRECTOR,
 			Role.Secured.ADMIN })
-	@Transactional
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public Set<Date> getDates(String dateFrom, String dateTo)
 			throws ParseException {
 
@@ -149,7 +150,7 @@ public class JournalServiceImpl implements JournalService {
 	@Secured({ Role.Secured.PARENT, Role.Secured.STUDENT, Role.Secured.TEACHER,
 			Role.Secured.HEAD_TEACHER, Role.Secured.DIRECTOR,
 			Role.Secured.ADMIN })
-	@Transactional
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public Set<JournalStudentWithMarksDTO> getStudentsWithMarks(String student,
 			String groupNumber, String groupLetter, String course,
 			String dateFrom, String dateTo) throws ParseException {

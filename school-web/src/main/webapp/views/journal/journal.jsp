@@ -87,17 +87,16 @@
 							</c:if>
 							<th class="thSubjectAndStudent"><div>
 									<select name="subject" class="form-control">
-										<c:forEach items="${teacher.courses}" var="course">
+										<c:forEach items="${teacher.courseNames}" var="course">
 											<option value="${course}">${course}</option>
 										</c:forEach>
-										<c:forEach items="${student.studentCourses}"
-											var="studentCourses">
-											<option value="${studentCourses.courseName}">${studentCourses.courseName}</option>
+										<c:forEach items="${student.courseNames}" var="course">
+											<option value="${course}">${course}</option>
 										</c:forEach>
 										<c:if test="${parent ne null}">
 											<c:forEach items="${parent.kids}" var="kid">
-												<c:forEach items="${kid.studentCourses}" var="studentCourse">
-													<option value="${studentCourse.courseName}">${studentCourse.courseName}</option>
+												<c:forEach items="${kid.courseNames}" var="course">
+													<option value="${course}">${course}</option>
 												</c:forEach>
 											</c:forEach>
 										</c:if>
