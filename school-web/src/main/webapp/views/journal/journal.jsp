@@ -10,10 +10,10 @@
 
 <link href="<c:url value="/resources/css/journal.css" />"
 	rel="stylesheet">
-<c:if test="${teacher ne null}">
+<c:if test="${teacher ne null or parent ne null}">
 	<table class="table table-condensed headerJournalBig">
 		</c:if>
-		<c:if test="${teacher == null}">
+		<c:if test="${teacher == null and parent == null}">
 			<table class="table table-condensed headerJournalSmall">
 				</c:if>
 				<tbody>

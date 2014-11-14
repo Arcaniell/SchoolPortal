@@ -1,27 +1,26 @@
-package school.dto;
+package school.dto.journal;
 
 import java.util.Set;
 
-public class JournalTeacherDto {
+public class JournalTeacherDTO extends JournalDTO {
 
 	private long teacherId;
 	private String teacherName;
 	private Set<Byte> groupNumbers;
 	private Set<Character> groupLetters;
-	private Set<String> courses;
+	private Set<String> courseNames;
 
-	public JournalTeacherDto() {
+	public JournalTeacherDTO() {
 	}
 
-	public JournalTeacherDto(long teacherId, String teacherName,
+	public JournalTeacherDTO(long teacherId, String teacherName,
 			Set<Byte> groupNumbers, Set<Character> groupLetters,
-			Set<String> courses) {
-		super();
+			Set<String> courseNames) {
 		this.teacherId = teacherId;
 		this.teacherName = teacherName;
 		this.groupNumbers = groupNumbers;
 		this.groupLetters = groupLetters;
-		this.courses = courses;
+		this.courseNames = courseNames;
 	}
 
 	public long getTeacherId() {
@@ -56,19 +55,20 @@ public class JournalTeacherDto {
 		this.groupLetters = groupLetters;
 	}
 
-	public Set<String> getCourses() {
-		return courses;
+	public Set<String> getCourseNames() {
+		return courseNames;
 	}
 
-	public void setCourses(Set<String> courses) {
-		this.courses = courses;
+	public void setCourseNames(Set<String> courseNames) {
+		this.courseNames = courseNames;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((courses == null) ? 0 : courses.hashCode());
+		result = prime * result
+				+ ((courseNames == null) ? 0 : courseNames.hashCode());
 		result = prime * result
 				+ ((groupLetters == null) ? 0 : groupLetters.hashCode());
 		result = prime * result
@@ -87,11 +87,11 @@ public class JournalTeacherDto {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		JournalTeacherDto other = (JournalTeacherDto) obj;
-		if (courses == null) {
-			if (other.courses != null)
+		JournalTeacherDTO other = (JournalTeacherDTO) obj;
+		if (courseNames == null) {
+			if (other.courseNames != null)
 				return false;
-		} else if (!courses.equals(other.courses))
+		} else if (!courseNames.equals(other.courseNames))
 			return false;
 		if (groupLetters == null) {
 			if (other.groupLetters != null)

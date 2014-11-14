@@ -23,11 +23,10 @@ import school.dao.ScheduleDao;
 import school.dao.StudentDao;
 import school.dao.TeacherDao;
 import school.dao.UserDao;
-import school.dto.JournalParentDTO;
-import school.dto.JournalStudentDto;
-import school.dto.JournalStudentWithMarksDTO;
-import school.dto.JournalTeacherDto;
-import school.model.Course;
+import school.dto.journal.JournalParentDTO;
+import school.dto.journal.JournalStudentDTO;
+import school.dto.journal.JournalStudentWithMarksDTO;
+import school.dto.journal.JournalTeacherDTO;
 import school.model.Group;
 import school.model.Journal;
 import school.model.Parent;
@@ -37,6 +36,7 @@ import school.model.Student;
 import school.model.Teacher;
 import school.model.User;
 import school.service.JournalService;
+import school.service.utils.JournalUtil;
 
 @Service
 public class JournalServiceImpl implements JournalService {
@@ -58,7 +58,7 @@ public class JournalServiceImpl implements JournalService {
 
 	@Secured(Role.Secured.TEACHER)
 	@Transactional
-	public JournalTeacherDto getTeacherInfo(String id) {
+	public JournalTeacherDTO getTeacherInfo(String id) {
 
 		long userId = Long.parseLong(id);
 		Teacher teacher = teacherDao.findByUserId(userId);
@@ -74,44 +74,36 @@ public class JournalServiceImpl implements JournalService {
 			courses.add(schedule.getCourse().getCourseName());
 		}
 
-		return new JournalTeacherDto(teacher.getId(), getWholeUserName(userId),
+		return new JournalTeacherDTO(teacher.getId(), getWholeUserName(userId),
 				groupNumbers, groupLetters, courses);
 	}
 
 	@Secured({ Role.Secured.STUDENT, Role.Secured.PARENT })
 	@Transactional
-	public JournalStudentDto getStudentInfo(String id) {
+	public JournalStudentDTO getStudentInfo(String id) {
 
 		long userId = Long.parseLong(id);
 
 		Student student = studentDao.findByUserId(userId);
 
 		Group mainGroup = student.getGroup();
-		List<Group> additionGroups = student.getAdditionGroups();
-		List<Schedule> schedules = scheduleDao.findByGroup(mainGroup);
+		List<Group> allGroups = student.getAdditionGroups();
+		allGroups.add(mainGroup);
 
-		for (Group group : additionGroups) {
-			List<Schedule> additionGroupSchedules = scheduleDao
-					.findByGroup(group);
-			for (Schedule schedule : additionGroupSchedules) {
-				schedules.add(schedule);
-			}
+		List<Schedule> schedules = new ArrayList<Schedule>();
+
+		for (Group group : allGroups) {
+			schedules.addAll(scheduleDao.findByGroup(group));
 		}
 
-		Set<Course> studentCourses = new TreeSet<Course>();
-		Set<Group> studentGroups = new TreeSet<Group>();
-
-		studentGroups.add(mainGroup);
-		for (Group group : additionGroups) {
-			studentGroups.add(group);
-		}
+		Set<String> courseNames = new TreeSet<String>();
 
 		for (Schedule schedule : schedules) {
-			studentCourses.add(schedule.getCourse());
+			courseNames.add(schedule.getCourse().getCourseName());
 		}
 
-		return new JournalStudentDto(student.getId(), getWholeUserName(userId),
-				studentGroups, studentCourses);
+		return new JournalStudentDTO(student.getId(), getWholeUserName(userId),
+				courseNames);
 	}
 
 	@Secured(Role.Secured.PARENT)
@@ -123,7 +115,7 @@ public class JournalServiceImpl implements JournalService {
 		Parent parent = parentDao.findByUserId(userId);
 		List<Student> students = parent.getStudents();
 
-		Set<JournalStudentDto> kids = new TreeSet<JournalStudentDto>();
+		Set<JournalStudentDTO> kids = new TreeSet<JournalStudentDTO>();
 		for (Student student : students) {
 			kids.add(getStudentInfo(String.valueOf(student.getUser().getId())));
 		}
@@ -165,7 +157,8 @@ public class JournalServiceImpl implements JournalService {
 		byte number = Byte.parseByte(groupNumber);
 		char letter = groupLetter.charAt(0);
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat dateFormat = new SimpleDateFormat(
+				JournalUtil.UI_DATE_FORMAT);
 
 		Date from = dateFormat.parse(dateFrom);
 		Date to = dateFormat.parse(dateTo);
@@ -173,7 +166,7 @@ public class JournalServiceImpl implements JournalService {
 		Group group = groupDao.findByNumberAndLetter(number, letter);
 
 		List<Student> students = new ArrayList<Student>();
-		if (student.equalsIgnoreCase("all")) {
+		if (student.equalsIgnoreCase(JournalUtil.ALL)) {
 			students = group.getStudent();
 		} else {
 			students.add(studentDao.findById(Long.parseLong(student)));

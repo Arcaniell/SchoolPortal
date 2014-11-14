@@ -1,24 +1,22 @@
-package school.dto;
+package school.dto.journal;
 
-import java.util.Date;
-import java.util.Map;
+import java.util.Set;
 
-public class JournalStudentWithMarksDTO implements
-		Comparable<JournalStudentWithMarksDTO> {
+public class JournalStudentDTO extends JournalDTO implements
+		Comparable<JournalStudentDTO> {
 
 	private long studentId;
 	private String name;
-	private Map<Date, String> marks;
+	private Set<String> courseNames;
 
-	public JournalStudentWithMarksDTO() {
-
+	public JournalStudentDTO() {
 	}
 
-	public JournalStudentWithMarksDTO(long studentId, String name,
-			Map<Date, String> marks) {
+	public JournalStudentDTO(long studentId, String name,
+			Set<String> courseNames) {
 		this.studentId = studentId;
 		this.name = name;
-		this.marks = marks;
+		this.courseNames = courseNames;
 	}
 
 	public long getStudentId() {
@@ -37,16 +35,16 @@ public class JournalStudentWithMarksDTO implements
 		this.name = name;
 	}
 
-	public Map<Date, String> getMarks() {
-		return marks;
+	public Set<String> getCourseNames() {
+		return courseNames;
 	}
 
-	public void setMarks(Map<Date, String> marks) {
-		this.marks = marks;
+	public void setCourseNames(Set<String> courseNames) {
+		this.courseNames = courseNames;
 	}
 
 	@Override
-	public int compareTo(JournalStudentWithMarksDTO journalStudentDto) {
+	public int compareTo(JournalStudentDTO journalStudentDto) {
 		return this.name.compareTo(journalStudentDto.getName());
 	}
 
@@ -54,7 +52,8 @@ public class JournalStudentWithMarksDTO implements
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((marks == null) ? 0 : marks.hashCode());
+		result = prime * result
+				+ ((courseNames == null) ? 0 : courseNames.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + (int) (studentId ^ (studentId >>> 32));
 		return result;
@@ -68,11 +67,11 @@ public class JournalStudentWithMarksDTO implements
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		JournalStudentWithMarksDTO other = (JournalStudentWithMarksDTO) obj;
-		if (marks == null) {
-			if (other.marks != null)
+		JournalStudentDTO other = (JournalStudentDTO) obj;
+		if (courseNames == null) {
+			if (other.courseNames != null)
 				return false;
-		} else if (!marks.equals(other.marks))
+		} else if (!courseNames.equals(other.courseNames))
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -83,5 +82,4 @@ public class JournalStudentWithMarksDTO implements
 			return false;
 		return true;
 	}
-
 }

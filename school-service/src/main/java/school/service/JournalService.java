@@ -4,16 +4,16 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.Set;
 
-import school.dto.JournalParentDTO;
-import school.dto.JournalStudentDto;
-import school.dto.JournalStudentWithMarksDTO;
-import school.dto.JournalTeacherDto;
+import school.dto.journal.JournalParentDTO;
+import school.dto.journal.JournalStudentDTO;
+import school.dto.journal.JournalStudentWithMarksDTO;
+import school.dto.journal.JournalTeacherDTO;
 
 public interface JournalService {
 
-	JournalTeacherDto getTeacherInfo(String userId);
+	JournalTeacherDTO getTeacherInfo(String userId);
 
-	JournalStudentDto getStudentInfo(String userId);
+	JournalStudentDTO getStudentInfo(String userId);
 
 	JournalParentDTO getParentInfo(String userId);
 
