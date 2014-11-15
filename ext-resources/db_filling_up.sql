@@ -70,9 +70,9 @@ INSERT INTO `USER` (`id`,`email`,`firstName`,`lastName`,`password`,`registration
 INSERT INTO `USER` (`id`,`email`,`firstName`,`lastName`,`password`,`registration`,`sex`) VALUES (381,"dictum@atvelit.net","Amal","Tran","ac","2014-09-19 08:34:35",1),(382,"porttitor@mattisvelitjusto.edu","Amy","Pena","non,","2014-03-23 10:14:28",1),(383,"aliquam.iaculis.lacus@semper.co.uk","Aileen","Trujillo","accumsan","2014-05-19 09:04:47",2),(384,"egestas.blandit.Nam@eget.ca","Dennis","Warner","Morbi","2014-02-28 00:32:12",1),(385,"orci@Praesentinterdum.edu","Jermaine","Oneal","odio","2014-08-25 12:37:34",3),(386,"netus@malesuadavelconvallis.com","Alea","Mcleod","pede","2014-08-02 12:01:01",1),(387,"dictum@nisiAeneaneget.net","Ora","Daugherty","ornare,","2014-08-04 09:04:20",2),(388,"eu@gravidaAliquam.org","Clayton","Houston","ornare","2013-12-24 16:20:10",3),(389,"dui.augue@Utsemper.ca","Shea","Barker","lorem.","2013-11-29 12:18:31",1),(390,"est.tempor@ornare.com","Holly","Nash","sociis","2014-05-26 01:52:03",3);
 INSERT INTO `USER` (`id`,`email`,`firstName`,`lastName`,`password`,`registration`,`sex`) VALUES (391,"et.euismod@Donecfelis.net","Mariam","Vargas","commodo","2014-05-17 08:16:38",3),(392,"magna.Lorem@Nullam.net","Kaye","Nguyen","orci","2014-02-23 12:21:01",3),(393,"cursus@egetmagnaSuspendisse.com","Dominic","Strong","felis.","2014-03-24 05:27:47",2),(394,"vestibulum.Mauris.magna@Aliquamgravida.co.uk","Hoyt","Rice","natoque","2014-09-02 11:00:22",2),(395,"fermentum.vel@loremipsumsodales.org","Mona","Clay","ullamcorper.","2014-01-16 11:02:40",3),(396,"vitae.sodales.nisi@famesac.ca","Abraham","Palmer","magna","2014-08-05 11:33:11",2),(397,"mattis@diamPellentesque.com","Karleigh","Watkins","In","2013-12-13 12:30:54",2),(398,"tincidunt@odioNaminterdum.co.uk","Amir","French","Cras","2013-11-27 10:17:34",2),(399,"Suspendisse@Innec.net","Alexandra","Barnes","iaculis,","2014-06-26 13:17:24",3),(400,"natoque@sapiencursus.ca","Reece","Farley","aptent","2014-04-04 00:53:08",2);
 
-INSERT INTO `LESSON` (`id`,`startTime`,`finishTime`) VALUES (1,"2013-11-02 08:00:00","2013-11-02 08:45:00"),(2,"2013-11-02 08:55:00","2013-11-02 09:40:00"),(3,"2013-11-02 09:50:00","2013-11-02 10:35:00"),(4,"2013-11-02 10:55:00","2013-11-02 11:40:00"),(5,"2013-11-02 11:50:00","2013-11-02 12:35:00"),(6,"2013-11-02 12:45:00","2013-11-02 13:30:00"),(7,"2013-11-02 13:40:00","2013-11-02 14:25:00"),(8,"2013-11-02 14:35:00","2013-11-02 15:20:00");
+INSERT INTO `LESSON` (`id`,`startTime`,`finishTime`) VALUES (1,"2013-11-02 08:30:00","2013-11-02 09:15:00"),(2,"2013-11-02 09:25:00","2013-11-02 10:10:00"),(3,"2013-11-02 10:30:00","2013-11-02 11:15:00"),(4,"2013-11-02 11:30:00","2013-11-02 12:15:00"),(5,"2013-11-02 12:25:00","2013-11-02 13:10:00"),(6,"2013-11-02 13:20:00","2013-11-02 14:05:00"),(7,"2013-11-02 14:10:00","2013-11-02 14:55:00"),(8,"2013-11-02 15:00:00","2013-11-02 15:45:00");
 
-INSERT INTO `COURSE` (`id`,`additional`,`coeficient`,`courseName`,`groupNumber`,`price`) VALUES (1,0,1,"Algebra",5,0),(2,0,1,"Algebra",6,0),(3,0,1,"Algebra",7,0),(4,0,1,"Algebra",8,0),(5,0,1,"Algebra",9,0),(6,0,1,"Math analys",12,0),(7,0,1,"Math analys",11,0),(8,0,1,"Math analys",9,0),(9,0,1,"Ukrainian",5,0),(10,0,1,"Ukrainian",6,0),(11,0,1,"Ukrainian",7,0),(12,0,1,"Ukrainian",8,0),(13,0,1,"Ukrainian",9,0),(14,0,1,"Ukrainian",10,0),(15,0,1,"Ukrainian",11,0),(16,0,1,"English",5,0),(17,0,1,"English",6,0),(18,0,1,"English",7,0),(19,0,1,"English",8,0),(20,0,1,"English",9,0),(21,0,1,"English",10,0),(22,0,1,"English",11,0),(23,0,1,"Biology",5,0),(24,0,1,"Biology",6,0),(25,0,1,"Biology",7,0),(26,0,1,"Biology",8,0),(27,0,1,"Biology",9,0),(28,0,1,"Biology",10,0),(29,0,1,"Biology",11,0),(30,0,1,"Chemistry",5,0),(31,0,1,"Chemistry",6,0),(32,0,1,"Chemistry",7,0),(33,0,1,"Chemistry",8,0),(34,0,1,"Chemistry",9,0),(35,0,1,"Chemistry",10,0),(36,0,1,"Chemistry",11,0),(37,0,1,"Physics",5,0),(38,0,1,"Physics",6,0),(39,0,1,"Physics",7,0),(40,0,1,"Physics",8,0),(41,0,1,"Physics",9,0),(42,0,1,"Physics",10,0),(43,0,1,"Physics",11,0),(44,0,1,"History",5,0),(45,0,1,"History",6,0),(46,0,1,"History",7,0),(47,0,1,"History",8,0),(48,0,1,"History",9,0),(49,0,1,"History",10,0),(50,0,1,"History",11,0),(51,0,1,"Ukrainian literature",5,0),(52,0,1,"Ukrainian literature",6,0),(53,0,1,"Ukrainian literature",7,0),(54,0,1,"Ukrainian literature",8,0),(55,0,1,"Ukrainian literature",9,0),(56,0,1,"Ukrainian literature",10,0),(57,0,1,"Ukrainian literature",11,0),(58,0,1,"Foreign literature",5,0),(59,0,1,"Foreign literature",6,0),(60,0,1,"Foreign literature",7,0),(61,0,1,"Foreign literature",8,0),(62,0,1,"Foreign literature",9,0),(63,0,1,"Foreign literature",10,0),(64,0,1,"Foreign literature",11,0),(65,0,1,"Geography",5,0),(66,0,1,"Geography",6,0),(67,0,1,"Geography",7,0),(68,0,1,"Geography",8,0),(69,0,1,"Geography",9,0),(70,0,1,"Geography",10,0),(71,0,1,"Geography",11,0),(72,1,3,"Quantum Physics",6,1000),(73,1,3,"Quantum Physics",7,1000),(74,1,3,"Quantum Physics",8,1000),(75,1,2,"Music lessons",6,500),(76,1,2,"Music lessons",7,500),(77,1,2,"Music lessons",8,500);
+INSERT INTO `COURSE` (`id`,`additional`,`coeficient`,`courseName`,`groupNumber`,`price`) VALUES (1,0,1,"Algebra",5,0),(2,0,1,"Algebra",6,0),(3,0,1,"Algebra",7,0),(4,0,1,"Algebra",8,0),(5,0,1,"Algebra",9,0),(6,0,1,"Math analys",10,0),(7,0,1,"Math analys",11,0),(8,0,1,"Math analys",9,0),(9,0,1,"Ukrainian",5,0),(10,0,1,"Ukrainian",6,0),(11,0,1,"Ukrainian",7,0),(12,0,1,"Ukrainian",8,0),(13,0,1,"Ukrainian",9,0),(14,0,1,"Ukrainian",10,0),(15,0,1,"Ukrainian",11,0),(16,0,1,"English",5,0),(17,0,1,"English",6,0),(18,0,1,"English",7,0),(19,0,1,"English",8,0),(20,0,1,"English",9,0),(21,0,1,"English",10,0),(22,0,1,"English",11,0),(23,0,1,"Biology",5,0),(24,0,1,"Biology",6,0),(25,0,1,"Biology",7,0),(26,0,1,"Biology",8,0),(27,0,1,"Biology",9,0),(28,0,1,"Biology",10,0),(29,0,1,"Biology",11,0),(30,0,1,"Chemistry",5,0),(31,0,1,"Chemistry",6,0),(32,0,1,"Chemistry",7,0),(33,0,1,"Chemistry",8,0),(34,0,1,"Chemistry",9,0),(35,0,1,"Chemistry",10,0),(36,0,1,"Chemistry",11,0),(37,0,1,"Physics",5,0),(38,0,1,"Physics",6,0),(39,0,1,"Physics",7,0),(40,0,1,"Physics",8,0),(41,0,1,"Physics",9,0),(42,0,1,"Physics",10,0),(43,0,1,"Physics",11,0),(44,0,1,"History",5,0),(45,0,1,"History",6,0),(46,0,1,"History",7,0),(47,0,1,"History",8,0),(48,0,1,"History",9,0),(49,0,1,"History",10,0),(50,0,1,"History",11,0),(51,0,1,"Ukrainian literature",5,0),(52,0,1,"Ukrainian literature",6,0),(53,0,1,"Ukrainian literature",7,0),(54,0,1,"Ukrainian literature",8,0),(55,0,1,"Ukrainian literature",9,0),(56,0,1,"Ukrainian literature",10,0),(57,0,1,"Ukrainian literature",11,0),(58,0,1,"Foreign literature",5,0),(59,0,1,"Foreign literature",6,0),(60,0,1,"Foreign literature",7,0),(61,0,1,"Foreign literature",8,0),(62,0,1,"Foreign literature",9,0),(63,0,1,"Foreign literature",10,0),(64,0,1,"Foreign literature",11,0),(65,0,1,"Geography",5,0),(66,0,1,"Geography",6,0),(67,0,1,"Geography",7,0),(68,0,1,"Geography",8,0),(69,0,1,"Geography",9,0),(70,0,1,"Geography",10,0),(71,0,1,"Geography",11,0),(72,1,3,"Quantum Physics",6,1000),(73,1,3,"Quantum Physics",7,1000),(74,1,3,"Quantum Physics",8,1000),(75,1,2,"Music lessons",6,500),(76,1,2,"Music lessons",7,500),(77,1,2,"Music lessons",8,500);
 
 INSERT INTO `ROOM` (`id`,`available`,`roomNumber`,`size`) VALUES (1,1,100,28),(2,1,101,27),(3,1,102,28),(4,1,103,28),(5,1,104,28),(6,1,105,29),(7,1,106,28),(8,1,107,25),(9,1,108,26),(10,1,109,27);
 INSERT INTO `ROOM` (`id`,`available`,`roomNumber`,`size`) VALUES (11,1,110,26),(12,1,111,26),(13,1,112,26),(14,1,113,30),(15,1,114,25),(16,1,115,27),(17,1,116,27),(18,1,117,30),(19,1,118,25),(20,1,119,30);
@@ -842,209 +842,6 @@ INSERT INTO `COURSE_REQUEST` (`id`,`date`,`isActive`,`courseId`,`studentId`) val
 INSERT INTO `COURSE_REQUEST` (`id`,`date`,`isActive`,`courseId`,`studentId`) values(60,'2014-10-28',1,77,60);
 
 
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (1,'0','0','0','est. Mauris',10,1);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (2,'0','0','0','dolor. Quisque',10,2);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (3,'0','0','0','sit amet',10,3);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (4,'0','0','0','ligula. Aenean',10,4);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (5,'0','0','0','lacus. Mauris',14,5);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (6,'0','0','0','lectus pede',15,6);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (7,'0','0','0','dolor, nonummy',16,7);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (8,'0','0','0','sed leo.',17,8);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (9,'1','0','0','natoque penatibus',18,9);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (10,'1','0','0','Donec luctus',19,10);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (11,'1','0','0','eleifend nec,',20,14);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (12,'1','0','0','dolor, tempus',21,14);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (13,'0','0','0','convallis, ante',22,14);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (14,'1','0','0','metus. Aliquam',23,14);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (15,'1','0','0','diam. Duis',24,15);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (16,'1','0','0','dui lectus',25,16);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (17,'1','0','0','dignissim magna',26,17);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (18,'1','0','0','fermentum fermentum',27,14);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (19,'0','0','0','orci quis',28,19);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (20,'1','0','0','In condimentum.',29,20);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (21,'1','0','0','amet, risus.',30,21);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (22,'1','0','0','lacus. Etiam',31,22);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (23,'0','0','0','Cum sociis',32,23);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (24,'1','0','0','sed pede.',33,24);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (25,'1','0','0','mauris erat',34,25);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (26,'1','0','0','Donec tempor,',35,26);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (27,'0','0','0','Nulla dignissim.',36,27);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (28,'0','0','0','mattis velit',37,28);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (29,'1','0','0','nisi dictum',38,29);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (30,'0','0','0','diam. Sed',39,30);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (31,'1','0','0','elementum at,',40,31);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (32,'0','0','0','erat volutpat.',41,32);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (33,'1','0','0','Phasellus at',42,33);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (34,'0','0','0','interdum ligula',43,34);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (35,'0','0','0','ut quam',44,35);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (36,'1','0','0','neque tellus,',45,36);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (37,'1','0','0','sagittis semper.',46,37);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (38,'1','0','0','rhoncus. Proin',47,38);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (39,'1','0','0','Phasellus at',48,39);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (40,'1','0','0','eget tincidunt',49,40);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (41,'1','0','0','urna. Ut',50,41);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (42,'0','0','0','egestas. Fusce',51,42);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (43,'0','0','0','non massa',52,43);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (44,'0','0','0','Donec sollicitudin',53,44);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (45,'0','0','0','semper auctor.',54,45);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (46,'1','0','0','mi felis,',55,46);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (47,'0','0','0','Cum sociis',56,47);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (48,'0','0','0','neque non',57,48);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (49,'1','0','0','tempor diam',58,49);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (50,'0','0','0','nunc sit',59,50);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (51,'1','0','0','sit amet',60,51);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (52,'1','0','0','a tortor.',61,52);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (53,'0','0','0','sem. Nulla',62,53);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (54,'1','0','0','vitae, sodales',63,54);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (55,'0','0','0','tristique pharetra.',64,55);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (56,'0','0','0','ridiculus mus.',65,56);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (57,'0','0','0','luctus sit',66,57);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (58,'0','0','0','tincidunt dui',67,58);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (59,'0','0','0','urna. Nunc',68,59);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (60,'1','0','0','ac ipsum.',69,60);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (61,'0','0','0','Phasellus vitae',70,61);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (62,'1','0','0','libero. Integer',71,62);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (63,'0','0','0','aptent taciti',72,63);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (64,'1','0','0','Vivamus non',73,64);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (65,'0','0','0','Aliquam fringilla',74,65);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (66,'0','0','0','lobortis. Class',75,66);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (67,'0','0','0','ultrices iaculis',76,67);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (68,'0','0','0','Donec felis',77,68);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (69,'0','0','0','Nullam scelerisque',78,69);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (70,'0','0','0','scelerisque, lorem',79,70);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (71,'0','1','0','magna. Duis',80,71);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (72,'0','0','0','Phasellus libero',81,72);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (73,'1','0','0','mollis. Duis',82,73);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (74,'0','0','0','luctus et',83,74);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (75,'0','0','0','tellus justo',84,75);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (76,'1','0','0','dapibus gravida.',85,76);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (77,'1','0','0','nunc. Quisque',86,77);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (78,'1','0','0','eu sem.',87,78);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (79,'0','0','0','quis urna.',88,79);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (80,'1','0','1','sit amet',89,80);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (81,'1','0','0','eget nisi',90,81);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (82,'0','0','0','nibh. Aliquam',91,82);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (83,'0','0','0','magna a',92,83);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (84,'0','0','0','imperdiet non,',93,84);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (85,'0','0','0','dui quis',94,85);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (86,'1','0','0','eu, ultrices',95,86);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (87,'1','0','0','nisl. Quisque',96,87);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (88,'1','0','0','quis urna.',97,88);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (89,'0','0','0','luctus sit',98,89);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (90,'0','0','0','ligula. Aenean',99,90);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (91,'1','0','0','mi eleifend',100,91);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (92,'0','0','0','pharetra sed,',101,92);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (93,'1','0','0','accumsan laoreet',102,93);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (94,'1','0','0','ut nisi',103,94);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (95,'1','0','0','volutpat ornare,',104,95);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (96,'1','0','0','neque sed',105,96);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (97,'1','0','0','hymenaeos. Mauris',106,97);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (98,'0','0','0','sit amet',107,98);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (99,'0','0','0','eleifend nec,',108,99);
-INSERT INTO `CONVERSATION` (`id`,`isAnswered`,`isDeletedReceiver`,`isDeletedSender`,`subject`,`receiverId`,`senderId`) VALUES (100,'0','0','0','risus quis',109,100);
-
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (1,'2015-08-01 15:24:16','0','0','1','0','ac, feugiat non, lobortis quis, pede.',1);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (2,'2014-11-05 01:59:52','0','0','1','0','a felis ullamcorper viverra. Maecenas iaculis aliquet diam. Sed diam',2);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (3,'2014-03-27 12:16:25','0','0','0','0','adipiscing ligula. Aenean gravida nunc sed',3);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (4,'2015-03-15 08:59:14','0','0','1','0','turpis egestas. Aliquam fringilla cursus purus. Nullam scelerisque neque sed',4);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (5,'2014-01-03 09:40:00','0','0','1','0','eu tempor erat',5);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (6,'2014-12-07 20:36:28','0','0','0','1','amet, consectetuer adipiscing elit. Etiam laoreet, libero et tristique',6);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (7,'2014-07-01 12:32:12','0','0','0','1','eu dui.',7);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (8,'2015-04-05 06:44:42','0','0','0','1','mollis. Phasellus libero mauris, aliquam eu, accumsan sed,',8);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (9,'2015-07-21 12:54:14','0','0','1','1','tellus. Nunc lectus pede, ultrices',9);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (10,'2014-08-31 06:40:54','0','1','0','0','in sodales elit erat vitae risus. Duis',10);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (11,'2014-04-15 04:33:08','0','0','1','1','dictum ultricies ligula. Nullam',11);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (12,'2015-03-22 21:46:02','0','0','0','0','eget odio. Aliquam vulputate',12);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (13,'2014-10-18 01:18:49','0','0','0','0','pede et risus. Quisque libero lacus, varius et,',13);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (14,'2014-01-30 23:04:10','0','0','1','1','Aenean eget metus.',14);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (15,'2014-01-23 13:23:15','0','0','0','1','libero et tristique pellentesque, tellus sem mollis dui, in',15);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (16,'2015-09-07 19:00:13','0','0','0','1','et arcu imperdiet ullamcorper. Duis at',16);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (17,'2014-03-30 03:09:21','0','0','0','1','Suspendisse sagittis. Nullam vitae',17);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (18,'2015-08-11 00:39:33','0','0','0','1','lobortis quis,',18);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (19,'2015-04-02 05:31:51','0','0','1','1','urna. Nunc quis arcu',19);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (20,'2014-06-14 20:49:12','0','0','1','0','congue, elit sed consequat auctor, nunc nulla vulputate',20);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (21,'2015-03-10 13:59:54','0','0','0','0','massa rutrum magna. Cras convallis convallis dolor. Quisque tincidunt pede',21);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (22,'2015-05-02 19:25:18','0','0','1','1','a, dui. Cras pellentesque. Sed dictum. Proin eget',22);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (23,'2014-08-09 07:06:15','0','0','1','0','Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie',23);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (24,'2014-08-29 09:37:19','0','0','1','0','neque. Nullam nisl. Maecenas malesuada fringilla',24);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (25,'2014-12-08 19:45:15','0','0','0','0','dictum',25);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (26,'2013-11-15 13:08:32','0','0','1','0','eros. Nam consequat dolor vitae dolor. Donec fringilla. Donec feugiat',26);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (27,'2015-09-22 15:51:15','0','0','1','0','elit erat vitae risus. Duis a mi fringilla mi lacinia',27);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (28,'2015-03-27 22:06:36','0','0','1','1','sapien, cursus in, hendrerit',28);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (29,'2013-11-04 00:27:17','0','0','1','1','turpis egestas. Aliquam fringilla cursus purus. Nullam scelerisque',29);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (30,'2013-12-06 09:38:06','0','0','1','1','scelerisque neque. Nullam nisl. Maecenas malesuada fringilla est. Mauris',30);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (31,'2014-04-24 23:18:26','0','0','1','1','at augue id ante dictum',31);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (32,'2015-09-03 15:13:30','0','0','0','0','Donec sollicitudin adipiscing ligula. Aenean gravida nunc sed pede.',32);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (33,'2015-10-07 11:23:43','0','0','0','0','aliquam eu, accumsan sed, facilisis vitae, orci. Phasellus dapibus',33);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (34,'2015-08-29 19:47:17','0','0','0','1','Cum sociis natoque penatibus et magnis',34);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (35,'2014-06-25 18:00:15','0','0','1','1','pede. Cum sociis natoque penatibus et',35);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (36,'2014-03-01 10:25:47','0','0','1','0','molestie dapibus ligula. Aliquam',36);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (37,'2014-01-03 21:01:53','0','0','1','1','Donec nibh',37);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (38,'2014-01-30 17:06:59','0','0','0','1','magna. Phasellus dolor elit, pellentesque a, facilisis',38);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (39,'2015-08-26 10:54:53','0','0','0','0','a, facilisis non,',39);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (40,'2014-03-06 03:44:58','0','0','0','0','luctus. Curabitur egestas nunc sed',40);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (41,'2014-02-18 21:40:07','0','0','1','0','facilisis facilisis, magna tellus',41);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (42,'2015-05-30 19:43:21','0','0','1','0','varius. Nam porttitor scelerisque neque. Nullam nisl. Maecenas',42);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (43,'2014-04-24 18:49:53','0','0','0','1','nec luctus felis purus ac',43);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (44,'2014-02-03 17:43:54','0','0','1','1','ante. Nunc mauris sapien, cursus in, hendrerit consectetuer,',44);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (45,'2015-04-11 14:31:01','0','0','0','1','In nec orci. Donec nibh.',45);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (46,'2014-01-01 02:44:26','0','0','1','0','massa. Suspendisse eleifend. Cras sed leo. Cras',46);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (47,'2014-11-20 00:18:20','0','0','0','0','et',1);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (48,'2014-07-15 22:07:57','0','0','1','1','egestas a, dui. Cras pellentesque. Sed dictum.',1);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (49,'2014-03-02 02:30:04','0','0','0','0','vel quam dignissim pharetra. Nam',1);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (50,'2014-11-19 14:19:52','0','0','1','0','a, magna. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.',1);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (51,'2014-02-22 03:00:44','0','0','0','0','ridiculus mus. Proin vel nisl. Quisque fringilla euismod enim. Etiam',1);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (52,'2014-01-05 00:24:25','0','0','1','1','sapien. Cras dolor dolor,',1);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (53,'2015-01-01 20:02:49','0','0','0','1','urna. Nunc quis arcu vel quam',1);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (54,'2015-09-27 03:33:00','0','0','1','0','eros. Nam',1);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (55,'2015-05-20 05:04:51','0','0','1','0','odio, auctor vitae, aliquet nec, imperdiet nec,',1);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (56,'2013-12-25 05:42:09','0','0','0','0','neque pellentesque massa lobortis ultrices. Vivamus',1);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (57,'2014-06-12 00:31:58','0','0','1','0','nisl. Quisque fringilla euismod enim. Etiam',57);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (58,'2014-01-20 04:03:27','0','0','0','0','semper rutrum. Fusce dolor quam, elementum at,',58);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (59,'2014-11-27 23:45:32','0','0','0','1','Sed nulla ante, iaculis nec, eleifend non, dapibus rutrum, justo.',59);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (60,'2015-10-22 19:20:28','0','0','1','1','Integer tincidunt',60);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (61,'2015-02-19 17:00:58','0','0','0','0','congue, elit sed consequat auctor, nunc nulla vulputate',61);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (62,'2015-05-25 09:33:51','0','0','1','1','neque. Sed eget lacus. Mauris non dui',62);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (63,'2014-01-07 13:49:05','0','0','0','1','quis diam. Pellentesque habitant morbi tristique senectus et netus',63);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (64,'2014-10-22 06:56:07','0','0','1','0','Aliquam',64);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (65,'2014-02-22 15:02:16','0','0','0','1','ac, fermentum vel, mauris. Integer sem',65);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (66,'2013-12-20 04:28:41','0','0','0','1','et, magna. Praesent interdum ligula eu enim. Etiam',66);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (67,'2014-01-09 08:45:46','0','0','0','0','tempor bibendum. Donec felis orci, adipiscing',67);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (68,'2015-03-01 02:22:07','0','0','1','0','in felis. Nulla tempor augue ac ipsum. Phasellus vitae mauris',68);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (69,'2015-05-01 12:36:22','0','0','1','0','Vivamus non',69);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (70,'2015-01-09 14:07:56','0','0','0','0','ante blandit viverra.',70);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (71,'2013-12-05 10:01:56','0','0','1','0','gravida nunc sed pede.',71);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (72,'2013-12-03 12:46:03','0','0','1','0','id, ante. Nunc mauris sapien, cursus in, hendrerit consectetuer, cursus',72);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (73,'2015-04-24 20:39:52','0','0','1','0','cursus vestibulum. Mauris magna. Duis dignissim tempor arcu.',73);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (74,'2013-11-29 18:20:24','0','0','0','0','Integer mollis. Integer tincidunt aliquam arcu.',74);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (75,'2014-10-17 10:05:11','0','0','0','1','tortor. Nunc commodo auctor velit. Aliquam nisl.',75);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (76,'2015-05-04 07:29:51','0','0','1','0','placerat. Cras dictum ultricies ligula. Nullam enim.',76);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (77,'2014-10-24 16:07:42','0','0','0','1','sem semper erat,',77);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (78,'2014-12-02 02:17:53','0','0','1','1','orci. Ut semper pretium neque. Morbi quis urna. Nunc quis',78);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (79,'2014-07-02 05:33:29','0','0','1','1','non ante',79);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (80,'2015-04-13 05:58:15','0','0','1','0','eu eros. Nam',80);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (81,'2014-03-05 22:19:05','0','0','1','0','est arcu ac orci. Ut',81);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (82,'2015-01-16 08:24:48','0','0','0','0','euismod ac, fermentum',82);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (83,'2014-12-08 09:25:37','0','0','0','1','cursus et, magna. Praesent interdum ligula eu enim. Etiam imperdiet',83);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (84,'2014-02-18 04:50:00','0','0','0','0','tempor diam dictum sapien. Aenean',84);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (85,'2015-10-10 05:09:32','0','0','0','0','egestas rhoncus. Proin nisl sem, consequat nec, mollis vitae,',85);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (86,'2015-04-16 06:07:09','0','0','0','0','turpis non enim. Mauris quis turpis vitae purus gravida',86);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (87,'2015-10-30 07:40:27','0','0','1','0','sed, est. Nunc laoreet lectus quis',87);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (88,'2015-07-24 23:55:37','0','0','1','1','non sapien molestie orci tincidunt adipiscing.',88);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (89,'2014-01-09 09:47:12','0','0','1','0','Nunc sollicitudin commodo ipsum. Suspendisse non leo. Vivamus',89);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (90,'2014-04-13 04:24:37','0','0','0','1','in molestie',90);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (91,'2013-12-24 09:57:49','0','0','1','1','cursus et,',91);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (92,'2015-08-10 05:04:48','0','0','1','1','et tristique pellentesque, tellus sem mollis dui,',92);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (93,'2014-04-19 03:51:43','0','0','0','0','Duis volutpat',93);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (94,'2015-08-10 21:04:09','0','0','1','1','auctor velit.',94);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (95,'2015-07-06 00:39:12','0','0','1','0','vel, convallis in, cursus',95);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (96,'2015-10-03 16:12:16','0','0','1','1','aliquet nec, imperdiet nec, leo.',96);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (97,'2013-12-17 06:11:22','0','0','1','1','sit amet nulla. Donec non',97);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (98,'2014-11-28 15:51:36','0','0','0','1','hymenaeos. Mauris ut',98);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (99,'2015-01-26 23:31:14','0','0','1','1','vitae diam. Proin dolor. Nulla',99);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (100,'2015-02-17 03:29:55','0','0','1','1','Suspendisse aliquet molestie tellus. Aenean egestas',100);
-INSERT INTO `MESSAGE` (`id`,`dateTime`,`isDeletedReceiver`,`isDeletedSender`,`isFromSender`,`isRead`,`text`,`conversationId`) VALUES (101,'2014-11-13 04:50:09','0','0','0','0','NEW REPLY',2);
-
 
 INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1,'2014-09-01',1,8,1,5,1), (2,'2014-09-01',9,8,2,13,3), (3,'2014-09-01',16,8,3,11,4), (4,'2014-09-01',23,8,4,40,5);
 INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (5,'2014-09-02',44,8,1,19,8), (6,'2014-09-02',51,8,2,32,9), (7,'2014-09-02',37,8,3,4,7), (8,'2014-09-02',65,8,4,2,10);
@@ -1207,8 +1004,484 @@ INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`t
 INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (493,'2014-10-02',11,10,1,13,3), (494,'2014-10-02',3,10,2,5,1),    (495,'2014-10-02',46,10,3,19,8), (496,'2014-10-02',3,10,4,5,1);
 INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (497,'2014-10-03',11,10,1,13,3), (498,'2014-10-03',25,10,2,40,5),  (499,'2014-10-03',53,10,3,32,9), (500,'2014-10-03',3,10,4,5,1);
 
-INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (501,'2014-10-03',73,10,1,13,3);
 
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (501,'2014-10-06',1,8,1,5,1),   (502,'2014-10-06',9,8,2,13,3),  (503,'2014-10-06',16,8,3,11,4), (504,'2014-10-06',23,8,4,40,5);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (505,'2014-10-07',44,8,1,19,8), (506,'2014-10-07',51,8,2,32,9), (507,'2014-10-07',37,8,3,4,7),  (508,'2014-10-07',65,8,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (509,'2014-10-08',58,8,1,12,11),(510,'2014-10-08',1,8,2,5,1),   (511,'2014-10-08',16,8,3,11,4), (512,'2014-10-08',30,8,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (513,'2014-10-09',23,8,1,40,5), (514,'2014-10-09',9,8,2,13,3),  (515,'2014-10-09',16,8,3,11,4), (516,'2014-10-09',44,8,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (517,'2014-10-10',51,8,1,32,9), (518,'2014-10-10',1,8,2,5,1),   (519,'2014-10-10',9,8,3,13,3),  (520,'2014-10-10',16,8,4,11,4);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (521,'2014-10-06',44,1,1,19,8), (522,'2014-10-06',51,1,2,32,9), (523,'2014-10-06',65,1,3,2,10),  (524,'2014-10-06',30,1,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (525,'2014-10-07',1,1,1,5,1),   (526,'2014-10-07',16,1,2,11,4), (527,'2014-10-07',58,1,3,12,11), (528,'2014-10-07',37,1,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (529,'2014-10-08',16,1,1,11,4), (530,'2014-10-08',23,1,2,40,5), (531,'2014-10-08',9,1,3,13,3),   (532,'2014-10-08',44,1,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (533,'2014-10-09',51,1,1,32,9), (534,'2014-10-09',16,1,2,11,4), (535,'2014-10-09',1,1,3,5,1),    (536,'2014-10-09',9,1,4,13,3);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (537,'2014-10-10',23,1,1,40,5), (538,'2014-10-10',9,1,2,13,3),  (539,'2014-10-10',16,1,3,11,4),  (540,'2014-10-10',58,1,4,12,11);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (541,'2014-10-06',10,9,1,13,3),(542,'2014-10-06',2,9,2,5,1),   (543,'2014-10-06',38,9,3,4,7),  (544,'2014-10-06',66,9,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (545,'2014-10-07',17,9,1,11,4), (546,'2014-10-07',2,9,2,5,1),   (547,'2014-10-07',31,9,3,34,6), (548,'2014-10-07',52,9,4,32,9);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (549,'2014-10-08',45,9,1,19,8), (550,'2014-10-08',59,9,2,12,11),(551,'2014-10-08',2,9,3,5,1),   (552,'2014-10-08',2,9,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (553,'2014-10-09',17,9,1,11,4), (554,'2014-10-09',59,9,2,12,11),(555,'2014-10-09',24,9,3,40,5), (556,'2014-10-09',38,9,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (557,'2014-10-10',2,9,1,5,1),   (558,'2014-10-10',17,9,2,11,4), (559,'2014-10-10',45,9,3,19,8), (560,'2014-10-10',10,9,4,13,3);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (561,'2014-10-06',59,2,1,12,11),(562,'2014-10-06',17,2,2,11,4), (563,'2014-10-06',2,2,3,5,1),   (564,'2014-10-06',2,2,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (565,'2014-10-07',31,2,1,34,6), (566,'2014-10-07',10,2,2,13,3), (567,'2014-10-07',17,2,3,11,4), (568,'2014-10-07',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (569,'2014-10-08',10,2,1,13,3), (570,'2014-10-08',38,2,2,4,7),  (571,'2014-10-08',24,2,3,40,5), (572,'2014-10-08',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (573,'2014-10-09',2,2,1,5,1),   (574,'2014-10-09',66,2,2,2,10), (575,'2014-10-09',52,2,3,32,9), (576,'2014-10-09',17,2,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (577,'2014-10-10',17,2,1,11,4), (578,'2014-10-10',52,2,2,32,9), (579,'2014-10-10',2,2,3,5,1),   (580,'2014-10-10',38,2,4,4,7);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (581,'2014-10-06',18,10,1,11,4), (582,'2014-10-06',60,10,2,12,11), (583,'2014-10-06',32,10,3,34,6), (584,'2014-10-06',39,10,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (585,'2014-10-07',11,10,1,13,3), (586,'2014-10-07',46,10,2,19,8),  (587,'2014-10-07',3,10,3,5,1),   (588,'2014-10-07',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (589,'2014-10-08',3,10,1,5,1),   (590,'2014-10-08',67,10,2,2,10),  (591,'2014-10-08',60,10,3,12,11),(592,'2014-10-08',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (593,'2014-10-09',11,10,1,13,3), (594,'2014-10-09',3,10,2,5,1),    (595,'2014-10-09',46,10,3,19,8), (596,'2014-10-09',3,10,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (597,'2014-10-10',11,10,1,13,3), (598,'2014-10-10',25,10,2,40,5),  (599,'2014-10-10',53,10,3,32,9), (600,'2014-10-10',3,10,4,5,1);
+
+
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (601,'2014-10-13',1,8,1,5,1),   (602,'2014-10-13',9,8,2,13,3),  (603,'2014-10-13',16,8,3,11,4), (604,'2014-10-13',23,8,4,40,5);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (605,'2014-10-14',44,8,1,19,8), (606,'2014-10-14',51,8,2,32,9), (607,'2014-10-14',37,8,3,4,7),  (608,'2014-10-14',65,8,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (609,'2014-10-15',58,8,1,12,11),(610,'2014-10-15',1,8,2,5,1),   (611,'2014-10-15',16,8,3,11,4), (612,'2014-10-15',30,8,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (613,'2014-10-16',23,8,1,40,5), (614,'2014-10-16',9,8,2,13,3),  (615,'2014-10-16',16,8,3,11,4), (616,'2014-10-16',44,8,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (617,'2014-10-17',51,8,1,32,9), (618,'2014-10-17',1,8,2,5,1),   (619,'2014-10-17',9,8,3,13,3),  (620,'2014-10-17',16,8,4,11,4);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (621,'2014-10-13',44,1,1,19,8), (622,'2014-10-13',51,1,2,32,9), (623,'2014-10-13',65,1,3,2,10),  (624,'2014-10-13',30,1,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (625,'2014-10-14',1,1,1,5,1),   (626,'2014-10-14',16,1,2,11,4), (627,'2014-10-14',58,1,3,12,11), (628,'2014-10-14',37,1,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (629,'2014-10-15',16,1,1,11,4), (630,'2014-10-15',23,1,2,40,5), (631,'2014-10-15',9,1,3,13,3),   (632,'2014-10-15',44,1,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (633,'2014-10-16',51,1,1,32,9), (634,'2014-10-16',16,1,2,11,4), (635,'2014-10-16',1,1,3,5,1),    (636,'2014-10-16',9,1,4,13,3);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (637,'2014-10-17',23,1,1,40,5), (638,'2014-10-17',9,1,2,13,3),  (639,'2014-10-17',16,1,3,11,4),  (640,'2014-10-17',58,1,4,12,11);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (641,'2014-10-13',10,9,1,13,3),(642,'2014-10-13',2,9,2,5,1),   (643,'2014-10-13',38,9,3,4,7),  (644,'2014-10-13',66,9,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (645,'2014-10-14',17,9,1,11,4), (646,'2014-10-14',2,9,2,5,1),   (647,'2014-10-14',31,9,3,34,6), (648,'2014-10-14',52,9,4,32,9);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (649,'2014-10-15',45,9,1,19,8), (650,'2014-10-15',59,9,2,12,11),(651,'2014-10-15',2,9,3,5,1),   (652,'2014-10-15',2,9,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (653,'2014-10-16',17,9,1,11,4), (654,'2014-10-16',59,9,2,12,11),(655,'2014-10-16',24,9,3,40,5), (656,'2014-10-16',38,9,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (657,'2014-10-17',2,9,1,5,1),   (658,'2014-10-17',17,9,2,11,4), (659,'2014-10-17',45,9,3,19,8), (660,'2014-10-17',10,9,4,13,3);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (661,'2014-10-13',59,2,1,12,11),(662,'2014-10-13',17,2,2,11,4), (663,'2014-10-13',2,2,3,5,1),   (664,'2014-10-13',2,2,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (665,'2014-10-14',31,2,1,34,6), (666,'2014-10-14',10,2,2,13,3), (667,'2014-10-14',17,2,3,11,4), (668,'2014-10-14',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (669,'2014-10-15',10,2,1,13,3), (670,'2014-10-15',38,2,2,4,7),  (671,'2014-10-15',24,2,3,40,5), (672,'2014-10-15',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (673,'2014-10-16',2,2,1,5,1),   (674,'2014-10-16',66,2,2,2,10), (675,'2014-10-16',52,2,3,32,9), (676,'2014-10-16',17,2,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (677,'2014-10-17',17,2,1,11,4), (678,'2014-10-17',52,2,2,32,9), (679,'2014-10-17',2,2,3,5,1),   (680,'2014-10-17',38,2,4,4,7);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (681,'2014-10-13',18,10,1,11,4), (682,'2014-10-13',60,10,2,12,11), (683,'2014-10-13',32,10,3,34,6), (684,'2014-10-13',39,10,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (685,'2014-10-14',11,10,1,13,3), (686,'2014-10-14',46,10,2,19,8),  (687,'2014-10-14',3,10,3,5,1),   (688,'2014-10-14',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (689,'2014-10-15',3,10,1,5,1),   (690,'2014-10-15',67,10,2,2,10),  (691,'2014-10-15',60,10,3,12,11),(692,'2014-10-15',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (693,'2014-10-16',11,10,1,13,3), (694,'2014-10-16',3,10,2,5,1),    (695,'2014-10-16',46,10,3,19,8), (696,'2014-10-16',3,10,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (697,'2014-10-17',11,10,1,13,3), (698,'2014-10-17',25,10,2,40,5),  (699,'2014-10-17',53,10,3,32,9), (700,'2014-10-17',3,10,4,5,1);
+
+
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (701,'2014-10-20',1,8,1,5,1),   (702,'2014-10-20',9,8,2,13,3),  (703,'2014-10-20',16,8,3,11,4), (704,'2014-10-20',23,8,4,40,5);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (705,'2014-10-21',44,8,1,19,8), (706,'2014-10-21',51,8,2,32,9), (707,'2014-10-21',37,8,3,4,7),  (708,'2014-10-21',65,8,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (709,'2014-10-22',58,8,1,12,11),(710,'2014-10-22',1,8,2,5,1),   (711,'2014-10-22',16,8,3,11,4), (712,'2014-10-22',30,8,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (713,'2014-10-23',23,8,1,40,5), (714,'2014-10-23',9,8,2,13,3),  (715,'2014-10-23',16,8,3,11,4), (716,'2014-10-23',44,8,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (717,'2014-10-24',51,8,1,32,9), (718,'2014-10-24',1,8,2,5,1),   (719,'2014-10-24',9,8,3,13,3),  (720,'2014-10-24',16,8,4,11,4);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (721,'2014-10-20',44,1,1,19,8), (722,'2014-10-20',51,1,2,32,9), (723,'2014-10-20',65,1,3,2,10),  (724,'2014-10-20',30,1,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (725,'2014-10-21',1,1,1,5,1),   (726,'2014-10-21',16,1,2,11,4), (727,'2014-10-21',58,1,3,12,11), (728,'2014-10-21',37,1,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (729,'2014-10-22',16,1,1,11,4), (730,'2014-10-22',23,1,2,40,5), (731,'2014-10-22',9,1,3,13,3),   (732,'2014-10-22',44,1,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (733,'2014-10-23',51,1,1,32,9), (734,'2014-10-23',16,1,2,11,4), (735,'2014-10-23',1,1,3,5,1),    (736,'2014-10-23',9,1,4,13,3);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (737,'2014-10-24',23,1,1,40,5), (738,'2014-10-24',9,1,2,13,3),  (739,'2014-10-24',16,1,3,11,4),  (740,'2014-10-24',58,1,4,12,11);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (741,'2014-10-20',10,9,1,13,3),(742,'2014-10-20',2,9,2,5,1),   (743,'2014-10-20',38,9,3,4,7),  (744,'2014-10-20',66,9,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (745,'2014-10-21',17,9,1,11,4), (746,'2014-10-21',2,9,2,5,1),   (747,'2014-10-21',31,9,3,34,6), (748,'2014-10-21',52,9,4,32,9);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (749,'2014-10-22',45,9,1,19,8), (750,'2014-10-22',59,9,2,12,11),(751,'2014-10-22',2,9,3,5,1),   (752,'2014-10-22',2,9,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (753,'2014-10-23',17,9,1,11,4), (754,'2014-10-23',59,9,2,12,11),(755,'2014-10-23',24,9,3,40,5), (756,'2014-10-23',38,9,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (757,'2014-10-24',2,9,1,5,1),   (758,'2014-10-24',17,9,2,11,4), (759,'2014-10-24',45,9,3,19,8), (760,'2014-10-24',10,9,4,13,3);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (761,'2014-10-20',59,2,1,12,11),(762,'2014-10-20',17,2,2,11,4), (763,'2014-10-20',2,2,3,5,1),   (764,'2014-10-20',2,2,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (765,'2014-10-21',31,2,1,34,6), (766,'2014-10-21',10,2,2,13,3), (767,'2014-10-21',17,2,3,11,4), (768,'2014-10-21',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (769,'2014-10-22',10,2,1,13,3), (770,'2014-10-22',38,2,2,4,7),  (771,'2014-10-22',24,2,3,40,5), (772,'2014-10-22',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (773,'2014-10-23',2,2,1,5,1),   (774,'2014-10-23',66,2,2,2,10), (775,'2014-10-23',52,2,3,32,9), (776,'2014-10-23',17,2,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (777,'2014-10-24',17,2,1,11,4), (778,'2014-10-24',52,2,2,32,9), (779,'2014-10-24',2,2,3,5,1),   (780,'2014-10-24',38,2,4,4,7);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (781,'2014-10-20',18,10,1,11,4), (782,'2014-10-20',60,10,2,12,11), (783,'2014-10-20',32,10,3,34,6), (784,'2014-10-20',39,10,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (785,'2014-10-21',11,10,1,13,3), (786,'2014-10-21',46,10,2,19,8),  (787,'2014-10-21',3,10,3,5,1),   (788,'2014-10-21',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (789,'2014-10-22',3,10,1,5,1),   (790,'2014-10-22',67,10,2,2,10),  (791,'2014-10-22',60,10,3,12,11),(792,'2014-10-22',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (793,'2014-10-23',11,10,1,13,3), (794,'2014-10-23',3,10,2,5,1),    (795,'2014-10-23',46,10,3,19,8), (796,'2014-10-23',3,10,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (797,'2014-10-24',11,10,1,13,3), (798,'2014-10-24',25,10,2,40,5),  (799,'2014-10-24',53,10,3,32,9), (800,'2014-10-24',3,10,4,5,1);
+
+
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (801,'2014-10-27',1,8,1,5,1),   (802,'2014-10-27',9,8,2,13,3),  (803,'2014-10-27',16,8,3,11,4), (804,'2014-10-27',23,8,4,40,5);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (805,'2014-10-28',44,8,1,19,8), (806,'2014-10-28',51,8,2,32,9), (807,'2014-10-28',37,8,3,4,7),  (808,'2014-10-28',65,8,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (809,'2014-10-29',58,8,1,12,11),(810,'2014-10-29',1,8,2,5,1),   (811,'2014-10-29',16,8,3,11,4), (812,'2014-10-29',30,8,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (813,'2014-10-30',23,8,1,40,5), (814,'2014-10-30',9,8,2,13,3),  (815,'2014-10-30',16,8,3,11,4), (816,'2014-10-30',44,8,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (817,'2014-10-31',51,8,1,32,9), (818,'2014-10-31',1,8,2,5,1),   (819,'2014-10-31',9,8,3,13,3),  (820,'2014-10-31',16,8,4,11,4);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (821,'2014-10-27',44,1,1,19,8), (822,'2014-10-27',51,1,2,32,9), (823,'2014-10-27',65,1,3,2,10),  (824,'2014-10-27',30,1,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (825,'2014-10-28',1,1,1,5,1),   (826,'2014-10-28',16,1,2,11,4), (827,'2014-10-28',58,1,3,12,11), (828,'2014-10-28',37,1,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (829,'2014-10-29',16,1,1,11,4), (830,'2014-10-29',23,1,2,40,5), (831,'2014-10-29',9,1,3,13,3),   (832,'2014-10-29',44,1,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (833,'2014-10-30',51,1,1,32,9), (834,'2014-10-30',16,1,2,11,4), (835,'2014-10-30',1,1,3,5,1),    (836,'2014-10-30',9,1,4,13,3);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (837,'2014-10-31',23,1,1,40,5), (838,'2014-10-31',9,1,2,13,3),  (839,'2014-10-31',16,1,3,11,4),  (840,'2014-10-31',58,1,4,12,11);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (841,'2014-10-27',10,9,1,13,3),(842,'2014-10-27',2,9,2,5,1),   (843,'2014-10-27',38,9,3,4,7),  (844,'2014-10-27',66,9,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (845,'2014-10-28',17,9,1,11,4), (846,'2014-10-28',2,9,2,5,1),   (847,'2014-10-28',31,9,3,34,6), (848,'2014-10-28',52,9,4,32,9);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (849,'2014-10-29',45,9,1,19,8), (850,'2014-10-29',59,9,2,12,11),(851,'2014-10-29',2,9,3,5,1),   (852,'2014-10-29',2,9,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (853,'2014-10-30',17,9,1,11,4), (854,'2014-10-30',59,9,2,12,11),(855,'2014-10-30',24,9,3,40,5), (856,'2014-10-30',38,9,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (857,'2014-10-31',2,9,1,5,1),   (858,'2014-10-31',17,9,2,11,4), (859,'2014-10-31',45,9,3,19,8), (860,'2014-10-31',10,9,4,13,3);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (861,'2014-10-27',59,2,1,12,11),(862,'2014-10-27',17,2,2,11,4), (863,'2014-10-27',2,2,3,5,1),   (864,'2014-10-27',2,2,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (865,'2014-10-28',31,2,1,34,6), (866,'2014-10-28',10,2,2,13,3), (867,'2014-10-28',17,2,3,11,4), (868,'2014-10-28',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (869,'2014-10-29',10,2,1,13,3), (870,'2014-10-29',38,2,2,4,7),  (871,'2014-10-29',24,2,3,40,5), (872,'2014-10-29',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (873,'2014-10-30',2,2,1,5,1),   (874,'2014-10-30',66,2,2,2,10), (875,'2014-10-30',52,2,3,32,9), (876,'2014-10-30',17,2,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (877,'2014-10-31',17,2,1,11,4), (878,'2014-10-31',52,2,2,32,9), (879,'2014-10-31',2,2,3,5,1),   (880,'2014-10-31',38,2,4,4,7);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (881,'2014-10-27',18,10,1,11,4), (882,'2014-10-27',60,10,2,12,11), (883,'2014-10-27',32,10,3,34,6), (884,'2014-10-27',39,10,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (885,'2014-10-28',11,10,1,13,3), (886,'2014-10-28',46,10,2,19,8),  (887,'2014-10-28',3,10,3,5,1),   (888,'2014-10-28',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (889,'2014-10-29',3,10,1,5,1),   (890,'2014-10-29',67,10,2,2,10),  (891,'2014-10-29',60,10,3,12,11),(892,'2014-10-29',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (893,'2014-10-30',11,10,1,13,3), (894,'2014-10-30',3,10,2,5,1),    (895,'2014-10-30',46,10,3,19,8), (896,'2014-10-30',3,10,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (897,'2014-10-31',11,10,1,13,3), (898,'2014-10-31',25,10,2,40,5),  (899,'2014-10-31',53,10,3,32,9), (900,'2014-10-31',3,10,4,5,1);
+
+
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (901,'2014-11-03',1,8,1,5,1),   (902,'2014-11-03',9,8,2,13,3),  (903,'2014-11-03',16,8,3,11,4), (904,'2014-11-03',23,8,4,40,5);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (905,'2014-11-04',44,8,1,19,8), (906,'2014-11-04',51,8,2,32,9), (907,'2014-11-04',37,8,3,4,7),  (908,'2014-11-04',65,8,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (909,'2014-11-05',58,8,1,12,11),(910,'2014-11-05',1,8,2,5,1),   (911,'2014-11-05',16,8,3,11,4), (912,'2014-11-05',30,8,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (913,'2014-11-06',23,8,1,40,5), (914,'2014-11-06',9,8,2,13,3),  (915,'2014-11-06',16,8,3,11,4), (916,'2014-11-06',44,8,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (917,'2014-11-07',51,8,1,32,9), (918,'2014-11-07',1,8,2,5,1),   (919,'2014-11-07',9,8,3,13,3),  (920,'2014-11-07',16,8,4,11,4);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (921,'2014-11-03',44,1,1,19,8), (922,'2014-11-03',51,1,2,32,9), (923,'2014-11-03',65,1,3,2,10),  (924,'2014-11-03',30,1,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (925,'2014-11-04',1,1,1,5,1),   (926,'2014-11-04',16,1,2,11,4), (927,'2014-11-04',58,1,3,12,11), (928,'2014-11-04',37,1,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (929,'2014-11-05',16,1,1,11,4), (930,'2014-11-05',23,1,2,40,5), (931,'2014-11-05',9,1,3,13,3),   (932,'2014-11-05',44,1,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (933,'2014-11-06',51,1,1,32,9), (934,'2014-11-06',16,1,2,11,4), (935,'2014-11-06',1,1,3,5,1),    (936,'2014-11-06',9,1,4,13,3);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (937,'2014-11-07',23,1,1,40,5), (938,'2014-11-07',9,1,2,13,3),  (939,'2014-11-07',16,1,3,11,4),  (940,'2014-11-07',58,1,4,12,11);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (941,'2014-11-03',10,9,1,13,3), (942,'2014-11-03',2,9,2,5,1),   (943,'2014-11-03',38,9,3,4,7),  (944,'2014-11-03',66,9,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (945,'2014-11-04',17,9,1,11,4), (946,'2014-11-04',2,9,2,5,1),   (947,'2014-11-04',31,9,3,34,6), (948,'2014-11-04',52,9,4,32,9);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (949,'2014-11-05',45,9,1,19,8), (950,'2014-11-05',59,9,2,12,11),(951,'2014-11-05',2,9,3,5,1),   (952,'2014-11-05',2,9,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (953,'2014-11-06',17,9,1,11,4), (954,'2014-11-06',59,9,2,12,11),(955,'2014-11-06',24,9,3,40,5), (956,'2014-11-06',38,9,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (957,'2014-11-07',2,9,1,5,1),   (958,'2014-11-07',17,9,2,11,4), (959,'2014-11-07',45,9,3,19,8), (960,'2014-11-07',10,9,4,13,3);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (961,'2014-11-03',59,2,1,12,11),(962,'2014-11-03',17,2,2,11,4), (963,'2014-11-03',2,2,3,5,1),   (964,'2014-11-03',2,2,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (965,'2014-11-04',31,2,1,34,6), (966,'2014-11-04',10,2,2,13,3), (967,'2014-11-04',17,2,3,11,4), (968,'2014-11-04',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (969,'2014-11-05',10,2,1,13,3), (970,'2014-11-05',38,2,2,4,7),  (971,'2014-11-05',24,2,3,40,5), (972,'2014-11-05',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (973,'2014-11-06',2,2,1,5,1),   (974,'2014-11-06',66,2,2,2,10), (975,'2014-11-06',52,2,3,32,9), (976,'2014-11-06',17,2,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (977,'2014-11-07',17,2,1,11,4), (978,'2014-11-07',52,2,2,32,9), (979,'2014-11-07',2,2,3,5,1),   (980,'2014-11-07',38,2,4,4,7);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (981,'2014-11-03',18,10,1,11,4), (982,'2014-11-03',60,10,2,12,11), (983,'2014-11-03',32,10,3,34,6), (984,'2014-11-03',39,10,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (985,'2014-11-04',11,10,1,13,3), (986,'2014-11-04',46,10,2,19,8),  (987,'2014-11-04',3,10,3,5,1),   (988,'2014-11-04',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (989,'2014-11-05',3,10,1,5,1),   (990,'2014-11-05',67,10,2,2,10),  (991,'2014-11-05',60,10,3,12,11),(992,'2014-11-05',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (993,'2014-11-06',11,10,1,13,3), (994,'2014-11-06',3,10,2,5,1),    (995,'2014-11-06',46,10,3,19,8), (996,'2014-11-06',3,10,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (997,'2014-11-07',11,10,1,13,3), (998,'2014-11-07',25,10,2,40,5),  (999,'2014-11-07',53,10,3,32,9), (1000,'2014-11-07',3,10,4,5,1);
+
+
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1001,'2014-11-10',1,8,1,5,1),   (1002,'2014-11-10',9,8,2,13,3),  (1003,'2014-11-10',16,8,3,11,4), (1004,'2014-11-10',23,8,4,40,5);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1005,'2014-11-11',44,8,1,19,8), (1006,'2014-11-11',51,8,2,32,9), (1007,'2014-11-11',37,8,3,4,7),  (1008,'2014-11-11',65,8,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1009,'2014-11-12',58,8,1,12,11),(1010,'2014-11-12',1,8,2,5,1),   (1011,'2014-11-12',16,8,3,11,4), (1012,'2014-11-12',30,8,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1013,'2014-11-13',23,8,1,40,5), (1014,'2014-11-13',9,8,2,13,3),  (1015,'2014-11-13',16,8,3,11,4), (1016,'2014-11-13',44,8,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1017,'2014-11-14',51,8,1,32,9), (1018,'2014-11-14',1,8,2,5,1),   (1019,'2014-11-14',9,8,3,13,3),  (1020,'2014-11-14',16,8,4,11,4);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1021,'2014-11-10',44,1,1,19,8), (1022,'2014-11-10',51,1,2,32,9), (1023,'2014-11-10',65,1,3,2,10),  (1024,'2014-11-10',30,1,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1025,'2014-11-11',1,1,1,5,1),   (1026,'2014-11-11',16,1,2,11,4), (1027,'2014-11-11',58,1,3,12,11), (1028,'2014-11-11',37,1,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1029,'2014-11-12',16,1,1,11,4), (1030,'2014-11-12',23,1,2,40,5), (1031,'2014-11-12',9,1,3,13,3),   (1032,'2014-11-12',44,1,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1033,'2014-11-13',51,1,1,32,9), (1034,'2014-11-13',16,1,2,11,4), (1035,'2014-11-13',1,1,3,5,1),    (1036,'2014-11-13',9,1,4,13,3);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1037,'2014-11-14',23,1,1,40,5), (1038,'2014-11-14',9,1,2,13,3),  (1039,'2014-11-14',16,1,3,11,4),  (1040,'2014-11-14',58,1,4,12,11);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1041,'2014-11-10',10,9,1,13,3), (1042,'2014-11-10',2,9,2,5,1),   (1043,'2014-11-10',38,9,3,4,7),  (1044,'2014-11-10',66,9,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1045,'2014-11-11',17,9,1,11,4), (1046,'2014-11-11',2,9,2,5,1),   (1047,'2014-11-11',31,9,3,34,6), (1048,'2014-11-11',52,9,4,32,9);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1049,'2014-11-12',45,9,1,19,8), (1050,'2014-11-12',59,9,2,12,11),(1051,'2014-11-12',2,9,3,5,1),   (1052,'2014-11-12',2,9,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1053,'2014-11-13',17,9,1,11,4), (1054,'2014-11-13',59,9,2,12,11),(1055,'2014-11-13',24,9,3,40,5), (1056,'2014-11-13',38,9,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1057,'2014-11-14',2,9,1,5,1),   (1058,'2014-11-14',17,9,2,11,4), (1059,'2014-11-14',45,9,3,19,8), (1060,'2014-11-14',10,9,4,13,3);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1061,'2014-11-10',59,2,1,12,11),(1062,'2014-11-10',17,2,2,11,4), (1063,'2014-11-10',2,2,3,5,1),   (1064,'2014-11-10',2,2,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1065,'2014-11-11',31,2,1,34,6), (1066,'2014-11-11',10,2,2,13,3), (1067,'2014-11-11',17,2,3,11,4), (1068,'2014-11-11',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1069,'2014-11-12',10,2,1,13,3), (1070,'2014-11-12',38,2,2,4,7),  (1071,'2014-11-12',24,2,3,40,5), (1072,'2014-11-12',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1073,'2014-11-13',2,2,1,5,1),   (1074,'2014-11-13',66,2,2,2,10), (1075,'2014-11-13',52,2,3,32,9), (1076,'2014-11-13',17,2,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1077,'2014-11-14',17,2,1,11,4), (1078,'2014-11-14',52,2,2,32,9), (1079,'2014-11-14',2,2,3,5,1),   (1080,'2014-11-14',38,2,4,4,7);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1081,'2014-11-10',18,10,1,11,4), (1082,'2014-11-10',60,10,2,12,11), (1083,'2014-11-10',32,10,3,34,6), (1084,'2014-11-10',39,10,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1085,'2014-11-11',11,10,1,13,3), (1086,'2014-11-11',46,10,2,19,8),  (1087,'2014-11-11',3,10,3,5,1),   (1088,'2014-11-11',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1089,'2014-11-12',3,10,1,5,1),   (1090,'2014-11-12',67,10,2,2,10),  (1091,'2014-11-12',60,10,3,12,11),(1092,'2014-11-12',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1093,'2014-11-13',11,10,1,13,3), (1094,'2014-11-13',3,10,2,5,1),    (1095,'2014-11-13',46,10,3,19,8), (1096,'2014-11-13',3,10,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1097,'2014-11-14',11,10,1,13,3), (1098,'2014-11-14',25,10,2,40,5),  (1099,'2014-11-14',53,10,3,32,9), (1100,'2014-11-14',3,10,4,5,1);
+
+
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1101,'2014-11-17',1,8,1,5,1),   (1102,'2014-11-17',9,8,2,13,3),  (1103,'2014-11-17',16,8,3,11,4), (1104,'2014-11-17',23,8,4,40,5);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1105,'2014-11-18',44,8,1,19,8), (1106,'2014-11-18',51,8,2,32,9), (1107,'2014-11-18',37,8,3,4,7),  (1108,'2014-11-18',65,8,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1109,'2014-11-19',58,8,1,12,11),(1110,'2014-11-19',1,8,2,5,1),   (1111,'2014-11-19',16,8,3,11,4), (1112,'2014-11-19',30,8,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1113,'2014-11-20',23,8,1,40,5), (1114,'2014-11-20',9,8,2,13,3),  (1115,'2014-11-20',16,8,3,11,4), (1116,'2014-11-20',44,8,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1117,'2014-11-21',51,8,1,32,9), (1118,'2014-11-21',1,8,2,5,1),   (1119,'2014-11-21',9,8,3,13,3),  (1120,'2014-11-21',16,8,4,11,4);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1121,'2014-11-17',44,1,1,19,8), (1122,'2014-11-17',51,1,2,32,9), (1123,'2014-11-17',65,1,3,2,10),  (1124,'2014-11-17',30,1,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1125,'2014-11-18',1,1,1,5,1),   (1126,'2014-11-18',16,1,2,11,4), (1127,'2014-11-18',58,1,3,12,11), (1128,'2014-11-18',37,1,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1129,'2014-11-19',16,1,1,11,4), (1130,'2014-11-19',23,1,2,40,5), (1131,'2014-11-19',9,1,3,13,3),   (1132,'2014-11-19',44,1,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1133,'2014-11-20',51,1,1,32,9), (1134,'2014-11-20',16,1,2,11,4), (1135,'2014-11-20',1,1,3,5,1),    (1136,'2014-11-20',9,1,4,13,3);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1137,'2014-11-21',23,1,1,40,5), (1138,'2014-11-21',9,1,2,13,3),  (1139,'2014-11-21',16,1,3,11,4),  (1140,'2014-11-21',58,1,4,12,11);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1141,'2014-11-17',10,9,1,13,3), (1142,'2014-11-17',2,9,2,5,1),   (1143,'2014-11-17',38,9,3,4,7),  (1144,'2014-11-17',66,9,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1145,'2014-11-18',17,9,1,11,4), (1146,'2014-11-18',2,9,2,5,1),   (1147,'2014-11-18',31,9,3,34,6), (1148,'2014-11-18',52,9,4,32,9);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1149,'2014-11-19',45,9,1,19,8), (1150,'2014-11-19',59,9,2,12,11),(1151,'2014-11-19',2,9,3,5,1),   (1152,'2014-11-19',2,9,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1153,'2014-11-20',17,9,1,11,4), (1154,'2014-11-20',59,9,2,12,11),(1155,'2014-11-20',24,9,3,40,5), (1156,'2014-11-20',38,9,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1157,'2014-11-21',2,9,1,5,1),   (1158,'2014-11-21',17,9,2,11,4), (1159,'2014-11-21',45,9,3,19,8), (1160,'2014-11-21',10,9,4,13,3);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1161,'2014-11-17',59,2,1,12,11),(1162,'2014-11-17',17,2,2,11,4), (1163,'2014-11-17',2,2,3,5,1),   (1164,'2014-11-17',2,2,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1165,'2014-11-18',31,2,1,34,6), (1166,'2014-11-18',10,2,2,13,3), (1167,'2014-11-18',17,2,3,11,4), (1168,'2014-11-18',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1169,'2014-11-19',10,2,1,13,3), (1170,'2014-11-19',38,2,2,4,7),  (1171,'2014-11-19',24,2,3,40,5), (1172,'2014-11-19',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1173,'2014-11-20',2,2,1,5,1),   (1174,'2014-11-20',66,2,2,2,10), (1175,'2014-11-20',52,2,3,32,9), (1176,'2014-11-20',17,2,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1177,'2014-11-21',17,2,1,11,4), (1178,'2014-11-21',52,2,2,32,9), (1179,'2014-11-21',2,2,3,5,1),   (1180,'2014-11-21',38,2,4,4,7);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1181,'2014-11-17',18,10,1,11,4), (1182,'2014-11-17',60,10,2,12,11), (1183,'2014-11-17',32,10,3,34,6), (1184,'2014-11-17',39,10,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1185,'2014-11-18',11,10,1,13,3), (1186,'2014-11-18',46,10,2,19,8),  (1187,'2014-11-18',3,10,3,5,1),   (1188,'2014-11-18',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1189,'2014-11-19',3,10,1,5,1),   (1190,'2014-11-19',67,10,2,2,10),  (1191,'2014-11-19',60,10,3,12,11),(1192,'2014-11-19',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1193,'2014-11-20',11,10,1,13,3), (1194,'2014-11-20',3,10,2,5,1),    (1195,'2014-11-20',46,10,3,19,8), (1196,'2014-11-20',3,10,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1197,'2014-11-21',11,10,1,13,3), (1198,'2014-11-21',25,10,2,40,5),  (1199,'2014-11-21',53,10,3,32,9), (1200,'2014-11-21',3,10,4,5,1);
+
+
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1201,'2014-11-24',1,8,1,5,1),   (1202,'2014-11-24',9,8,2,13,3),  (1203,'2014-11-24',16,8,3,11,4), (1204,'2014-11-24',23,8,4,40,5);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1205,'2014-11-25',44,8,1,19,8), (1206,'2014-11-25',51,8,2,32,9), (1207,'2014-11-25',37,8,3,4,7),  (1208,'2014-11-25',65,8,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1209,'2014-11-26',58,8,1,12,11),(1210,'2014-11-26',1,8,2,5,1),   (1211,'2014-11-26',16,8,3,11,4), (1212,'2014-11-26',30,8,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1213,'2014-11-27',23,8,1,40,5), (1214,'2014-11-27',9,8,2,13,3),  (1215,'2014-11-27',16,8,3,11,4), (1216,'2014-11-27',44,8,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1217,'2014-11-28',51,8,1,32,9), (1218,'2014-11-28',1,8,2,5,1),   (1219,'2014-11-28',9,8,3,13,3),  (1220,'2014-11-28',16,8,4,11,4);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1221,'2014-11-24',44,1,1,19,8), (1222,'2014-11-24',51,1,2,32,9), (1223,'2014-11-24',65,1,3,2,10),  (1224,'2014-11-24',30,1,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1225,'2014-11-25',1,1,1,5,1),   (1226,'2014-11-25',16,1,2,11,4), (1227,'2014-11-25',58,1,3,12,11), (1228,'2014-11-25',37,1,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1229,'2014-11-26',16,1,1,11,4), (1230,'2014-11-26',23,1,2,40,5), (1231,'2014-11-26',9,1,3,13,3),   (1232,'2014-11-26',44,1,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1233,'2014-11-27',51,1,1,32,9), (1234,'2014-11-27',16,1,2,11,4), (1235,'2014-11-27',1,1,3,5,1),    (1236,'2014-11-27',9,1,4,13,3);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1237,'2014-11-28',23,1,1,40,5), (1238,'2014-11-28',9,1,2,13,3),  (1239,'2014-11-28',16,1,3,11,4),  (1240,'2014-11-28',58,1,4,12,11);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1241,'2014-11-24',10,9,1,13,3), (1242,'2014-11-24',2,9,2,5,1),   (1243,'2014-11-24',38,9,3,4,7),  (1244,'2014-11-24',66,9,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1245,'2014-11-25',17,9,1,11,4), (1246,'2014-11-25',2,9,2,5,1),   (1247,'2014-11-25',31,9,3,34,6), (1248,'2014-11-25',52,9,4,32,9);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1249,'2014-11-26',45,9,1,19,8), (1250,'2014-11-26',59,9,2,12,11),(1251,'2014-11-26',2,9,3,5,1),   (1252,'2014-11-26',2,9,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1253,'2014-11-27',17,9,1,11,4), (1254,'2014-11-27',59,9,2,12,11),(1255,'2014-11-27',24,9,3,40,5), (1256,'2014-11-27',38,9,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1257,'2014-11-28',2,9,1,5,1),   (1258,'2014-11-28',17,9,2,11,4), (1259,'2014-11-28',45,9,3,19,8), (1260,'2014-11-28',10,9,4,13,3);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1261,'2014-11-24',59,2,1,12,11),(1262,'2014-11-24',17,2,2,11,4), (1263,'2014-11-24',2,2,3,5,1),   (1264,'2014-11-24',2,2,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1265,'2014-11-25',31,2,1,34,6), (1266,'2014-11-25',10,2,2,13,3), (1267,'2014-11-25',17,2,3,11,4), (1268,'2014-11-25',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1269,'2014-11-26',10,2,1,13,3), (1270,'2014-11-26',38,2,2,4,7),  (1271,'2014-11-26',24,2,3,40,5), (1272,'2014-11-26',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1273,'2014-11-27',2,2,1,5,1),   (1274,'2014-11-27',66,2,2,2,10), (1275,'2014-11-27',52,2,3,32,9), (1276,'2014-11-27',17,2,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1277,'2014-11-28',17,2,1,11,4), (1278,'2014-11-28',52,2,2,32,9), (1279,'2014-11-28',2,2,3,5,1),   (1280,'2014-11-28',38,2,4,4,7);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1281,'2014-11-24',18,10,1,11,4), (1282,'2014-11-24',60,10,2,12,11), (1283,'2014-11-24',32,10,3,34,6), (1284,'2014-11-24',39,10,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1285,'2014-11-25',11,10,1,13,3), (1286,'2014-11-25',46,10,2,19,8),  (1287,'2014-11-25',3,10,3,5,1),   (1288,'2014-11-25',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1289,'2014-11-26',3,10,1,5,1),   (1290,'2014-11-26',67,10,2,2,10),  (1291,'2014-11-26',60,10,3,12,11),(1292,'2014-11-26',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1293,'2014-11-27',11,10,1,13,3), (1294,'2014-11-27',3,10,2,5,1),    (1295,'2014-11-27',46,10,3,19,8), (1296,'2014-11-27',3,10,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1297,'2014-11-28',11,10,1,13,3), (1298,'2014-11-28',25,10,2,40,5),  (1299,'2014-11-28',53,10,3,32,9), (1300,'2014-11-28',3,10,4,5,1);
+
+
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1301,'2014-12-01',1,8,1,5,1),   (1302,'2014-12-01',9,8,2,13,3),  (1303,'2014-12-01',16,8,3,11,4), (1304,'2014-12-01',23,8,4,40,5);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1305,'2014-12-02',44,8,1,19,8), (1306,'2014-12-02',51,8,2,32,9), (1307,'2014-12-02',37,8,3,4,7),  (1308,'2014-12-02',65,8,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1309,'2014-12-03',58,8,1,12,11),(1310,'2014-12-03',1,8,2,5,1),   (1311,'2014-12-03',16,8,3,11,4), (1312,'2014-12-03',30,8,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1313,'2014-12-04',23,8,1,40,5), (1314,'2014-12-04',9,8,2,13,3),  (1315,'2014-12-04',16,8,3,11,4), (1316,'2014-12-04',44,8,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1317,'2014-12-05',51,8,1,32,9), (1318,'2014-12-05',1,8,2,5,1),   (1319,'2014-12-05',9,8,3,13,3),  (1320,'2014-12-05',16,8,4,11,4);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1321,'2014-12-01',44,1,1,19,8), (1322,'2014-12-01',51,1,2,32,9), (1323,'2014-12-01',65,1,3,2,10),  (1324,'2014-12-01',30,1,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1325,'2014-12-02',1,1,1,5,1),   (1326,'2014-12-02',16,1,2,11,4), (1327,'2014-12-02',58,1,3,12,11), (1328,'2014-12-02',37,1,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1329,'2014-12-03',16,1,1,11,4), (1330,'2014-12-03',23,1,2,40,5), (1331,'2014-12-03',9,1,3,13,3),   (1332,'2014-12-03',44,1,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1333,'2014-12-04',51,1,1,32,9), (1334,'2014-12-04',16,1,2,11,4), (1335,'2014-12-04',1,1,3,5,1),    (1336,'2014-12-04',9,1,4,13,3);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1337,'2014-12-05',23,1,1,40,5), (1338,'2014-12-05',9,1,2,13,3),  (1339,'2014-12-05',16,1,3,11,4),  (1340,'2014-12-05',58,1,4,12,11);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1341,'2014-12-01',10,9,1,13,3), (1342,'2014-12-01',2,9,2,5,1),   (1343,'2014-12-01',38,9,3,4,7),  (1344,'2014-12-01',66,9,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1345,'2014-12-02',17,9,1,11,4), (1346,'2014-12-02',2,9,2,5,1),   (1347,'2014-12-02',31,9,3,34,6), (1348,'2014-12-02',52,9,4,32,9);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1349,'2014-12-03',45,9,1,19,8), (1350,'2014-12-03',59,9,2,12,11),(1351,'2014-12-03',2,9,3,5,1),   (1352,'2014-12-03',2,9,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1353,'2014-12-04',17,9,1,11,4), (1354,'2014-12-04',59,9,2,12,11),(1355,'2014-12-04',24,9,3,40,5), (1356,'2014-12-04',38,9,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1357,'2014-12-05',2,9,1,5,1),   (1358,'2014-12-05',17,9,2,11,4), (1359,'2014-12-05',45,9,3,19,8), (1360,'2014-12-05',10,9,4,13,3);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1361,'2014-12-01',59,2,1,12,11),(1362,'2014-12-01',17,2,2,11,4), (1363,'2014-12-01',2,2,3,5,1),   (1364,'2014-12-01',2,2,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1365,'2014-12-02',31,2,1,34,6), (1366,'2014-12-02',10,2,2,13,3), (1367,'2014-12-02',17,2,3,11,4), (1368,'2014-12-02',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1369,'2014-12-03',10,2,1,13,3), (1370,'2014-12-03',38,2,2,4,7),  (1371,'2014-12-03',24,2,3,40,5), (1372,'2014-12-03',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1373,'2014-12-04',2,2,1,5,1),   (1374,'2014-12-04',66,2,2,2,10), (1375,'2014-12-04',52,2,3,32,9), (1376,'2014-12-04',17,2,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1377,'2014-12-05',17,2,1,11,4), (1378,'2014-12-05',52,2,2,32,9), (1379,'2014-12-05',2,2,3,5,1),   (1380,'2014-12-05',38,2,4,4,7);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1381,'2014-12-01',18,10,1,11,4), (1382,'2014-12-01',60,10,2,12,11), (1383,'2014-12-01',32,10,3,34,6), (1384,'2014-12-01',39,10,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1385,'2014-12-02',11,10,1,13,3), (1386,'2014-12-02',46,10,2,19,8),  (1387,'2014-12-02',3,10,3,5,1),   (1388,'2014-12-02',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1389,'2014-12-03',3,10,1,5,1),   (1390,'2014-12-03',67,10,2,2,10),  (1391,'2014-12-03',60,10,3,12,11),(1392,'2014-12-03',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1393,'2014-12-04',11,10,1,13,3), (1394,'2014-12-04',3,10,2,5,1),    (1395,'2014-12-04',46,10,3,19,8), (1396,'2014-12-04',3,10,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1397,'2014-12-05',11,10,1,13,3), (1398,'2014-12-05',25,10,2,40,5),  (1399,'2014-12-05',53,10,3,32,9), (1400,'2014-12-05',3,10,4,5,1);
+
+
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1401,'2014-12-08',1,8,1,5,1),   (1402,'2014-12-08',9,8,2,13,3),  (1403,'2014-12-08',16,8,3,11,4), (1404,'2014-12-08',23,8,4,40,5);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1405,'2014-12-09',44,8,1,19,8), (1406,'2014-12-09',51,8,2,32,9), (1407,'2014-12-09',37,8,3,4,7),  (1408,'2014-12-09',65,8,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1409,'2014-12-10',58,8,1,12,11),(1410,'2014-12-10',1,8,2,5,1),   (1411,'2014-12-10',16,8,3,11,4), (1412,'2014-12-10',30,8,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1413,'2014-12-11',23,8,1,40,5), (1414,'2014-12-11',9,8,2,13,3),  (1415,'2014-12-11',16,8,3,11,4), (1416,'2014-12-11',44,8,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1417,'2014-12-12',51,8,1,32,9), (1418,'2014-12-12',1,8,2,5,1),   (1419,'2014-12-12',9,8,3,13,3),  (1420,'2014-12-12',16,8,4,11,4);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1421,'2014-12-08',44,1,1,19,8), (1422,'2014-12-08',51,1,2,32,9), (1423,'2014-12-08',65,1,3,2,10),  (1424,'2014-12-08',30,1,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1425,'2014-12-09',1,1,1,5,1),   (1426,'2014-12-09',16,1,2,11,4), (1427,'2014-12-09',58,1,3,12,11), (1428,'2014-12-09',37,1,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1429,'2014-12-10',16,1,1,11,4), (1430,'2014-12-10',23,1,2,40,5), (1431,'2014-12-10',9,1,3,13,3),   (1432,'2014-12-10',44,1,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1433,'2014-12-11',51,1,1,32,9), (1434,'2014-12-11',16,1,2,11,4), (1435,'2014-12-11',1,1,3,5,1),    (1436,'2014-12-11',9,1,4,13,3);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1437,'2014-12-12',23,1,1,40,5), (1438,'2014-12-12',9,1,2,13,3),  (1439,'2014-12-12',16,1,3,11,4),  (1440,'2014-12-12',58,1,4,12,11);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1441,'2014-12-08',10,9,1,13,3), (1442,'2014-12-08',2,9,2,5,1),   (1443,'2014-12-08',38,9,3,4,7),  (1444,'2014-12-08',66,9,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1445,'2014-12-09',17,9,1,11,4), (1446,'2014-12-09',2,9,2,5,1),   (1447,'2014-12-09',31,9,3,34,6), (1448,'2014-12-09',52,9,4,32,9);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1449,'2014-12-10',45,9,1,19,8), (1450,'2014-12-10',59,9,2,12,11),(1451,'2014-12-10',2,9,3,5,1),   (1452,'2014-12-10',2,9,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1453,'2014-12-11',17,9,1,11,4), (1454,'2014-12-11',59,9,2,12,11),(1455,'2014-12-11',24,9,3,40,5), (1456,'2014-12-11',38,9,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1457,'2014-12-12',2,9,1,5,1),   (1458,'2014-12-12',17,9,2,11,4), (1459,'2014-12-12',45,9,3,19,8), (1460,'2014-12-12',10,9,4,13,3);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1461,'2014-12-08',59,2,1,12,11),(1462,'2014-12-08',17,2,2,11,4), (1463,'2014-12-08',2,2,3,5,1),   (1464,'2014-12-08',2,2,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1465,'2014-12-09',31,2,1,34,6), (1466,'2014-12-09',10,2,2,13,3), (1467,'2014-12-09',17,2,3,11,4), (1468,'2014-12-09',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1469,'2014-12-10',10,2,1,13,3), (1470,'2014-12-10',38,2,2,4,7),  (1471,'2014-12-10',24,2,3,40,5), (1472,'2014-12-10',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1473,'2014-12-11',2,2,1,5,1),   (1474,'2014-12-11',66,2,2,2,10), (1475,'2014-12-11',52,2,3,32,9), (1476,'2014-12-11',17,2,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1477,'2014-12-12',17,2,1,11,4), (1478,'2014-12-12',52,2,2,32,9), (1479,'2014-12-12',2,2,3,5,1),   (1480,'2014-12-12',38,2,4,4,7);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1481,'2014-12-08',18,10,1,11,4), (1482,'2014-12-08',60,10,2,12,11), (1483,'2014-12-08',32,10,3,34,6), (1484,'2014-12-08',39,10,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1485,'2014-12-09',11,10,1,13,3), (1486,'2014-12-09',46,10,2,19,8),  (1487,'2014-12-09',3,10,3,5,1),   (1488,'2014-12-09',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1489,'2014-12-10',3,10,1,5,1),   (1490,'2014-12-10',67,10,2,2,10),  (1491,'2014-12-10',60,10,3,12,11),(1492,'2014-12-10',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1493,'2014-12-11',11,10,1,13,3), (1494,'2014-12-11',3,10,2,5,1),    (1495,'2014-12-11',46,10,3,19,8), (1496,'2014-12-11',3,10,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1497,'2014-12-12',11,10,1,13,3), (1498,'2014-12-12',25,10,2,40,5),  (1499,'2014-12-12',53,10,3,32,9), (1500,'2014-12-12',3,10,4,5,1);
+
+
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1501,'2014-12-15',1,8,1,5,1),   (1502,'2014-12-15',9,8,2,13,3),  (1503,'2014-12-15',16,8,3,11,4), (1504,'2014-12-15',23,8,4,40,5);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1505,'2014-12-16',44,8,1,19,8), (1506,'2014-12-16',51,8,2,32,9), (1507,'2014-12-16',37,8,3,4,7),  (1508,'2014-12-16',65,8,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1509,'2014-12-17',58,8,1,12,11),(1510,'2014-12-17',1,8,2,5,1),   (1511,'2014-12-17',16,8,3,11,4), (1512,'2014-12-17',30,8,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1513,'2014-12-18',23,8,1,40,5), (1514,'2014-12-18',9,8,2,13,3),  (1515,'2014-12-18',16,8,3,11,4), (1516,'2014-12-18',44,8,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1517,'2014-12-19',51,8,1,32,9), (1518,'2014-12-19',1,8,2,5,1),   (1519,'2014-12-19',9,8,3,13,3),  (1520,'2014-12-19',16,8,4,11,4);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1521,'2014-12-15',44,1,1,19,8), (1522,'2014-12-15',51,1,2,32,9), (1523,'2014-12-15',65,1,3,2,10),  (1524,'2014-12-15',30,1,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1525,'2014-12-16',1,1,1,5,1),   (1526,'2014-12-16',16,1,2,11,4), (1527,'2014-12-16',58,1,3,12,11), (1528,'2014-12-16',37,1,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1529,'2014-12-17',16,1,1,11,4), (1530,'2014-12-17',23,1,2,40,5), (1531,'2014-12-17',9,1,3,13,3),   (1532,'2014-12-17',44,1,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1533,'2014-12-18',51,1,1,32,9), (1534,'2014-12-18',16,1,2,11,4), (1535,'2014-12-18',1,1,3,5,1),    (1536,'2014-12-18',9,1,4,13,3);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1537,'2014-12-19',23,1,1,40,5), (1538,'2014-12-19',9,1,2,13,3),  (1539,'2014-12-19',16,1,3,11,4),  (1540,'2014-12-19',58,1,4,12,11);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1541,'2014-12-15',10,9,1,13,3), (1542,'2014-12-15',2,9,2,5,1),   (1543,'2014-12-15',38,9,3,4,7),  (1544,'2014-12-15',66,9,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1545,'2014-12-16',17,9,1,11,4), (1546,'2014-12-16',2,9,2,5,1),   (1547,'2014-12-16',31,9,3,34,6), (1548,'2014-12-16',52,9,4,32,9);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1549,'2014-12-17',45,9,1,19,8), (1550,'2014-12-17',59,9,2,12,11),(1551,'2014-12-17',2,9,3,5,1),   (1552,'2014-12-17',2,9,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1553,'2014-12-18',17,9,1,11,4), (1554,'2014-12-18',59,9,2,12,11),(1555,'2014-12-18',24,9,3,40,5), (1556,'2014-12-18',38,9,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1557,'2014-12-19',2,9,1,5,1),   (1558,'2014-12-19',17,9,2,11,4), (1559,'2014-12-19',45,9,3,19,8), (1560,'2014-12-19',10,9,4,13,3);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1561,'2014-12-15',59,2,1,12,11),(1562,'2014-12-15',17,2,2,11,4), (1563,'2014-12-15',2,2,3,5,1),   (1564,'2014-12-15',2,2,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1565,'2014-12-16',31,2,1,34,6), (1566,'2014-12-16',10,2,2,13,3), (1567,'2014-12-16',17,2,3,11,4), (1568,'2014-12-16',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1569,'2014-12-17',10,2,1,13,3), (1570,'2014-12-17',38,2,2,4,7),  (1571,'2014-12-17',24,2,3,40,5), (1572,'2014-12-17',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1573,'2014-12-18',2,2,1,5,1),   (1574,'2014-12-18',66,2,2,2,10), (1575,'2014-12-18',52,2,3,32,9), (1576,'2014-12-18',17,2,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1577,'2014-12-19',17,2,1,11,4), (1578,'2014-12-19',52,2,2,32,9), (1579,'2014-12-19',2,2,3,5,1),   (1580,'2014-12-19',38,2,4,4,7);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1581,'2014-12-15',18,10,1,11,4), (1582,'2014-12-15',60,10,2,12,11), (1583,'2014-12-15',32,10,3,34,6), (1584,'2014-12-15',39,10,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1585,'2014-12-16',11,10,1,13,3), (1586,'2014-12-16',46,10,2,19,8),  (1587,'2014-12-16',3,10,3,5,1),   (1588,'2014-12-16',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1589,'2014-12-17',3,10,1,5,1),   (1590,'2014-12-17',67,10,2,2,10),  (1591,'2014-12-17',60,10,3,12,11),(1592,'2014-12-17',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1593,'2014-12-18',11,10,1,13,3), (1594,'2014-12-18',3,10,2,5,1),    (1595,'2014-12-18',46,10,3,19,8), (1596,'2014-12-18',3,10,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1597,'2014-12-19',11,10,1,13,3), (1598,'2014-12-19',25,10,2,40,5),  (1599,'2014-12-19',53,10,3,32,9), (1600,'2014-12-19',3,10,4,5,1);
+
+
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1601,'2014-12-22',1,8,1,5,1),   (1602,'2014-12-22',9,8,2,13,3),  (1603,'2014-12-22',16,8,3,11,4), (1604,'2014-12-22',23,8,4,40,5);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1605,'2014-12-23',44,8,1,19,8), (1606,'2014-12-23',51,8,2,32,9), (1607,'2014-12-23',37,8,3,4,7),  (1608,'2014-12-23',65,8,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1609,'2014-12-24',58,8,1,12,11),(1610,'2014-12-24',1,8,2,5,1),   (1611,'2014-12-24',16,8,3,11,4), (1612,'2014-12-24',30,8,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1613,'2014-12-25',23,8,1,40,5), (1614,'2014-12-25',9,8,2,13,3),  (1615,'2014-12-25',16,8,3,11,4), (1616,'2014-12-25',44,8,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1617,'2014-12-26',51,8,1,32,9), (1618,'2014-12-26',1,8,2,5,1),   (1619,'2014-12-26',9,8,3,13,3),  (1620,'2014-12-26',16,8,4,11,4);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1621,'2014-12-22',44,1,1,19,8), (1622,'2014-12-22',51,1,2,32,9), (1623,'2014-12-22',65,1,3,2,10),  (1624,'2014-12-22',30,1,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1625,'2014-12-23',1,1,1,5,1),   (1626,'2014-12-23',16,1,2,11,4), (1627,'2014-12-23',58,1,3,12,11), (1628,'2014-12-23',37,1,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1629,'2014-12-24',16,1,1,11,4), (1630,'2014-12-24',23,1,2,40,5), (1631,'2014-12-24',9,1,3,13,3),   (1632,'2014-12-24',44,1,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1633,'2014-12-25',51,1,1,32,9), (1634,'2014-12-25',16,1,2,11,4), (1635,'2014-12-25',1,1,3,5,1),    (1636,'2014-12-25',9,1,4,13,3);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1637,'2014-12-26',23,1,1,40,5), (1638,'2014-12-26',9,1,2,13,3),  (1639,'2014-12-26',16,1,3,11,4),  (1640,'2014-12-26',58,1,4,12,11);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1641,'2014-12-22',10,9,1,13,3), (1642,'2014-12-22',2,9,2,5,1),   (1643,'2014-12-22',38,9,3,4,7),  (1644,'2014-12-22',66,9,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1645,'2014-12-23',17,9,1,11,4), (1646,'2014-12-23',2,9,2,5,1),   (1647,'2014-12-23',31,9,3,34,6), (1648,'2014-12-23',52,9,4,32,9);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1649,'2014-12-24',45,9,1,19,8), (1650,'2014-12-24',59,9,2,12,11),(1651,'2014-12-24',2,9,3,5,1),   (1652,'2014-12-24',2,9,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1653,'2014-12-25',17,9,1,11,4), (1654,'2014-12-25',59,9,2,12,11),(1655,'2014-12-25',24,9,3,40,5), (1656,'2014-12-25',38,9,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1657,'2014-12-26',2,9,1,5,1),   (1658,'2014-12-26',17,9,2,11,4), (1659,'2014-12-26',45,9,3,19,8), (1660,'2014-12-26',10,9,4,13,3);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1661,'2014-12-22',59,2,1,12,11),(1662,'2014-12-22',17,2,2,11,4), (1663,'2014-12-22',2,2,3,5,1),   (1664,'2014-12-22',2,2,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1665,'2014-12-23',31,2,1,34,6), (1666,'2014-12-23',10,2,2,13,3), (1667,'2014-12-23',17,2,3,11,4), (1668,'2014-12-23',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1669,'2014-12-24',10,2,1,13,3), (1670,'2014-12-24',38,2,2,4,7),  (1671,'2014-12-24',24,2,3,40,5), (1672,'2014-12-24',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1673,'2014-12-25',2,2,1,5,1),   (1674,'2014-12-25',66,2,2,2,10), (1675,'2014-12-25',52,2,3,32,9), (1676,'2014-12-25',17,2,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1677,'2014-12-26',17,2,1,11,4), (1678,'2014-12-26',52,2,2,32,9), (1679,'2014-12-26',2,2,3,5,1),   (1680,'2014-12-26',38,2,4,4,7);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1681,'2014-12-22',18,10,1,11,4), (1682,'2014-12-22',60,10,2,12,11), (1683,'2014-12-22',32,10,3,34,6), (1684,'2014-12-22',39,10,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1685,'2014-12-23',11,10,1,13,3), (1686,'2014-12-23',46,10,2,19,8),  (1687,'2014-12-23',3,10,3,5,1),   (1688,'2014-12-23',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1689,'2014-12-24',3,10,1,5,1),   (1690,'2014-12-24',67,10,2,2,10),  (1691,'2014-12-24',60,10,3,12,11),(1692,'2014-12-24',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1693,'2014-12-25',11,10,1,13,3), (1694,'2014-12-25',3,10,2,5,1),    (1695,'2014-12-25',46,10,3,19,8), (1696,'2014-12-25',3,10,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1697,'2014-12-26',11,10,1,13,3), (1698,'2014-12-26',25,10,2,40,5),  (1699,'2014-12-26',53,10,3,32,9), (1700,'2014-12-26',3,10,4,5,1);
+
+
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1701,'2014-12-29',1,8,1,5,1),   (1702,'2014-12-29',9,8,2,13,3),  (1703,'2014-12-29',16,8,3,11,4), (1704,'2014-12-29',23,8,4,40,5);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1705,'2014-12-30',44,8,1,19,8), (1706,'2014-12-30',51,8,2,32,9), (1707,'2014-12-30',37,8,3,4,7),  (1708,'2014-12-30',65,8,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1709,'2014-12-31',58,8,1,12,11),(1710,'2014-12-31',1,8,2,5,1),   (1711,'2014-12-31',16,8,3,11,4), (1712,'2014-12-31',30,8,4,34,6);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1713,'2014-12-29',44,1,1,19,8), (1714,'2014-12-29',51,1,2,32,9), (1715,'2014-12-29',65,1,3,2,10),  (1716,'2014-12-29',30,1,4,34,6);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1717,'2014-12-30',1,1,1,5,1),   (1718,'2014-12-30',16,1,2,11,4), (1719,'2014-12-30',58,1,3,12,11), (1720,'2014-12-30',37,1,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1721,'2014-12-31',16,1,1,11,4), (1722,'2014-12-31',23,1,2,40,5), (1723,'2014-12-31',9,1,3,13,3),   (1724,'2014-12-31',44,1,4,19,8);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1725,'2014-12-29',10,9,1,13,3), (1726,'2014-12-29',2,9,2,5,1),   (1727,'2014-12-29',38,9,3,4,7),  (1728,'2014-12-29',66,9,4,2,10);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1729,'2014-12-30',17,9,1,11,4), (1730,'2014-12-30',2,9,2,5,1),   (1731,'2014-12-30',31,9,3,34,6), (1732,'2014-12-30',52,9,4,32,9);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1733,'2014-12-31',45,9,1,19,8), (1734,'2014-12-31',59,9,2,12,11),(1735,'2014-12-31',2,9,3,5,1),   (1736,'2014-12-31',2,9,4,5,1);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1737,'2014-12-29',59,2,1,12,11),(1738,'2014-12-29',17,2,2,11,4), (1739,'2014-12-29',2,2,3,5,1),   (1740,'2014-12-29',2,2,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1741,'2014-12-30',31,2,1,34,6), (1742,'2014-12-30',10,2,2,13,3), (1743,'2014-12-30',17,2,3,11,4), (1744,'2014-12-30',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1745,'2014-12-31',10,2,1,13,3), (1746,'2014-12-31',38,2,2,4,7),  (1747,'2014-12-31',24,2,3,40,5), (1748,'2014-12-31',45,2,4,19,8);
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1749,'2014-12-29',18,10,1,11,4), (1750,'2014-12-29',60,10,2,12,11), (1751,'2014-12-29',32,10,3,34,6), (1752,'2014-12-29',39,10,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1753,'2014-12-30',11,10,1,13,3), (1754,'2014-12-30',46,10,2,19,8),  (1755,'2014-12-30',3,10,3,5,1),   (1756,'2014-12-30',18,10,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1757,'2014-12-31',3,10,1,5,1),   (1758,'2014-12-31',67,10,2,2,10),  (1759,'2014-12-31',60,10,3,12,11),(1760,'2014-12-31',18,10,4,11,4);
+
+
+
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1761,'2014-09-01',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1762,'2014-09-03',73,16,5,4,12); 
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1763,'2014-09-05',73,16,5,4,12);
+
+
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1764,'2014-09-08',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1765,'2014-09-10',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1766,'2014-09-12',73,16,5,4,12);
+
+ 
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1767,'2014-09-15',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1768,'2014-09-17',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1769,'2014-09-19',73,16,5,4,12); 
+
+ 
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1770,'2014-09-22',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1771,'2014-09-24',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1772,'2014-09-26',73,16,5,4,12); 
+
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1773,'2014-09-29',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1774,'2014-10-01',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1775,'2014-10-03',73,16,5,4,12); 
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1776,'2014-10-06',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1777,'2014-10-08',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1778,'2014-10-10',73,16,5,4,12); 
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1779,'2014-10-13',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1780,'2014-10-15',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1781,'2014-10-17',73,16,5,4,12); 
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1782,'2014-10-20',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1783,'2014-10-22',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1784,'2014-10-24',73,16,5,4,12); 
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1785,'2014-10-27',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1786,'2014-10-29',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1787,'2014-10-31',73,16,5,4,12); 
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1788,'2014-11-03',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1789,'2014-11-05',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1790,'2014-11-07',73,16,5,4,12); 
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1791,'2014-11-10',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1792,'2014-11-12',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1793,'2014-11-14',73,16,5,4,12); 
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1794,'2014-11-17',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1795,'2014-11-19',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1796,'2014-11-21',73,16,5,4,12); 
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1797,'2014-11-24',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1798,'2014-11-26',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1799,'2014-11-28',73,16,5,4,12); 
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1800,'2014-12-01',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1801,'2014-12-03',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1802,'2014-12-05',73,16,5,4,12); 
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1803,'2014-12-08',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1804,'2014-12-10',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1805,'2014-12-12',73,16,5,4,12); 
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1806,'2014-12-15',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1807,'2014-12-17',73,16,5,4,12);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1808,'2014-12-19',73,16,5,4,12); 
+
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1809,'2014-12-22',73,16,5,4,12);
 
 INSERT INTO `JOURNAL` (`id`, `coefficient`, `date`, `mark`, `scheduleId`, `studentId`) VALUES ('1', '1', '2014-09-01 00:00:00', '10', '21', '1');
 INSERT INTO `JOURNAL` (`id`, `coefficient`, `date`, `mark`, `scheduleId`, `studentId`) VALUES ('2', '1', '2014-09-01 00:00:00', '8', '21', '2');
