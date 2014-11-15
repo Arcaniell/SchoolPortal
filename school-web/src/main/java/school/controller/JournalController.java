@@ -3,6 +3,9 @@ package school.controller;
 import java.security.Principal;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -14,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import school.dto.JournalParentDTO;
-import school.dto.JournalStudentDto;
-import school.dto.JournalStudentWithMarksDTO;
-import school.dto.JournalTeacherDto;
+import school.dto.journal.JournalDTO;
+import school.dto.journal.JournalParentDTO;
+import school.dto.journal.JournalStudentDTO;
+import school.dto.journal.JournalStudentWithMarksDTO;
+import school.dto.journal.JournalTeacherDTO;
 import school.model.Role;
 import school.service.JournalService;
+import school.service.utils.JournalUtil;
 
 @Controller
 public class JournalController {
@@ -30,22 +35,9 @@ public class JournalController {
 	@RequestMapping(value = "journal")
 	public String index(Principal user, Model model, HttpServletRequest request) {
 
-		if (request.isUserInRole(Role.Secured.TEACHER)) {
-			JournalTeacherDto teacherDTO = journalService.getTeacherInfo(user
-					.getName());
-			model.addAttribute("teacher", teacherDTO);
-		}
-
-		if (request.isUserInRole(Role.Secured.STUDENT)) {
-			JournalStudentDto studentDTO = journalService.getStudentInfo(user
-					.getName());
-			model.addAttribute("student", studentDTO);
-		}
-
-		if (request.isUserInRole(Role.Secured.PARENT)) {
-			JournalParentDTO parentDTO = journalService.getParentInfo(user
-					.getName());
-			model.addAttribute("parent", parentDTO);
+		Map<String, JournalDTO> DTOs = getDTOsByRole(user, request);
+		for (Entry<String, JournalDTO> entry : DTOs.entrySet()) {
+			model.addAttribute(entry.getKey(), entry.getValue());
 		}
 
 		return "journal";
@@ -66,19 +58,40 @@ public class JournalController {
 				.getStudentsWithMarks(student, groupNumber, groupLetter,
 						course, dateFrom, dateTo);
 
-		model.addAttribute("studentDtos", studentWithMarksDTOs);
-		model.addAttribute("scheduleDates", dates);
+		model.addAttribute(JournalUtil.STUDENT_DTOS, studentWithMarksDTOs);
+		model.addAttribute(JournalUtil.SCHEDULE_DATES, dates);
 
-		if (request.isUserInRole(Role.Secured.TEACHER)) {
-			JournalTeacherDto teacherDTO = journalService.getTeacherInfo(user
-					.getName());
-			model.addAttribute("teacher", teacherDTO);
-		} else if (request.isUserInRole(Role.Secured.STUDENT)) {
-			JournalStudentDto studentDTO = journalService.getStudentInfo(user
-					.getName());
-			model.addAttribute("student", studentDTO);
+		Map<String, JournalDTO> DTOs = getDTOsByRole(user, request);
+		for (Entry<String, JournalDTO> entry : DTOs.entrySet()) {
+			model.addAttribute(entry.getKey(), entry.getValue());
 		}
 
 		return "journal";
+	}
+
+	private Map<String, JournalDTO> getDTOsByRole(Principal user,
+			HttpServletRequest request) {
+
+		Map<String, JournalDTO> DTOs = new HashMap<String, JournalDTO>();
+
+		if (request.isUserInRole(Role.Secured.TEACHER)) {
+			JournalTeacherDTO teacherDTO = journalService.getTeacherInfo(user
+					.getName());
+			DTOs.put(JournalUtil.TEACHER, teacherDTO);
+		}
+
+		if (request.isUserInRole(Role.Secured.STUDENT)) {
+			JournalStudentDTO studentDTO = journalService.getStudentInfo(user
+					.getName());
+			DTOs.put(JournalUtil.STUDENT, studentDTO);
+		}
+
+		if (request.isUserInRole(Role.Secured.PARENT)) {
+			JournalParentDTO parentDTO = journalService.getParentInfo(user
+					.getName());
+			DTOs.put(JournalUtil.PARENT, parentDTO);
+		}
+
+		return DTOs;
 	}
 }

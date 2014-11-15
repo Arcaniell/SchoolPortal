@@ -1,17 +1,17 @@
-package school.dto;
+package school.dto.journal;
 
 import java.util.Set;
 
-public class JournalParentDTO {
+public class JournalParentDTO extends JournalDTO {
 
 	private long id;
 	private String name;
-	private Set<JournalStudentDto> kids;
+	private Set<JournalStudentDTO> kids;
 
 	public JournalParentDTO() {
 	}
 
-	public JournalParentDTO(long id, String name, Set<JournalStudentDto> kids) {
+	public JournalParentDTO(long id, String name, Set<JournalStudentDTO> kids) {
 		this.id = id;
 		this.name = name;
 		this.kids = kids;
@@ -33,11 +33,11 @@ public class JournalParentDTO {
 		this.name = name;
 	}
 
-	public Set<JournalStudentDto> getKids() {
+	public Set<JournalStudentDTO> getKids() {
 		return kids;
 	}
 
-	public void setKids(Set<JournalStudentDto> kids) {
+	public void setKids(Set<JournalStudentDTO> kids) {
 		this.kids = kids;
 	}
 

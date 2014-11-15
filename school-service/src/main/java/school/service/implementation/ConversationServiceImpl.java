@@ -1,10 +1,10 @@
 package school.service.implementation;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -88,10 +88,10 @@ public class ConversationServiceImpl implements ConversationService {
 
 	@Transactional
 	public List<ConversationDto> constructInboxConversationsDto(
-			List<Conversation> conversations, long id) {
+			List<Conversation> conversations, long id, Locale loc) {
 		List<ConversationDto> dtos = new ArrayList<ConversationDto>();
 		List<Date> dates = getDates(conversations, id);
-		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, loc);
 		
 		conversationsUtils.sortConversations(conversations, dates);
 
@@ -112,10 +112,10 @@ public class ConversationServiceImpl implements ConversationService {
 
 	@Transactional
 	public List<ConversationDto> constructSentConversationsDto(
-			List<Conversation> conversations, long id) {
+			List<Conversation> conversations, long id, Locale loc) {
 		List<ConversationDto> dtos = new ArrayList<ConversationDto>();
 		List<Date> dates = getDates(conversations, id);
-		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, loc);
 
 		conversationsUtils.sortConversations(conversations, dates);
 

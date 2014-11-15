@@ -11,8 +11,33 @@
 .table {
 	width: 80%;
 	max-width: 100%;
-	min-width: 1150px;
+	min-width: 750px;
 	margin-bottom: 20px;
+}
+
+.headerJournalBig {
+	width: 970px;
+	max-width: 100%;
+	min-width: 970px;
+	margin-bottom: 20px;
+}
+
+.headerJournalSmall {
+	width: 750px;
+	max-width: 100%;
+	min-width: 750px margin-bottom: 20px;
+}
+
+.thDate {
+	width: 350px;
+}
+
+.thSubjectAndStudent {
+	width: 250px;
+}
+
+.thButton {
+	width: 120px;
 }
 
 td {
@@ -66,7 +91,7 @@ h4, .h4, h5, .h5, h6, .h6 {
 	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
-.form-control-small {
+.form-control-middle {
 	display: inline;
 	width: 120px;
 	height: 34px;
