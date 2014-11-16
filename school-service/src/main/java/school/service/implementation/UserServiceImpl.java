@@ -1,6 +1,6 @@
 package school.service.implementation;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             return false;
         }
-        Set<Role> roles = user.getRoles();
+        List<Role> roles = user.getRoles();
         for (Role role : roles) {
             if (role.getName().equals("ROLE_HEAD_TEACHER")) {
                 return true;
@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             return false;
         }
-        Set<Role> roles = user.getRoles();
+        List<Role> roles = user.getRoles();
         for (Role role : roles) {
             if (role.getName().equals("ROLE_STUDENT")) {
                 return true;

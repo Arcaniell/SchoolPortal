@@ -6,8 +6,9 @@
 	prefix="sec"%>
 <sec:authorize access="isAuthenticated()">
 	<p class="profile-info">Lora Palmer</p>
-	<!-- <input name = "userId" type=hidden value="${pageContext.request.userPrincipal.name}"> --> 
-	<img class="logo" src="<c:url value="/resources/img/logos/${pageContext.request.userPrincipal.name}.png" />" />
+	<!-- <input name = "userId" type=hidden value="${pageContext.request.userPrincipal.name}"> -->
+	<img class="logo"
+		src="<c:url value="/resources/img/logos/${pageContext.request.userPrincipal.name}.png" />" />
 </sec:authorize>
 <sec:authorize access="isAnonymous()">
 	<img class="logo"
@@ -17,14 +18,19 @@
 	<ul class="nav nav-sidebar">
 		<li class="active"><a href="#">Profile</a></li>
 		<li><a href="#">Schedule</a></li>
-		<sec:authorize access="hasRole('ROLE_TEACHER')">
+		<sec:authorize
+			access="hasAnyRole('ROLE_STUDENT', 'ROLE_PARENT', 'ROLE_ADMIN')">
+			<li><a href="diary">Diary</a></li>
+		</sec:authorize>
+		<sec:authorize
+			access="hasAnyRole('ROLE_TEACHER', 'ROLE_HEAD_TEACHER', 'ROLE_DIRECTOR', 'ROLE_ADMIN')">
 			<li><a href="journal">Journal</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_PARENT')">
 			<li><a href='<c:url value="/inbox"/>'>Message</a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_STUDENT')">
-		<li><a href=courses>My courses</a></li>
+			<li><a href=courses>My courses</a></li>
 		</sec:authorize>
 		<li><a href=course-request>Course request</a></li>
 

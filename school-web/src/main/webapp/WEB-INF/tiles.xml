@@ -25,6 +25,11 @@
 		<put-attribute name="main_content" value="/views/journal/journal.jsp" />
 	</definition>
 
+	<definition name="diary" extends="base.definition">
+		<put-attribute name="title" value="Diary" />
+		<put-attribute name="main_content" value="/views/journal/diary.jsp" />
+	</definition>
+
 	<definition name="groups-*" extends="base.definition">
 		<put-attribute name="title" value="Group page" />
 		<put-attribute name="main_content" value="/views/groups/{1}.jsp" />
