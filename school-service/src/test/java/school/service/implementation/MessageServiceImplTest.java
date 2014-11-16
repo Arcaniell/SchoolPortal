@@ -35,9 +35,8 @@ public class MessageServiceImplTest {
 	public void testCreateMessage() {
 		List<Message> messageList = messageDao.findAll();
 		int size = messageList.size();
-		System.out.println(size);
-		Conversation conversation = conversationDao.findById(10L);
+		Conversation conversation = conversationDao.findById(1L);
 		messagesService.createNewMessage(conversation, "TEXT");
-		Assert.assertTrue(messageDao.findAll().size() == size+1);
+		Assert.assertTrue(messageDao.findAll().size() == size + 1);
 	}
 }

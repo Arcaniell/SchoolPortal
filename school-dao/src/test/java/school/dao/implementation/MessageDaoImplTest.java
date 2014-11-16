@@ -43,14 +43,14 @@ public class MessageDaoImplTest extends DBUnitConfig {
 
 		conversation = new Conversation();
 		
-       // DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
-             //   .getConnection(), getDataSet());
+        DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
+                .getConnection(), getDataSet());
 	}
 
 	@After
 	public void tearDown() throws Exception {
-        //DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester()
-               // .getConnection(), getDataSet());
+        DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester()
+                .getConnection(), getDataSet());
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class MessageDaoImplTest extends DBUnitConfig {
 	@Test
 	public void testFindMessagesOfConversation() {
 		
-		/*conversation = conversationDao.findById(5L);
+		conversation = conversationDao.findById(5L);
 		List<Message> actualMessages = messageDao.findReceiversMessagesOfConversation(conversation);
 		Message message5 = messageDao.findById(5L);
 		Message message8 = messageDao.findById(8L);
@@ -72,7 +72,7 @@ public class MessageDaoImplTest extends DBUnitConfig {
 		Assert.assertTrue(actualMessages.get(2).getId() == expectedMessages.get(2).getId());
 		for(int i = 0; i < actualMessages.size(); i++) {
 			Assert.assertTrue(actualMessages.get(i).getId() == expectedMessages.get(i).getId());
-		}*/
+		}
 		
 	}
 }

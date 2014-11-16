@@ -1483,6 +1483,9 @@ INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`t
 
 INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (1809,'2014-12-22',73,16,5,4,12);
 
+INSERT INTO `CONVERSATION` (`id`,`subject`,`receiverId`,`senderId`,`isAnsweredReceiver`,`isAnsweredSender`,`isDeletedReceiver`,`isDeletedSender`) VALUES (1,"Subject",80,10,0,1,0,0);
+INSERT INTO `MESSAGE` (`id`,`dateTime`,`isFromSender`,`isRead`,`text`,`conversationId`, `isDeletedSender`, `isDeletedReceiver`) VALUES (1,"2014-11-16 14:24:16",1,0,"Hello",1, 0, 0);
+
 INSERT INTO `JOURNAL` (`id`, `coefficient`, `date`, `mark`, `scheduleId`, `studentId`) VALUES ('1', '1', '2014-09-01 00:00:00', '10', '21', '1');
 INSERT INTO `JOURNAL` (`id`, `coefficient`, `date`, `mark`, `scheduleId`, `studentId`) VALUES ('2', '1', '2014-09-01 00:00:00', '8', '21', '2');
 INSERT INTO `JOURNAL` (`id`, `coefficient`, `date`, `mark`, `scheduleId`, `studentId`) VALUES ('3', '1', '2014-09-01 00:00:00', '6', '21', '3');

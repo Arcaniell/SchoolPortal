@@ -55,15 +55,14 @@ public class ConversationServiceImplTest {
 		
 	}
 	
-	/* @Test
+/*	 @Test
 	public void testCompose() {
 		List<Conversation> conversations = conversatinDao.findAll();
-		System.out.println(conversations.size());
 		int size = conversations.size();
 		conversationService.createConversation("Subject", 10L, 80L, "Text");
 		Assert.assertTrue(conversatinDao.findAll().size() == size+1);
-	}
-*/
+	}*/
+
 	@Test
 	public void testInbox() {
 /*		List<Conversation> convs =  conversationService.findInbox();
