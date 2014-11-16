@@ -100,19 +100,9 @@ public class MessagesController {
 		Conversation conversation = conversationService.findById(repliedMessage
 				.getConversationId().getId());
 		long principalId = Long.valueOf(principal.getName());
-		Message message = new Message();
-		message.setRead(false);
-		message.setDateTime(new Date());
-		message.setConversationId(conversation);
-		message.setDeletedReceiver(false);
-		message.setDeletedSender(false);
-		message.setText(replyText);
-		if (conversation.getReceiverId().getId() == principalId) {
-			message.setFromSender(false);
-		} else {
-			message.setFromSender(true);
-		}
-		messagesService.saveMessage(message);
+		
+		messagesService.replyMessage(conversation, replyText, principalId);
+		
 		String currentPage = (String) request.getSession().getAttribute(
 				"currentPage");
 		return "redirect:/" + currentPage;

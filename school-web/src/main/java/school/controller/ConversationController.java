@@ -28,14 +28,11 @@ public class ConversationController {
 
 	@Autowired
 	public MessagesService messagesService;
-	
+
 	@RequestMapping("inbox")
 	public String inbox(Model model, Principal principal,
 			HttpServletRequest request) {
-		Long id = Long.valueOf(principal.getName());
-		if(id == null) {
-			return "redirect:/login";
-		}
+		long id = Long.valueOf(principal.getName());
 		List<Conversation> conversationsS = conversationService.findSent(id);
 		List<Conversation> conversationsI = conversationService.findInbox(id);
 		int sentSize = conversationsS.size();
@@ -55,9 +52,6 @@ public class ConversationController {
 	public String sent(Model model, Principal principal,
 			HttpServletRequest request) {
 		Long id = Long.valueOf(principal.getName());
-		if(id == null) {
-			return "redirect:/login";
-		}
 		List<Conversation> conversationsI = conversationService.findInbox(id);
 		List<Conversation> conversationsS = conversationService.findSent(id);
 		int inboxSize = conversationsI.size();
@@ -75,11 +69,11 @@ public class ConversationController {
 
 	@RequestMapping(value = "delete-conversations", method = RequestMethod.POST)
 	public String deleteSentConversations(
-			@RequestParam(value="selected", required=false) String[] ids, Principal principal,
-			HttpServletRequest request) {
+			@RequestParam(value = "selected", required = false) String[] ids,
+			Principal principal, HttpServletRequest request) {
 
 		long id = Long.valueOf(principal.getName());
-		if(ids != null) {
+		if (ids != null) {
 			conversationService.deleteConversations(ids, id);
 		}
 		String currentPage = (String) request.getSession().getAttribute(
@@ -88,16 +82,17 @@ public class ConversationController {
 	}
 
 	@RequestMapping(value = "compose", method = RequestMethod.POST)
-	public String inboxCompose(@RequestParam(value = "to", required = false) String name,
+	public String compose(
+			@RequestParam(value = "to", required = false) String name,
 			@RequestParam(value = "subject", required = false) String subject,
-			@RequestParam(value = "text", required = false) String text, HttpServletRequest request) {
-
-		System.out.println(name);
-		System.out.println(subject);
-		System.out.println(text);
-		
-		String currectPage = (String) request.getSession().getAttribute("currentPage");
-		return "redirect:/"+currectPage;
+			@RequestParam(value = "text", required = false) String text,
+			HttpServletRequest request, Principal principal) {
+		Long principalId = Long.valueOf(principal.getName());
+		Long receiverId = Long.valueOf(name);
+		conversationService.createConversation(subject, principalId,
+				receiverId, text);
+		String currectPage = (String) request.getSession().getAttribute(
+				"currentPage");
+		return "redirect:/" + currectPage;
 	}
-
 }

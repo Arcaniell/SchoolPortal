@@ -65,12 +65,16 @@ public class ConversationDaoImplTest extends DBUnitConfig {
 		return new FlatXmlDataSet(this.getClass().getResourceAsStream(
 				"/xml-data-sets/conversation.xml"));
 	}
-
+	@Test
+	public void test(){
+	    
+	}
+	
 	@Test
 	public void testFindInboxConversationsForUser() {
 		receiver = userDao.findById(1L);
 		List<Conversation> actualList = conversationDao
-				.findInboxConversationsForUser(receiver);
+				.findInboxConversations(receiver);
 		Conversation conversation1 = conversationDao.findById(1L);
 		Conversation conversation3 = conversationDao.findById(3L);
 		Conversation conversation4 = conversationDao.findById(4L);
@@ -91,7 +95,7 @@ public class ConversationDaoImplTest extends DBUnitConfig {
 	public void testSentConversationsForUser() {
 		receiver = userDao.findById(1L);
 		List<Conversation> actualList = conversationDao
-				.findSentConversationsForUser(receiver);
+				.findSentConversations(receiver);
 		Conversation conversation1 = conversationDao.findById(1L);
 		Conversation conversation4 = conversationDao.findById(4L);
 		Conversation conversation7 = conversationDao.findById(7L);

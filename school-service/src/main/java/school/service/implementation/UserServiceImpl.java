@@ -48,6 +48,7 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
     /**
      * @param id
      *            id of our logged user
@@ -70,5 +71,20 @@ public class UserServiceImpl implements UserService {
             }
         }
         return false;
+    }
+
+    /**
+     * @param id
+     *            id of our logged user
+     * @author Blowder
+     */
+    @Override
+    public String getUserNameById(long id) {
+        User user = userDao.findById(id);
+        if (user != null) {
+            return user.getFirstName() + " " + user.getLastName();
+        } else {
+            return "Jane Dou";
+        }
     }
 }

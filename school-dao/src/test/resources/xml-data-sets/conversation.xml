@@ -12,13 +12,13 @@
 	<USER id="5" email="testemail5@gmail.com" firstName="Roman" lastName="Zherebytsky" 
 	password="password" registration="2014-10-20 23:09:10" sex="0"/>
 	
-	<CONVERSATION id="1" subject="Subject1" senderId="2" receiverId="1" isAnswered="1" isDeletedReceiver="0" isDeletedSender="0"/>
-	<CONVERSATION id="2" subject="Subject2" senderId="4" receiverId="2" isAnswered="1" isDeletedReceiver="0" isDeletedSender="0"/>
-	<CONVERSATION id="3" subject="Subject3" senderId="4" receiverId="1" isAnswered="0" isDeletedReceiver="0" isDeletedSender="0"/>
-	<CONVERSATION id="4" subject="Subject4" senderId="1" receiverId="4" isAnswered="1" isDeletedReceiver="0" isDeletedSender="0"/>
-	<CONVERSATION id="5" subject="Subject5" senderId="5" receiverId="1" isAnswered="0" isDeletedReceiver="0" isDeletedSender="0"/>
-	<CONVERSATION id="6" subject="Subject6" senderId="3" receiverId="1" isAnswered="0" isDeletedReceiver="0" isDeletedSender="0"/>
-	<CONVERSATION id="7" subject="Subject7" senderId="5" receiverId="1" isAnswered="1" isDeletedReceiver="0" isDeletedSender="0"/>
+	<CONVERSATION id="1" subject="Subject1" senderId="2" receiverId="1" isAnsweredReceiver="1" isAnsweredSender="1" isDeletedReceiver="0" isDeletedSender="0"/>
+	<CONVERSATION id="2" subject="Subject2" senderId="4" receiverId="2" isAnsweredReceiver="1" isAnsweredSender="1" isDeletedReceiver="0" isDeletedSender="0"/>
+	<CONVERSATION id="3" subject="Subject3" senderId="4" receiverId="1" isAnsweredReceiver="0" isAnsweredSender="0" isDeletedReceiver="0" isDeletedSender="0"/>
+	<CONVERSATION id="4" subject="Subject4" senderId="1" receiverId="4" isAnsweredReceiver="1" isAnsweredSender="1" isDeletedReceiver="0" isDeletedSender="0"/>
+	<CONVERSATION id="5" subject="Subject5" senderId="5" receiverId="1" isAnsweredReceiver="0" isAnsweredSender="0" isDeletedReceiver="0" isDeletedSender="0"/>
+	<CONVERSATION id="6" subject="Subject6" senderId="3" receiverId="1" isAnsweredReceiver="0" isAnsweredSender="0" isDeletedReceiver="0" isDeletedSender="0"/>
+	<CONVERSATION id="7" subject="Subject7" senderId="5" receiverId="1" isAnsweredReceiver="1" isAnsweredSender="1" isDeletedReceiver="0" isDeletedSender="0"/>
 	
 	<MESSAGE id="1" text="Text1" isFromSender="1" dateTime="2014-10-20 23:09:19" isRead="1" conversationId="1" isDeletedReceiver="0" isDeletedSender="0"/>
 	<MESSAGE id="2" text="Text2" isFromSender="1" dateTime="2014-10-20 23:09:18" isRead="1" conversationId="2" isDeletedReceiver="0" isDeletedSender="0"/>
