@@ -39,12 +39,13 @@ public class CourseDaoImpl extends BaseDaoImpl<Course, Long> implements
 
     @SuppressWarnings("unchecked")
     @Transactional
-    public List<Course> findAllByStatusAndYear(boolean status,int year) {
+    public List<Course> findAllByStatusAndYear(boolean status, int year) {
         try {
             if (entityManager != null) {
                 return (List<Course>) entityManager
                         .createNamedQuery(Course.FIND_BY_STATUS_AND_YEAR)
-                        .setParameter("active", status).setParameter("year", year).getResultList();
+                        .setParameter("active", status)
+                        .setParameter("year", year).getResultList();
             } else {
                 return null;
             }
@@ -147,12 +148,11 @@ public class CourseDaoImpl extends BaseDaoImpl<Course, Long> implements
                         .setParameter("groupId", groupId)
                         .setParameter("from", from).setParameter("till", till)
                         .getResultList();
-            } else {
-                return null;
             }
-        } catch (NoResultException e) {
-            return null;
+        } catch (Exception e) {
+            // nothing to do here, return null
         }
+        return null;
     }
 
 }
