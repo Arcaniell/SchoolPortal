@@ -4,10 +4,12 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
+
 <sec:authorize access="isAuthenticated()">
-	<p class="profile-info">Lora Palmer</p>
-	<!-- <input name = "userId" type=hidden value="${pageContext.request.userPrincipal.name}"> --> 
-	<img class="logo" src="<c:url value="/resources/img/logos/${pageContext.request.userPrincipal.name}.png" />" />
+	<p class="profile-info"></p>
+	<!-- <input name = "userId" type=hidden value="${pageContext.request.userPrincipal.name}"> -->
+	<img class="logo"
+		src="<c:url value="/resources/img/logos/${pageContext.request.userPrincipal.name}.png" />" />
 </sec:authorize>
 <sec:authorize access="isAnonymous()">
 	<img class="logo"
@@ -15,20 +17,30 @@
 </sec:authorize>
 <div class="internal-buttons">
 	<ul class="nav nav-sidebar">
-		<li class="active"><a href="#">Profile</a></li>
-		<li><a href="#">Schedule</a></li>
+		<sec:authorize access="isAuthenticated()">
+			<li><a href="#"><spring:message code="sidebar.profile" /></a></li>
+		</sec:authorize>
+		<li><a href="#"><spring:message code="sidebar.schedule" /></a></li>
 		<sec:authorize access="hasRole('ROLE_TEACHER')">
-			<li><a href="journal">Journal</a></li>
+			<li><a href="journal"><spring:message
+						code="sidebar.journal" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_PARENT')">
-			<li><a href='<c:url value="/inbox"/>'>Message</a></li>
+			<li><a href='<c:url value="/inbox"/>'><spring:message
+						code="sidebar.message" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_STUDENT')">
-		<li><a href=courses>My courses</a></li>
+			<li><a href=courses><spring:message code="sidebar.course" /></a></li>
 		</sec:authorize>
-		<li><a href=course-request>Course request</a></li>
+		<li><a href=course-request><spring:message
+					code="sidebar.request" /></a></li>
 
-		<li><a href="#">Contacts</a></li>
-		<li><a href="#">About Us</a></li>
+		<li><a href="#"><spring:message code="sidebar.contacts" /></a></li>
+		<li><a href="#"><spring:message code="sidebar.about" /></a></li>
 	</ul>
 </div>
+<script src="<c:url value="https://code.jquery.com/jquery-1.10.2.js" />">
+	
+</script>
+<script src="<c:url value="/resources/js/course-request.js" />"
+	type="text/javascript"></script>
