@@ -23,7 +23,7 @@
 			form="cForm">Delete</button>
 	</li>
 </ul>
-<table class="tablem">
+<table class="table table-hover">
 	<tbody>
 		<c:choose>
 			<c:when test="${conversationsDto.size() > 0}">
@@ -31,7 +31,7 @@
 					<c:forEach items="${conversationsDto}" var="conversation"
 						varStatus="status">
 						<tr>
-							<td><input type="checkbox" name="selected"
+							<td class="checkBox"><input type="checkbox" name="selected"
 								value="${conversation.id}" /></td>
 							<td class="name"><a
 								href='<c:url value="/sent/${conversation.id}"/>'>${conversation.firstName}

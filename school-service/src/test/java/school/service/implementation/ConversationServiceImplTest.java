@@ -18,16 +18,21 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import school.dao.ConversationDao;
+import school.dao.UserDao;
 import school.model.Conversation;
+import school.model.User;
 import school.service.ConversationService;
 
-/*@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/META-INF/service-context.xml"})
-@TestExecutionListeners( { DependencyInjectionTestExecutionListener.class })*/
+@TestExecutionListeners( { DependencyInjectionTestExecutionListener.class })
 public class ConversationServiceImplTest {
 	
-/*	@Autowired
+	@Autowired
 	private ConversationService conversationService;
+	
+	@Autowired
+	private UserDao userDao;
 	
 	private Conversation conversation1;
 	private Conversation conversation2;
@@ -48,7 +53,16 @@ public class ConversationServiceImplTest {
 	@After
 	public void tearDown() throws Exception {
 		
-	}*/
+	}
+	
+	@Test
+	public void testCompose() {
+		List<Conversation> conversations = conversatinDao.findAll();
+		System.out.println(conversations.size());
+		int size = conversations.size();
+		conversationService.createConversation("Subject", 10L, 80L, "Text");
+		Assert.assertTrue(conversatinDao.findAll().size() == size+1);
+	}
 
 	@Test
 	public void testInbox() {

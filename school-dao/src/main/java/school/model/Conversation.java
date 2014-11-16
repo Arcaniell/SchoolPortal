@@ -18,12 +18,19 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "CONVERSATION")
 @NamedQueries({
-		@NamedQuery(name = "Conversation.INBOX_CONVERSATIONS", query = "SELECT c FROM Conversation c "
-				+ "WHERE (c.receiverId = :receiver and c.isDeletedReceiver = false) "
-				+ "OR (c.senderId = :receiver AND c.isAnswered = true AND c.isDeletedSender = false)"),
-		@NamedQuery(name = "Conversation.SENT_CONVERSATIONS", query = "SELECT c from Conversation c "
-				+ "where (c.senderId = :sender and c.isDeletedSender = false) "
-				+ "or (c.receiverId = :sender and c.isAnswered = true and c.isDeletedReceiver = false)"),
+		@NamedQuery(name = "Conversation.INBOX_CONVERSATIONS", query = 
+				  "SELECT c FROM Conversation c where (c.senderId = :user and "
+				  + "c.isAnsweredReceiver = true and c.isDeletedSender = false) or"
+				  + " (c.receiverId = :user and c.isDeletedReceiver = false) "
+				  + "or (c.senderId = :user and c.isDeletedReceiver = true and c.isDeletedSender = false) or "
+				  + "(c.senderId = :user and ((SELECT m from Message m where m.conversationId = c and "
+				  + "m.isFromSender = false and m.isDeletedSender = false) is not null))"),
+
+		@NamedQuery(name = "Conversation.SENT_CONVERSATIONS", query = 
+		          "SELECT c FROM Conversation c where (c.senderId = :user and "
+				+ "c.isAnsweredSender = true and c.isDeletedSender = false) or "
+				+ "(c.receiverId = :user and c.isAnsweredReceiver = true and c.isDeletedReceiver = false)"),
+
 		@NamedQuery(name = "Conversation.FIND_DATE_RECEIVER", query = "select max(m.dateTime) "
 				+ "from Message m where m.conversationId = :conversation and m.isDeletedReceiver = false"),
 		@NamedQuery(name = "Conversation.FIND_DATE_SENDER", query = "select max(m.dateTime) "
@@ -42,14 +49,17 @@ public class Conversation {
 	@JoinColumn(nullable = false, name = "receiverId")
 	private User receiverId;
 
-	@OneToMany(mappedBy = "conversationId", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "conversationId")
 	private List<Message> messages;
 
 	@Column(nullable = false, length = 100)
 	private String subject;
 
 	@Column(nullable = false)
-	private boolean isAnswered;
+	private boolean isAnsweredReceiver;
+
+	@Column(nullable = false)
+	private boolean isAnsweredSender;
 
 	@Column(nullable = false)
 	private boolean isDeletedReceiver;
@@ -97,12 +107,20 @@ public class Conversation {
 		this.subject = subject;
 	}
 
-	public boolean isAnswered() {
-		return isAnswered;
+	public boolean isAnsweredReceiver() {
+		return isAnsweredReceiver;
 	}
 
-	public void setAnswered(boolean isAnswered) {
-		this.isAnswered = isAnswered;
+	public void setAnsweredReceiver(boolean isAnsweredReceiver) {
+		this.isAnsweredReceiver = isAnsweredReceiver;
+	}
+
+	public boolean isAnsweredSender() {
+		return isAnsweredSender;
+	}
+
+	public void setAnsweredSender(boolean isAnsweredSender) {
+		this.isAnsweredSender = isAnsweredSender;
 	}
 
 	public boolean isDeletedReceiver() {
@@ -126,7 +144,8 @@ public class Conversation {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + (isAnswered ? 1231 : 1237);
+		result = prime * result + (isAnsweredReceiver ? 1231 : 1237);
+		result = prime * result + (isAnsweredSender ? 1231 : 1237);
 		result = prime * result + (isDeletedReceiver ? 1231 : 1237);
 		result = prime * result + (isDeletedSender ? 1231 : 1237);
 		result = prime * result
@@ -150,7 +169,9 @@ public class Conversation {
 		Conversation other = (Conversation) obj;
 		if (id != other.id)
 			return false;
-		if (isAnswered != other.isAnswered)
+		if (isAnsweredReceiver != other.isAnsweredReceiver)
+			return false;
+		if (isAnsweredSender != other.isAnsweredSender)
 			return false;
 		if (isDeletedReceiver != other.isDeletedReceiver)
 			return false;

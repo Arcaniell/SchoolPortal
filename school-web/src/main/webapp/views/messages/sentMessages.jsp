@@ -42,11 +42,15 @@
 				</div>
 			</c:forEach>
 		</form>
-		<div class="mform-group">
-			<textarea class="form-control" rows="3"
-				placeholder="reply to this message..."></textarea>
-		</div>
-		<button type="submit" value="Reply" class="btn btn-primary">Reply</button>
+		<c:set var="dtos" value="${messagesDto}" />
+		<form action="${pageContext.request.contextPath}/reply" method="post">
+			<input type="hidden" value="${dtos[0].id}" name="messageId" />
+			<div class="mform-group">
+				<textarea name="replyText" class="form-control" rows="3"
+					placeholder="reply to this message..."></textarea>
+			</div>
+			<button type="submit" value="Reply" class="btn btn-primary">Reply</button>
+		</form>
 	</c:when>
 	<c:otherwise>
 		<p id="empty">Empty conversation</p>
