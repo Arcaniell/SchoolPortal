@@ -28,4 +28,6 @@ public interface ConversationService {
 	void deleteConversations(String[] ids, long id);
 
 	Conversation findById(long id);
+	
+	void createConversation(String subject, long sender, long receiver, String text);
 }
