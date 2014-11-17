@@ -19,13 +19,13 @@ import javax.persistence.Table;
 		@NamedQuery(name = Journal.FIND_BY_INTERVAL, query = "SELECT j FROM Journal j WHERE j.date BETWEEN :from AND :till"),
 		@NamedQuery(name = Journal.FIND_BY_STUDENT, query = "SELECT j FROM Journal j WHERE j.student.id = :studentId ORDER BY j.date ASC"),
 		@NamedQuery(name = Journal.FIND_BY_INTERVAL_AND_STUDENT, query = "SELECT j FROM Journal j WHERE j.student.id = :studentId AND j.date BETWEEN :from AND :till"),
-		@NamedQuery(name = Journal.FIND_BY_SCHEDULE_AND_STUDENT, query = "SELECT j FROM Journal j WHERE j.student.id = :studentId AND j.schedule.id = :scheduleId"), })
+		@NamedQuery(name = Journal.FIND_BY_STUDENT_AND_SCHEDULE, query = "SELECT j FROM Journal j WHERE j.student.id = :studentId AND j.schedule.id = :scheduleId"), })
 public class Journal {
 
 	public static final String FIND_BY_INTERVAL = "Journal.findByInterval";
 	public static final String FIND_BY_STUDENT = "Journal.findByStudentId";
 	public static final String FIND_BY_INTERVAL_AND_STUDENT = "Journal.findByIntervalAndStudentId";
-	public static final String FIND_BY_SCHEDULE_AND_STUDENT = "Journal.findByScheduleAndStudent";
+	public static final String FIND_BY_STUDENT_AND_SCHEDULE = "Journal.findByStudentAndSchedule";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

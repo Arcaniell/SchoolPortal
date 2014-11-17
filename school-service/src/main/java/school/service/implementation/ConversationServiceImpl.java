@@ -1,22 +1,25 @@
 package school.service.implementation;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import school.dao.ConversationDao;
+import school.dao.MessageDao;
 import school.dao.UserDao;
 import school.dto.ConversationDto;
 import school.model.Conversation;
 import school.model.Message;
 import school.model.User;
 import school.service.ConversationService;
+import school.service.MessagesService;
 import school.service.utils.ConversationsUtils;
 
 @Service
@@ -24,6 +27,9 @@ public class ConversationServiceImpl implements ConversationService {
 
 	@Autowired
 	private ConversationDao conversationDao;
+	
+	@Autowired
+	private MessagesService messagesService;
 
 	@Autowired
 	private UserDao userDao;
@@ -32,17 +38,17 @@ public class ConversationServiceImpl implements ConversationService {
 
 	@Transactional
 	public List<Conversation> findInbox(long id) {
-		User receiver = userDao.findById(id);
+		User user = userDao.findById(id);
 		List<Conversation> list = conversationDao
-				.findInboxConversationsForUser(receiver);
+				.findInboxConversations(user);
 		return list;
 	}
-
+	
 	@Transactional
 	public List<Conversation> findSent(long id) {
-		User sender = userDao.findById(id);
+		User user = userDao.findById(id);
 		List<Conversation> list = conversationDao
-				.findSentConversationsForUser(sender);
+				.findSentConversations(user);
 		return list;
 	}
 
@@ -74,12 +80,14 @@ public class ConversationServiceImpl implements ConversationService {
 					.valueOf(s));
 			if (conversation.getReceiverId().getId() == id) {
 				conversation.setDeletedReceiver(true);
-				for(Message m:conversation.getMessages()) {
+				conversation.setAnsweredReceiver(false);
+				for (Message m : conversation.getMessages()) {
 					m.setDeletedReceiver(true);
 				}
 			} else {
 				conversation.setDeletedSender(true);
-				for(Message m:conversation.getMessages()) {
+				conversation.setAnsweredSender(false);
+				for (Message m : conversation.getMessages()) {
 					m.setDeletedSender(true);
 				}
 			}
@@ -88,11 +96,12 @@ public class ConversationServiceImpl implements ConversationService {
 
 	@Transactional
 	public List<ConversationDto> constructInboxConversationsDto(
-			List<Conversation> conversations, long id) {
+			List<Conversation> conversations, long id, Locale loc) {
 		List<ConversationDto> dtos = new ArrayList<ConversationDto>();
 		List<Date> dates = getDates(conversations, id);
-		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		
+		DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM,
+				loc);
+
 		conversationsUtils.sortConversations(conversations, dates);
 
 		List<String> fNames = getFirstNames(conversations);
@@ -112,10 +121,11 @@ public class ConversationServiceImpl implements ConversationService {
 
 	@Transactional
 	public List<ConversationDto> constructSentConversationsDto(
-			List<Conversation> conversations, long id) {
+			List<Conversation> conversations, long id, Locale loc) {
 		List<ConversationDto> dtos = new ArrayList<ConversationDto>();
 		List<Date> dates = getDates(conversations, id);
-		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM,
+				loc);
 
 		conversationsUtils.sortConversations(conversations, dates);
 
@@ -165,5 +175,23 @@ public class ConversationServiceImpl implements ConversationService {
 	@Override
 	public Conversation findById(long id) {
 		return conversationDao.findById(id);
+	}
+
+	@Override
+	public void createConversation(String subject, long sender, long receiver, String text) {
+		Conversation conversation = new Conversation();
+		conversation.setSubject(subject);
+		conversation.setAnsweredReceiver(false);
+		conversation.setAnsweredSender(true);
+		conversation.setDeletedReceiver(false);
+		conversation.setDeletedSender(false);
+		User userReceiver = userDao.findById(receiver);
+		conversation.setReceiverId(userReceiver);
+		User userSender = userDao.findById(sender);
+		conversation.setSenderId(userSender);
+		
+		conversationDao.save(conversation);
+		
+		messagesService.createNewMessage(conversation, text);
 	}
 }

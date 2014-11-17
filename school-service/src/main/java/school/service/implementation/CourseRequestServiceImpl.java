@@ -1,5 +1,6 @@
 package school.service.implementation;
 
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +19,7 @@ import school.model.CourseRequest;
 import school.model.Student;
 import school.service.CourseRequestService;
 import school.service.GroupService;
+import school.service.utils.SchoolUtil;
 
 /**
  * @author Blowder
@@ -34,15 +36,10 @@ public class CourseRequestServiceImpl implements CourseRequestService {
     StudentDao studentDao;
     @Autowired
     GroupService groupService;
-
+    //find all requests for current user
     @Override
-    public List<CourseRequestStudentDTO> findRequestsByUserId(long id) {
-        SimpleDateFormat formatterDate = new SimpleDateFormat("MM/dd/yyyy");
-
-        ArrayList<CourseRequestStudentDTO> listCourseRequestsDTO = new ArrayList<CourseRequestStudentDTO>();
-        if (studentDao == null || courseRequestDao == null) {
-            return null;
-        }
+    public List<CourseRequestStudentDTO> findUserCourseRequests(Principal user) {
+        long id = Long.parseLong(user.getName());
         Student student = studentDao.findByUserId(id);
         if (student == null) {
             return null;
@@ -51,24 +48,27 @@ public class CourseRequestServiceImpl implements CourseRequestService {
         if (requests == null) {
             return null;
         }
+        //setting DTO object
+        ArrayList<CourseRequestStudentDTO> listCourseRequestsDTO = new ArrayList<CourseRequestStudentDTO>();
         for (CourseRequest courseRequest : requests) {
-            CourseRequestStudentDTO courseRequestDto = new CourseRequestStudentDTO();
-            courseRequestDto.setId(courseRequest.getId());
-            Course course = courseRequest.getCourse();
-            if (course != null) {
-                courseRequestDto.setCourseName(course.getCourseName());
-                courseRequestDto.setCourseYear(course.getGroupNumber());
-                courseRequestDto.setMembers(courseRequestDao
-                        .findAllBySubjectId(course.getId()).size());
+            CourseRequestStudentDTO courseRequestDTO = new CourseRequestStudentDTO();
+            courseRequestDTO.setId(courseRequest.getId());
+            Course courseFromCurrentRequest = courseRequest.getCourse();
+            if (courseFromCurrentRequest != null) {
+                courseRequestDTO.setCourseName(courseFromCurrentRequest.getCourseName());
+                courseRequestDTO.setCourseYear(courseFromCurrentRequest.getGroupNumber());
+                courseRequestDTO.setMembers(courseRequestDao
+                        .findAllBySubjectId(courseFromCurrentRequest.getId()).size());
             }
-            courseRequestDto.setDateOfRequest(formatterDate
+            SimpleDateFormat formatterDate = new SimpleDateFormat(
+                    SchoolUtil.UI_DATE_FORMAT);
+            courseRequestDTO.setDateOfRequest(formatterDate
                     .format(courseRequest.getDate()));
-            // courseRequestDao
-            listCourseRequestsDTO.add(courseRequestDto);
+            listCourseRequestsDTO.add(courseRequestDTO);
         }
         return listCourseRequestsDTO;
     }
-
+    
     @Override
     public void addCourseRequest(long userId, long courseId) {
         CourseRequest courseRequest = new CourseRequest();
@@ -133,6 +133,7 @@ public class CourseRequestServiceImpl implements CourseRequestService {
         }
         Course course = courseDao.findById(courseId);
         groupService.createAdditionGroup(students, course, from, till);
-
     }
+
+
 }

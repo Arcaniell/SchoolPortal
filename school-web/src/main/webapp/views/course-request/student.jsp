@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <link href="<c:url value="/resources/css/course.css" />"
 	rel="stylesheet">
@@ -15,7 +16,9 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">×</button>
-					<h3 class="modal-title"><spring:message code="course.request" /></h3>
+					<h3 class="modal-title">
+						<spring:message code="course.request" />
+					</h3>
 				</div>
 				<form action="course-request/request" method="post">
 					<div class="modal-body">
@@ -27,7 +30,8 @@
 					</div>
 					<div class="modal-footer">
 						<button name="courserequest" type="submit" class="btn btn-default">
-							<spring:message code="course.request.btn.request.for.new" /></button>
+							<spring:message code="course.request.btn.request.for.new" />
+						</button>
 					</div>
 				</form>
 			</div>
@@ -67,10 +71,12 @@
 				data-target=".course_request_modal">
 				<spring:message code="course.request.btn.request.new" />
 			</button>
-			<button type="button" class="btn btn-default" data-toggle="modal"
-				data-target=".course_delete_modal">
-				<spring:message code="course.request.btn.delete.request" />
-			</button>
+			<c:if test="${fn:length(courseList) > 0}">
+				<button type="button" class="btn btn-default" data-toggle="modal"
+					data-target=".course_delete_modal">
+					<spring:message code="course.request.btn.delete.request" />
+				</button>
+			</c:if>
 		</p>
 		<table class="table table-hover">
 			<thead>

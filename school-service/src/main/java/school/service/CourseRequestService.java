@@ -1,5 +1,6 @@
 package school.service;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
@@ -10,8 +11,9 @@ import school.dto.CourseRequestTeacherDTO;
  * @author Blowder
  */
 public interface CourseRequestService {
-    List<CourseRequestStudentDTO> findRequestsByUserId(long id);
 
+    List<CourseRequestStudentDTO> findUserCourseRequests(Principal user);
+    
     void addCourseRequest(long userId, long courseId);
 
     void removeRequest(long requestId);
@@ -19,7 +21,9 @@ public interface CourseRequestService {
     List<CourseRequestTeacherDTO> showAllRequests();
 
     void deleteAllRequestsWithCourseId(long id);
-    
+
     void formGroupAndCloseRequests(long courseId, Date from, Date till);
+
+    
 
 }

@@ -12,8 +12,11 @@
 	<artifactId>school-web</artifactId>
 	<packaging>war</packaging>
 
-	<dependencies>
+	<properties>
+		<jackson.version>1.9.10</jackson.version>
+	</properties>
 
+	<dependencies>
 		<dependency>
 			<groupId>lv128</groupId>
 			<artifactId>school-service</artifactId>

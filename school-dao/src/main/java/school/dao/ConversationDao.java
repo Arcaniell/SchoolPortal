@@ -7,8 +7,12 @@ import school.model.Conversation;
 import school.model.User;
 
 public interface ConversationDao extends BaseDao<Conversation, Long> {
-	List<Conversation> findInboxConversationsForUser(User receiver);
-	List<Conversation> findSentConversationsForUser(User sender);
+	
+	List<Conversation> findInboxConversations(User user);
+
+	List<Conversation> findSentConversations(User user);
+
 	Date findDateForReceiversConversation(Conversation conversation);
+
 	Date findDateForSendersConversation(Conversation conversation);
 }

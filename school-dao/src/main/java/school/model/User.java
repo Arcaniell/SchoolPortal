@@ -2,6 +2,7 @@ package school.model;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -21,8 +22,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "USER")
 @NamedQueries({
-	@NamedQuery(name = User.FIND_BY_EMAIL, query = User.FIND_BY_EMAIL_QUERY),
-	@NamedQuery(name = User.FIND_BY_EMAIL_AND_PASSWORD, query = User.FIND_BY_EMAIL_AND_PASSWORD_QUERY) })
+		@NamedQuery(name = User.FIND_BY_EMAIL, query = User.FIND_BY_EMAIL_QUERY),
+		@NamedQuery(name = User.FIND_BY_EMAIL_AND_PASSWORD, query = User.FIND_BY_EMAIL_AND_PASSWORD_QUERY) })
 public class User {
 	public static final String FIND_BY_EMAIL = "User.findByEmail";
 	public static final String FIND_BY_EMAIL_QUERY = "SELECT u FROM User u WHERE u.email = :email";
@@ -48,7 +49,7 @@ public class User {
 	private boolean confirmed;
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "USER_ROLE_REF", joinColumns = { @JoinColumn(name = "userId", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "roleId", nullable = false) })
-	private Set<Role> roles = new HashSet<Role>();
+	private List<Role> roles;
 
 	public User() {
 		super();
@@ -110,11 +111,11 @@ public class User {
 		this.registration = registration;
 	}
 
-	public Set<Role> getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<Role> roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
 
@@ -184,7 +185,8 @@ public class User {
 			return false;
 		return true;
 	}
-	public class SexType{
+
+	public class SexType {
 		public static final byte MALE = (byte) 0;
 		public static final byte FEMALE = (byte) 1;
 		public static final byte OTHER = (byte) 2;

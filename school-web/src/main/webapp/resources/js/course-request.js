@@ -1,3 +1,12 @@
+/*$(document).ready(function() {
+	var currentName = 0;
+	$.post("getUserNameController",function(data){
+		$(".profile-info").text(data.name);
+	}, "json");
+	if (currentName != 0) {
+		$(".profile-info").text(currentName);
+	}
+});*/
 $('#select-all').click(function(event) {
 	if (this.checked) {
 		// Iterate each checkbox

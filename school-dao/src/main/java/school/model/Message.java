@@ -30,7 +30,7 @@ public class Message {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "conversationId", nullable = false)
 	private Conversation conversationId;
 
