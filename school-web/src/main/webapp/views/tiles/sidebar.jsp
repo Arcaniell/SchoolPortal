@@ -28,7 +28,7 @@
 			<li><a href='<c:url value="/inbox"/>'><spring:message
 						code="sidebar.message" /></a></li>
 		</sec:authorize>
-		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_STUDENT')">
+		<sec:authorize access="hasAnyRole('ROLE_HEAD_TEACHER', 'ROLE_STUDENT')">
 			<li><a href=courses><spring:message code="sidebar.course" /></a></li>
 			<li><a href=course-request><spring:message
 						code="sidebar.request" /></a></li>

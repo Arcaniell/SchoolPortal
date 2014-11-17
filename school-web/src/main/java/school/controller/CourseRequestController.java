@@ -55,7 +55,7 @@ public class CourseRequestController {
         if (user == null) {
             return URL_REDIRECT + URL_LOGIN;
         }
-        if (request.isUserInRole(Role.Secured.TEACHER)) {
+        if (request.isUserInRole(Role.Secured.HEAD_TEACHER)) {
             List<CourseRequestTeacherDTO> courseRequests = courseRequestService
                     .showAllRequests();
             if (courseRequests.size() == 0 || courseRequests == null) {
