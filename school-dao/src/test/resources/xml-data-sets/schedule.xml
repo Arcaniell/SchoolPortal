@@ -6,15 +6,15 @@
 	<LESSON id="4" startTime="2014-10-23 11:30:00" finishTime="2014-10-23 12:15:00"/>
 	
 	<USER id="1" email="testemail1@gmail.com" firstName="Roman" lastName="Petrov" 
-	password="password" registration="2014-10-20 23:06:10" sex="0"/>
+	password="password" registration="2014-10-20 23:06:10" sex="0" confirmed="0"/>
 	<USER id="2" email="testemail2@gmail.com" firstName="Bogdan" lastName="Petrov" 
-	password="password" registration="2014-10-20 23:08:10" sex="0"/>
+	password="password" registration="2014-10-20 23:08:10" sex="0" confirmed="0"/>
 	<USER id="3" email="testemail3@gmail.com" firstName="Ivan" lastName="Petrovsky" 
-	password="password" registration="2014-10-20 23:09:10" sex="0"/>
+	password="password" registration="2014-10-20 23:09:10" sex="0" confirmed="0"/>
 	<USER id="4" email="testemail4@gmail.com" firstName="Petro" lastName="Petrovich" 
-	password="password" registration="2014-10-20 23:11:10" sex="0"/>
+	password="password" registration="2014-10-20 23:11:10" sex="0" confirmed="0"/>
 	<USER id="5" email="testemail5@gmail.com" firstName="Grigoriy" lastName="PetrovRomanov" 
-	password="password" registration="2014-10-20 23:12:10" sex="0"/>
+	password="password" registration="2014-10-20 23:12:10" sex="0" confirmed="0"/>
 	
 	
 	<TEACHER id="1" rate="100000" userId="1" isActive="0"/>

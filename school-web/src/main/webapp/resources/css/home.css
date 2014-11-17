@@ -61,6 +61,9 @@
 .padding_right{
 	padding-right: 20px;
 }
+.margin_left{
+	margin-left: 30px;
+}
 
 .all_in_one_line{
 	white-space: nowrap;
@@ -74,6 +77,35 @@
 	width: 178px;
 }
 
-.signup_bitton{
+#signup_button{
 	width: 140px;
+}
+
+.hidden_error{
+	display: none;
+}
+
+.visible_error{
+	display: inherit;
+	color: red;
+}
+#signup_from label{
+	color: red;
+	font-size: small;
+}
+label.valid {
+  width: 30px;
+  height: 30px;
+  background: url('../img/valid.png') center center no-repeat;
+  display: inline-block;
+  text-indent: -9999px;
+   
+}
+
+label.error {
+  font-weight: bold;
+  color: red;
+  padding: 2px 8px;
+  margin-top: 1px;
+  display: inline;
 }

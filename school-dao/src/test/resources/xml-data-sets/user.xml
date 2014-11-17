@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
 	<USER id="1" email="testemail1@gmail.com" firstName="Roman" lastName="Petrov" 
-	password="password" registration="2014-10-20 23:06:10" sex="0"/>
+	password="password" registration="2014-10-20 23:06:10" sex="0" confirmed="1"/>
 	<USER id="2" email="testemail2@gmail.com" firstName="Bogdan" lastName="Petrov" 
-	password="password" registration="2014-10-20 23:08:10" sex="0"/>
+	password="password" registration="2014-10-20 23:08:10" sex="0" confirmed="0"/>
 	<USER id="3" email="testemail3@gmail.com" firstName="Ivan" lastName="Petrovsky" 
-	password="password" registration="2014-10-20 23:09:10" sex="0"/>
+	password="password" registration="2014-10-20 23:09:10" sex="0" confirmed="0"/>
 	<USER id="4" email="testemail4@gmail.com" firstName="Petro" lastName="Petrovich" 
-	password="password" registration="2014-10-20 23:11:10" sex="0"/>
+	password="password" registration="2014-10-20 23:11:10" sex="0" confirmed="0"/>
 	<USER id="5" email="testemail5@gmail.com" firstName="Grigoriy" lastName="PetrovRomanov" 
-	password="password" registration="2014-10-20 23:12:10" sex="0"/>
+	password="password" registration="2014-10-20 23:12:10" sex="0" confirmed="0"/>
 	<ROLE id="1" name="Teacher"/>
 	<ROLE id="2" name="Parent"/>
 	<USER_ROLE_REF userId="1" roleId="1"/>

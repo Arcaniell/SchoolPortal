@@ -49,6 +49,8 @@
 		</div>
 
 		<jsp:include page="/views/home/login.jsp" />
+		<jsp:include page="/views/home/forgotapassword.jsp" />
 		<jsp:include page="/views/home/registration.jsp" />
+		<jsp:include page="/views/home/registration_succes.jsp" />
 
 	</div>

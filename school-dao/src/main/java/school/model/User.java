@@ -36,7 +36,7 @@ public class User {
 	private String email;
 	@Column(nullable = false, length = 45)
 	private String password;
-	@Column(nullable = false, length = 45)
+	@Column(nullable = false, length = 65)
 	private String firstName;
 	@Column(nullable = false, length = 45)
 	private String lastName;
@@ -44,6 +44,8 @@ public class User {
 	private byte sex;
 	@Column(nullable = false)
 	private Date registration;
+	@Column(nullable = false)
+	private boolean confirmed;
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "USER_ROLE_REF", joinColumns = { @JoinColumn(name = "userId", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "roleId", nullable = false) })
 	private Set<Role> roles = new HashSet<Role>();
@@ -116,6 +118,14 @@ public class User {
 		this.roles = roles;
 	}
 
+	public boolean isConfirmed() {
+		return confirmed;
+	}
+
+	public void setConfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -178,6 +188,10 @@ public class User {
 		public static final byte MALE = (byte) 0;
 		public static final byte FEMALE = (byte) 1;
 		public static final byte OTHER = (byte) 2;
+	}
+	public class ConfirmType{
+		public static final boolean UCONFIRMED = false;
+		public static final boolean CONFIRMED = true;
 	}
 
 }

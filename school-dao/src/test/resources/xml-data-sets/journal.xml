@@ -3,22 +3,22 @@
 
 	<USER id="1" email="testemail1@gmail.com" firstName="Roman"
 		lastName="Petrov" password="password" registration="2013-10-20 23:06:10"
-		sex="0" />
+		sex="0"  confirmed="0"/>
 	<USER id="2" email="testemail2@gmail.com" firstName="Bogdan"
 		lastName="Petrov" password="password" registration="2013-10-20 23:08:10"
-		sex="0" />
+		sex="0"  confirmed="0"/>
 	<USER id="3" email="testemail3@gmail.com" firstName="Ivan"
 		lastName="Petrovsky" password="password" registration="2013-10-20 23:09:10"
-		sex="0" />
+		sex="0"  confirmed="0"/>
 	<USER id="4" email="testemail4@gmail.com" firstName="Petro"
 		lastName="Petrovich" password="password" registration="2013-10-20 23:11:10"
-		sex="0" />
+		sex="0"  confirmed="0"/>
 	<USER id="5" email="testemail5@gmail.com" firstName="Ivan"
 		lastName="Petrovsky" password="password" registration="2013-10-20 23:09:10"
-		sex="0" />
+		sex="0"  confirmed="0"/>
 	<USER id="6" email="testemail6@gmail.com" firstName="Ivan"
 		lastName="Petrovsky" password="password" registration="2013-10-20 23:09:10"
-		sex="0" />
+		sex="0"  confirmed="0"/>
 	<COURSE id="1" courseName="Math" groupNumber="5" additional="0"
 		coeficient="1" price="10" />
 

@@ -22,6 +22,7 @@
 		<class>school.model.Course</class>
 		<class>school.model.Conversation</class>
 		<class>school.model.News</class>
+		<class>school.model.RegistrationCode</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 			<property name="hibernate.connection.show_sql" value="true" />

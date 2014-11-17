@@ -4,10 +4,6 @@
 <%@ page session="true"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
-
-<script src="<c:url value="/resources/js/home.js" />"
-	type="text/javascript"></script>
-
 <div>
 	<div class="home">
 		<div align="center">

@@ -43,6 +43,7 @@ public class UserDaoImplTest extends DBUnitConfig {
 		user.setPassword("password");
 		user.setRegistration(new Date());
 		user.setSex(User.SexType.MALE);
+		user.setConfirmed(User.ConfirmType.CONFIRMED);
 		DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
 				.getConnection(), getDataSet());
 	}
@@ -74,6 +75,7 @@ public class UserDaoImplTest extends DBUnitConfig {
 		newUser.setPassword("password");
 		newUser.setRegistration(new Date());
 		newUser.setSex(User.SexType.FEMALE);
+		newUser.setConfirmed(User.ConfirmType.CONFIRMED);
 		userDao.save(newUser);
 		List<User> users = userDao.findAll();
 		Assert.assertTrue(users.size() == 6);

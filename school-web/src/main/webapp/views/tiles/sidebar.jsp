@@ -4,11 +4,17 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
-<div class="profile-info">Lora Palmer</div>
+<%@ page session="false"%>
+<% String user_name = (String) request.getSession().getAttribute("user_name");
+if(user_name == null){
+	user_name = "";
+}
+%>
+<div class="profile-info"><%=user_name %></div>
 <img class="logo" src="<c:url value="/resources/img/logo.png" />" />
 <div class="internal-buttons">
 	<ul class="nav nav-sidebar">
-		<li class="active"><a href="#">Profile</a></li>
+		<li class="active"><a href="profile">Profile</a></li>
 		<li><a href="#">Schedule</a></li>
 		<sec:authorize access="hasRole('ROLE_TEACHER')">
 			<li><a href="journal">Journal</a></li>

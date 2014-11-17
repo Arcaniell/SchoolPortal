@@ -2,15 +2,15 @@
 <dataset>
 
     <USER id="1" email="testemail1@gmail.com" firstName="Vladyslav" lastName="Maksymenko" 
-	password="password" registration="2014-10-20 23:06:10" sex="0"/>
+	password="password" registration="2014-10-20 23:06:10" sex="0" confirmed="0"/>
 	<USER id="2" email="testemail2@gmail.com" firstName="Roman" lastName="Mudry" 
-	password="password" registration="2014-10-20 23:08:10" sex="0"/>
+	password="password" registration="2014-10-20 23:08:10" sex="0" confirmed="0"/>
 	<USER id="3" email="testemail3@gmail.com" firstName="Roman" lastName="Mudry2" 
-	password="password" registration="2014-10-20 23:08:10" sex="0"/>
+	password="password" registration="2014-10-20 23:08:10" sex="0" confirmed="0"/>
 	<USER id="4" email="testemail4@gmail.com" firstName="Viktor" lastName="Fedinchuk" 
-	password="password" registration="2014-10-20 23:09:10" sex="0"/>
+	password="password" registration="2014-10-20 23:09:10" sex="0" confirmed="0"/>
 	<USER id="5" email="testemail5@gmail.com" firstName="Roman" lastName="Zherebytsky" 
-	password="password" registration="2014-10-20 23:09:10" sex="0"/>
+	password="password" registration="2014-10-20 23:09:10" sex="0" confirmed="0"/>
 	
 	<CONVERSATION id="1" subject="Subject1" senderId="2" receiverId="1" isAnswered="1" isDeletedReceiver="0" isDeletedSender="0"/>
 	<CONVERSATION id="2" subject="Subject2" senderId="4" receiverId="2" isAnswered="1" isDeletedReceiver="0" isDeletedSender="0"/>

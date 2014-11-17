@@ -12,7 +12,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><tiles:getAsString name="title" /></title>
-<!-- OUR LOCAL CSS -->
+<!-- OUR LOCAL CSS-->
 <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/home.css" />" rel="stylesheet">
 <!-- BOOTSTRAP -->
@@ -25,9 +25,15 @@
 <!-- JQUERY -->
 <script type="text/javascript"
 	src="<c:url value="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" />"></script>
+<script type="text/javascript"
+	src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+
 <!-- BOOTSTRAP JS -->
 <script type="text/javascript"
 	src="<c:url value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js" />"></script>
+<!-- OUR LOCAL JS -->
+<script type="text/javascript" src="<c:url value="/resources/js/home.js" />"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/validate-registration.js" />"></script>
 <!-- DATAPICKER -->
 <link
 	href="<c:url value="https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />"
