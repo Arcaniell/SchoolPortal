@@ -22,6 +22,7 @@ import school.service.CourseService;
  */
 @Service
 public class CourseServiceImpl implements CourseService {
+    final boolean COURSE_STATUS = true;
     @Autowired
     CourseDao courseDao;
     @Autowired
@@ -29,7 +30,7 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     CourseRequestDao courseRequestDao;
 
-    List<Course> getCourseForGroup(Group group, Date from, Date till) {
+    public List<Course> getCourseForGroup(Group group, Date from, Date till) {
         List<Course> listCourses = new ArrayList<Course>();
         try {
             List<Course> course = courseDao.findByGroupIdAndDataRange(
@@ -61,26 +62,27 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> findAllByStatusAndYear(boolean status, int year,
-            long userId) {
+    public List<Course> findCanRequestCourses(Principal user) {
+        long userId = Long.parseLong(user.getName());
         Student student = studentDao.findByUserId(userId);
-        if (student == null) {
+        Group mainGroup = student.getGroup();
+        if (student == null || mainGroup == null) {
             return null;
         }
+
         List<CourseRequest> additionCourses = courseRequestDao
                 .findAllByStudentId(student.getId());
-        List<Course> courses = courseDao.findAllByStatusAndYear(status, year);
-        if (courseDao == null && courseRequestDao == null) {
-            return null;
-        }
+        List<Course> canSignCourses = courseDao.findAllByStatusAndYear(
+                COURSE_STATUS, mainGroup.getNumber());
+        // check if user already sign to one of the list of available courses
         for (int i = 0; i < additionCourses.size(); i++) {
-            for (int j = 0; j < courses.size(); j++) {
-                if (additionCourses.get(i).getCourse().getId() == courses
+            for (int j = 0; j < canSignCourses.size(); j++) {
+                if (additionCourses.get(i).getCourse().getId() == canSignCourses
                         .get(j).getId()) {
-                    courses.remove(j);
+                    canSignCourses.remove(j);
                 }
             }
         }
-        return courses;
+        return canSignCourses;
     }
 }

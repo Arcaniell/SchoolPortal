@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * @param id
-     *            logged user id
+     *            id of our logged user
      * @author Blowder
      */
     @Override

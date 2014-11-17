@@ -13,6 +13,6 @@ public interface CourseService {
     // @Secured("ROLE_TEACHER")
     List<Course> allCoursesinDateRangeForStudent(Principal user, Date from, Date till);
 
-    List<Course> findAllByStatusAndYear(boolean status, int year, long userId);
+    List<Course> findCanRequestCourses(Principal user);
 
 }

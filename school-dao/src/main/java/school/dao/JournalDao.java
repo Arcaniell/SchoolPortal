@@ -14,6 +14,6 @@ public interface JournalDao extends BaseDao<Journal, Long> {
 	List<Journal> findByIntervalAndStudentId(long studentId, Date from,
 			Date till);
 
-	Journal findByScheduleAndStudent(long studentId, long scheduleId);
+	Journal findByStudentAndSchedule(long studentId, long scheduleId);
 
 }

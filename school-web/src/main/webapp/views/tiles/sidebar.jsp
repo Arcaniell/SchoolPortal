@@ -22,8 +22,7 @@
 		</sec:authorize>
 		<li><a href="#"><spring:message code="sidebar.schedule" /></a></li>
 		<sec:authorize access="hasRole('ROLE_TEACHER')">
-			<li><a href="journal"><spring:message
-						code="sidebar.journal" /></a></li>
+			<li><a href="journal"><spring:message code="sidebar.journal" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_PARENT')">
 			<li><a href='<c:url value="/inbox"/>'><spring:message
@@ -31,10 +30,9 @@
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_STUDENT')">
 			<li><a href=courses><spring:message code="sidebar.course" /></a></li>
+			<li><a href=course-request><spring:message
+						code="sidebar.request" /></a></li>
 		</sec:authorize>
-		<li><a href=course-request><spring:message
-					code="sidebar.request" /></a></li>
-
 		<li><a href="#"><spring:message code="sidebar.contacts" /></a></li>
 		<li><a href="#"><spring:message code="sidebar.about" /></a></li>
 	</ul>
