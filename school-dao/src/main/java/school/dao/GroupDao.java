@@ -23,4 +23,7 @@ public interface GroupDao extends BaseDao<Group, Long> {
 
     public Group findByCourseId(long courseId);
 
+    List<Group> findAllByTeacherIdGroupIdDataRange(long teacherId,
+            long courseId, Date from, Date till);
+
 }

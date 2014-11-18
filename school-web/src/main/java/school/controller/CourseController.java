@@ -2,6 +2,7 @@ package school.controller;
 
 import java.security.Principal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import school.dto.CourseTeacherDTO;
 import school.model.Course;
 import school.model.Role;
 import school.service.CourseService;
@@ -46,16 +48,34 @@ public class CourseController {
                 till = swap;
             }
             // get list of courses
-            List<Course> coursesSet = course.allCoursesinDateRangeForStudent(
+            List<Course> coursesList = course.allCoursesinDateRangeForStudent(
                     user, from, till);
             // transfer data to form
             model.addAttribute("dateFrom", formatterDate.format(from));
             model.addAttribute("dateTill", formatterDate.format(till));
-            model.addAttribute("courses", coursesSet);
+            model.addAttribute("courses", coursesList);
             return "courses-student";
         }
         if (request.isUserInRole(Role.Secured.TEACHER)) {
-            // TODO Blowder: write a teacher representation of course
+            // parse dates from form
+            Date from = ControllersUtil.dateProceed(dateFrom, formatterDate,
+                    TWO_MONTHS_IN_DAYS, FORWARD_TRUE);
+            Date till = ControllersUtil.dateProceed(dateTill, formatterDate,
+                    TWO_MONTHS_IN_DAYS, FORWARD_FALSE);
+            if (from.after(till)) {
+                Date swap = from;
+                from = till;
+                till = swap;
+            }
+            // get list of courses
+            List<CourseTeacherDTO> coursesList = new ArrayList<CourseTeacherDTO>();
+            coursesList = course.allCoursesinDateRangeForTeacher(user, from,
+                    till);
+            // transfer data to form
+            model.addAttribute("dateFrom", formatterDate.format(from));
+            model.addAttribute("dateTill", formatterDate.format(till));
+            model.addAttribute("courses", coursesList);
+            return "courses-teacher";
         }
         return "redirect:/login";
     }

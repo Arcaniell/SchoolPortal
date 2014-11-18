@@ -1,20 +1,27 @@
 package school.service.implementation;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import school.dao.CourseDao;
 import school.dao.CourseRequestDao;
+import school.dao.GroupDao;
 import school.dao.StudentDao;
+import school.dao.TeacherDao;
+import school.dto.CourseTeacherDTO;
 import school.model.Course;
 import school.model.CourseRequest;
 import school.model.Group;
 import school.model.Student;
+import school.model.Teacher;
 import school.service.CourseService;
 
 /**
@@ -23,12 +30,17 @@ import school.service.CourseService;
 @Service
 public class CourseServiceImpl implements CourseService {
     final boolean COURSE_STATUS = true;
+    SimpleDateFormat formatterDate = new SimpleDateFormat("MM/dd/yyyy");
     @Autowired
     CourseDao courseDao;
     @Autowired
     StudentDao studentDao;
     @Autowired
+    TeacherDao teacherDao;
+    @Autowired
     CourseRequestDao courseRequestDao;
+    @Autowired
+    GroupDao groupDao;
 
     public List<Course> getCourseForGroup(Group group, Date from, Date till) {
         List<Course> listCourses = new ArrayList<Course>();
@@ -84,5 +96,65 @@ public class CourseServiceImpl implements CourseService {
             }
         }
         return canSignCourses;
+    }
+
+    @Override
+    public List<CourseTeacherDTO> allCoursesinDateRangeForTeacher(
+            Principal user, Date from, Date till) {
+        long userId = Long.parseLong(user.getName());
+        Teacher teacher = teacherDao.findByUserId(userId);
+        List<Course> coursesFromTeacher = teacher.getCourse();
+        List<Course> coursesFromSchedule = courseDao
+                .findByTeacherIdAndDataRange(teacher.getId(), from, till);
+
+        List<CourseTeacherDTO> jspCoursesList = new ArrayList<CourseTeacherDTO>();
+        for (Course currentCourse : coursesFromTeacher) {
+            CourseTeacherDTO temporaryCourseDTO = new CourseTeacherDTO();
+            temporaryCourseDTO.setId(currentCourse.getId());
+            temporaryCourseDTO.setName(currentCourse.getCourseName());
+            temporaryCourseDTO.setYear(currentCourse.getGroupNumber());
+            if (currentCourse.isAdditional()) {
+                temporaryCourseDTO.setAdditional("YES");
+            } else {
+                temporaryCourseDTO.setAdditional("NO");
+            }
+            temporaryCourseDTO.setRate(currentCourse.getCoeficient());
+            temporaryCourseDTO.setFrom("-");
+            temporaryCourseDTO.setTill("-");
+            Iterator<Course> additionCourse = coursesFromSchedule.iterator();
+            while (additionCourse.hasNext()) {
+                if (currentCourse.getId() == additionCourse.next().getId()) {
+                    temporaryCourseDTO.setFrom(formatterDate.format(from));
+                    temporaryCourseDTO.setTill(formatterDate.format(till));
+                    additionCourse.remove();
+                }
+            }
+
+            temporaryCourseDTO.setGroups(groupDao
+                    .findAllByTeacherIdGroupIdDataRange(teacher.getId(),
+                            currentCourse.getId(), from, till).size());
+            // add element to main JSP list
+            jspCoursesList.add(temporaryCourseDTO);
+        }
+        for (Course additionCourse : coursesFromSchedule) {
+            CourseTeacherDTO temporaryCourseDTO = new CourseTeacherDTO();
+            temporaryCourseDTO.setId(additionCourse.getId());
+            temporaryCourseDTO.setName(additionCourse.getCourseName());
+            temporaryCourseDTO.setYear(additionCourse.getGroupNumber());
+            if (additionCourse.isAdditional()) {
+                temporaryCourseDTO.setAdditional("YES");
+            } else {
+                temporaryCourseDTO.setAdditional("NO");
+            }
+            temporaryCourseDTO.setRate(additionCourse.getCoeficient());
+            temporaryCourseDTO.setFrom(formatterDate.format(from));
+            temporaryCourseDTO.setTill(formatterDate.format(till));
+            temporaryCourseDTO.setGroups(groupDao
+                    .findAllByTeacherIdGroupIdDataRange(teacher.getId(),
+                            additionCourse.getId(), from, till).size());
+            // add element to main JSP list
+            jspCoursesList.add(temporaryCourseDTO);
+        }
+        return jspCoursesList;
     }
 }
