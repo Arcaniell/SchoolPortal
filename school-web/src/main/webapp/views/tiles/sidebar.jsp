@@ -6,14 +6,16 @@
 	prefix="sec"%>
 
 <%@ page session="false"%>
-<% String user_name = (String) request.getSession().getAttribute("user_name");
-if(user_name == null){
-	user_name = "";
-}
+<%
+    String user_name = (String) request.getSession().getAttribute(
+            "user_name");
+    if (user_name == null) {
+        user_name = "";
+    }
 %>
 
 <sec:authorize access="isAuthenticated()">
-	<div class="profile-info"><%=user_name %></div>
+	<div class="profile-info"><%=user_name%></div>
 	<!-- <input name = "userId" type=hidden value="${pageContext.request.userPrincipal.name}"> -->
 	<img class="logo"
 		src="<c:url value="/resources/img/logos/${pageContext.request.userPrincipal.name}.png" />" />
@@ -35,10 +37,12 @@ if(user_name == null){
 			<li><a href='<c:url value="/inbox"/>'><spring:message
 						code="sidebar.message" /></a></li>
 		</sec:authorize>
-		<sec:authorize access="hasAnyRole('ROLE_HEAD_TEACHER', 'ROLE_STUDENT')">
+		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_STUDENT')">
 			<li><a href=courses><spring:message code="sidebar.course" /></a></li>
-			<li><a href=course-request><spring:message
-						code="sidebar.request" /></a></li>
+			<li><a href=groups><spring:message code="sidebar.groups" /></a></li>
+		</sec:authorize>
+		<sec:authorize access="hasAnyRole('ROLE_HEAD_TEACHER', 'ROLE_STUDENT')">
+			<li><a href=course-request><spring:message code="sidebar.request" /></a></li>
 		</sec:authorize>
 		<li><a href="#"><spring:message code="sidebar.contacts" /></a></li>
 		<li><a href="#"><spring:message code="sidebar.about" /></a></li>
