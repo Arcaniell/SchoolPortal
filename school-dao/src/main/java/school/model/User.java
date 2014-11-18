@@ -1,9 +1,7 @@
 package school.model;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,11 +33,11 @@ public class User {
 	private long id;
 	@Column(nullable = false, unique = true, length = 100)
 	private String email;
-	@Column(nullable = false, length = 45)
-	private String password;
 	@Column(nullable = false, length = 65)
+	private String password;
+	@Column(nullable = false, length = 20)
 	private String firstName;
-	@Column(nullable = false, length = 45)
+	@Column(nullable = false, length = 20)
 	private String lastName;
 	@Column(nullable = false)
 	private byte sex;

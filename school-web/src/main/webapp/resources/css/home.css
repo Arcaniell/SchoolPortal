@@ -109,3 +109,12 @@ label.error {
   margin-top: 1px;
   display: inline;
 }
+.question_drop_long{
+	width:350px; height: 30px;
+}
+.question_drop_short{
+	width:200px; height: 30px;
+}
+#for_caret{
+margin-left: -12px;
+}

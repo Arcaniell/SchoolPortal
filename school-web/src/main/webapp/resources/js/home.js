@@ -9,29 +9,13 @@ $(document).ready(function(){
 		    $(".showhomeinfo").hide();
 		    $(".hidehomeinfo").show();
 		  });
-	  $("#signup_button").click(function(){
-		  var firstname = $("#firstname").val();
-		  var lastname = $("#lastname").val();
-		  var email = $("#email").val();
-		  var password = $("#createapassword").val();
-		  var sex = $( "input:radio[name=sex]:checked" ).val();
-		  var role = $( "input:radio[name=role]:checked" ).val();
-		  $.ajax({
-				type : "POST",
-				url : "registration/check",
-				data : "firstname=" + firstname + "&lastname=" + lastname + 
-				"&email=" + email + "&password=" + password + "&sex=" + sex + 
-				"&role=" + role,
-		        success : function(responce) {
-		        		$("#signUpSuccesButton").click();
-		           },
-             error: function() {
-                 alert("eee");
-             }
-          });
-	
-		  
+	  
+	  $(".question").click(function(){
+		  $("#question").val($("."+$(this).attr('id')).attr("value"));
+		  $("#questionNumber").val($(this).attr('id'));
 		  });
+	  
+
 	  $("#forgotAPasswordButton").click(function(){
 		  var email = $("#forgot_email").val();
 		  alert(email);
