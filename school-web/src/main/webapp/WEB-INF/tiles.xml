@@ -5,7 +5,7 @@
 
 <tiles-definitions>
 	<definition name="base.definition" template="/views/layout.jsp">
-		<put-attribute name="header" value="/views/tiles/header.jsp" />
+		<put-attribute name="header" value="/views/tiles/header_new.jsp" />
 		<put-attribute name="sidebar" value="/views/tiles/sidebar.jsp" />
 		<put-attribute name="main_content" value="" />
 	</definition>
@@ -44,19 +44,22 @@
 	<definition name="groups-*" extends="base.definition">
 		<put-attribute name="title" value="Group page" />
 		<put-attribute name="main_content" value="/views/groups/{1}.jsp" />
-		<put-attribute name="current" value="group" />
 	</definition>
 
 	<definition name="courses-*" extends="base.definition">
 		<put-attribute name="title" value="Courses page" />
 		<put-attribute name="main_content" value="/views/courses/{1}.jsp" />
-		<put-attribute name="current" value="group" />
+	</definition>
+
+	<definition name="salary-*" extends="base.definition">
+		<put-attribute name="title" value="Salary page" />
+		<put-attribute name="main_content" value="/views/salary/{1}.jsp" />
+		<put-attribute name="current" value="salary" />
 	</definition>
 
 	<definition name="course-request-*" extends="base.definition">
 		<put-attribute name="title" value="Course request page" />
 		<put-attribute name="main_content" value="/views/course-request/{1}.jsp" />
-		<put-attribute name="current" value="group" />
 	</definition>
 
 	<definition name="inbox" extends="base.definition">

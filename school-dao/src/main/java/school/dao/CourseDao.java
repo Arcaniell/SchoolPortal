@@ -13,7 +13,8 @@ public interface CourseDao extends BaseDao<Course, Long> {
 
     List<Course> findAllByStatus(boolean status);
 
-    List<Course> findByGroupNumber(int groupNumber) throws NoResultException, MySQLSyntaxErrorException;
+    List<Course> findByGroupNumber(int groupNumber) throws NoResultException,
+            MySQLSyntaxErrorException;
 
     List<Course> findByCoefficient(int coefficient);
 
@@ -27,5 +28,8 @@ public interface CourseDao extends BaseDao<Course, Long> {
     List<Course> findByGroupIdAndDataRange(long groupId, Date from, Date till);
 
     List<Course> findAllByStatusAndYear(boolean status, int year);
+
+    List<Course> findByTeacherIdAndDataRange(long teacherId, Date from,
+            Date till);
 
 }

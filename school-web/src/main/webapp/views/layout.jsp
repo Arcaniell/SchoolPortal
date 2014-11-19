@@ -34,6 +34,7 @@
 <!-- OUR LOCAL JS -->
 <script type="text/javascript" src="<c:url value="/resources/js/home.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/validate-registration.js" />"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/validate-forgotyourpassword.js" />"></script>
 <!-- DATAPICKER -->
 <link
 	href="<c:url value="https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />"

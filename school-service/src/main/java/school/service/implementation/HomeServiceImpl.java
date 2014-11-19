@@ -1,5 +1,6 @@
 package school.service.implementation;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -10,11 +11,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import school.dao.NewsDao;
-import school.dao.RegistrationCodeDao;
+import school.dao.RegistrationDataDao;
 import school.dao.UserDao;
+import school.dto.RegistrationDTO;
 import school.model.News;
-import school.model.RegistrationCode;
-import school.model.RoleRequest;
+import school.model.RegistrationData;
+import school.model.Role;
 import school.model.User;
 import school.service.EmailService;
 import school.service.HomeService;
@@ -29,7 +31,7 @@ public class HomeServiceImpl implements HomeService {
 	@Autowired
 	UserDao userDao;
 	@Autowired
-	RegistrationCodeDao registrationCodeDao;
+	RegistrationDataDao registrationDataDao;
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -43,37 +45,35 @@ public class HomeServiceImpl implements HomeService {
 	}
 
 	@Override
-	public boolean registrateUser(User user, Integer role, String url) {
+	public boolean registrateUser(RegistrationDTO registrationDTO, String url) {
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		User newUser = userService.createUser(user);
-		if (newUser != null) {
-			RoleRequest roleRequest = roleRequestService.createRoleRequest(
-					newUser, role);
-			if (roleRequest != null) {
-
-				RegistrationCode registrationCode = new RegistrationCode();
-				registrationCode.setUser(newUser);
+		registrationDTO.getUser().setPassword(passwordEncoder
+				.encode(registrationDTO.getUser().getPassword()));
+		List<Role> roles = registrationDTO.getUser().getRoles();
+		registrationDTO.getUser().setRoles(null);
+		registrationDTO.getUser().setRegistration(new Date());
+		registrationDTO.setUser(userService.createUser(registrationDTO.getUser()));
+		if (registrationDTO.getUser() != null) {
+			roleRequestService.createRoleRequest(registrationDTO.getUser(), roles);
+			registrationDTO.getRegistrationData().setUser(registrationDTO.getUser());
 				Random random = new Random();
-				registrationCode
-						.setRegistrationCode(Math.abs(random.nextInt()));
-				RegistrationCode newRegistrationCode = registrationCodeDao
-						.update(registrationCode);
-				if (newRegistrationCode != null) {
-					if (emailService.sendRegistrationEmail(newUser,
-							newRegistrationCode, url))
+				registrationDTO.getRegistrationData().setRegistrationCode(Math.abs(random.nextInt()));
+				registrationDTO.setRegistrationData(registrationDataDao
+						.update(registrationDTO.getRegistrationData()));
+				if (registrationDTO.getRegistrationData() != null) {
+					if (emailService.sendRegistrationEmail(registrationDTO, url))
 						return true;
 				}
-			}
+			
 		}
 		return false;
 	}
 
 	@Override
 	public User confirmUser(long userId, int code) {
-		RegistrationCode registrationCode = registrationCodeDao
+		RegistrationData registrationData = registrationDataDao
 				.findByUserAndCode(userId, code);
-		if (registrationCode != null){
+		if (registrationData != null){
 			User user = userDao.findById(userId);
 			user.setConfirmed(User.ConfirmType.CONFIRMED);
 			return userDao.update(user);

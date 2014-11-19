@@ -1,6 +1,7 @@
 package school.service.implementation;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,19 +19,14 @@ public class RoleRequestServiceImpl implements RoleRequestService{
 	private RoleRequestDao roleRequestDao;
 
 	@Override
-	public RoleRequest createRoleRequest(User user, Integer roleId) {
-		Role role = new Role();
-		role.setId(roleId);
+	public void createRoleRequest(User user, List<Role> roles) {
+		for(Role role : roles){
 		RoleRequest roleRequest = new RoleRequest();
 		roleRequest.setRole(role);
 		roleRequest.setUser(user);
 		roleRequest.setRequestDate(new Date());
-		try{
-			return roleRequestDao.update(roleRequest);
-		}catch(Exception e){
-			return null;
+		roleRequestDao.update(roleRequest);
 		}
-		
 	}
 	
 

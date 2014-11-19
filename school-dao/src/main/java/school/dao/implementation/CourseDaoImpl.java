@@ -154,5 +154,24 @@ public class CourseDaoImpl extends BaseDaoImpl<Course, Long> implements
         }
         return null;
     }
+    
+    @SuppressWarnings("unchecked")
+    @Transactional
+    public List<Course> findByTeacherIdAndDataRange(long teacherId, Date from,
+            Date till) {
+        try {
+            if (entityManager != null) {
+                return (List<Course>) entityManager
+                        .createNamedQuery(
+                                Course.FIND_BY_TEACHER_ID_AND_DATA_RANGE)
+                        .setParameter("teacherId", teacherId)
+                        .setParameter("from", from).setParameter("till", till)
+                        .getResultList();
+            }
+        } catch (Exception e) {
+            // nothing to do here, return null
+        }
+        return null;
+    }
 
 }

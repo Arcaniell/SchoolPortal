@@ -22,8 +22,7 @@ import javax.persistence.Table;
 @NamedQueries({
         @NamedQuery(name = Teacher.FIND_ALL_BY_STATUS, query = Teacher.FIND_ALL_BY_STATUS_QUERY),
         @NamedQuery(name = Teacher.FIND_BY_USER_ID, query = Teacher.FIND_BY_USER_ID_QUERY),
-        @NamedQuery(name = Teacher.FIND_RATE_RANGE, query = Teacher.FIND_RATE_RANGE_QUERY) 
-        })
+        @NamedQuery(name = Teacher.FIND_RATE_RANGE, query = Teacher.FIND_RATE_RANGE_QUERY) })
 public class Teacher {
     public static final String FIND_ALL_BY_STATUS = "Teacher.findAllByStatus";
     public static final String FIND_BY_USER_ID = "Teacher.findByUserId";
@@ -47,28 +46,12 @@ public class Teacher {
     private User user;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
-    private Set<Course> course;
+    private List<Course> course;
 
     private boolean isActive;
 
     public Teacher() {
         super();
-    }
-
-    public Set<Course> getCourse() {
-        return course;
-    }
-
-    public void setCourse(Set<Course> course) {
-        this.course = course;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean isActive) {
-        this.isActive = isActive;
     }
 
     public long getId() {
@@ -103,12 +86,20 @@ public class Teacher {
         this.user = user;
     }
 
-    public Set<Course> getSubject() {
+    public List<Course> getCourse() {
         return course;
     }
 
-    public void setSubject(Set<Course> subject) {
-        this.course = subject;
+    public void setCourse(List<Course> course) {
+        this.course = course;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
     @Override

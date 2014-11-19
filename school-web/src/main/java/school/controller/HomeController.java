@@ -1,7 +1,9 @@
 package school.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,11 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import school.dto.RegistrationDTO;
+import school.model.RegistrationData;
+import school.model.Role;
 import school.model.User;
 import school.service.HomeService;
 import school.service.UserService;
@@ -79,28 +85,16 @@ public class HomeController {
 		return "signinfailure";
 	}
 
-	@RequestMapping(value = "/registration/check", method = RequestMethod.POST)
-	public @ResponseBody boolean registration(HttpServletRequest request,
-			@RequestParam(value = "firstname") String firstName,
-			@RequestParam(value = "lastname") String lastName,
-			@RequestParam(value = "email") String email,
-			@RequestParam(value = "password") String password,
-			@RequestParam(value = "sex") Byte sex,
-			@RequestParam(value = "role") Integer role) {
-		User user = new User();
-		user.setEmail(email);
-		user.setFirstName(firstName);
-		user.setLastName(lastName);
-		user.setPassword(password);
-		user.setRegistration(new Date());
-		user.setSex(sex);
-		user.setConfirmed(User.ConfirmType.UCONFIRMED);
-		return homeService.registrateUser(user, role, request.getContextPath());
+	@RequestMapping(value = "/registration", method = RequestMethod.POST)
+	public @ResponseBody boolean registration(@RequestBody RegistrationDTO registrationDTO,
+			HttpServletRequest request) {	
+		return homeService.registrateUser(registrationDTO, request.getContextPath());
 	}
 
 	@RequestMapping(value = "/email/check", method = RequestMethod.GET)
-	public @ResponseBody boolean check(
-			@RequestParam(value = "email") String email) {
+	public @ResponseBody boolean check(@RequestParam(value = "email") String email) {
 		return userService.isEmailAviable(email);
 	}
+		
+	
 }
