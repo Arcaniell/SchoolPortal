@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import school.dto.CourseDTO;
-import school.model.Course;
 import school.model.Role;
 import school.service.CourseService;
 
