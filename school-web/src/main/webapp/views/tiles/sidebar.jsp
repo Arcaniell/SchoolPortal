@@ -30,7 +30,10 @@
 			<li><a href="#"><spring:message code="sidebar.profile" /></a></li>
 		</sec:authorize>
 		<li><a href="#"><spring:message code="sidebar.schedule" /></a></li>
-		<sec:authorize access="hasRole('ROLE_TEACHER')">
+		<sec:authorize access="hasAnyRole('ROLE_STUDENT', 'ROLE_PARENT')">
+			<li><a href="diary">Diary</a></li>
+		</sec:authorize>
+		<sec:authorize access="hasAnyRole('ROLE_HEAD_TEACHER', 'ROLE_TEACHER')">
 			<li><a href="journal"><spring:message code="sidebar.journal" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_PARENT')">
@@ -39,20 +42,10 @@
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_STUDENT')">
 			<li><a href=courses><spring:message code="sidebar.course" /></a></li>
-		</sec:authorize>
-		<sec:authorize
-			access="hasAnyRole('ROLE_TEACHER', 'ROLE_STUDENT', 'ROLE_HEAD_TEACHER')">
 			<li><a href=groups><spring:message code="sidebar.groups" /></a></li>
 		</sec:authorize>
-		<sec:authorize
-			access="hasAnyRole('ROLE_HEAD_TEACHER', 'ROLE_STUDENT')">
-			<li><a href=course-request><spring:message
-						code="sidebar.request" /></a></li>
-		</sec:authorize>
-		<sec:authorize
-			access="hasRole('ROLE_TEACHER')">
-			<li><a href=salary><spring:message
-						code="sidebar.salary" /></a></li>
+		<sec:authorize access="hasAnyRole('ROLE_HEAD_TEACHER', 'ROLE_STUDENT')">
+			<li><a href=course-request><spring:message code="sidebar.request" /></a></li>
 		</sec:authorize>
 		<li><a href="#"><spring:message code="sidebar.contacts" /></a></li>
 		<li><a href="#"><spring:message code="sidebar.about" /></a></li>

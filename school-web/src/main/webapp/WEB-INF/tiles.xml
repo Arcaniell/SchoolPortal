@@ -5,7 +5,7 @@
 
 <tiles-definitions>
 	<definition name="base.definition" template="/views/layout.jsp">
-		<put-attribute name="header" value="/views/tiles/header_new.jsp" />
+		<put-attribute name="header" value="/views/tiles/header.jsp" />
 		<put-attribute name="sidebar" value="/views/tiles/sidebar.jsp" />
 		<put-attribute name="main_content" value="" />
 	</definition>
@@ -25,9 +25,20 @@
 		<put-attribute name="main_content" value="/views/journal/journal.jsp" />
 	</definition>
 
+	<definition name="journal-group-marks" extends="base.definition">
+		<put-attribute name="title" value="Journal" />
+		<put-attribute name="main_content"
+			value="/views/journal/journal-group-marks.jsp" />
+	</definition>
+
 	<definition name="diary" extends="base.definition">
 		<put-attribute name="title" value="Diary" />
 		<put-attribute name="main_content" value="/views/journal/diary.jsp" />
+	</definition>
+
+	<definition name="diary-change" extends="base.definition">
+		<put-attribute name="title" value="Diary" />
+		<put-attribute name="main_content" value="/views/journal/diary-change.jsp" />
 	</definition>
 
 	<definition name="groups-*" extends="base.definition">

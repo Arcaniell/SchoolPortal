@@ -5,4 +5,5 @@ import school.model.RegistrationData;
 public interface RegistrationDataDao extends BaseDao<RegistrationData, Long>{
 	
 	RegistrationData findByUserAndCode(long userId, int code);
+	RegistrationData findByUserQuestionAnswer(RegistrationData registrationData);
 }

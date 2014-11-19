@@ -29,12 +29,20 @@
 
 										<td><spring:message code="label.registration.name" /></td>
 
-										<td><input id="firstname" name="firstName"
-											class="registration_names" type="text"
-											placeholder="<spring:message code="label.firstname" />" /> <input
-											id="lastname" name="lastName" class="registration_names"
-											type="text"
-											placeholder="<spring:message code="label.lastname" />" /></td>
+										<td>
+											<table>
+												<tr>
+													<td><input id="firstname" name="firstName"
+														class="registration_names" type="text"
+														placeholder="<spring:message code="label.firstname" />" /></td>
+												</tr>
+												<tr>
+													<td><input id="lastname" name="lastName"
+														class="registration_names" type="text"
+														placeholder="<spring:message code="label.lastname" />" /></td>
+												</tr>
+											</table>
+										</td>
 
 									</tr>
 									<tr>
@@ -67,56 +75,82 @@
 									</tr>
 
 								</table></td>
-						
 
 
-							
+
+
 						</tr>
 						<tr>
-							
-							<td>
-							<table>
-							<tr><td>
-							<h4>Please select secret question for your account</h4>
-							</td></tr>
-							<tr>
-							<td>
-				<table>
-							<tr><td>			
-				<div class="btn-group btn-group-vertical" >
-				<input type="button" id="question" class="dropdown-toggle question_drop_long" id="question"
-				data-toggle="dropdown" 
-				value="<spring:message code="label.question1" /> ">
-				<span class="caret" id="for_caret" ></span>
-			<ul class="dropdown-menu" role="menu" >
-				<li class="question" id="question1"><spring:message code="label.question1" /></li>
-				<li class="question" id="question2"><spring:message code="label.question2" /></li>
-				<li class="question" id="question3"><spring:message code="label.question3" /></li>
-				<li class="question" id="question4"><spring:message code="label.question4" /></li>
-				<li class="question" id="question5"><spring:message code="label.question5" /></li>
-				
-			</ul>
-			<input class="question1" type="hidden" value="<spring:message code="label.question1" />">
-			<input class="question2" type="hidden" value="<spring:message code="label.question2" />">
-			<input class="question3" type="hidden" value="<spring:message code="label.question3" />">
-			<input class="question4" type="hidden" value="<spring:message code="label.question4" />">
-			<input class="question5" type="hidden" value="<spring:message code="label.question5" />">
-			<input type="hidden" id="questionNumber" name="questionNumber" value="question1">
-		</div>			
 
-						</td></tr></table>
+							<td>
+								<table>
+									<tr>
+										<td>
+											<h4>
+												<spring:message code="label.question" />
+											</h4>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<table>
+												<tr>
+													<td>
+														<div class="btn-group btn-group-vertical">
+															<input type="button" id="question"
+																class="dropdown-toggle question_drop_long" id="question"
+																data-toggle="dropdown"
+																value="<spring:message code="label.question1" /> ">
+															<span class="caret" id="for_caret"></span>
+															<ul class="dropdown-menu" role="menu">
+																<li class="question" id="question1"><spring:message
+																		code="label.question1" /></li>
+																<li class="question" id="question2"><spring:message
+																		code="label.question2" /></li>
+																<li class="question" id="question3"><spring:message
+																		code="label.question3" /></li>
+																<li class="question" id="question4"><spring:message
+																		code="label.question4" /></li>
+																<li class="question" id="question5"><spring:message
+																		code="label.question5" /></li>
+
+															</ul>
+															<input class="question1" type="hidden"
+																value="<spring:message code="label.question1" />">
+															<input class="question2" type="hidden"
+																value="<spring:message code="label.question2" />">
+															<input class="question3" type="hidden"
+																value="<spring:message code="label.question3" />">
+															<input class="question4" type="hidden"
+																value="<spring:message code="label.question4" />">
+															<input class="question5" type="hidden"
+																value="<spring:message code="label.question5" />">
+															<input type="hidden" id="questionNumber"
+																name="questionNumber" value="question1">
+														</div>
+
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<h4>
+												<spring:message code="label.ansver" />
+											</h4>
+
+										</td>
+									</tr>
+									<tr>
+										<td><input name="questionAnsver" id="questionAnsver"
+											type="text" class="question_drop_short"></td>
+									</tr>
+								</table>
 							</td>
-							</tr>
-							<tr><td>
-							<h4>Give secret answer to your question</h4>
-							
-							</td></tr>
-							<tr><td><input name="questionAnsver" id="questionAnsver" type="text" class="question_drop_short"></td></tr>
-							</table>			
-							</td>
-						
-						<td>
-							<table class="all_in_one_line">
+
+							<td>
+								<table class="all_in_one_line">
 									<tr>
 										<td><h4 align="center">
 												<spring:message code="label.registration.type" />
@@ -133,11 +167,11 @@
 									</tr>
 
 								</table>
-							
+
 							</td>
-						
+
 						</tr>
-						
+
 					</table>
 					<div align="center">
 						<table>
@@ -147,7 +181,9 @@
 									value="<spring:message code="label.signup"/>" /> <input
 									type="button" class="hidden_error" id="signUpSuccesButton"
 									data-toggle="modal" class="close" data-dismiss="modal"
-									data-target="#signUpSucces" /></td>
+									data-target="#signUpSucces" /> <input type="button"
+									class="hidden_error" id="signUpFailureButton"
+									data-toggle="modal" data-target="#signUpFailure" /></td>
 							</tr>
 						</table>
 

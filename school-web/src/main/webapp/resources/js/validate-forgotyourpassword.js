@@ -1,10 +1,12 @@
 $(document).ready(function() {
 
+	var root_action = $("#root_action").val();
+
 	$.validator.addMethod("existingEmail", function(value, element) {
 		var result = false;
 		$.ajax({
 			type : "GET",
-			url : "email/check",
+			url : root_action+"email/check",
 			data : "email=" + value,
 			dataType : 'json',
 			contentType : 'application/json',
@@ -23,7 +25,7 @@ $(document).ready(function() {
 			}
 		});
 		return result;
-	}, "Email doesn't exist! Please, enter correct email!");
+	}, "Email doesn't exist!");
 
 	$('#forgot_form').validate({
 		rules : {
@@ -58,40 +60,29 @@ $(document).ready(function() {
 
 	$("#forgot_button").click(function() {
 		if ($("#forgot_form").valid()) {
-			/////////////////////////////////////////////
-			var firstname = $("#firstname").val();
-			var lastname = $("#lastname").val();
-			var email = $("#email").val();
-			var password = $("#createapassword").val();
-			var sex = $("input:radio[name=sex]:checked").val();
-			var role = $("input:radio[name=role]:checked").val();
-			var questionNumber = $("#questionNumber").val();
-			var questionAnsver = $("#questionAnsver").val();
+			var email = $("#forgot_email").val();
+			var questionNumber = $("#forgot_question_number").val();
+			var questionAnsver = $("#forgot_question_answer").val();
 
 			var json = {
-				"user" : {
-					"id" : 0,
-					"email" : email,
-					"password" : password,
-					"firstName" : firstname,
-					"lastName" : lastname,
-					"registration" : 0,
-					"confirmed" : false,
-					"roles" : [ {
-						"id" : role,
-						"name" : ""
-					} ]
-				},
-				"registrationData" : {
 					"id" : 0,
 					"registrationCode" : 0,
 					"question" : questionNumber,
 					"answer" : questionAnsver,
-					"user" : null
+					"user" : {
+						"id" : 0,
+						"email" : email,
+						"password" : "",
+						"firstName" : "",
+						"lastName" : "",
+						"registration" : 0,
+						"confirmed" : false,
+						"roles" : []
+					
 				}
 			}
 			$.ajax({
-				url : 'registration',
+				url : root_action+'forgotpassword',
 				type : "POST",
 				data : JSON.stringify(json),
 				beforeSend : function(xhr) {
@@ -100,13 +91,13 @@ $(document).ready(function() {
 				},
 				success : function(responce) {
 					if (responce.valueOf() == 1) {
-						$("#signUpSuccesButton").click();
+						$("#forgotAPasswordButtonSucces").click();
 					} else {
-						alert("Error - your account is not created!")
+						$("#forgotAPasswordButtonFailure").click();
 					}
 				},
 				error : function() {
-					alert('Internal server error');
+					alert('Internal server error!!!!!!!!!!!!!');
 				}
 			});
 

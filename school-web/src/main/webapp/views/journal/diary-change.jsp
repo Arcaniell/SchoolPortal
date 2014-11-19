@@ -19,6 +19,7 @@
 	</form>
 </nav>
 
+
 <table class="table tableOnBack">
 	<tr>
 		<td>
@@ -53,7 +54,8 @@
 														</c:out></td>
 													<td><c:out value="${mark.schedule.course.courseName}"></c:out></td>
 													<td></td>
-													<td><c:if test="${mark.journal.mark eq 0}">
+													<td class="tdCenter"><c:if
+															test="${mark.journal.mark eq 0}">
 															<c:out value=""></c:out>
 														</c:if> <c:if test="${mark.journal.mark ne 0}">
 															<c:out value="${mark.journal.mark}"></c:out>
@@ -101,7 +103,8 @@
 														</c:out></td>
 													<td><c:out value="${mark.schedule.course.courseName}"></c:out></td>
 													<td></td>
-													<td><c:if test="${mark.journal.mark eq 0}">
+													<td class="tdCenter"><c:if
+															test="${mark.journal.mark eq 0}">
 															<c:out value=""></c:out>
 														</c:if> <c:if test="${mark.journal.mark ne 0}">
 															<c:out value="${mark.journal.mark}"></c:out>
