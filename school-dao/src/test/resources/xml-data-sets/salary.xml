@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-	<SALARY id="1" sum="3000" issueDate="2014-10-13" teacherId="1"/>
-	<SALARY id="2" sum="3500" issueDate="2014-11-11" teacherId="1"/>
-	<SALARY id="3" sum="2900" issueDate="2014-12-14" teacherId="2"/>
+	<LESSON id="1" startTime="2014-10-23 8:30:00" finishTime="2014-10-23 9:15:00" />
+	<LESSON id="2" startTime="2014-10-23 9:25:00" finishTime="2014-10-23 10:10:00" />
+
+	<ROOM id="1" available="1" roomNumber="110" size="25" />
+	<ROOM id="2" available="1" roomNumber="112" size="20" />
+
+	<USER id="1" email="testemail1@gmail.com" firstName="Roman"
+		lastName="Petrov" password="password" registration="2014-10-20 23:06:10"
+		sex="0" confirmed="1" />
+	<USER id="2" email="testemail2@gmail.com" firstName="Bogdan"
+		lastName="Petrov" password="password" registration="2014-10-20 23:08:10"
+		sex="0" confirmed="0" />
+
+	<TEACHER id="1" rate="1" userId="1" isActive="0" />
+	<TEACHER id="2" rate="3" userId="2" isActive="0" />
+
+	<GROUPS id="1" additional="0" letter="A" number="5"
+		startDate="2010-09-01 08:30:00" teacherId="1" endDate="2020-05-31 10:30:00" />
+	<GROUPS id="2" additional="0" letter="B" number="5"
+		startDate="2010-09-01 08:30:00" teacherId="2" endDate="2020-05-31 10:30:00" />
+
+	<COURSE id="1" additional="0" coeficient="75" courseName="Math"
+		groupNumber="5" price="0" />
+	<COURSE id="2" additional="0" coeficient="75" courseName="English"
+		groupNumber="5" price="0" />
+
+	<SCHEDULE id="1" date="2014-10-23 08:08:10" groupId="1"
+		lessonId="1" teacherId="1" courseId="1" roomId="1" />
+	<SCHEDULE id="2" date="2014-10-23 08:08:10" groupId="2"
+		lessonId="2" teacherId="2" courseId="1" roomId="1" />
+	<SCHEDULE id="3" date="2014-10-25 08:08:10" groupId="2"
+		lessonId="1" teacherId="1" courseId="2" roomId="1" />
+	<SCHEDULE id="4" date="2014-10-25 08:08:10" groupId="1"
+		lessonId="1" teacherId="2" courseId="2" roomId="2" />
+
+
+	<SALARY id="1" sum="3000" issueDate="2014-10-13" teacherId="1" />
+	<SALARY id="2" sum="3500" issueDate="2014-11-11" teacherId="1" />
+	<SALARY id="3" sum="2900" issueDate="2014-12-14" teacherId="2" />
 </dataset>

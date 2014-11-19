@@ -42,6 +42,12 @@
 		<put-attribute name="current" value="group" />
 	</definition>
 
+	<definition name="salary-*" extends="base.definition">
+		<put-attribute name="title" value="Salary page" />
+		<put-attribute name="main_content" value="/views/salary/{1}.jsp" />
+		<put-attribute name="current" value="salary" />
+	</definition>
+
 	<definition name="course-request-*" extends="base.definition">
 		<put-attribute name="title" value="Course request page" />
 		<put-attribute name="main_content" value="/views/course-request/{1}.jsp" />

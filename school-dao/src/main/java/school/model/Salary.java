@@ -10,29 +10,47 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="SALARY")
+@Table(name = "SALARY")
+@NamedQueries({
+		@NamedQuery(name = Salary.FIND_BY_DATE, query = Salary.FIND_BY_DATE_QUERY),
+		@NamedQuery(name = Salary.FIND_BY_PERIOD, query = Salary.FIND_BY_PERIOD_QUERY),
+		@NamedQuery(name = Salary.FIND_BY_TEACHER_ID, query = Salary.FIND_BY_TEACHER_ID_QUERY),
+		@NamedQuery(name = Salary.FIND_COUNT_OF_HOURS_BY_PERIOD, query = Salary.FIND_COUNT_OF_HOURS_BY_PERIOD_QUERY),
+		@NamedQuery(name = Salary.FIND_BY_TEACHER_ID_AND_PERIOD, query = Salary.FIND_BY_TEACHER_ID_AND_PERIOD_QUERY),
+		@NamedQuery(name = Salary.FIND_BY_LAST_ISSUE_DATE, query = Salary.FIND_BY_LAST_ISSUE_DATE_QUERY) })
 public class Salary {
+	public static final String FIND_BY_DATE = "Salary.findByDate";
 	public static final String FIND_BY_DATE_QUERY = "SELECT u FROM Salary u WHERE u.issueDate = :issueDate";
+	public static final String FIND_BY_PERIOD = "Salary.findByPeriod";
 	public static final String FIND_BY_PERIOD_QUERY = "SELECT u FROM Salary u WHERE u.issueDate BETWEEN :from AND :until";
+	public static final String FIND_BY_TEACHER_ID = "Salary.findByTeacherId";
 	public static final String FIND_BY_TEACHER_ID_QUERY = "SELECT u FROM Salary u WHERE u.teacher.id = :id";
-
-
+	public static final String FIND_COUNT_OF_HOURS_BY_PERIOD = "Salary.findCountOfHoursByPeropd";
+	public static final String FIND_COUNT_OF_HOURS_BY_PERIOD_QUERY = "SELECT count(u.id) as count FROM Schedule u WHERE u.teacher.id = :id and u.date BETWEEN :from AND :until";
+	public static final String FIND_BY_TEACHER_ID_AND_PERIOD = "Salary.findByTeacherIdAndPeriod";
+	public static final String FIND_BY_TEACHER_ID_AND_PERIOD_QUERY = "SELECT u FROM Salary u WHERE u.teacher.id = :id AND u.issueDate BETWEEN :from AND :until";
+	public static final String FIND_BY_LAST_ISSUE_DATE = "Salary.findByLastIssueDate";
+	public static final String FIND_BY_LAST_ISSUE_DATE_QUERY = "SELECT u FROM Salary u WHERE u.teacher.id = :id ORDER BY u.issueDate DESC";
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	private int sum;
 
+	private int hours;
+
 	@Temporal(TemporalType.DATE)
 	private Date issueDate;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
-            CascadeType.MERGE })
+			CascadeType.MERGE })
 	@JoinColumn(name = "teacherId", nullable = false)
 	private Teacher teacher;
 
@@ -54,6 +72,14 @@ public class Salary {
 
 	public void setSum(int sum) {
 		this.sum = sum;
+	}
+
+	public int getHours() {
+		return hours;
+	}
+
+	public void setHours(int hours) {
+		this.hours = hours;
 	}
 
 	public Date getIssueDate() {
