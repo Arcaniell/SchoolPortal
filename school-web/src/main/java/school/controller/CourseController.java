@@ -14,7 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import school.dto.CourseTeacherDTO;
+import school.dto.CourseDTO;
 import school.model.Course;
 import school.model.Role;
 import school.service.CourseService;
@@ -48,8 +48,11 @@ public class CourseController {
                 till = swap;
             }
             // get list of courses
-            List<Course> coursesList = course.allCoursesinDateRangeForStudent(
-                    user, from, till);
+            // List<Course> coursesList =
+            // course.allCoursesinDateRangeForStudent(
+            // user, from, till);
+            List<CourseDTO> coursesList = course
+                    .allCoursesInDateRangeForStudent(user, from, till);
             // transfer data to form
             model.addAttribute("dateFrom", formatterDate.format(from));
             model.addAttribute("dateTill", formatterDate.format(till));
@@ -68,8 +71,8 @@ public class CourseController {
                 till = swap;
             }
             // get list of courses
-            List<CourseTeacherDTO> coursesList = new ArrayList<CourseTeacherDTO>();
-            coursesList = course.allCoursesinDateRangeForTeacher(user, from,
+            List<CourseDTO> coursesList = new ArrayList<CourseDTO>();
+            coursesList = course.allCoursesInDateRangeForTeacher(user, from,
                     till);
             // transfer data to form
             model.addAttribute("dateFrom", formatterDate.format(from));

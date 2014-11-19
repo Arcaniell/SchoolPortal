@@ -1,6 +1,6 @@
 package school.dto;
 
-public class CourseTeacherDTO {
+public class CourseDTO {
     private long id;
     private String name;
     private int year;

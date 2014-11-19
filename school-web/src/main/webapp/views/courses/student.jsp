@@ -12,9 +12,11 @@
 	<form method="POST" action="courses">
 		<p>
 			<spring:message code="course.data.from" />
-			<input name="dateFrom" value="${dateFrom}" type="text" class="datepicker">
+			<input name="dateFrom" value="${dateFrom}" type="text"
+				class="datepicker">
 			<spring:message code="course.data.till" />
-			<input name="dateTill" value="${dateTill}" type="text" class="datepicker">
+			<input name="dateTill" value="${dateTill}" type="text"
+				class="datepicker">
 			<button type="submit" class="btn btn-default">
 				<spring:message code="course.btn.show" />
 			</button>
@@ -33,11 +35,11 @@
 		<tbody>
 			<c:forEach items="${courses}" var="element">
 				<tr>
-					<td>${element.courseName}</td>
-					<td>${element.groupNumber}</td>
+					<td>${element.name}</td>
+					<td>${element.year}</td>
 					<td>${element.additional}</td>
-					<td>${dateFrom}</td>
-					<td>${dateTill}</td>
+					<td>${element.from}</td>
+					<td>${element.till}</td>
 				</tr>
 			</c:forEach>
 		</tbody>

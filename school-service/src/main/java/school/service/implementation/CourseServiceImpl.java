@@ -16,7 +16,7 @@ import school.dao.CourseRequestDao;
 import school.dao.GroupDao;
 import school.dao.StudentDao;
 import school.dao.TeacherDao;
-import school.dto.CourseTeacherDTO;
+import school.dto.CourseDTO;
 import school.model.Course;
 import school.model.CourseRequest;
 import school.model.Group;
@@ -57,23 +57,6 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> allCoursesinDateRangeForStudent(Principal user,
-            Date from, Date till) {
-        long userId = Long.parseLong(user.getName());
-        Student student = studentDao.findByUserId(userId);
-        Group group = student.getGroup();
-        List<Group> additionalGroups = student.getAdditionGroups();
-        List<Course> courses = new ArrayList<Course>();
-        // select courses from schedule of primary group
-        courses.addAll(getCourseForGroup(group, from, till));
-        // select courses from schedule of additional group
-        for (Group groupElement : additionalGroups) {
-            courses.addAll(getCourseForGroup(groupElement, from, till));
-        }
-        return courses;
-    }
-
-    @Override
     public List<Course> findCanRequestCourses(Principal user) {
         long userId = Long.parseLong(user.getName());
         Student student = studentDao.findByUserId(userId);
@@ -99,7 +82,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<CourseTeacherDTO> allCoursesinDateRangeForTeacher(
+    public List<CourseDTO> allCoursesInDateRangeForTeacher(
             Principal user, Date from, Date till) {
         long userId = Long.parseLong(user.getName());
         Teacher teacher = teacherDao.findByUserId(userId);
@@ -107,9 +90,9 @@ public class CourseServiceImpl implements CourseService {
         List<Course> coursesFromSchedule = courseDao
                 .findByTeacherIdAndDataRange(teacher.getId(), from, till);
 
-        List<CourseTeacherDTO> jspCoursesList = new ArrayList<CourseTeacherDTO>();
+        List<CourseDTO> jspCoursesList = new ArrayList<CourseDTO>();
         for (Course currentCourse : coursesFromTeacher) {
-            CourseTeacherDTO temporaryCourseDTO = new CourseTeacherDTO();
+            CourseDTO temporaryCourseDTO = new CourseDTO();
             temporaryCourseDTO.setId(currentCourse.getId());
             temporaryCourseDTO.setName(currentCourse.getCourseName());
             temporaryCourseDTO.setYear(currentCourse.getGroupNumber());
@@ -137,7 +120,7 @@ public class CourseServiceImpl implements CourseService {
             jspCoursesList.add(temporaryCourseDTO);
         }
         for (Course additionCourse : coursesFromSchedule) {
-            CourseTeacherDTO temporaryCourseDTO = new CourseTeacherDTO();
+            CourseDTO temporaryCourseDTO = new CourseDTO();
             temporaryCourseDTO.setId(additionCourse.getId());
             temporaryCourseDTO.setName(additionCourse.getCourseName());
             temporaryCourseDTO.setYear(additionCourse.getGroupNumber());
@@ -156,5 +139,40 @@ public class CourseServiceImpl implements CourseService {
             jspCoursesList.add(temporaryCourseDTO);
         }
         return jspCoursesList;
+    }
+
+    @Override
+    public List<CourseDTO> allCoursesInDateRangeForStudent(
+            Principal user, Date from, Date till) {
+        long userId = Long.parseLong(user.getName());
+        Student student = studentDao.findByUserId(userId);
+        // get student groups
+        List<Group> additionalGroups = student.getAdditionGroups();
+        Group mainGroup = student.getGroup();
+        List<Group> allGroups = new ArrayList<Group>();
+        allGroups.add(mainGroup);
+        allGroups.addAll(additionalGroups);
+
+        List<Course> allCoursesFromAllGroups = new ArrayList<Course>();
+        for (Group group : allGroups) {
+            allCoursesFromAllGroups
+                    .addAll(getCourseForGroup(group, from, till));
+        }
+        List<CourseDTO> listCoursesDTO = new ArrayList<CourseDTO>();
+        for (Course course : allCoursesFromAllGroups) {
+            CourseDTO currentCourseDTO = new CourseDTO();
+            currentCourseDTO.setId(course.getId());
+            currentCourseDTO.setName(course.getCourseName());
+            currentCourseDTO.setYear(course.getGroupNumber());
+            if (course.isAdditional()) {
+                currentCourseDTO.setAdditional("YES");
+            } else {
+                currentCourseDTO.setAdditional("NO");
+            }
+            currentCourseDTO.setFrom(formatterDate.format(from));
+            currentCourseDTO.setTill(formatterDate.format(till));
+            listCoursesDTO.add(currentCourseDTO);
+        }
+        return listCoursesDTO;
     }
 }
