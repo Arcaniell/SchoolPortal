@@ -17,31 +17,36 @@
 				</h3>
 			</div>
 			<div class="modal-body">
-			<h3 class = "hidden_error ${visible_login}"><spring:message code="label.visible_login" /></h3>
-			<h3 class = "hidden_error ${visible_signinfailure}"><spring:message code="label.visible_signinfailure" /></h3>
-				<form action="${login_action}j_spring_security_check" method="post">
+				<h3 class="hidden_error ${visible_login}">
+					<spring:message code="label.visible_login" />
+				</h3>
+				<h3 class="hidden_error ${visible_signinfailure}">
+					<spring:message code="label.visible_signinfailure" />
+				</h3>
+				<form action="${root_action}j_spring_security_check" method="post"
+					id="login_form">
 					<table>
 						<tr>
-							<td class="padding_right"><label
-								class="control-label" for="j_username"><spring:message
-										code="label.email" /></label></td>
-							<td><input class="input" id="j_username" name="j_username"
-								size="20" maxlength="50" type="text" value="${user_email}"/></td>
+							<td class="padding_right"><h4><spring:message code="label.email" /></h4></td>
+							<td class="for_input"><input class="input" id="j_username"
+								name="j_username" type="text" value="${user_email}" /></td>
 						</tr>
 						<tr>
-							<td class="padding_right"><label for="j_password"><spring:message
-										code="label.password" /></label></td>
-							<td><input class="input" id="j_password" name="j_password"
-								size="20" maxlength="50" type="password" /></td>
+							<td class="padding_right"><h4><spring:message
+									code="label.password" /></h4></td>
+							<td class="for_input"><input class="input" id="j_password"
+								name="j_password" type="password" /></td>
 						</tr>
 						<tr>
 							<td></td>
-							<td style="font-size: small;"><p align="right"><a href="" data-toggle="modal"
-									data-dismiss="modal" data-target="#forgotAPassword">
-							<spring:message code="label.forgotapassword"/></a></p></td>
+							<td style="font-size: small;"><p align="right">
+									<a href="" data-toggle="modal" data-dismiss="modal"
+										data-target="#forgotAPassword"> <spring:message
+											code="label.forgotapassword" /></a>
+								</p></td>
 						</tr>
 					</table>
-					<div align="center" >
+					<div align="center">
 						<table>
 							<tr>
 								<td><input type="submit" class="btn btn-default"
@@ -50,17 +55,21 @@
 						</table>
 					</div>
 				</form>
-				
+
 				<div align="center">
 					<hr>
 					<table>
 						<tr>
 							<td>
-								<h6><spring:message code="label.notregistrated"/></h6>
+								<h6>
+									<spring:message code="label.notregistrated" />
+								</h6>
 							</td>
 							<td>
 								<button class="btn" data-toggle="modal" class="close"
-									data-dismiss="modal" data-target="#signUp"><spring:message code="label.signup"/></button>
+									data-dismiss="modal" data-target="#signUp">
+									<spring:message code="label.signup" />
+								</button>
 							</td>
 						</tr>
 					</table>

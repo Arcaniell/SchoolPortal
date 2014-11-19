@@ -1,3 +1,7 @@
+.for_input{
+	max-width: 200px;
+}
+
 .news {
 	
 }
@@ -27,11 +31,13 @@
 .hidehomeinfo {
 	font-size: 1em;
 	padding: 5px;
+	float: right;
 }
 
 .showhomeinfo {
 	font-size: 1em;
 	padding: 5px;
+	float: right;
 	display: none;
 }
 

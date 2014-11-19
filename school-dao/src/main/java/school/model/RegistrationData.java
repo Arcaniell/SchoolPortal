@@ -6,27 +6,33 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "REGISTRATION_DATA")
-@NamedQuery(name = RegistrationData.FIND_BY_USER_AND_CODE, query = RegistrationData.FIND_BY_USER_AND_CODE_QUERY)
+@NamedQueries({
+@NamedQuery(name = RegistrationData.FIND_BY_USER_AND_CODE, query = RegistrationData.FIND_BY_USER_AND_CODE_QUERY),
+@NamedQuery(name = RegistrationData.FIND_BY_USER_QUESTION_ANSWER, query = RegistrationData.FIND_BY_USER_QUESTION_ANSWER_QUERY)})
 public class RegistrationData {
 	
 	public static final String FIND_BY_USER_AND_CODE = "RegistrationData.findByUserAndCode";
 	public static final String FIND_BY_USER_AND_CODE_QUERY = "SELECT r FROM RegistrationData r WHERE "
 			+ "r.user.id = :userId and r.registrationCode = :registrationCode";
+	public static final String FIND_BY_USER_QUESTION_ANSWER = "RegistrationData.findByUserQuestionAnswer";
+	public static final String FIND_BY_USER_QUESTION_ANSWER_QUERY = "SELECT r FROM RegistrationData r WHERE "
+			+ "r.user.id = :userId and r.question = :question and r.answer = :answer";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@Column(nullable = false)
 	private int registrationCode;
-	@Column(nullable = false)
+	@Column(nullable = false, length = 20)
 	private String question;
-	@Column(nullable = false)
+	@Column(nullable = false, length = 20)
 	private String answer;
 	@OneToOne
 	@JoinColumn(name = "userId", nullable = false)
@@ -35,6 +41,7 @@ public class RegistrationData {
 	public RegistrationData() {
 		super();
 	}
+
 	public long getId() {
 		return id;
 	}
@@ -65,6 +72,7 @@ public class RegistrationData {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
 	
 	
 }

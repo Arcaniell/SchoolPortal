@@ -25,4 +25,18 @@ public class RegistrationDataDaoImpl extends BaseDaoImpl<RegistrationData, Long>
 			}
 	}
 
+	@Override
+	public RegistrationData findByUserQuestionAnswer(
+			RegistrationData registrationData) {
+		try{
+			return (RegistrationData) entityManager.createNamedQuery(RegistrationData.FIND_BY_USER_QUESTION_ANSWER)
+					.setParameter("userId", registrationData.getUser().getId())
+					.setParameter("question", registrationData.getQuestion())
+					.setParameter("answer", registrationData.getAnswer())
+					.getSingleResult();
+			}catch(NoResultException e){
+				return null;
+			}
+	}
+
 }

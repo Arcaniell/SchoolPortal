@@ -12,10 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import school.dao.NewsDao;
 import school.dao.RegistrationDataDao;
+import school.dao.RestorePasswordDao;
 import school.dao.UserDao;
-import school.dto.RegistrationDTO;
 import school.model.News;
 import school.model.RegistrationData;
+import school.model.RestorePassword;
 import school.model.Role;
 import school.model.User;
 import school.service.EmailService;
@@ -33,6 +34,8 @@ public class HomeServiceImpl implements HomeService {
 	@Autowired
 	RegistrationDataDao registrationDataDao;
 	@Autowired
+	RestorePasswordDao restorePasswordDao;
+	@Autowired
 	private UserService userService;
 	@Autowired
 	private RoleRequestService roleRequestService;
@@ -44,29 +47,21 @@ public class HomeServiceImpl implements HomeService {
 		return newsDao.findAll();
 	}
 
+
 	@Override
-	public boolean registrateUser(RegistrationDTO registrationDTO, String url) {
+	public boolean registrateUser(RegistrationData registrationData, String url) {
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		registrationDTO.getUser().setPassword(passwordEncoder
-				.encode(registrationDTO.getUser().getPassword()));
-		List<Role> roles = registrationDTO.getUser().getRoles();
-		registrationDTO.getUser().setRoles(null);
-		registrationDTO.getUser().setRegistration(new Date());
-		registrationDTO.setUser(userService.createUser(registrationDTO.getUser()));
-		if (registrationDTO.getUser() != null) {
-			roleRequestService.createRoleRequest(registrationDTO.getUser(), roles);
-			registrationDTO.getRegistrationData().setUser(registrationDTO.getUser());
-				Random random = new Random();
-				registrationDTO.getRegistrationData().setRegistrationCode(Math.abs(random.nextInt()));
-				registrationDTO.setRegistrationData(registrationDataDao
-						.update(registrationDTO.getRegistrationData()));
-				if (registrationDTO.getRegistrationData() != null) {
-					if (emailService.sendRegistrationEmail(registrationDTO, url))
-						return true;
-				}
-			
-		}
-		return false;
+		registrationData.getUser().setPassword(passwordEncoder
+				.encode(registrationData.getUser().getPassword()));
+		List<Role> roles = registrationData.getUser().getRoles();
+		registrationData.getUser().setRoles(null);
+		registrationData.getUser().setRegistration(new Date());
+		registrationData.setUser(userService.createUser(registrationData.getUser()));
+		roleRequestService.createRoleRequest(registrationData.getUser(), roles);
+		Random random = new Random();
+		registrationData.setRegistrationCode(Math.abs(random.nextInt(10000)));
+		registrationData = registrationDataDao.update(registrationData);
+		return emailService.sendRegistrationEmail(registrationData, url);
 	}
 
 	@Override
@@ -82,12 +77,44 @@ public class HomeServiceImpl implements HomeService {
 	}
 
 	@Override
-	public boolean forgotAPassword(String email) {
-		if(userService.isEmailAviable(email)){
-			emailService.sendNewPassword(null, null, null);
-			return true;
+	public boolean forgotAPassword(RegistrationData registrationData, String url) {
+		User user = userDao.findByEmail(registrationData.getUser().getEmail());
+		registrationData.setUser(user);
+		registrationData = registrationDataDao.findByUserQuestionAnswer(registrationData);
+		if(registrationData != null){
+			RestorePassword restorePassword = new RestorePassword();
+			Random random = new Random();
+			restorePassword.setRestoreCode(Math.abs(random.nextInt(10000)));
+			restorePassword.setNewPassword(generateRandomString(12));
+			restorePassword.setUser(user);
+			restorePassword = restorePasswordDao.update(restorePassword);
+			return emailService.sendNewPassword(restorePassword, url);
 		}
 		return false;
+	}
+	
+	private String generateRandomString(int length){
+		char[] chars = "abcdefghijklmnopqrstuvwxyz123456789".toCharArray();
+		StringBuilder sb = new StringBuilder();
+		Random random = new Random();
+		for (int i = 0; i < length; i++) {
+		    char c = chars[random.nextInt(chars.length)];
+		    sb.append(c);
+		}
+		return sb.toString();
+	}
+
+
+	@Override
+	public User confirmPassword(long userId, int code) {
+		RestorePassword restorePassword = restorePasswordDao.findByUserAndCode(userId, code);
+		if(restorePassword != null){
+		User user = userDao.findById(userId);
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		user.setPassword(passwordEncoder
+				.encode(restorePassword.getNewPassword()));
+		return userDao.update(user);
+		}return null;
 	}
 
 }

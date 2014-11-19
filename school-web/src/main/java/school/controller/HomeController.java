@@ -1,9 +1,6 @@
 package school.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import school.dto.RegistrationDTO;
 import school.model.RegistrationData;
-import school.model.Role;
 import school.model.User;
 import school.service.HomeService;
 import school.service.UserService;
@@ -59,36 +54,36 @@ public class HomeController {
 	}
 	@RequestMapping(value = "/registration", method = RequestMethod.GET)
 	public String registrationConfirm(Model model,
+	@ModelAttribute(value = "u") long userId,
+	@ModelAttribute(value = "c") int code) {
+	User user = homeService.confirmUser(userId, code);
+	model.addAttribute("newsList", homeService.findAllNews());
+	model.addAttribute("root_action", "../");
+	if(user != null)
+	model.addAttribute("user_email", user.getEmail());
+	return "signinfailure";
+	}
+	@RequestMapping(value = "/forgotpassword", method = RequestMethod.GET)
+	public String forgotpasswordConfirm(Model model,
 			@ModelAttribute(value = "u") long userId,
 			@ModelAttribute(value = "c") int code) {
-		User user = homeService.confirmUser(userId, code);
+		User user = homeService.confirmPassword(userId, code);
 		model.addAttribute("newsList", homeService.findAllNews());
-		model.addAttribute("login_action", "../");
+		model.addAttribute("root_action", "../");
 		if(user != null)
 		model.addAttribute("user_email", user.getEmail());
 		return "signinfailure";
 	}
-	@RequestMapping(value = "/forgotemail/check", method = RequestMethod.GET)
-	public @ResponseBody boolean forgotemailCheck(
-			@RequestParam(value = "email") String email) {
-		return userService.isEmailAviable(email);
-	}
-	@RequestMapping(value = "/forgotemail", method = RequestMethod.GET)
-	public String forgotemail(Model model,
-			@ModelAttribute(value = "u") long userId,
-			@ModelAttribute(value = "c") int code) {
-		User user = homeService.confirmUser(userId, code);
-		model.addAttribute("newsList", homeService.findAllNews());
-		model.addAttribute("login_action", "../");
-		if(user != null)
-		model.addAttribute("user_email", user.getEmail());
-		return "signinfailure";
+	@RequestMapping(value = "/forgotpassword", method = RequestMethod.POST)
+	public @ResponseBody boolean forgotpassword(@RequestBody RegistrationData registrationData,
+			HttpServletRequest request) {	
+		return homeService.forgotAPassword(registrationData, request.getContextPath());
 	}
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public @ResponseBody boolean registration(@RequestBody RegistrationDTO registrationDTO,
+	public @ResponseBody boolean registration(@RequestBody RegistrationData registrationData,
 			HttpServletRequest request) {	
-		return homeService.registrateUser(registrationDTO, request.getContextPath());
+		return homeService.registrateUser(registrationData, request.getContextPath());
 	}
 
 	@RequestMapping(value = "/email/check", method = RequestMethod.GET)

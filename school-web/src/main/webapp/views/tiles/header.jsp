@@ -49,8 +49,14 @@
 		</div>
 
 		<jsp:include page="/views/home/login.jsp" />
-		<jsp:include page="/views/home/forgotapassword.jsp" />
 		<jsp:include page="/views/home/registration.jsp" />
 		<jsp:include page="/views/home/registration_succes.jsp" />
+		<jsp:include page="/views/home/registration_failure.jsp" />
+		<jsp:include page="/views/home/forgotapassword.jsp" />
+		<jsp:include page="/views/home/forgotapassword_succes.jsp" />
+		<jsp:include page="/views/home/forgotapassword_failure.jsp" />
+		<input type="hidden" id="root_action" value="${root_action}">
+		
+		
 
 	</div>
