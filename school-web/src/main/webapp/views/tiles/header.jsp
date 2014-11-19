@@ -11,14 +11,18 @@
 	<div class="header">
 
 		<ul class="crumbs">
-			<li class="first"><a href="home" style="z-index: 9;"><span></span>Home</a></li>
-			<li class="active"><a href="#"
-				style="z-index: 8;">My profile</a></li>
-			<li class="active"><a
-				href="journal" style="z-index: 7;">Journal</a></li>
-			<li class="active"><a
-				href='<spring:url value="/inbox.html"></spring:url>'
-				style="z-index: 6;">Messages</a></li>
+			<li class="first"><a href="home" style="z-index: 9;"><span></span><spring:message code="header.home"/></a></li>
+			<c:if test = "${not empty current}">
+				<c:if test = "${current == 'courses'}">
+					<li class="active"><a href="courses" style="z-index: 8;"><spring:message code="sidebar.course"/></a></li>
+				</c:if>
+				<c:if test = "${current == 'group'}">
+					<li class="active"><a href="groups" style="z-index: 8;"><spring:message code="sidebar.groups"/></a></li>
+				</c:if>
+				<c:if test = "${current == 'request'}">
+					<li class="active"><a href="course-request" style="z-index: 8;"><spring:message code="sidebar.request"/></a></li>
+				</c:if>
+			</c:if>
 		</ul>
 		
 		<sec:authorize access="isAnonymous()">
