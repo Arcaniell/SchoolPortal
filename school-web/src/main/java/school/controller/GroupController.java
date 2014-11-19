@@ -41,6 +41,7 @@ public class GroupController {
         if (request.isUserInRole(Role.Secured.STUDENT)) {
             List<GroupDTO> groups = groupService.getStudentGroups(user);
             model.addAttribute("groupList", groups);
+            model.addAttribute("current", "group");
             return "groups-student";
         }
         if (request.isUserInRole(Role.Secured.TEACHER)) {
@@ -59,11 +60,13 @@ public class GroupController {
             model.addAttribute("dateFrom", formatterDate.format(from));
             model.addAttribute("dateTill", formatterDate.format(till));
             model.addAttribute("groupList", groups);
+            model.addAttribute("current", "group");
             return "groups-teacher";
         }
         if (request.isUserInRole(Role.Secured.HEAD_TEACHER)) {
             List<GroupDTO> groups = groupService.getHeadTeacherGroups();
             model.addAttribute("groupList", groups);
+            model.addAttribute("current", "group");
             return "groups-head-teacher";
         }
         return "redirect:/login";

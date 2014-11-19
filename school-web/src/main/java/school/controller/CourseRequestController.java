@@ -62,6 +62,7 @@ public class CourseRequestController {
                 courseRequests = new ArrayList<CourseRequestTeacherDTO>();
             }
             model.addAttribute(JSP_TEACHER_REQUESTS, courseRequests);
+            model.addAttribute("current", "request");
             return URL_COURSE_REQUEST_TEACHER;
         }
         if (request.isUserInRole(Role.Secured.STUDENT)) {
@@ -73,6 +74,7 @@ public class CourseRequestController {
             model.addAttribute(JSP_STUDENT_REQUESTS, listOfCourseRequestsDTO);
             model.addAttribute(JSP_STUDENT_CAN_REQUEST_COURSES,
                     canRequestCourses);
+            model.addAttribute("current", "request");
             return URL_COURSE_REQUEST_STUDENT;
         }
         return URL_REDIRECT + URL_HOME;
