@@ -32,6 +32,8 @@ public class CourseRequestController {
     private final String JSP_INPUT_TEACHER_BRANCH = "groupChange";
     private final String JSP_INPUT_TEACHER_APPROVE = "approve";
     private final String JSP_INPUT_TEACHER_DENY = "deny";
+    private final String JSP_CURRENT_PAGE="current";
+    private final String JSP_CURRENT_PAGE_VALUE="request";
     private final int ONE_MONTH_IN_DAYS = 30;
     private final String URL_REDIRECT = "redirect:";
     private final String URL_HOME = "/home";
@@ -62,6 +64,7 @@ public class CourseRequestController {
                 courseRequests = new ArrayList<CourseRequestTeacherDTO>();
             }
             model.addAttribute(JSP_TEACHER_REQUESTS, courseRequests);
+            model.addAttribute(JSP_CURRENT_PAGE, JSP_CURRENT_PAGE_VALUE);
             return URL_COURSE_REQUEST_TEACHER;
         }
         if (request.isUserInRole(Role.Secured.STUDENT)) {
@@ -73,6 +76,7 @@ public class CourseRequestController {
             model.addAttribute(JSP_STUDENT_REQUESTS, listOfCourseRequestsDTO);
             model.addAttribute(JSP_STUDENT_CAN_REQUEST_COURSES,
                     canRequestCourses);
+            model.addAttribute(JSP_CURRENT_PAGE, JSP_CURRENT_PAGE_VALUE);
             return URL_COURSE_REQUEST_STUDENT;
         }
         return URL_REDIRECT + URL_HOME;
@@ -110,7 +114,6 @@ public class CourseRequestController {
     }
 
     // teacher request manage, creating new group
-
     @RequestMapping(value = URL_COURSE_REQUEST_TEACHER_MANAGE)
     public String groupCreate(
             @RequestParam(value = JSP_INPUT_TEACHER_COURSE_ID) String id,

@@ -20,7 +20,7 @@
 			<spring:message code="salary.date.until" />
 			<input name="dateTill" value="${dateUntil}" type="text"
 				class="datepicker">
-			<button type="submit" class="btn-default">
+			<button type="submit" class="btn btn-default">
 				<spring:message code="salary.show" />
 			</button>
 		</p>

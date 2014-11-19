@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import school.dto.CourseDTO;
-import school.model.Course;
 import school.model.Role;
 import school.service.CourseService;
 
@@ -57,6 +56,7 @@ public class CourseController {
             model.addAttribute("dateFrom", formatterDate.format(from));
             model.addAttribute("dateTill", formatterDate.format(till));
             model.addAttribute("courses", coursesList);
+            model.addAttribute("current", "courses");
             return "courses-student";
         }
         if (request.isUserInRole(Role.Secured.TEACHER)) {
@@ -78,6 +78,7 @@ public class CourseController {
             model.addAttribute("dateFrom", formatterDate.format(from));
             model.addAttribute("dateTill", formatterDate.format(till));
             model.addAttribute("courses", coursesList);
+            model.addAttribute("current", "courses");
             return "courses-teacher";
         }
         return "redirect:/login";
