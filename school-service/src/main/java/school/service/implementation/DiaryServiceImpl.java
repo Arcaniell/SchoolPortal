@@ -1,7 +1,5 @@
 package school.service.implementation;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,39 +39,30 @@ public class DiaryServiceImpl implements DiaryService {
 	@Inject
 	private StudentDao studentDao;
 
-	// TODO make current week by default and add week changer by arrows
-
 	@Secured({ Role.Secured.STUDENT, Role.Secured.PARENT })
 	@Transactional
-	public List<StudentMarksDTO> getDiaryMarks(String id) throws ParseException {
+	public List<StudentMarksDTO> getDiaryMarks(String id, List<Date> currentWeek) {
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat(
-				JournalUtil.UI_DATE_FORMAT);
-
-		Date from = dateFormat.parse("09/01/2014");
-		Date to = dateFormat.parse("09/05/2014");
+		Date from = currentWeek.get(JournalUtil.FIRST_DATE_OF_WEEK);
+		Date to = currentWeek.get(JournalUtil.LAST_DATE_OF_WEEK);
 
 		long userId = Long.parseLong(id);
 
 		Student student = studentDao.findByUserId(userId);
-
 		Group group = student.getGroup();
-
 		List<Schedule> schedules = scheduleDao.findByGroupInterval(
 				group.getId(), from, to);
-
-		Set<Date> dates = getDates("09/01/2014", "09/05/2014");
 		List<Journal> journals = journalDao.findByIntervalAndStudentId(
 				student.getId(), from, to);
 		List<StudentMarksDTO> diaryMarksDTO = new ArrayList<StudentMarksDTO>();
 
-		for (Date date : dates) {
+		for (Date date : currentWeek) {
 			Set<MarkDTO> markDTOs = new TreeSet<MarkDTO>();
+
 			for (Schedule schedule : schedules) {
-
 				if (date.equals(schedule.getDate())) {
-					for (Journal journal : journals) {
 
+					for (Journal journal : journals) {
 						if (journal.getSchedule().getId() == schedule.getId()) {
 
 							markDTOs.add(new MarkDTO(schedule.getLesson()
@@ -85,29 +74,9 @@ public class DiaryServiceImpl implements DiaryService {
 				}
 			}
 			diaryMarksDTO.add(new StudentMarksDTO(student.getId(),
-					getWholeUserName(userId), markDTOs));
+					getWholeUserName(userId), date, markDTOs));
 		}
-
 		return diaryMarksDTO;
-	}
-
-	private Set<Date> getDates(String dateFrom, String dateTo)
-			throws ParseException {
-
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-
-		Date from = dateFormat.parse(dateFrom);
-		Date to = dateFormat.parse(dateTo);
-
-		List<Schedule> schedules = scheduleDao.findByDates(from, to);
-
-		Set<Date> dates = new TreeSet<Date>();
-
-		for (Schedule schedule : schedules) {
-			dates.add(schedule.getDate());
-		}
-		return dates;
-
 	}
 
 	private String getWholeUserName(long userId) {

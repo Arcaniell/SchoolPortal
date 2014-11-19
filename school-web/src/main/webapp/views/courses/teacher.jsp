@@ -28,8 +28,10 @@
 				<th><spring:message code="course.table.Name" /></th>
 				<th><spring:message code="course.table.Year" /></th>
 				<th><spring:message code="course.table.Additional" /></th>
+				<th><spring:message code="course.rate" /></th>
 				<th><spring:message code="course.table.start" /></th>
 				<th><spring:message code="course.table.fin" /></th>
+				<th><spring:message code="course.groups" /></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -38,8 +40,10 @@
 					<td>${element.name}</td>
 					<td>${element.year}</td>
 					<td>${element.additional}</td>
+					<td>${element.rate}</td>
 					<td>${element.from}</td>
 					<td>${element.till}</td>
+					<td>${element.groups}</td>
 				</tr>
 			</c:forEach>
 		</tbody>

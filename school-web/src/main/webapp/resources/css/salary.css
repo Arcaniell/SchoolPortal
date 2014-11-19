@@ -1,0 +1,31 @@
+.content .text .btn {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-decoration: none;
+	font-size: 14px;
+	color: #428bca;
+}
+
+.modal-title {
+	text-align: center;
+}
+.modal-body {
+	width: 100%;
+	text-align: center;
+}
+
+.modal-footer .btn {
+	display: block;
+	margin: 0 auto;
+
+}
+.modal-content .btn{
+	padding-left: 30px;
+	padding-right: 30px;
+	weight:100%;
+}
+
+#currentButton{
+	width: 400px;
+	height: 50px;
+	
+}

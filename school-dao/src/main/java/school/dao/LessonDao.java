@@ -4,10 +4,10 @@ import java.util.Date;
 
 import school.model.Lesson;
 
-
-
 public interface LessonDao extends BaseDao<Lesson, Long> {
 
-	Lesson findByStartTime (Date startTime);
+	Lesson findByStartTime(Date startTime);
+
+	Lesson findByCurrentTime(Date currentTime);
 
 }
