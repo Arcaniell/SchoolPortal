@@ -35,8 +35,7 @@
 	<SCHEDULE id="4" date="2014-10-25 08:08:10" groupId="1"
 		lessonId="1" teacherId="2" courseId="2" roomId="2" />
 
-
-	<SALARY id="1" sum="3000" issueDate="2014-10-13" teacherId="1" />
-	<SALARY id="2" sum="3500" issueDate="2014-11-11" teacherId="1" />
-	<SALARY id="3" sum="2900" issueDate="2014-12-14" teacherId="2" />
+	<SALARY id="1" sum="3000" issueDate="2014-10-13" hours="89" teacherId="1" />
+	<SALARY id="2" sum="3500" issueDate="2014-11-11" hours="95" teacherId="1" />
+	<SALARY id="3" sum="2900" issueDate="2014-12-14" hours="78" teacherId="2" />
 </dataset>
