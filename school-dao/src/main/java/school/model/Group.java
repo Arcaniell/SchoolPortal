@@ -27,7 +27,8 @@ import javax.persistence.Table;
         @NamedQuery(name = Group.FIND_BY_COURSE, query = "SELECT g FROM Group g WHERE g.additionCourse.id = :courseId"),
         @NamedQuery(name = Group.FIND_BY_NUMBER_LETTER, query = "SELECT g FROM Group g WHERE g.number = :number and g.letter = :letter"),
         @NamedQuery(name = Group.FIND_ALL_ACTIVE_GROUP, query = "SELECT g FROM Group g WHERE :actualDate BETWEEN g.startDate and g.endDate"),
-        @NamedQuery(name = Group.FIND_BY_TEACHER_ID_COURSE_ID_AND_DATA_RANGE, query = Group.FIND_BY_TEACHER_ID_COURSE_ID_AND_DATA_RANGE_QUERY) })
+        @NamedQuery(name = Group.FIND_BY_TEACHER_ID_COURSE_ID_AND_DATA_RANGE, query = Group.FIND_BY_TEACHER_ID_COURSE_ID_AND_DATA_RANGE_QUERY),
+        @NamedQuery(name = Group.FIND_BY_TEACHER_ID_AND_DATA_RANGE, query = Group.FIND_BY_TEACHER_ID_AND_DATA_RANGE_QUERY) })
 public class Group implements Comparable<Group> {
 
     public static final String FIND_BY_STATUS = "Group.findByStatus";
@@ -40,7 +41,8 @@ public class Group implements Comparable<Group> {
     public static final String FIND_ALL_ACTIVE_GROUP = "Group.findAllActiveGroups";
     public static final String FIND_BY_TEACHER_ID_COURSE_ID_AND_DATA_RANGE = "Group.findAllByTeacherIdGroupIdDataRange";
     public static final String FIND_BY_TEACHER_ID_COURSE_ID_AND_DATA_RANGE_QUERY = "SELECT DISTINCT c FROM Group c INNER JOIN c.schedule s WHERE s.teacher.id = :teacherId AND s.course.id=:courseId AND (s.date BETWEEN :from AND :till)";
-
+    public static final String FIND_BY_TEACHER_ID_AND_DATA_RANGE = "Group.findAllByTeacherIdDataRange";
+    public static final String FIND_BY_TEACHER_ID_AND_DATA_RANGE_QUERY = "SELECT DISTINCT c FROM Group c INNER JOIN c.schedule s WHERE s.teacher.id = :teacherId AND (s.date BETWEEN :from AND :till)";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true)

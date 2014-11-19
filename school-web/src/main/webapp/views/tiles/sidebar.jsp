@@ -39,10 +39,15 @@
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_STUDENT')">
 			<li><a href=courses><spring:message code="sidebar.course" /></a></li>
+		</sec:authorize>
+		<sec:authorize
+			access="hasAnyRole('ROLE_TEACHER', 'ROLE_STUDENT', 'ROLE_HEAD_TEACHER')">
 			<li><a href=groups><spring:message code="sidebar.groups" /></a></li>
 		</sec:authorize>
-		<sec:authorize access="hasAnyRole('ROLE_HEAD_TEACHER', 'ROLE_STUDENT')">
-			<li><a href=course-request><spring:message code="sidebar.request" /></a></li>
+		<sec:authorize
+			access="hasAnyRole('ROLE_HEAD_TEACHER', 'ROLE_STUDENT')">
+			<li><a href=course-request><spring:message
+						code="sidebar.request" /></a></li>
 		</sec:authorize>
 		<li><a href="#"><spring:message code="sidebar.contacts" /></a></li>
 		<li><a href="#"><spring:message code="sidebar.about" /></a></li>

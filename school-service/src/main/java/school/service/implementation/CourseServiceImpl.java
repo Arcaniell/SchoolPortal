@@ -114,7 +114,7 @@ public class CourseServiceImpl implements CourseService {
             }
 
             temporaryCourseDTO.setGroups(groupDao
-                    .findAllByTeacherIdGroupIdDataRange(teacher.getId(),
+                    .findAllByTeacherIdCourseIdDataRange(teacher.getId(),
                             currentCourse.getId(), from, till).size());
             // add element to main JSP list
             jspCoursesList.add(temporaryCourseDTO);
@@ -133,7 +133,7 @@ public class CourseServiceImpl implements CourseService {
             temporaryCourseDTO.setFrom(formatterDate.format(from));
             temporaryCourseDTO.setTill(formatterDate.format(till));
             temporaryCourseDTO.setGroups(groupDao
-                    .findAllByTeacherIdGroupIdDataRange(teacher.getId(),
+                    .findAllByTeacherIdCourseIdDataRange(teacher.getId(),
                             additionCourse.getId(), from, till).size());
             // add element to main JSP list
             jspCoursesList.add(temporaryCourseDTO);

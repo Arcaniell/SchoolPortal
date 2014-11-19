@@ -84,6 +84,7 @@ public class GroupDaoImpl extends BaseDaoImpl<Group, Long> implements GroupDao {
         }
     }
 
+    @Transactional
     @Override
     public Group findByCourseId(long courseId) {
         try {
@@ -94,9 +95,10 @@ public class GroupDaoImpl extends BaseDaoImpl<Group, Long> implements GroupDao {
         }
     }
 
+    @Transactional
     @SuppressWarnings("unchecked")
     @Override
-    public List<Group> findAllByTeacherIdGroupIdDataRange(long teacherId,
+    public List<Group> findAllByTeacherIdCourseIdDataRange(long teacherId,
             long courseId, Date from, Date till) {
         try {
             return entityManager
@@ -104,6 +106,23 @@ public class GroupDaoImpl extends BaseDaoImpl<Group, Long> implements GroupDao {
                             Group.FIND_BY_TEACHER_ID_COURSE_ID_AND_DATA_RANGE)
                     .setParameter("teacherId", teacherId)
                     .setParameter("courseId", courseId)
+                    .setParameter("from", from).setParameter("till", till)
+                    .getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @Transactional
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Group> findAllByTeacherIdDataRange(long teacherId, Date from,
+            Date till) {
+        try {
+            return entityManager
+                    .createNamedQuery(
+                            Group.FIND_BY_TEACHER_ID_AND_DATA_RANGE)
+                    .setParameter("teacherId", teacherId)
                     .setParameter("from", from).setParameter("till", till)
                     .getResultList();
         } catch (NoResultException e) {
