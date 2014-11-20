@@ -630,6 +630,27 @@ INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (38,'20
 INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (39,'2014-10-10',3475,64,19);
 INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (40,'2014-10-10',4611,92,20);
 
+INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (41,'2014-11-10',4330,98,1);
+INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (42,'2014-11-10',4513,101,2);
+INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (43,'2014-11-10',3562,68,3);
+INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (44,'2014-11-10',4522,67,4);
+INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (45,'2014-11-10',3646,74,5);
+INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (46,'2014-11-10',3734,64,6);
+INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (47,'2014-11-10',4163,68,7);
+INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (48,'2014-11-10',4336,82,8);
+INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (49,'2014-11-10',4426,88,9);
+INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (50,'2014-11-10',4231,87,10);
+INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (51,'2014-11-10',3342,87,11);
+INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (52,'2014-11-10',3236,83,12);
+INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (53,'2014-11-10',4330,91,13);
+INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (54,'2014-11-10',3976,98,14);
+INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (55,'2014-11-10',3804,61,15);
+INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (56,'2014-11-10',4100,73,16);
+INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (57,'2014-11-10',4000,47,17);
+INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (58,'2014-11-10',4355,75,18);
+INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (59,'2014-11-10',3366,54,19);
+INSERT INTO `SALARY` (`id`,`issueDate`,`sum`,`hours`,`teacherId`) values (60,'2014-11-10',3764,62,20);
+
 INSERT INTO `PARENT` (`id`,`userId`) values (1,26);
 INSERT INTO `PARENT` (`id`,`userId`) values (2,27);
 INSERT INTO `PARENT` (`id`,`userId`) values (3,28);

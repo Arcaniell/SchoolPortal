@@ -6,23 +6,20 @@
 	rel="stylesheet">
 <div align="center" class="text">
 
-	<button id="currentButton" data-toggle="modal"
-			data-target="#month">
-			<spring:message code="salary.currentbutton" />
-		</button>
-		
 	<form method="POST" action="salary">
 		<p>
-		<h4> <spring:message code="salary.period" /> </h4>
-			<spring:message code="salary.date.from" />
-			<input name="dateFrom" value="${dateFrom}" type="text"
-				class="datepicker">
-			<spring:message code="salary.date.until" />
-			<input name="dateTill" value="${dateUntil}" type="text"
-				class="datepicker">
-			<button type="submit" class="btn btn-default">
-				<spring:message code="salary.show" />
-			</button>
+		<h3>
+			<spring:message code="salary.period" />
+		</h3>
+		<spring:message code="salary.date.from" />
+		<input name="dateFrom" value="${dateFrom}" type="text"
+			class="datepicker">
+		<spring:message code="salary.date.until" />
+		<input name="dateTill" value="${dateUntil}" type="text"
+			class="datepicker">
+		<button type="submit" class="btn btn-default">
+			<spring:message code="salary.show" />
+		</button>
 		</p>
 	</form>
 	<table class="table table-hover">
@@ -44,6 +41,7 @@
 		</tbody>
 	</table>
 </div>
+
 <script src="<c:url value="https://code.jquery.com/jquery-1.10.2.js" />">
 	
 </script>
