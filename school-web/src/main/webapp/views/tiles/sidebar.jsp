@@ -12,12 +12,12 @@
 	if (user_name == null) {
 		user_name = "";
 	}
+
 %>
 <%
 	Integer newMessages = (Integer) request.getSession().getAttribute(
 			"newMessages");
 %>
-
 <sec:authorize access="isAuthenticated()">
 	<div class="profile-info"><%=user_name%></div>
 	<img class="logo"
@@ -56,6 +56,9 @@
 			access="hasAnyRole('ROLE_HEAD_TEACHER', 'ROLE_STUDENT')">
 			<li><a href=course-request><spring:message
 						code="sidebar.request" /></a></li>
+		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_TEACHER')">
+			<li><a href=salary><spring:message code="sidebar.salary" /></a></li>
 		</sec:authorize>
 		<li><a href="#"><spring:message code="sidebar.contacts" /></a></li>
 		<li><a href="#"><spring:message code="sidebar.about" /></a></li>

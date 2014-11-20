@@ -22,6 +22,9 @@
 				<c:if test = "${current == 'request'}">
 					<li class="active"><a href="course-request" style="z-index: 8;"><spring:message code="sidebar.request"/></a></li>
 				</c:if>
+				<c:if test = "${current == 'salary'}">
+					<li class="active"><a href="salary" style="z-index: 8;"><spring:message code="sidebar.salary"/></a></li>
+				</c:if>
 			</c:if>
 		</ul>
 		
