@@ -13,4 +13,6 @@ public interface JournalService {
 	List<StudentMarksDTO> getMarksOfGroup(String quarter, String idGroup,
 			String course) throws ParseException;
 
+	public List<StudentMarksDTO> addMark(String studentAndSchedule,
+			String mark, String note, String coefficient) throws ParseException;
 }

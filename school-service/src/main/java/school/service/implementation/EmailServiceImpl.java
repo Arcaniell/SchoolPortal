@@ -15,19 +15,18 @@ import javax.mail.internet.MimeMultipart;
 
 import org.springframework.stereotype.Service;
 
-import school.dto.RegistrationDTO;
 import school.model.RegistrationData;
-import school.model.User;
+import school.model.RestorePassword;
 import school.service.EmailService;
 
 @Service
 public class EmailServiceImpl implements EmailService{
 
-	private final static String serviceEmail = "schoolportalservice@gmail.com";
+	private final static String serviceEmail = "schoolportalservice2@gmail.com";
 	private final static String servicePassword = "servicepassword";
 	
 	@Override
-	public boolean sendRegistrationEmail(RegistrationDTO registrationDTO, String url) {
+	public boolean sendRegistrationEmail(RegistrationData registrationData, String url) {
 		
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -47,16 +46,18 @@ public class EmailServiceImpl implements EmailService{
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(serviceEmail));
 			message.setRecipients(Message.RecipientType.TO,
-				InternetAddress.parse(registrationDTO.getUser().getEmail()));
-			message.setSubject("Confirmation of registration in School Portal");
+				InternetAddress.parse(registrationData.getUser().getEmail()));
+			message.setSubject("Confirmation of registration at School Portal");
 			MimeBodyPart messageBodyPart = new MimeBodyPart();
-			String messageBody = "Dear ," + registrationDTO.getUser().getLastName() + 
-					" " + registrationDTO.getUser().getFirstName()
-					+ "\n\n Please confirm your registration in School Portal!"
-					+ "\n\n Enter this link: "
+			String messageBody = "<h2>Dear, " + registrationData.getUser().getLastName() + 
+					" " + registrationData.getUser().getFirstName() + "</h2>"
+					+ "<h4> Please click the link below to confirm your registration at School Portal!</h4>"
 					+ "<a href='http://localhost:10080/school-web/registration/?u="
-					+ registrationDTO.getUser().getId()+"&c="+
-					registrationDTO.getRegistrationData().getRegistrationCode()+"'>school-web</a>";
+					+ registrationData.getUser().getId()+"&c="+
+					registrationData.getRegistrationCode()+"'>"
+					+ "http://localhost:10080/school-web/registration/?u="
+					+ registrationData.getUser().getId()+"&c="+
+					+ registrationData.getRegistrationCode() + "</a>";
 			
 			messageBodyPart.setText(messageBody,"UTF-8","html");
 
@@ -73,8 +74,13 @@ public class EmailServiceImpl implements EmailService{
 	}
 
 	@Override
-	public boolean sendNewPassword(User user,
-			RegistrationData registrationData, String url) {
+	public boolean sendNewPassword(RestorePassword restorePassword, String url) {
+		/*Dear ,
+
+		You have requested a change of your email address for your user account at
+		SoftServe ITA LMS. Please open the following URL in your browser in order to
+		confirm this change.*/
+		
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
@@ -93,15 +99,22 @@ public class EmailServiceImpl implements EmailService{
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(serviceEmail));
 			message.setRecipients(Message.RecipientType.TO,
-				InternetAddress.parse(user.getEmail()));
-			message.setSubject("Confirmation of registration in School Portal");
+				InternetAddress.parse(restorePassword.getUser().getEmail()));
+			message.setSubject("Restoring of password at School Portal");
 			MimeBodyPart messageBodyPart = new MimeBodyPart();
-			String messageBody = "Dear ," + user.getLastName() + " " + user.getFirstName()
-					+ "\n\n Please confirm your registration in School Portal!"
-					+ "\n\n Enter this link: "
-					+ "<a href='http://localhost:10080/school-web/registration/?u="
-					+ user.getId()+"&c="+registrationData.getRegistrationCode()+"'>school-web</a>";
-			
+			String messageBody = "<h2>Dear, " + restorePassword.getUser().getLastName() + 
+					" " + restorePassword.getUser().getFirstName() + "</h2>"
+					+ "<h4>You have requested a change of your password for your user account at"
+					+ "School Portal.</h4> <h4>Your new password is "+restorePassword.getNewPassword()
+					+ "</h4><h4> Please open the following URL in your browser in order to"
+					+ " confirm this change</h4>"
+					+ "<a href='http://localhost:10080/school-web/forgotpassword/?u="
+					+ restorePassword.getUser().getId()+"&c="+
+					restorePassword.getRestoreCode()+"'>"
+					+ "http://localhost:10080/school-web/forgotpassword/?u="
+					+ restorePassword.getUser().getId()+"&c="+
+					+ restorePassword.getRestoreCode() + "</a>";
+					
 			messageBodyPart.setText(messageBody,"UTF-8","html");
 
 			Multipart multipart = new MimeMultipart();

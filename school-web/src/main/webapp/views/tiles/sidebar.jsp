@@ -20,7 +20,6 @@
 
 <sec:authorize access="isAuthenticated()">
 	<div class="profile-info"><%=user_name%></div>
-	<!-- <input name = "userId" type=hidden value="${pageContext.request.userPrincipal.name}"> -->
 	<img class="logo"
 		src="<c:url value="/resources/img/logos/${pageContext.request.userPrincipal.name}.png" />" />
 </sec:authorize>
@@ -34,7 +33,11 @@
 			<li><a href="#"><spring:message code="sidebar.profile" /></a></li>
 		</sec:authorize>
 		<li><a href="#"><spring:message code="sidebar.schedule" /></a></li>
-		<sec:authorize access="hasRole('ROLE_TEACHER')">
+		<sec:authorize access="hasAnyRole('ROLE_STUDENT', 'ROLE_PARENT')">
+			<li><a href="diary"><spring:message code="sidebar.diary" /></a></li>
+		</sec:authorize>
+		<sec:authorize
+			access="hasAnyRole('ROLE_HEAD_TEACHER', 'ROLE_TEACHER')">
 			<li><a href="journal"><spring:message code="sidebar.journal" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_PARENT')">
@@ -46,16 +49,13 @@
 			<li><a href=courses><spring:message code="sidebar.course" /></a></li>
 		</sec:authorize>
 		<sec:authorize
-			access="hasAnyRole('ROLE_TEACHER', 'ROLE_STUDENT', 'ROLE_HEAD_TEACHER')">
+			access="hasAnyRole('ROLE_HEAD_TEACHER','ROLE_TEACHER', 'ROLE_STUDENT')">
 			<li><a href=groups><spring:message code="sidebar.groups" /></a></li>
 		</sec:authorize>
 		<sec:authorize
 			access="hasAnyRole('ROLE_HEAD_TEACHER', 'ROLE_STUDENT')">
 			<li><a href=course-request><spring:message
 						code="sidebar.request" /></a></li>
-		</sec:authorize>
-		<sec:authorize access="hasRole('ROLE_TEACHER')">
-			<li><a href=salary><spring:message code="sidebar.salary" /></a></li>
 		</sec:authorize>
 		<li><a href="#"><spring:message code="sidebar.contacts" /></a></li>
 		<li><a href="#"><spring:message code="sidebar.about" /></a></li>

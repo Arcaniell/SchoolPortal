@@ -7,6 +7,7 @@ public class SchoolUtil {
 	public static final String ALL = "all";
 
 	public static final String UI_DATE_FORMAT = "MM/dd/yyyy";
+	public static final String DEFAULT_DATE_FORMAT = "EEE MMM dd HH:mm:ss z yyyy";
 
 	public static final String STUDENT = "student";
 	public static final String PARENT = "parent";

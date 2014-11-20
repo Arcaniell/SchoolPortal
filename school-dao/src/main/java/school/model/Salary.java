@@ -33,7 +33,7 @@ public class Salary {
 	public static final String FIND_BY_TEACHER_ID = "Salary.findByTeacherId";
 	public static final String FIND_BY_TEACHER_ID_QUERY = "SELECT u FROM Salary u WHERE u.teacher.id = :id";
 	public static final String FIND_COUNT_OF_HOURS_BY_PERIOD = "Salary.findCountOfHoursByPeropd";
-	public static final String FIND_COUNT_OF_HOURS_BY_PERIOD_QUERY = "SELECT count(u.id) as count FROM Schedule u WHERE u.teacher.id = :id and u.date BETWEEN :from AND :until";
+	public static final String FIND_COUNT_OF_HOURS_BY_PERIOD_QUERY = "SELECT count(u.id) FROM Schedule u WHERE u.teacher.id = :id and u.date BETWEEN :from AND :until";
 	public static final String FIND_BY_TEACHER_ID_AND_PERIOD = "Salary.findByTeacherIdAndPeriod";
 	public static final String FIND_BY_TEACHER_ID_AND_PERIOD_QUERY = "SELECT u FROM Salary u WHERE u.teacher.id = :id AND u.issueDate BETWEEN :from AND :until";
 	public static final String FIND_BY_LAST_ISSUE_DATE = "Salary.findByLastIssueDate";
