@@ -22,6 +22,7 @@
 				</div>
 				<form action="course-request/request" method="post">
 					<div class="modal-body">
+						<p><spring:message code="course.request.student.msg" /></p>
 						<select name="courseId" class="selectpicker">
 							<c:forEach items="${haveCourses}" var="crs">
 								<option value="${crs.id}">${crs.courseName}</option>
