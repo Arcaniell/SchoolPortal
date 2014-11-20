@@ -5,14 +5,14 @@
 
 <link href="<c:url value="/resources/css/conversations.css" />"
 	rel="stylesheet">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="<c:url value="/resources/js/jquery.autocomplete.min.js" />"></script>
 
 <ul class="nav nav-tabs">
-	<li class="active"><a
-		href='<c:url value="inbox"/>'>Inbox<span
+	<li class="active"><a href='<c:url value="inbox"/>'>Inbox<span
 			class="badge">${conversationsDto.size()}</span>
 	</a></li>
-	<li><a href='<c:url value="sent"/>'>Sent<span
-			class="badge">${sentSize}</span>
+	<li><a href='<c:url value="sent"/>'>Sent<span class="badge">${sentSize}</span>
 	</a></li>
 	<li id="compose">
 		<button type="button" class="btn btn-success" data-toggle="modal"
@@ -34,12 +34,16 @@
 						<tr>
 							<td class="checkBox"><input type="checkbox" name="selected"
 								value="${conversation.id}" /></td>
-							<td class="name"><a
+							<td
+								class="${conversation.hasNewMessages == 'true' ? 'name bold' : 'name'}"><a
 								href='<c:url value="/inbox/${conversation.id}"/>'>${conversation.firstName}
 									${conversation.lastName}</a></td>
-							<td class="subject"><a
+							<td
+								class="${conversation.hasNewMessages == 'true' ? 'subject bold' : 'subject'}"><a
 								href='<c:url value="/inbox/${conversation.id}"/>'>${conversation.subject}</a></td>
-							<td class="date"><a href='<c:url value="/inbox/${conversation.id}"/>'>${conversation.date}</a></td>
+							<td
+								class="${conversation.hasNewMessages == 'true' ? 'date bold' : 'date'}"><a
+								href='<c:url value="/inbox/${conversation.id}"/>'>${conversation.date}</a></td>
 						</tr>
 					</c:forEach>
 				</form>

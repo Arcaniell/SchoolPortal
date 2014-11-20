@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-import school.dto.ConversationDto;
+import school.dto.message.ConversationDto;
 import school.model.Conversation;
+import school.model.User;
 import school.service.ConversationService;
 import school.service.MessagesService;
+import school.service.UserService;
 
 @Controller
 public class ConversationController {
@@ -28,42 +31,55 @@ public class ConversationController {
 
 	@Autowired
 	public MessagesService messagesService;
+	
+	@Autowired
+	public UserService userService;
 
 	@RequestMapping("inbox")
 	public String inbox(Model model, Principal principal,
 			HttpServletRequest request) {
-		long id = Long.valueOf(principal.getName());
-		List<Conversation> conversationsS = conversationService.findSent(id);
-		List<Conversation> conversationsI = conversationService.findInbox(id);
+		long principalId = Long.valueOf(principal.getName());
+		List<Conversation> conversationsS = conversationService
+				.findSent(principalId);
+		List<Conversation> conversationsI = conversationService
+				.findInbox(principalId);
 		int sentSize = conversationsS.size();
 		List<ConversationDto> conversationsDto = new ArrayList<ConversationDto>();
 		if (conversationsI.size() > 0) {
 			Locale loc = RequestContextUtils.getLocale(request);
 			conversationsDto = conversationService
-					.constructInboxConversationsDto(conversationsI, id, loc);
+					.constructInboxConversationsDto(conversationsI,
+							principalId, loc);
 		}
 		model.addAttribute("conversationsDto", conversationsDto);
 		model.addAttribute("sentSize", sentSize);
-		request.getSession().setAttribute("currentPage", "inbox");
+		int newMessages = messagesService.countOfNewMessages(principalId);
+		request.getSession(false).setAttribute("newMessages", newMessages);
+		request.getSession(false).setAttribute("currentPage", "inbox");
 		return "inbox";
 	}
 
 	@RequestMapping("sent")
 	public String sent(Model model, Principal principal,
 			HttpServletRequest request) {
-		Long id = Long.valueOf(principal.getName());
-		List<Conversation> conversationsI = conversationService.findInbox(id);
-		List<Conversation> conversationsS = conversationService.findSent(id);
+		long principalId = Long.valueOf(principal.getName());
+		List<Conversation> conversationsI = conversationService
+				.findInbox(principalId);
+		List<Conversation> conversationsS = conversationService
+				.findSent(principalId);
 		int inboxSize = conversationsI.size();
 		List<ConversationDto> conversationsDto = new ArrayList<ConversationDto>();
 		if (conversationsS.size() > 0) {
 			Locale loc = RequestContextUtils.getLocale(request);
 			conversationsDto = conversationService
-					.constructSentConversationsDto(conversationsS, id, loc);
+					.constructSentConversationsDto(conversationsS, principalId,
+							loc);
 		}
 		model.addAttribute("conversationsDto", conversationsDto);
 		model.addAttribute("inboxSize", inboxSize);
-		request.getSession().setAttribute("currentPage", "sent");
+		int newMessages = messagesService.countOfNewMessages(principalId);
+		request.getSession(false).setAttribute("newMessages", newMessages);
+		request.getSession(false).setAttribute("currentPage", "sent");
 		return "sent";
 	}
 
@@ -83,14 +99,16 @@ public class ConversationController {
 
 	@RequestMapping(value = "compose", method = RequestMethod.POST)
 	public String compose(
-			@RequestParam(value = "to", required = false) String name,
+			@RequestParam(value = "to", required = false) String nameAndEmail,
 			@RequestParam(value = "subject", required = false) String subject,
 			@RequestParam(value = "text", required = false) String text,
 			HttpServletRequest request, Principal principal) {
 		Long principalId = Long.valueOf(principal.getName());
-		Long receiverId = Long.valueOf(name);
+		String email = nameAndEmail.split("-")[1].trim();
+		User receiver = userService.findByEmail(email);
+		Long receiverId = receiver.getId();
 		conversationService.createConversation(subject, principalId,
-				receiverId, text);
+				receiverId, principalId, text);
 		String currectPage = (String) request.getSession().getAttribute(
 				"currentPage");
 		return "redirect:/" + currectPage;

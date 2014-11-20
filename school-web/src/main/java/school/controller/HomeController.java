@@ -23,6 +23,7 @@ import school.model.RegistrationData;
 import school.model.Role;
 import school.model.User;
 import school.service.HomeService;
+import school.service.MessagesService;
 import school.service.UserService;
 
 @Controller
@@ -32,6 +33,8 @@ public class HomeController {
 	private HomeService homeService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MessagesService messagesService;
 
 	@RequestMapping(value = "home")
 	public String index(Model model, Principal principal, HttpServletRequest request) {
@@ -40,6 +43,9 @@ public class HomeController {
 		if (principal != null && session.getAttribute("user_name") == null){
 			User user = userService.loadUser(Integer.parseInt(principal.getName()));
 			session.setAttribute("user_name", user.getFirstName() + " " +user.getLastName());
+			long userId = Long.valueOf(principal.getName());
+			int newMessages = messagesService.countOfNewMessages(userId);
+			session.setAttribute("newMessages", newMessages);
 		}
 		return "home";
 	}

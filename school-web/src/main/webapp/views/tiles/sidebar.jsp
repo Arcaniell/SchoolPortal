@@ -9,11 +9,13 @@
 <%
 	String user_name = (String) request.getSession().getAttribute(
 			"user_name");
-	Integer newMessages = (Integer) request.getSession().getAttribute(
-			"newMessages");
 	if (user_name == null) {
 		user_name = "";
 	}
+%>
+<%
+	Integer newMessages = (Integer) request.getSession().getAttribute(
+			"newMessages");
 %>
 
 <sec:authorize access="isAuthenticated()">
@@ -36,9 +38,9 @@
 			<li><a href="journal"><spring:message code="sidebar.journal" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_PARENT')">
-			<li><a href='<c:url value="/inbox"/>'><spring:message
+			<li><a class="sidebarMessage" href='<c:url value="/inbox"/>'><spring:message
 						code="sidebar.message" /> <img
-					src="<c:url value="/resources/img/envelope_blue.png" />" /> <%=newMessages%></a></li>
+					src="<c:url value="/resources/img/envelope30.png" />" /> <%=newMessages%></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_STUDENT')">
 			<li><a href=courses><spring:message code="sidebar.course" /></a></li>

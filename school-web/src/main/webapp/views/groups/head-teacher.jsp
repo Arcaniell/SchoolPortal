@@ -1,13 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <table class="table table-hover">
 	<thead>
 		<tr>
-			<th>Group name</th>
-			<th>Year</th>
-			<th>Additional</th>
-			<th>Members</th>
-			<th>Curator</th>
+			<th><spring:message code="groups.table.name" /></th>
+			<th><spring:message code="course.table.Year" /></th>
+			<th><spring:message code="course.table.Additional" /></th>
+			<th><spring:message code="course.request.members" /></th>
+			<th><spring:message code="groups.table.curator" /></th>
 		</tr>
 	</thead>
 	<tbody>

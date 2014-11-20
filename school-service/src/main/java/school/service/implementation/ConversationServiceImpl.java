@@ -2,7 +2,6 @@ package school.service.implementation;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -12,9 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import school.dao.ConversationDao;
-import school.dao.MessageDao;
 import school.dao.UserDao;
-import school.dto.ConversationDto;
+import school.dto.message.ConversationDto;
 import school.model.Conversation;
 import school.model.Message;
 import school.model.User;
@@ -27,7 +25,7 @@ public class ConversationServiceImpl implements ConversationService {
 
 	@Autowired
 	private ConversationDao conversationDao;
-	
+
 	@Autowired
 	private MessagesService messagesService;
 
@@ -39,16 +37,14 @@ public class ConversationServiceImpl implements ConversationService {
 	@Transactional
 	public List<Conversation> findInbox(long id) {
 		User user = userDao.findById(id);
-		List<Conversation> list = conversationDao
-				.findInboxConversations(user);
+		List<Conversation> list = conversationDao.findInboxConversations(user);
 		return list;
 	}
-	
+
 	@Transactional
 	public List<Conversation> findSent(long id) {
 		User user = userDao.findById(id);
-		List<Conversation> list = conversationDao
-				.findSentConversations(user);
+		List<Conversation> list = conversationDao.findSentConversations(user);
 		return list;
 	}
 
@@ -114,6 +110,7 @@ public class ConversationServiceImpl implements ConversationService {
 			dto.setDate(date);
 			dto.setFirstName(fNames.get(i));
 			dto.setLastName(lNames.get(i));
+			dto.setHasNewMessages(hasNewMessages(conversations.get(i), id));
 			dtos.add(dto);
 		}
 		return dtos;
@@ -139,6 +136,7 @@ public class ConversationServiceImpl implements ConversationService {
 			dto.setDate(date);
 			dto.setFirstName(fNames.get(i));
 			dto.setLastName(lNames.get(i));
+			dto.setHasNewMessages(hasNewMessages(conversations.get(i), id));
 			dtos.add(dto);
 		}
 		return dtos;
@@ -178,7 +176,8 @@ public class ConversationServiceImpl implements ConversationService {
 	}
 
 	@Override
-	public void createConversation(String subject, long sender, long receiver, String text) {
+	public void createConversation(String subject, long sender, long receiver,
+			long principalId, String text) {
 		Conversation conversation = new Conversation();
 		conversation.setSubject(subject);
 		conversation.setAnsweredReceiver(false);
@@ -189,9 +188,27 @@ public class ConversationServiceImpl implements ConversationService {
 		conversation.setReceiverId(userReceiver);
 		User userSender = userDao.findById(sender);
 		conversation.setSenderId(userSender);
-		
+
 		conversationDao.save(conversation);
-		
-		messagesService.createNewMessage(conversation, text);
+
+		messagesService.createNewMessage(conversation, text, principalId);
+	}
+
+	@Override
+	public boolean hasNewMessages(Conversation conversation, long userId) {
+		List<Message> messages = messagesService.findMessagesOfConversation(
+				conversation.getId(), userId);
+		for (Message m : messages) {
+			if (conversation.getReceiverId().getId() == userId) {
+				if (!m.isReadReceiver() && m.isFromSender()) {
+					return true;
+				}
+			} else {
+				if (!m.isReadSender() && !m.isFromSender()) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }
