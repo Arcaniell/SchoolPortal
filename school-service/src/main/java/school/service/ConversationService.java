@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import school.dto.ConversationDto;
+import school.dto.message.ConversationDto;
 import school.model.Conversation;
 
 public interface ConversationService {
@@ -29,5 +29,7 @@ public interface ConversationService {
 
 	Conversation findById(long id);
 	
-	void createConversation(String subject, long sender, long receiver, String text);
+	void createConversation(String subject, long sender, long receiver, long principalId, String text);
+	
+	boolean hasNewMessages(Conversation conversation, long userId);
 }

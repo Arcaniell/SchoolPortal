@@ -36,10 +36,9 @@ public class ConversationDaoImpl extends BaseDaoImpl<Conversation, Long>
 					.createNamedQuery("Conversation.INBOX_CONVERSATIONS")
 					.setParameter("user", user).getResultList();
 		} catch (NoResultException e) {
-			e.printStackTrace();
-		} finally {
 			return list;
-		}
+		} 
+		return list;
 	}
 
 	@SuppressWarnings({ "unchecked", "finally" })

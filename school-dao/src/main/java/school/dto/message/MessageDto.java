@@ -1,9 +1,10 @@
-package school.dto;
+package school.dto.message;
 
 public class MessageDto {
 
 	private String id;
 	private String name;
+	private long userId;
 	private String dateTime;
 	private String text;
 	
@@ -30,6 +31,12 @@ public class MessageDto {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public long getUserId() {
+		return userId;
+	}
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 	
 }

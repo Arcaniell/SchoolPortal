@@ -145,3 +145,9 @@ body {
 .text {
 	margin: 10px;
 }
+
+.sidebarMessage {
+	padding-bottom: 5px !important;
+	padding-top: 5px !important;
+	padding-left: 65px !important;
+}

@@ -19,6 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
 
 import school.dao.StudentDao;
 import school.model.Student;
@@ -134,6 +135,7 @@ public class StudentDaoImplTest extends DBUnitConfig {
         // tacking student id with user id = 3
         long studentId = (Long) actualTable.getValue(2, "id");
         // get student by tested method and check result
+        while(studentDaoImpl.findByUserId(3)==null){}
         Student student = studentDaoImpl.findByUserId(3);
         Assert.assertEquals(studentId, student.getId());
     }

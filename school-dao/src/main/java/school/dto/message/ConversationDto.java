@@ -1,4 +1,4 @@
-package school.dto;
+package school.dto.message;
 
 public class ConversationDto {
 
@@ -7,6 +7,8 @@ public class ConversationDto {
 	private String subject;
 	private String date;
 	private String id;
+	private boolean hasNewMessages;
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -37,4 +39,11 @@ public class ConversationDto {
 	public void setId(String id) {
 		this.id = id;
 	}
+	public boolean isHasNewMessages() {
+		return hasNewMessages;
+	}
+	public void setHasNewMessages(boolean hasNewMessages) {
+		this.hasNewMessages = hasNewMessages;
+	}
+	
 }
