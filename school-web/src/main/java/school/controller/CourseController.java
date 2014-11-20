@@ -23,17 +23,27 @@ public class CourseController {
     private final int TWO_MONTHS_IN_DAYS = 60;
     private final boolean FORWARD_TRUE = true;
     private final boolean FORWARD_FALSE = false;
-    SimpleDateFormat formatterDate = new SimpleDateFormat("MM/dd/yyyy");
+    private final String URL_COURSES = "/courses";
+    private final String URL_REDIRECT = "redirect:";
+    private final String URL_LOGIN = "/login";
+    private final String URL_STUDENT_COURSE = "courses-student";
+    private final String URL_TEACHER_COURSE = "courses-teacher";
+    private final String JSP_INPUT_DATE_FROM = "dateFrom";
+    private final String JSP_INPUT_DATE_TILL = "dateTill";
+    private final String JSP_OUTPUT_COURSE_LIST = "courses";
+    private final String JSP_OUTPUT_CURRENT_PAGE ="current";
+    private final String JSP_OUTPUT_CURRENT_PAGE_VALUE ="courses";
+    private final SimpleDateFormat formatterDate = new SimpleDateFormat("MM/dd/yyyy");
     @Autowired
     CourseService course;
 
-    @RequestMapping(value = "/courses")
+    @RequestMapping(value = URL_COURSES)
     public String getCourses(
-            @RequestParam(value = "dateFrom", required = false) String dateFrom,
-            @RequestParam(value = "dateTill", required = false) String dateTill,
+            @RequestParam(value = JSP_INPUT_DATE_FROM, required = false) String dateFrom,
+            @RequestParam(value = JSP_INPUT_DATE_TILL, required = false) String dateTill,
             Model model, HttpServletRequest request, Principal user) {
         if (user == null) {
-            return "redirect:/login";
+            return URL_REDIRECT + URL_LOGIN;
         }
         if (request.isUserInRole(Role.Secured.STUDENT)) {
             // parse dates from form
@@ -46,18 +56,14 @@ public class CourseController {
                 from = till;
                 till = swap;
             }
-            // get list of courses
-            // List<Course> coursesList =
-            // course.allCoursesinDateRangeForStudent(
-            // user, from, till);
             List<CourseDTO> coursesList = course
                     .allCoursesInDateRangeForStudent(user, from, till);
             // transfer data to form
-            model.addAttribute("dateFrom", formatterDate.format(from));
-            model.addAttribute("dateTill", formatterDate.format(till));
-            model.addAttribute("courses", coursesList);
-            model.addAttribute("current", "courses");
-            return "courses-student";
+            model.addAttribute(JSP_INPUT_DATE_FROM, formatterDate.format(from));
+            model.addAttribute(JSP_INPUT_DATE_TILL, formatterDate.format(till));
+            model.addAttribute(JSP_OUTPUT_COURSE_LIST, coursesList);
+            model.addAttribute(JSP_OUTPUT_CURRENT_PAGE, JSP_OUTPUT_CURRENT_PAGE_VALUE);
+            return URL_STUDENT_COURSE;
         }
         if (request.isUserInRole(Role.Secured.TEACHER)) {
             // parse dates from form
@@ -75,12 +81,12 @@ public class CourseController {
             coursesList = course.allCoursesInDateRangeForTeacher(user, from,
                     till);
             // transfer data to form
-            model.addAttribute("dateFrom", formatterDate.format(from));
-            model.addAttribute("dateTill", formatterDate.format(till));
-            model.addAttribute("courses", coursesList);
-            model.addAttribute("current", "courses");
-            return "courses-teacher";
+            model.addAttribute(JSP_INPUT_DATE_FROM, formatterDate.format(from));
+            model.addAttribute(JSP_INPUT_DATE_TILL, formatterDate.format(till));
+            model.addAttribute(JSP_OUTPUT_COURSE_LIST, coursesList);
+            model.addAttribute(JSP_OUTPUT_CURRENT_PAGE, JSP_OUTPUT_CURRENT_PAGE_VALUE);
+            return URL_TEACHER_COURSE;
         }
-        return "redirect:/login";
+        return URL_REDIRECT + URL_LOGIN;
     }
 }
