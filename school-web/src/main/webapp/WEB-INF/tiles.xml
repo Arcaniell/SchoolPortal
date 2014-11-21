@@ -5,7 +5,7 @@
 
 <tiles-definitions>
 	<definition name="base.definition" template="/views/layout.jsp">
-		<put-attribute name="header" value="/views/tiles/header_new.jsp" />
+		<put-attribute name="header" value="/views/tiles/header.jsp" />
 		<put-attribute name="sidebar" value="/views/tiles/sidebar.jsp" />
 		<put-attribute name="main_content" value="" />
 	</definition>
@@ -39,6 +39,11 @@
 	<definition name="diary-parent" extends="base.definition">
 		<put-attribute name="title" value="Diary" />
 		<put-attribute name="main_content" value="/views/journal/diary-parent.jsp" />
+	</definition>
+
+	<definition name="diary-parent-*" extends="base.definition">
+		<put-attribute name="title" value="Diary" />
+		<put-attribute name="main_content" value="/views/journal/diary-parent-id.jsp" />
 	</definition>
 
 	<definition name="groups-*" extends="base.definition">

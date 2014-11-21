@@ -14,16 +14,16 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">×</button>
-				<h3 class="modal-title">Course approval</h3>
+				<h3 class="modal-title"><spring:message code="course.request.modal.title" /></h3>
 			</div>
 			<form action="course-request-manage-group" method="post">
 				<input id="exportedVal" name="exportedVal" type="hidden" value="" />
 				<div class="modal-body">
-					<p>You need to choose option what to do with current requests.</p>
+					<p><spring:message code="course.request.modal.message" /></p>
 					<button name="groupChange" value="approve" type="submit"
-						class="btn btn-default">Approve and create class</button>
+						class="btn btn-default"><spring:message code="course.request.modal.approve" /></button>
 					<button name="groupChange" value="deny" type="submit"
-						class="btn btn-default">Close this group</button>
+						class="btn btn-default"><spring:message code="course.request.modal.deny" /></button>
 				</div>
 			</form>
 		</div>
@@ -35,9 +35,9 @@
 	<table class="table table-hover">
 		<thead>
 			<tr>
-				<th>Course name</th>
-				<th>Year</th>
-				<th>Members</th>
+				<th><spring:message code="course.table.Name" /></th>
+				<th><spring:message code="course.table.Year" /></th>
+				<th><spring:message code="course.request.members" /></th>
 			</tr>
 		</thead>
 		<tbody>

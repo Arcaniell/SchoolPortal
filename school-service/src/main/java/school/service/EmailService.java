@@ -1,10 +1,10 @@
 package school.service;
 
-import school.dto.RegistrationDTO;
 import school.model.RegistrationData;
+import school.model.RestorePassword;
 import school.model.User;
 
 public interface EmailService {
-	boolean sendRegistrationEmail(RegistrationDTO registrationDTO, String url);
-	boolean sendNewPassword(User user, RegistrationData registrationData, String url);
+	boolean sendRegistrationEmail(RegistrationData registrationData, String url);
+	boolean sendNewPassword(RestorePassword restorePassword, String url);
 }

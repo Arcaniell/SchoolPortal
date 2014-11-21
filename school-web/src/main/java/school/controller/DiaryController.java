@@ -11,7 +11,6 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import school.dto.journal.StudentMarksDTO;
 import school.model.Role;
-import school.model.Student;
 import school.service.DiaryService;
 import school.service.utils.JournalUtil;
 
@@ -87,7 +85,7 @@ public class DiaryController {
 		return "diary-parent";
 	}
 
-	@RequestMapping(value = "diary-parent/{id}")
+	@RequestMapping(value = "diary-parent-{id}")
 	public String getDiaryParent(Principal user, Model model,
 			@PathVariable String id, HttpServletRequest request)
 			throws ParseException {
@@ -125,12 +123,12 @@ public class DiaryController {
 			List<StudentMarksDTO> diaryMarks = diaryService.getDiaryMarks(id,
 					currentWeek);
 			model.addAttribute(JournalUtil.MOD_ATT_DIARY_MARKS, diaryMarks);
+			model.addAttribute("userId", id);
 		}
 		if (request.isUserInRole(Role.Secured.PARENT)) {
 			model.addAttribute("kids", diaryService.getKids(user.getName()));
 		}
 
-		return "diary-parent";
+		return "diary-parent-" + id;
 	}
-
 }

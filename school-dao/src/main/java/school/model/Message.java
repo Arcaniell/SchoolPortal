@@ -2,7 +2,6 @@ package school.model;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,12 +17,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "MESSAGE")
 @NamedQueries({
-		@NamedQuery(name = "Message.FIND_RECEIVERS_MESSAGES", query = "SELECT m from Message m "
-				+ "where m.conversationId = :conversation "
-				+ "and m.isDeletedReceiver = false order by m.dateTime asc"),
-		@NamedQuery(name = "Message.FIND_SENDERS_MESSAGES", query = "SELECT m from Message m "
-				+ "where m.conversationId = :conversation "
-				+ "and m.isDeletedSender = false order by m.dateTime asc") })
+	@NamedQuery(name = "Message.FIND_RECEIVERS_MESSAGES", query = "SELECT m from Message m "
+			+ "where m.conversationId = :conversation "
+			+ "and m.isDeletedReceiver = false order by m.dateTime asc"),
+	@NamedQuery(name = "Message.FIND_SENDERS_MESSAGES", query = "SELECT m from Message m "
+			+ "where m.conversationId = :conversation "
+			+ "and m.isDeletedSender = false order by m.dateTime asc"),
+	@NamedQuery(name = "Message.FIND_NEW_MESSAGES", query = "SELECT m from Message m "
+			+ "where m.conversationId IN (:conversations)") })
 public class Message {
 
 	@Id
@@ -44,7 +45,10 @@ public class Message {
 	private Date dateTime;
 
 	@Column(nullable = false)
-	private boolean isRead;
+	private boolean isReadReceiver;
+	
+	@Column(nullable = false)
+	private boolean isReadSender;
 
 	@Column(nullable = false)
 	private boolean isDeletedReceiver;
@@ -92,12 +96,20 @@ public class Message {
 		this.dateTime = dateTime;
 	}
 
-	public boolean isRead() {
-		return isRead;
+	public boolean isReadReceiver() {
+		return isReadReceiver;
 	}
 
-	public void setRead(boolean isRead) {
-		this.isRead = isRead;
+	public void setReadReceiver(boolean isReadReceiver) {
+		this.isReadReceiver = isReadReceiver;
+	}
+
+	public boolean isReadSender() {
+		return isReadSender;
+	}
+
+	public void setReadSender(boolean isReadSender) {
+		this.isReadSender = isReadSender;
 	}
 
 	public boolean isDeletedReceiver() {
@@ -128,7 +140,8 @@ public class Message {
 		result = prime * result + (isDeletedReceiver ? 1231 : 1237);
 		result = prime * result + (isDeletedSender ? 1231 : 1237);
 		result = prime * result + (isFromSender ? 1231 : 1237);
-		result = prime * result + (isRead ? 1231 : 1237);
+		result = prime * result + (isReadReceiver ? 1231 : 1237);
+		result = prime * result + (isReadSender ? 1231 : 1237);
 		result = prime * result + ((text == null) ? 0 : text.hashCode());
 		return result;
 	}
@@ -160,7 +173,9 @@ public class Message {
 			return false;
 		if (isFromSender != other.isFromSender)
 			return false;
-		if (isRead != other.isRead)
+		if (isReadReceiver != other.isReadReceiver)
+			return false;
+		if (isReadSender != other.isReadSender)
 			return false;
 		if (text == null) {
 			if (other.text != null)

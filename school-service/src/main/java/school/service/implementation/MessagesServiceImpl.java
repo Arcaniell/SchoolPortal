@@ -13,9 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 import school.dao.ConversationDao;
 import school.dao.MessageDao;
 import school.dao.UserDao;
-import school.dto.MessageDto;
+import school.dto.message.EmailObjectDTO;
+import school.dto.message.MessageDto;
 import school.model.Conversation;
 import school.model.Message;
+import school.model.Role;
 import school.model.User;
 import school.service.ConversationService;
 import school.service.MessagesService;
@@ -28,7 +30,7 @@ public class MessagesServiceImpl implements MessagesService {
 
 	@Autowired
 	private ConversationDao conversationDao;
-	
+
 	@Autowired
 	private ConversationService conversationService;
 
@@ -48,39 +50,43 @@ public class MessagesServiceImpl implements MessagesService {
 	}
 
 	@Transactional
-	public void createNewMessage(Conversation conversation, String text) {
+	public void createNewMessage(Conversation conversation, String text,
+			long principalId) {
 		Message message = new Message();
 		message.setDateTime(new Date());
 		message.setDeletedReceiver(false);
 		message.setDeletedSender(false);
 		message.setFromSender(true);
-		message.setRead(false);
+		message.setReadSender(true);
+		message.setReadReceiver(false);
 		message.setText(text);
 		message.setConversationId(conversation);
-		
+
 		messageDao.save(message);
 	}
-	
+
 	@Transactional
-	public void replyMessage(Conversation conversation, String text, long principalId) {
+	public void replyMessage(Conversation conversation, String text,
+			long principalId) {
 		Message message = new Message();
-		message.setRead(false);
 		message.setDateTime(new Date());
 		message.setConversationId(conversation);
 		message.setDeletedReceiver(false);
 		message.setDeletedSender(false);
 		message.setText(text);
-		
+
 		if (conversation.getReceiverId().getId() == principalId) {
 			message.setFromSender(false);
 			conversation.setAnsweredReceiver(true);
 			conversation.setDeletedSender(false);
+			message.setReadSender(false);
 		} else {
 			message.setFromSender(true);
 			conversation.setAnsweredSender(true);
 			conversation.setDeletedReceiver(false);
+			message.setReadReceiver(false);
 		}
-		
+
 		messageDao.save(message);
 	}
 
@@ -90,11 +96,17 @@ public class MessagesServiceImpl implements MessagesService {
 		List<MessageDto> dtos = new ArrayList<MessageDto>();
 		List<String> names = getNames(messages, receiverId, senderId);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+
 		for (int i = 0; i < messages.size(); i++) {
 			MessageDto dto = new MessageDto();
 			dto.setId(String.valueOf(messages.get(i).getId()));
 			dto.setDateTime(dateFormat.format(messages.get(i).getDateTime()));
 			dto.setName(names.get(i));
+			if (messages.get(i).isFromSender()) {
+				dto.setUserId(senderId);
+			} else {
+				dto.setUserId(receiverId);
+			}
 			dto.setText(messages.get(i).getText());
 			dtos.add(dto);
 		}
@@ -119,30 +131,26 @@ public class MessagesServiceImpl implements MessagesService {
 	}
 
 	@Transactional
-	public void deleteMessages(String[] ids, long id) {
-		Conversation conversation = messageDao.findById(Long.valueOf(ids[0]))
+	public void deleteMessage(long messageId, long id) {
+		Conversation conversation = messageDao.findById(messageId)
 				.getConversationId();
 		if (conversation.getReceiverId().getId() == id) {
-			for (String s : ids) {
-				Message message = messageDao.findById(Long.valueOf(s));
-				message.setDeletedReceiver(true);
-				int size = messageDao.findReceiversMessagesOfConversation(
-						conversation).size();
-				if (size == 0) {
-					conversation.setDeletedReceiver(true);
-					conversation.setAnsweredReceiver(false);
-				}
+			Message message = messageDao.findById(messageId);
+			message.setDeletedReceiver(true);
+			int size = messageDao.findReceiversMessagesOfConversation(
+					conversation).size();
+			if (size == 0) {
+				conversation.setDeletedReceiver(true);
+				conversation.setAnsweredReceiver(false);
 			}
 		} else {
-			for (String s : ids) {
-				Message message = messageDao.findById(Long.valueOf(s));
-				message.setDeletedSender(true);
-				int size = messageDao.findSendersMessagesOfConversation(
-						conversation).size();
-				if (size == 0) {
-					conversation.setDeletedSender(true);
-					conversation.setAnsweredSender(false);
-				}
+			Message message = messageDao.findById(messageId);
+			message.setDeletedSender(true);
+			int size = messageDao.findSendersMessagesOfConversation(
+					conversation).size();
+			if (size == 0) {
+				conversation.setDeletedSender(true);
+				conversation.setAnsweredSender(false);
 			}
 		}
 	}
@@ -150,5 +158,79 @@ public class MessagesServiceImpl implements MessagesService {
 	@Override
 	public Message findById(long repliedMessageId) {
 		return messageDao.findById(repliedMessageId);
+	}
+
+	@Override
+	public void markAsRead(List<Message> messages, long principalId) {
+
+		for (Message m : messages) {
+			Conversation conversation = conversationDao.findById(m
+					.getConversationId().getId());
+			if (conversation.getReceiverId().getId() == principalId) {
+				m.setReadReceiver(true);
+			} else {
+				m.setReadSender(true);
+			}
+		}
+	}
+
+	@Override
+	public int countOfNewMessages(long userId) {
+		User user = userDao.findById(userId);
+		List<Conversation> conversations = conversationDao
+				.findInboxConversations(user);
+		int count = 0;
+		if (conversations.size() != 0) {
+			List<Message> messageList = messageDao
+					.countOfNewMessages(conversations);
+			for (Message m : messageList) {
+				Conversation conversation = conversationDao.findById(m
+						.getConversationId().getId());
+				if (conversation.getReceiverId().getId() == userId
+						&& !m.isReadReceiver() && !m.isDeletedReceiver()) {
+					count++;
+				} else if (conversation.getSenderId().getId() == userId
+						&& !m.isReadSender() && !m.isDeletedSender()) {
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+
+	@Override
+	public List<User> simulateSearchResult(String tagName, boolean isParent) {
+		List<User> result = new ArrayList<User>();
+		List<User> users = userDao.findAll();
+		for (User u : users) {
+			for (Role r : u.getRoles()) {
+				if (isParent
+						&& r.getName().equals("ROLE_TEACHER")
+						&& (u.getLastName().contains(tagName)
+								|| u.getFirstName().contains(tagName) || u
+								.getEmail().contains(tagName))) {
+					result.add(u);
+				} else if (!isParent
+						&& r.getName().equals("ROLE_PARENT")
+						&& (u.getLastName().contains(tagName)
+								|| u.getFirstName().contains(tagName) || u
+								.getEmail().contains(tagName))) {
+					result.add(u);
+				}
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public List<EmailObjectDTO> contructEmailObjectDTO(List<User> users) {
+		List<EmailObjectDTO> emailObjectDTOs = new ArrayList<EmailObjectDTO>();
+		for (User u : users) {
+			EmailObjectDTO emailObjectDTO = new EmailObjectDTO();
+			emailObjectDTO.setNameAndEmail(u.getFirstName() + " "
+					+ u.getLastName() + " - " + u.getEmail());
+			emailObjectDTOs.add(emailObjectDTO);
+		}
+		return emailObjectDTOs;
 	}
 }

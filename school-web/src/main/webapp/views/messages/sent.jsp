@@ -3,12 +3,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="<c:url value="/resources/js/jquery.autocomplete.min.js" />"></script>
 <link href="<c:url value="/resources/css/conversations.css" />"
 	rel="stylesheet">
 
 <ul class="nav nav-tabs">
-	<li><a href='<c:url value="inbox"/>'>Inbox<span
-			class="badge">${inboxSize}</span>
+	<li><a href='<c:url value="inbox"/>'>Inbox<span class="badge">${inboxSize}</span>
 	</a></li>
 	<li class="active"><a href='<c:url value="sent"/>'>Sent<span
 			class="badge">${conversationsDto.size()}</span>
@@ -33,12 +34,15 @@
 						<tr>
 							<td class="checkBox"><input type="checkbox" name="selected"
 								value="${conversation.id}" /></td>
-							<td class="name"><a
+							<td
+								class="${conversation.hasNewMessages == 'true' ? 'name bold' : 'name'}"><a
 								href='<c:url value="/sent/${conversation.id}"/>'>${conversation.firstName}
 									${conversation.lastName}</a></td>
-							<td class="subject"><a
+							<td
+								class="${conversation.hasNewMessages == 'true' ? 'subject bold' : 'subject'}"><a
 								href='<c:url value="/sent/${conversation.id}"/>'>${conversation.subject}</a></td>
-							<td class="date"><a
+							<td
+								class="${conversation.hasNewMessages == 'true' ? 'date bold' : 'date'}"><a
 								href='<c:url value="/sent/${conversation.id}"/>'>${conversation.date}</a></td>
 						</tr>
 					</c:forEach>

@@ -15,32 +15,4 @@ $(document).ready(function(){
 		  $("#questionNumber").val($(this).attr('id'));
 		  });
 	  
-
-	  $("#forgotAPasswordButton").click(function(){
-		  var email = $("#forgot_email").val();
-		  alert(email);
-		  $.ajax({
-				type : "GET",
-				url : "forgotemail/check",
-				data : "email=" + email,
-				dataType: 'json', 
-		        contentType: 'application/json',
-		        mimeType: 'application/json',
-		        async:false,
-		        success : function(response) {
-		        	if (response == 0){
-		        		alert('send');
-		        	}
-		        	else{
-		        		alert('no');
-		        	}
-
-		           },  
-		           error : function(e) {  
-		            alert('Internal server error');   
-		           }  
-          });
-	
-		  
-		  });
 	});

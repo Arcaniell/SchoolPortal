@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import school.dao.MessageDao;
 import school.model.Conversation;
 import school.model.Message;
+import school.model.User;
 
 @Repository
 public class MessageDaoImpl extends BaseDaoImpl<Message, Long> implements
@@ -54,5 +55,18 @@ public class MessageDaoImpl extends BaseDaoImpl<Message, Long> implements
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Message> countOfNewMessages(List<Conversation> conversations) {
+		try {	
+			return entityManager
+					.createNamedQuery("Message.FIND_NEW_MESSAGES")
+					.setParameter("conversations", conversations).getResultList();
+		} catch (NoResultException e) {
+			return new ArrayList<Message>();
+		}
 	}
 }

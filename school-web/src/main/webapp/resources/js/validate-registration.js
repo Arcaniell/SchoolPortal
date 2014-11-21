@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+	var root_action = $("#root_action").val();
+	
 	$.validator.addMethod("regexName", function(value, element) {
 		return /^[a-zA-Z]+$/.test(value);
 	}, "Only letters are allowed!");
@@ -8,7 +10,7 @@ $(document).ready(function() {
 		var result = false;
 		$.ajax({
 			type : "GET",
-			url : "email/check",
+			url : root_action+"email/check",
 			data : "email=" + value,
 			dataType : 'json',
 			contentType : 'application/json',
@@ -23,11 +25,11 @@ $(document).ready(function() {
 
 			},
 			error : function(e) {
-				alert('Internal server error');
+				alert('Internal server erroriiii');
 			}
 		});
 		return result;
-	}, "Email is Already Taken! Please, enter another email!");
+	}, "Email is Already Taken!");
 
 	$('#signup_from').validate({
 		rules : {
@@ -109,29 +111,27 @@ $(document).ready(function() {
 			var questionAnsver = $("#questionAnsver").val();
 
 			var json = {
-				"user" : {
-					"id" : 0,
-					"email" : email,
-					"password" : password,
-					"firstName" : firstname,
-					"lastName" : lastname,
-					"registration" : 0,
-					"confirmed" : false,
-					"roles" : [ {
-						"id" : role,
-						"name" : ""
-					} ]
-				},
-				"registrationData" : {
 					"id" : 0,
 					"registrationCode" : 0,
 					"question" : questionNumber,
 					"answer" : questionAnsver,
-					"user" : null
+					"user" : {
+						"id" : 0,
+						"email" : email,
+						"password" : password,
+						"firstName" : firstname,
+						"lastName" : lastname,
+						"registration" : 0,
+						"confirmed" : false,
+						"roles" : [ {
+							"id" : role,
+							"name" : ""
+						} ]
+					}
 				}
-			}
+			
 			$.ajax({
-				url : 'registration',
+				url : root_action+'registration',
 				type : "POST",
 				data : JSON.stringify(json),
 				beforeSend : function(xhr) {
@@ -142,11 +142,11 @@ $(document).ready(function() {
 					if (responce.valueOf() == 1) {
 						$("#signUpSuccesButton").click();
 					} else {
-						alert("Error - your account is not created!")
+						$("#signUpFailureButton").click();
 					}
 				},
 				error : function() {
-					alert('Internal server error');
+					alert('Internal server erroreeeeee');
 				}
 			});
 

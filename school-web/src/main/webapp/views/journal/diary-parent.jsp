@@ -6,7 +6,8 @@
 <link href="<c:url value="/resources/css/diary.css" />" rel="stylesheet">
 
 <nav class="table tableOnBack">
-	<form action="diary-parent/${kid.user.id}" method="post">
+	<form action="<c:url value="diary-parent/${kid.user.id}"/>"
+		method="post">
 		<input name="date" value="${diaryMarks[0].date}" type="hidden">
 		<button class="btn btn2 btn-lg" type="submit" name="changePage"
 			value="previous">
@@ -27,7 +28,7 @@
 		</button>
 		<ul class="dropdown-menu" role="menu">
 			<c:forEach items="${kids}" var="kid">
-				<li><a href='<c:url value="/diary-parent/${kid.user.id}"/>'>${kid.user.firstName }${kid.user.lastName}</a></li>
+				<li><a href='<c:url value="/diary-parent-${kid.user.id}"/>'>${kid.user.firstName }${kid.user.lastName}</a></li>
 			</c:forEach>
 		</ul>
 	</div>
