@@ -17,7 +17,7 @@
 						<c:forEach items="${groupMarks}" var="studentMark" begin="0"
 							end="0">
 							<tr class="info trHeaderRow">
-								<th>Group
+								<th><spring:message code="journal.group" />
 									${studentMark.group.number}${studentMark.group.letter}</th>
 							</tr>
 						</c:forEach>
@@ -96,15 +96,21 @@
 								</select></th>
 							</tr>
 							<tr class="trSize trSide">
-								<th id="RightSideBarJournal" class="thButton"><h4>Quarter</h4></th>
+								<th id="RightSideBarJournal" class="thButton"><h4>
+										<spring:message code="journal.quarter" />
+									</h4></th>
 							</tr>
 							<tr class="trSize trSide">
 								<th id="RightSideBarJournal" class="thButton"><select
 									name="quarter" class="form-control-small">
-										<option value="1">1st</option>
-										<option value="2">2nd</option>
-										<option value="3">3rd</option>
-										<option value="4">4th</option>
+										<option value="1"><spring:message
+												code="journal.first" /></option>
+										<option value="2"><spring:message
+												code="journal.second" /></option>
+										<option value="3"><spring:message
+												code="journal.third" /></option>
+										<option value="4"><spring:message
+												code="journal.fourth" /></option>
 								</select></th>
 							<tr class="trSize trSide">
 								<th id="RightSideBarJournal" class="thButton"><button
@@ -130,7 +136,9 @@
 					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 				</button>
 
-				<h4 class="modal-title">Add mark</h4>
+				<h4 class="modal-title">
+					<spring:message code="journal.add_mark" />
+				</h4>
 			</div>
 			<form action="journal-group-marks-add-mark" method="post">
 				<input id="dateAndStudent" name="studentAndSchedule" type="hidden"
@@ -138,14 +146,14 @@
 				<div class="modal-body">
 					<table class="table">
 						<tr class="trSize">
-							<th id="RightSideBarJournal" class="thButton tdCenter">Choose
-								a mark</th>
+							<th id="RightSideBarJournal" class="thButton tdCenter"><spring:message
+									code="journal.select_mark" /></th>
 
 						</tr>
 						<tr>
 							<td id="RightSideBarJournal" class="thButton tdCenter"><select
 								id="markSelect" name="markSelect" class="form-control-small">
-									<option value="0">none</option>
+									<option value="0"><spring:message code="journal.none" /></option>
 									<option value="1">1</option>
 									<option value="2">2</option>
 									<option value="3">3</option>
@@ -161,27 +169,29 @@
 							</select></td>
 						</tr>
 						<tr class="trSize">
-							<th id="RightSideBarJournal" class="thButton tdCenter ">Choose
-								mark status</th>
+							<th id="RightSideBarJournal" class="thButton tdCenter "><spring:message
+									code="journal.select_mark_status" /></th>
 						</tr>
 						<tr>
 							<td id="RightSideBarJournal" class="thButton tdCenter"><select
 								id="coefficient" name="coefficient" class="form-control-small">
-									<option value="1">Regular</option>
-									<option value="3">Test</option>
-									<option value="5">Exam</option>
+									<option value="1"><spring:message
+											code="journal.regular" /></option>
+									<option value="3"><spring:message code="journal.test" /></option>
+									<option value="5"><spring:message code="journal.exam" /></option>
 							</select></td>
 
 						</tr>
 						<tr class="trSize">
-							<th id="RightSideBarJournal" class="thButton tdCenter">Choose
-								a note</th>
+							<th id="RightSideBarJournal" class="thButton tdCenter"><spring:message
+									code="journal.select_note" /></th>
 						</tr>
 						<tr>
 							<td id="RightSideBarJournal" class="thButton tdCenter"><select
 								id="note" name="note" class="form-control">
-									<option value="0">none</option>
-									<option value="1">Student is absent</option>
+									<option value="0"><spring:message code="journal.none" /></option>
+									<option value="1"><spring:message
+											code="journal.student_absent" /></option>
 							</select></td>
 						</tr>
 					</table>
@@ -195,7 +205,8 @@
 							</td>
 							<td id="RightSideBarJournal">
 								<button id="cancelMark" type="button" class="btn btn-default"
-									data-dismiss="modal">Cancel</button>
+									data-dismiss="modal"><spring:message
+									code="journal.cancel" /></button>
 							</td>
 						</tr>
 					</table>

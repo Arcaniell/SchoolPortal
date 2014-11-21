@@ -4,15 +4,13 @@ $(function() {
 
 $(".addMark").click(function() {
 	$("#dateAndStudent").val($(this).data('value'));
-	$("#submitMark").val($(this).data('value'));
 	console.log(this);
 	console.log(event.target);
 });
 
-$(function() {
-	$("#getGroupInfo").val($("#groupInfo").data('value'))
-});
-
+//$(function() {
+//	$("#getGroupInfo").val($("#groupInfo").data('value'))
+//});
 // $("#submitMark").click(function() {
 //
 // $(function() {

@@ -5,7 +5,7 @@ import java.util.Set;
 
 import school.model.Group;
 
-public class StudentMarksDTO {
+public class StudentMarksDTO implements Comparable<StudentMarksDTO> {
 
 	private long studentId;
 	private String studentName;
@@ -70,6 +70,11 @@ public class StudentMarksDTO {
 
 	public void setDiaryMark(Set<MarkDTO> diaryMark) {
 		this.diaryMark = diaryMark;
+	}
+
+	@Override
+	public int compareTo(StudentMarksDTO studentMarksDTO) {
+		return this.studentName.compareTo(studentMarksDTO.getStudentName());
 	}
 
 	@Override

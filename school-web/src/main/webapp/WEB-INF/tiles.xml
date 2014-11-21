@@ -36,9 +36,9 @@
 		<put-attribute name="main_content" value="/views/journal/diary.jsp" />
 	</definition>
 
-	<definition name="diary-change" extends="base.definition">
+	<definition name="diary-parent" extends="base.definition">
 		<put-attribute name="title" value="Diary" />
-		<put-attribute name="main_content" value="/views/journal/diary-change.jsp" />
+		<put-attribute name="main_content" value="/views/journal/diary-parent.jsp" />
 	</definition>
 
 	<definition name="groups-*" extends="base.definition">

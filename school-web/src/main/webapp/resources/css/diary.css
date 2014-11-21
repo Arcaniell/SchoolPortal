@@ -12,11 +12,10 @@
 	background-color: #fff;
 }
 
-.pagination {
-	display: inline-block;
-	padding-left: 0;
-	margin: 0;
-	border-radius: 4px;
+#noBorder {
+	border: 0;
+	padding-left: 2px;
+	padding-right: 2px;
 }
 
 .tdCenter {
@@ -29,14 +28,12 @@
 	width: 100%;
 	max-width: 100%;
 	margin-bottom: 2px;
-	background-color: #F4F4FF;
 }
 
 .tableOnBack {
 	width: 90%;
 	max-width: 100%;
 	margin-bottom: 2px;
-	background-color: rgba(214, 214, 218, 0.21);
 }
 
 .divHeader {
@@ -62,9 +59,14 @@
 	text-decoration: none;
 	font-size: 14px;
 	color: #428bca;
-	position: relative;
+	background-color: #fff;
 	float: left;
-	width: 100px;
-	margin-right: 10px;
-	margin-bottom: 5px;
+	width: 130px;
+	position: relative;
+}
+
+.btn2:hover {
+	background-color: #eee;
+	color: #2a6496;
+}
 }

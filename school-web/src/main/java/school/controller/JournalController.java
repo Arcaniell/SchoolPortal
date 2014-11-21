@@ -51,6 +51,10 @@ public class JournalController {
 			@RequestParam(value = "course") String course, Model model,
 			HttpServletRequest request) throws ParseException {
 
+		if (user == null) {
+			return "redirect:/login";
+		}
+
 		List<StudentMarksDTO> groupMarks = journalService.getMarksOfGroup(
 				quarter, idGroup, course);
 		model.addAttribute(JournalUtil.MOD_ATT_DATES, groupMarks.get(0)
@@ -64,7 +68,7 @@ public class JournalController {
 		return "journal-group-marks";
 	}
 
-	@RequestMapping(value = "journal-group-marks-add-mark")
+	@RequestMapping(value = "journal-group-marks-add-mark", method = RequestMethod.POST)
 	public String addMark(
 			Principal user,
 			Model model,
@@ -73,6 +77,10 @@ public class JournalController {
 			@RequestParam(value = "note") String note,
 			@RequestParam(value = "coefficient") String coefficient,
 			HttpServletRequest request) throws ParseException {
+
+		if (user == null) {
+			return "redirect:/login";
+		}
 
 		List<StudentMarksDTO> groupMarks = journalService.addMark(
 				studentAndSchedule, mark, note, coefficient);

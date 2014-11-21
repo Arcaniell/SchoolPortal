@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import school.dao.GroupDao;
 import school.dao.JournalDao;
-import school.dao.LessonDao;
 import school.dao.ScheduleDao;
 import school.dao.StudentDao;
 import school.dao.TeacherDao;
@@ -26,7 +25,6 @@ import school.dto.journal.JournalTeacherDTO;
 import school.dto.journal.MarkDTO;
 import school.model.Group;
 import school.model.Journal;
-import school.model.Lesson;
 import school.model.Role;
 import school.model.Schedule;
 import school.model.Student;
@@ -49,8 +47,6 @@ public class JournalServiceImpl implements JournalService {
 	@Inject
 	private GroupDao groupDao;
 	@Inject
-	private LessonDao lessonDao;
-	@Inject
 	private StudentDao studentDao;
 
 	@Secured(Role.Secured.TEACHER)
@@ -71,16 +67,6 @@ public class JournalServiceImpl implements JournalService {
 
 		return new JournalTeacherDTO(teacher.getId(), getWholeUserName(userId),
 				groups, courses);
-	}
-
-	public List<StudentMarksDTO> getByCurrentLesson(String id, Date currentDate)
-			throws ParseException {
-
-		long userId = Long.parseLong(id);
-		Teacher teacher = teacherDao.findByUserId(userId);
-		Lesson currentLesson = lessonDao.findByCurrentTime(currentDate);
-
-		return null;
 	}
 
 	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
@@ -116,9 +102,12 @@ public class JournalServiceImpl implements JournalService {
 			studentsWithMarks.add(new StudentMarksDTO(student.getId(),
 					getWholeUserName(student.getUser().getId()), group, marks));
 		}
+		Collections.sort(studentsWithMarks);
 		return studentsWithMarks;
 	}
 
+	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
+			Role.Secured.DIRECTOR })
 	public List<StudentMarksDTO> addMark(String studentAndSchedule,
 			String mark, String note, String coefficient) throws ParseException {
 

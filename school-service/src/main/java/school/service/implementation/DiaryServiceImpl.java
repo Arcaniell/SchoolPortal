@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import school.dao.JournalDao;
+import school.dao.ParentDao;
 import school.dao.ScheduleDao;
 import school.dao.StudentDao;
 import school.dao.UserDao;
@@ -20,6 +21,7 @@ import school.dto.journal.StudentMarksDTO;
 import school.dto.journal.MarkDTO;
 import school.model.Group;
 import school.model.Journal;
+import school.model.Parent;
 import school.model.Role;
 import school.model.Schedule;
 import school.model.Student;
@@ -38,6 +40,8 @@ public class DiaryServiceImpl implements DiaryService {
 	private UserDao userDao;
 	@Inject
 	private StudentDao studentDao;
+	@Inject
+	private ParentDao parentDao;
 
 	@Secured({ Role.Secured.STUDENT, Role.Secured.PARENT })
 	@Transactional
@@ -77,6 +81,13 @@ public class DiaryServiceImpl implements DiaryService {
 					getWholeUserName(userId), date, markDTOs));
 		}
 		return diaryMarksDTO;
+	}
+
+	public List<Student> getKids(String id) {
+
+		long userId = Long.parseLong(id);
+		Parent parent = parentDao.findByUserId(userId);
+		return parent.getStudents();
 	}
 
 	private String getWholeUserName(long userId) {

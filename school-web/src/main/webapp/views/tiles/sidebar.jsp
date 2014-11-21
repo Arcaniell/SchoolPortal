@@ -31,7 +31,7 @@
 		</sec:authorize>
 		<li><a href="#"><spring:message code="sidebar.schedule" /></a></li>
 		<sec:authorize access="hasAnyRole('ROLE_STUDENT', 'ROLE_PARENT')">
-			<li><a href="diary">Diary</a></li>
+			<li><a href="diary"><spring:message code="diary.diary" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_HEAD_TEACHER', 'ROLE_TEACHER')">
 			<li><a href="journal"><spring:message code="sidebar.journal" /></a></li>

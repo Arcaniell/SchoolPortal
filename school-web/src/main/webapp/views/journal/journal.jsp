@@ -29,7 +29,7 @@
 							</select></th>
 						</tr>
 						<tr class="trSize trSide">
-							<th  id="RightSideBarJournal" class="thButton">
+							<th id="RightSideBarJournal" class="thButton">
 								<h4>
 									<spring:message code="journal.group" />
 								</h4>
@@ -45,15 +45,25 @@
 							</select></th>
 						</tr>
 						<tr class="trSize trSide">
-							<th id="RightSideBarJournal" class="thButton"><h4>Quarter</h4></th>
+							<th id="RightSideBarJournal" class="thButton"><h4>
+									<spring:message code="journal.quarter" />
+								</h4></th>
 						</tr>
 						<tr class="trSize trSide">
 							<th id="RightSideBarJournal" class="thButton"><select
 								name="quarter" class="form-control-small">
-									<option value="1">1st</option>
-									<option value="2">2nd</option>
-									<option value="3">3rd</option>
-									<option value="4">4th</option>
+									<option value="1">
+										<spring:message code="journal.first" />
+									</option>
+									<option value="2">
+										<spring:message code="journal.second" />
+									</option>
+									<option value="3">
+										<spring:message code="journal.third" />
+									</option>
+									<option value="4">
+										<spring:message code="journal.fourth" />
+									</option>
 							</select></th>
 						<tr class="trSize trSide">
 							<th id="RightSideBarJournal" class="thButton"><button
