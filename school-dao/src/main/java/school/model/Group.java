@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import javax.persistence.CascadeType;
+
 @Entity
 @Table(name = "GROUPS")
 @NamedQueries({
@@ -47,14 +49,16 @@ public class Group implements Comparable<Group> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true)
     private long id;
-    @OneToOne
+    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "teacherId")
     private Teacher teacher;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
     private List<Schedule> schedule;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = { CascadeType.MERGE,
+            CascadeType.PERSIST })
     private List<Student> student;
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "additionGroups")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "additionGroups", cascade = { CascadeType.MERGE,
+            CascadeType.PERSIST })
     private List<Student> addStudent;
     private byte number;
     private char letter;
@@ -62,7 +66,7 @@ public class Group implements Comparable<Group> {
     @Column(nullable = false)
     private Date startDate;
     private Date endDate;
-    @OneToOne
+    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "additionCourseId")
     private Course additionCourse;
 
@@ -158,19 +162,15 @@ public class Group implements Comparable<Group> {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result
-                + ((addStudent == null) ? 0 : addStudent.hashCode());
-        result = prime * result
-                + ((additionCourse == null) ? 0 : additionCourse.hashCode());
+        result = prime * result + ((addStudent == null) ? 0 : addStudent.hashCode());
+        result = prime * result + ((additionCourse == null) ? 0 : additionCourse.hashCode());
         result = prime * result + (additional ? 1231 : 1237);
         result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
         result = prime * result + (int) (id ^ (id >>> 32));
         result = prime * result + letter;
         result = prime * result + number;
-        result = prime * result
-                + ((schedule == null) ? 0 : schedule.hashCode());
-        result = prime * result
-                + ((startDate == null) ? 0 : startDate.hashCode());
+        result = prime * result + ((schedule == null) ? 0 : schedule.hashCode());
+        result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
         result = prime * result + ((student == null) ? 0 : student.hashCode());
         result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
         return result;
@@ -238,8 +238,7 @@ public class Group implements Comparable<Group> {
         } else if (this.number > group.getNumber()) {
             return 1;
         }
-        return Character.toString(this.letter).compareTo(
-                Character.toString(group.getLetter()));
+        return Character.toString(this.letter).compareTo(Character.toString(group.getLetter()));
     }
 
 }

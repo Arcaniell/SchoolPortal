@@ -1,0 +1,19 @@
+.modal-body .btn, .group_modal_window {
+	width: 100%;
+}
+
+.modal-title, .group_modal_window th {
+	text-align: center;
+}
+
+td {
+	height: 40px;
+}
+
+.addition_couse_checkbox {
+	margin-right: 5px !important;
+}
+
+.addition_name_input {
+	display: none;
+}
