@@ -103,15 +103,15 @@
 																value="<spring:message code="label.question1" /> ">
 															<span class="caret" id="for_caret"></span>
 															<ul class="dropdown-menu" role="menu">
-																<li class="question" id="question1"><spring:message
+																<li class="rquestion" id="question1"><spring:message
 																		code="label.question1" /></li>
-																<li class="question" id="question2"><spring:message
+																<li class="rquestion" id="question2"><spring:message
 																		code="label.question2" /></li>
-																<li class="question" id="question3"><spring:message
+																<li class="rquestion" id="question3"><spring:message
 																		code="label.question3" /></li>
-																<li class="question" id="question4"><spring:message
+																<li class="rquestion" id="question4"><spring:message
 																		code="label.question4" /></li>
-																<li class="question" id="question5"><spring:message
+																<li class="rquestion" id="question5"><spring:message
 																		code="label.question5" /></li>
 
 															</ul>

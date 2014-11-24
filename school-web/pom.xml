@@ -97,6 +97,8 @@
 			<artifactId>spring-boot-starter-websocket</artifactId>
 			<version>1.1.4.RELEASE</version>
 		</dependency>
+
+
 	</dependencies>
 	<build>
 		<finalName>schoolportal</finalName>
