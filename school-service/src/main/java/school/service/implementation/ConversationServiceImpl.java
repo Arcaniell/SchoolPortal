@@ -176,8 +176,7 @@ public class ConversationServiceImpl implements ConversationService {
 	}
 
 	@Override
-	public void createConversation(String subject, long sender, long receiver,
-			long principalId, String text) {
+	public void createConversation(String subject, long sender, long receiver, String text) {
 		Conversation conversation = new Conversation();
 		conversation.setSubject(subject);
 		conversation.setAnsweredReceiver(false);
@@ -191,7 +190,7 @@ public class ConversationServiceImpl implements ConversationService {
 
 		conversationDao.save(conversation);
 
-		messagesService.createNewMessage(conversation, text, principalId);
+		messagesService.createNewMessage(conversation, text);
 	}
 
 	@Override

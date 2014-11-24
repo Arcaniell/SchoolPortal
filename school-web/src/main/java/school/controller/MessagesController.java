@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import school.dto.message.EmailObjectDTO;
 import school.dto.message.MessageDto;
+import school.dto.message.NewMessagesObjectDTO;
 import school.model.Conversation;
 import school.model.Message;
 import school.model.User;
@@ -119,5 +120,18 @@ public class MessagesController {
 		List<User> users = messagesService.simulateSearchResult(tagName,
 				isParent);
 		return messagesService.contructEmailObjectDTO(users);
+	}
+
+	@RequestMapping(value = "/newMessages", method = RequestMethod.GET)
+	public @ResponseBody
+	NewMessagesObjectDTO getNewMessages(Principal principal) {
+		NewMessagesObjectDTO newMessagesObjectDTO = new NewMessagesObjectDTO();
+		if(principal != null) {
+			newMessagesObjectDTO =  messagesService.constructNewMessagesObjectDTO(Long
+					.valueOf(principal.getName()));
+		} else {
+			newMessagesObjectDTO.setNewMessages("0");
+		}
+		return newMessagesObjectDTO;
 	}
 }
