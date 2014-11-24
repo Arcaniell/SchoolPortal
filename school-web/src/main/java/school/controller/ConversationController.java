@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +30,7 @@ public class ConversationController {
 
 	@Autowired
 	public MessagesService messagesService;
-	
+
 	@Autowired
 	public UserService userService;
 
@@ -99,16 +98,20 @@ public class ConversationController {
 
 	@RequestMapping(value = "compose", method = RequestMethod.POST)
 	public String compose(
-			@RequestParam(value = "to", required = false) String nameAndEmail,
+			@RequestParam(value = "to", required = false) String to,
 			@RequestParam(value = "subject", required = false) String subject,
 			@RequestParam(value = "text", required = false) String text,
 			HttpServletRequest request, Principal principal) {
+
 		Long principalId = Long.valueOf(principal.getName());
-		String email = nameAndEmail.split("-")[1].trim();
+
+		String email = to.split("-")[1].trim();
 		User receiver = userService.findByEmail(email);
 		Long receiverId = receiver.getId();
+
 		conversationService.createConversation(subject, principalId,
-				receiverId, principalId, text);
+				receiverId, text);
+
 		String currectPage = (String) request.getSession().getAttribute(
 				"currentPage");
 		return "redirect:/" + currectPage;

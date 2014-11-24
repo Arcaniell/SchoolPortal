@@ -13,10 +13,6 @@
 		user_name = "";
 	}
 %>
-<%
-	Integer newMessages = (Integer) request.getSession().getAttribute(
-			"newMessages");
-%>
 <sec:authorize access="isAuthenticated()">
 	<div class="profile-info"><%=user_name%></div>
 	<img class="logo"
@@ -32,12 +28,8 @@
 			<li><a href="#"><spring:message code="sidebar.profile" /></a></li>
 		</sec:authorize>
 		<li><a href="#"><spring:message code="sidebar.schedule" /></a></li>
-		<sec:authorize access="hasRole('ROLE_STUDENT')">
+		<sec:authorize access="hasAnyRole('ROLE_STUDENT', 'ROLE_PARENT')">
 			<li><a href="diary"><spring:message code="sidebar.diary" /></a></li>
-		</sec:authorize>
-		<sec:authorize access="hasRole('ROLE_PARENT')">
-			<li><a href="diary-parent"><spring:message
-						code="sidebar.diary" /></a></li>
 		</sec:authorize>
 		<sec:authorize
 			access="hasAnyRole('ROLE_HEAD_TEACHER', 'ROLE_TEACHER')">
@@ -46,7 +38,8 @@
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_PARENT')">
 			<li><a class="sidebarMessage" href='<c:url value="/inbox"/>'><spring:message
 						code="sidebar.message" /> <img
-					src="<c:url value="/resources/img/envelope30.png" />" /> <%=newMessages%></a></li>
+					src="<c:url value="/resources/img/envelope30.png" />" /> <span
+					id="newMessages" class="badgeMessage"></span></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_STUDENT')">
 			<li><a href=courses><spring:message code="sidebar.course" /></a></li>
@@ -67,3 +60,26 @@
 		<li><a href="#"><spring:message code="sidebar.about" /></a></li>
 	</ul>
 </div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+(function(poll) {
+	var poll = function() {
+		$.ajax({
+			url : '${pageContext.request.contextPath}/newMessages',
+			dataType : 'json',
+			type : 'get',
+			success : function(data) {
+				$("#newMessages").text(data.newMessages);
+			},
+			error : function() {
+				console.log("Error while counting new messages");
+			}
+		});
+	};
+
+	setInterval(function() {
+		poll();
+	}, 2000);
+
+})();
+</script>
