@@ -60,7 +60,6 @@
 		<li><a href="#"><spring:message code="sidebar.about" /></a></li>
 	</ul>
 </div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
 (function(poll) {
 	var poll = function() {
