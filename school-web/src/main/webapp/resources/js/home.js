@@ -10,9 +10,13 @@ $(document).ready(function(){
 		    $(".hidehomeinfo").show();
 		  });
 	  
-	  $(".question").click(function(){
+	  $(".rquestion").click(function(){
 		  $("#question").val($("."+$(this).attr('id')).attr("value"));
 		  $("#questionNumber").val($(this).attr('id'));
+		  });
+	  $(".fquestion").click(function(){
+		  $("#fquestion").val($("."+$(this).attr('id')).attr("value"));
+		  $("#forgotQuestionNumber").val($(this).attr('id'));
 		  });
 	  
 	});

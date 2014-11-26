@@ -3,7 +3,6 @@ package school.service.implementation;
 import java.util.Properties;
 
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -22,29 +21,24 @@ import school.service.EmailService;
 @Service
 public class EmailServiceImpl implements EmailService{
 
-	private final static String serviceEmail = "schoolportalservice2@gmail.com";
-	private final static String servicePassword = "servicepassword";
-	
+	private Properties emailPropoperties =  new Properties();
+
+
 	@Override
 	public boolean sendRegistrationEmail(RegistrationData registrationData, String url) {
 		
-		Properties props = new Properties();
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587");
+		try {
+			emailPropoperties.load(EmailServiceImpl.class.getClassLoader()
+					.getResourceAsStream("email.properties"));
  
-		Session session = Session.getInstance(props,
+			Message message = new MimeMessage(Session.getInstance(emailPropoperties,
 		  new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(serviceEmail, servicePassword);
+				return new PasswordAuthentication(emailPropoperties.getProperty("service.email"),
+						emailPropoperties.getProperty("service.password"));
 			}
-		  });
- 
-		try {
- 
-			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(serviceEmail));
+		  }));
+			message.setFrom(new InternetAddress(emailPropoperties.getProperty("service.email")));
 			message.setRecipients(Message.RecipientType.TO,
 				InternetAddress.parse(registrationData.getUser().getEmail()));
 			message.setSubject("Confirmation of registration at School Portal");
@@ -59,7 +53,8 @@ public class EmailServiceImpl implements EmailService{
 					+ registrationData.getUser().getId()+"&c="+
 					+ registrationData.getRegistrationCode() + "</a>";
 			
-			messageBodyPart.setText(messageBody,"UTF-8","html");
+			messageBodyPart.setText(messageBody,emailPropoperties.getProperty("service.utf"),
+					emailPropoperties.getProperty("service.html"));
 
 			Multipart multipart = new MimeMultipart();
 			multipart.addBodyPart(messageBodyPart);
@@ -68,36 +63,26 @@ public class EmailServiceImpl implements EmailService{
 			Transport.send(message);
 			return true;
  
-		} catch (MessagingException e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}
 
 	@Override
 	public boolean sendNewPassword(RestorePassword restorePassword, String url) {
-		/*Dear ,
-
-		You have requested a change of your email address for your user account at
-		SoftServe ITA LMS. Please open the following URL in your browser in order to
-		confirm this change.*/
-		
-		Properties props = new Properties();
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587");
- 
-		Session session = Session.getInstance(props,
+		try {
+			emailPropoperties.load(EmailServiceImpl.class.getClassLoader()
+					.getResourceAsStream("email.properties"));
+		Session session = Session.getInstance(emailPropoperties,
 		  new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(serviceEmail, servicePassword);
+				return new PasswordAuthentication(emailPropoperties.getProperty("service.email"),
+						emailPropoperties.getProperty("service.password"));
 			}
 		  });
  
-		try {
- 
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(serviceEmail));
+			message.setFrom(new InternetAddress(emailPropoperties.getProperty("service.email")));
 			message.setRecipients(Message.RecipientType.TO,
 				InternetAddress.parse(restorePassword.getUser().getEmail()));
 			message.setSubject("Restoring of password at School Portal");
@@ -115,16 +100,16 @@ public class EmailServiceImpl implements EmailService{
 					+ restorePassword.getUser().getId()+"&c="+
 					+ restorePassword.getRestoreCode() + "</a>";
 					
-			messageBodyPart.setText(messageBody,"UTF-8","html");
+			messageBodyPart.setText(messageBody,emailPropoperties.getProperty("service.utf"),
+					emailPropoperties.getProperty("service.html"));
 
 			Multipart multipart = new MimeMultipart();
 			multipart.addBodyPart(messageBodyPart);
 			message.setContent(multipart);
- 
 			Transport.send(message);
 			return true;
  
-		} catch (MessagingException e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}

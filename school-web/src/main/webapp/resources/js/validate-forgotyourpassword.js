@@ -61,9 +61,8 @@ $(document).ready(function() {
 	$("#forgot_button").click(function() {
 		if ($("#forgot_form").valid()) {
 			var email = $("#forgot_email").val();
-			var questionNumber = $("#forgot_question_number").val();
-			var questionAnsver = $("#forgot_question_answer").val();
-
+			var questionNumber = $("#forgotQuestionNumber").val();
+			var questionAnsver = $("#forgotQuestionAnsver").val();
 			var json = {
 					"id" : 0,
 					"registrationCode" : 0,
@@ -97,7 +96,7 @@ $(document).ready(function() {
 					}
 				},
 				error : function() {
-					alert('Internal server error!!!!!!!!!!!!!');
+					alert('Internal server error');
 				}
 			});
 

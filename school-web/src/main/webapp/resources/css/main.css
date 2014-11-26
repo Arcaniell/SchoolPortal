@@ -149,5 +149,22 @@ body {
 .sidebarMessage {
 	padding-bottom: 5px !important;
 	padding-top: 5px !important;
-	padding-left: 65px !important;
+	padding-left: 63px !important;
+}
+
+.badgeMessage {
+	display: inline-block;
+	min-width: 10px;
+	padding: 3px 7px;
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 1;
+	color: #FFF;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	background-color: red;
+	border: 1px solid #FFF;
+	border-radius: 10px;
+	margin-left: 0px;
 }

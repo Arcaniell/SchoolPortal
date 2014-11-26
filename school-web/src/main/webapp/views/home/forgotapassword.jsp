@@ -47,21 +47,21 @@
 									<tr>
 										<td><br>
 											<div class="btn-group btn-group-vertical">
-												<input type="button" id="question"
-													class="dropdown-toggle question_drop_long" id="question"
+												<input type="button" id="fquestion"
+													class="dropdown-toggle question_drop_long"
 													data-toggle="dropdown"
 													value="<spring:message code="label.question1" /> ">
 												<span class="caret" id="for_caret"></span>
 												<ul class="dropdown-menu" role="menu">
-													<li class="question" id="question1"><spring:message
+													<li class="fquestion" id="question1"><spring:message
 															code="label.question1" /></li>
-													<li class="question" id="question2"><spring:message
+													<li class="fquestion" id="question2"><spring:message
 															code="label.question2" /></li>
-													<li class="question" id="question3"><spring:message
+													<li class="fquestion" id="question3"><spring:message
 															code="label.question3" /></li>
-													<li class="question" id="question4"><spring:message
+													<li class="fquestion" id="question4"><spring:message
 															code="label.question4" /></li>
-													<li class="question" id="question5"><spring:message
+													<li class="fquestion" id="question5"><spring:message
 															code="label.question5" /></li>
 
 												</ul>
@@ -75,7 +75,7 @@
 													value="<spring:message code="label.question4" />">
 												<input class="question5" type="hidden"
 													value="<spring:message code="label.question5" />">
-												<input type="hidden" id="forgot_question_number"
+												<input type="hidden" id="forgotQuestionNumber"
 													name="questionNumber" value="question1">
 											</div></td>
 									</tr>
@@ -97,7 +97,7 @@
 													<table>
 														<tr>
 															<td><input name="questionAnsver"
-																id="forgot_question_answer" type="text"
+																id="forgotQuestionAnsver" type="text"
 																class="question_drop_short"></td>
 														</tr>
 													</table>
