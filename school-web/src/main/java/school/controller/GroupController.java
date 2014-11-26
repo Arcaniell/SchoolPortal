@@ -2,8 +2,6 @@ package school.controller;
 
 import java.security.Principal;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -17,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import school.dto.GroupDTO;
-import school.dto.GroupDataDTO;
 import school.dto.TeacherDTO;
-import school.model.Group;
 import school.model.Role;
 import school.service.GroupService;
 
@@ -37,7 +33,6 @@ public class GroupController {
     private final String URL_AJAX_GET_TEACHERS = "/getTeacherSelect";
     private final String URL_GROUP_ADD = "group-create";
     private final String URL_GROUP_REMOVE = "group-remove";
-    private final String URL_GROUP_EDIT = "";
     private final String JSP_INPUT_DATE_FROM = "dateFrom";
     private final String JSP_INPUT_DATE_TILL = "dateTill";
     private final String JSP_OUTPUT_GROUP_LIST = "groupList";

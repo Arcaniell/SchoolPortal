@@ -2,8 +2,6 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<link href="<c:url value="/resources/css/bootstrap-select.min.css" />"
-	rel="stylesheet">
 <link href="<c:url value="/resources/css/group.css" />" rel="stylesheet">
 <!-- ADD GROUP MODAL -->
 <div class="modal fade add_group_modal" tabindex="-1" role="dialog"
@@ -110,6 +108,4 @@
 	
 </script>
 <script src="<c:url value="/resources/js/group.js" />"
-	type="text/javascript"></script>
-<script src="<c:url value="/resources/js/bootstrap-select.min.js" />"
 	type="text/javascript"></script>

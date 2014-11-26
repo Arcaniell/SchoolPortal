@@ -1,8 +1,12 @@
 package school.service.implementation;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +19,10 @@ import school.dao.StudentDao;
 import school.dao.TeacherDao;
 import school.dto.GroupDTO;
 import school.dto.GroupDataDTO;
+import school.dto.GroupEditHeaderDTO;
+import school.dto.StudentDTO;
 import school.dto.TeacherDTO;
+import school.dto.journal.StudentMarksDTO;
 import school.model.Group;
 import school.model.Schedule;
 import school.model.Student;
@@ -29,10 +36,11 @@ import school.model.Course;
 
 @Service
 public class GroupServiceImpl implements GroupService {
-    public static final Integer[] YEARS_OF_STUDY = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
-
+    public static final Integer[] YEARS_OF_STUDY = { 5, 6, 7, 8, 9, 10, 11 };
+    private final SimpleDateFormat formatterDate = new SimpleDateFormat("MM/dd/yyyy");
     public static final String[] SYMBOLS_FOR_CLASS = { "A", "B", "C", "D", "E", "F", "G", "H", "I",
             "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+    private static final int FIRST_CLASS_YEARS = 6;
     final boolean ADDITIONAL_FLAG_TRUE = true;
     @Autowired
     StudentDao studentDao;
@@ -243,5 +251,96 @@ public class GroupServiceImpl implements GroupService {
         if (group != null) {
             groupDao.remove(groupDao.findById(requestId));
         }
+    }
+
+    @Transactional
+    @Override
+    public GroupEditHeaderDTO getGroupEditHeaderInfo(long id) {
+        Group group = groupDao.findById(id);
+        if (group == null) {
+            return null;
+        }
+        Calendar currentDate = Calendar.getInstance();
+        int aproxYear = currentDate.get(Calendar.YEAR) - group.getNumber() - FIRST_CLASS_YEARS;
+        List<TeacherDTO> teachers = new ArrayList<TeacherDTO>();
+        List<Student> studentsOfGroup = new ArrayList<Student>();
+        List<Student> studentWithoutGroup = new ArrayList<Student>();
+        studentWithoutGroup = studentDao.findAll();
+        Teacher teacherGroupTeacher = group.getTeacher();
+        
+        // if group have teacher add it to list
+        if (teacherGroupTeacher != null) {
+            TeacherDTO curentGroupTeacherDAO = new TeacherDTO();
+            curentGroupTeacherDAO.setId(teacherGroupTeacher.getId());
+            curentGroupTeacherDAO.setFullName(teacherGroupTeacher.getUser().getFirstName() + " "
+                    + teacherGroupTeacher.getUser().getLastName());
+            teachers.add(curentGroupTeacherDAO);
+        }
+        String groupName = "";
+        if (group.isAdditional()) {
+            Course course = group.getAdditionCourse();
+            if(course!=null){
+                groupName= course.getCourseName()+" "+ course.getGroupNumber()+" year";
+            }
+            teachers.addAll(getAllTeachers());
+            studentsOfGroup = group.getAddStudent();
+
+        } else {
+            groupName=group.getNumber()+" - "+group.getLetter();
+            teachers.addAll(getNotCurators());
+            studentsOfGroup = group.getStudent();
+            Iterator<Student> studentIter = studentWithoutGroup.iterator();
+            while (studentIter.hasNext()) {
+                if (studentIter.next().getGroup() != null) {
+                    studentIter.remove();
+                }
+            }
+        }
+
+        List<StudentDTO> studentWithoutGroupDTO = fillStudentDTO(studentWithoutGroup);
+
+        Iterator<StudentDTO> studentIter = studentWithoutGroupDTO.iterator();
+        while (studentIter.hasNext()) {
+            StudentDTO student4Condition = studentIter.next();
+            if ((student4Condition.getYear() < (aproxYear - 1))
+                    || (student4Condition.getYear() > (aproxYear + 1))) {
+                studentIter.remove();
+            }
+        }
+        GroupEditHeaderDTO container = new GroupEditHeaderDTO();
+        container.setName(groupName);
+        container.setDateFrom(date2String(group.getStartDate(), formatterDate));
+        container.setDateTill(date2String(group.getEndDate(), formatterDate));
+        container.setTeachers(teachers);
+        container.setGroupStudents(fillStudentDTO(studentsOfGroup));
+        container.setAllFreeStudents(studentWithoutGroupDTO);
+        return container;
+    }
+
+    private List<StudentDTO> fillStudentDTO(List<Student> students) {
+        List<StudentDTO> containerOfStudentDTO = new ArrayList<StudentDTO>();
+        for (Student student : students) {
+            StudentDTO curentStudentDTO = new StudentDTO();
+            curentStudentDTO.setId(student.getId());
+            if (student.getUser() != null) {
+                curentStudentDTO.setName(student.getUser().getFirstName() + " "
+                        + student.getUser().getLastName());
+                Calendar birthday = new GregorianCalendar();
+                birthday.setTime(student.getUser().getBirthday());
+                curentStudentDTO.setYear(birthday.get(Calendar.YEAR));
+            }
+            containerOfStudentDTO.add(curentStudentDTO);
+        }
+        return containerOfStudentDTO;
+    }
+
+    private String date2String(Date date, SimpleDateFormat formater) {
+        String dateStr = "-/-/-";
+        try {
+            dateStr = formater.format(date);
+        } catch (Exception e) {
+            // nothing to do here
+        }
+        return dateStr;
     }
 }

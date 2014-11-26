@@ -1,0 +1,37 @@
+.custom_table td {
+	width: 175px;
+	padding-right: 10px;
+	height: 45px;
+	text-align: right;
+}
+
+.custom_table {
+	width: 700px;
+	margin: auto;
+}
+
+.datepicker {
+	width: 130px;
+	height: 30px;
+}
+
+.right {
+	width: 48%;
+	margin-right: 10px;
+	margin-top: 20px;
+	float: right;
+}
+
+.left {
+	width: 48%;
+	margin-right: 10px;
+	margin-top: 20px;
+	float: left;
+}
+h3{
+	text-align: center;
+}
+.main_submit{
+	width: 100%;
+	display: none;
+}

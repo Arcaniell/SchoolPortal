@@ -8,6 +8,7 @@ import org.springframework.security.access.annotation.Secured;
 
 import school.dto.GroupDTO;
 import school.dto.GroupDataDTO;
+import school.dto.GroupEditHeaderDTO;
 import school.dto.TeacherDTO;
 import school.model.Course;
 import school.model.Group;
@@ -42,5 +43,7 @@ public interface GroupService {
             String branch);
 
     void removeGroup(long requestId);
+
+    GroupEditHeaderDTO getGroupEditHeaderInfo(long id);
 
 }

@@ -16,8 +16,11 @@
 				<c:if test = "${current == 'courses'}">
 					<li class="active"><a href="courses" style="z-index: 8;"><spring:message code="sidebar.course"/></a></li>
 				</c:if>
-				<c:if test = "${current == 'group'}">
+				<c:if test = "${current == 'group'||current == 'group_edit'}">
 					<li class="active"><a href="groups" style="z-index: 8;"><spring:message code="sidebar.groups"/></a></li>
+				</c:if>
+				<c:if test = "${current == 'group_edit'}">
+					<li class="active"><a href="" style="z-index: 7;">Group edit</a></li>
 				</c:if>
 				<c:if test = "${current == 'request'}">
 					<li class="active"><a href="course-request" style="z-index: 8;"><spring:message code="sidebar.request"/></a></li>
