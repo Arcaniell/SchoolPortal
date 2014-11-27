@@ -6,7 +6,6 @@
 <link href="<c:url value="/resources/css/diary.css" />" rel="stylesheet">
 
 <nav class="table tableOnBack">
-
 	<form action="<c:url value="diary-parent-${userId}"/>" method="post">
 		<input name="date" value="${diaryMarks[0].date}" type="hidden">
 		<button class="btn btn2 btn-lg" type="submit" name="changePage"
@@ -20,16 +19,20 @@
 			<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
 		</button>
 	</form>
-
 	<div class="btn-group">
-		<button type="button" class="btn btn2 btn-lg dropdown-toggle"
-			data-toggle="dropdown" aria-expanded="false">
-			Kids <span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu" role="menu">
-			<c:forEach items="${kids}" var="kid">
-				<li><a href='<c:url value="/diary-parent-${kid.user.id}"/>'>${kid.user.firstName }${kid.user.lastName}</a></li>
-			</c:forEach>
+		<ul class="nav nav-pills">
+			<li role="presentation" class="dropdown"><a
+				class="btn btn2 btn-lg dropdown-toggle" data-toggle="dropdown"
+				href="#" role="button" aria-expanded="false"> Kids <span
+					class="caret"></span>
+			</a>
+				<ul class="dropdown-menu" role="menu">
+					<c:forEach items="${kids}" var="kid">
+						<li><a href='<c:url value="/diary-parent-${kid.user.id}"/>'>${kid.user.firstName}
+								${kid.user.lastName}</a></li>
+					</c:forEach>
+				</ul></li>
+			<li role="presentation"><a class="btn btn2 btn-lg" href="#">Rating</a></li>
 		</ul>
 	</div>
 </nav>
