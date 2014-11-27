@@ -1,9 +1,5 @@
 package school.controller;
 
-import java.util.ArrayList;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import school.dto.GroupEditHeaderDTO;
 import school.dto.GroupEditResponseDTO;
-import school.dto.StudentDTO;
 import school.service.GroupService;
 
 @Controller
@@ -30,10 +25,7 @@ public class GroupEditController {
     private final String JSP_OUTPUT_CURRENT_PAGE_VALUE_GROUP_EDIT = "group_edit";
     private final String JSP_INPUT_GROUP_ID = "groupId";
     private final String JSP_INPUT_CONTENT_TYPE = "Content-type=application/json";
-    private final String JSP_INPUT_DATE_FROM = "dateFrom";
-    private final String JSP_INPUT_DATE_TILL = "dateTill";
-    private final String JSP_INPUT_TEACHER_ID = "teacherId";
-    private final String JSP_INPUT_STUDENTS = "students";
+
     @Autowired
     GroupService groupService;
 
@@ -64,27 +56,10 @@ public class GroupEditController {
         }
     }
 
-    /*
-     * @RequestMapping(value = URL_GROUP_UPDATE) public @ResponseBody void
-     * groupUpdate(
-     * 
-     * @RequestParam(value = JSP_INPUT_GROUP_ID, required = false) String
-     * groupId,
-     * 
-     * @RequestParam(value = JSP_INPUT_DATE_FROM, required = false) String
-     * dateFromString,
-     * 
-     * @RequestParam(value = JSP_INPUT_DATE_TILL, required = false) String
-     * dateTillString,
-     * 
-     * @RequestParam(value = JSP_INPUT_TEACHER_ID, required = false) String
-     * teacherId,
-     * 
-     * @RequestParam(value = JSP_INPUT_STUDENTS, required = false) String
-     * students, HttpServletRequest request) {
-     * System.out.println(request.getParameterNames()); }
-     */
     @RequestMapping(value = URL_GROUP_UPDATE, headers = { JSP_INPUT_CONTENT_TYPE })
     public @ResponseBody void groupUpdate(@RequestBody GroupEditResponseDTO dataForUpdate) {
+        if (dataForUpdate != null) {
+            groupService.groupUpdate(dataForUpdate);
+        }
     }
 }

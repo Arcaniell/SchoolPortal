@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import school.dao.TeacherDao;
 import school.dto.GroupDTO;
 import school.dto.GroupDataDTO;
 import school.dto.GroupEditHeaderDTO;
+import school.dto.GroupEditResponseDTO;
 import school.dto.StudentDTO;
 import school.dto.TeacherDTO;
 import school.dto.journal.StudentMarksDTO;
@@ -51,17 +54,7 @@ public class GroupServiceImpl implements GroupService {
     @Autowired
     ScheduleDao scheduleDao;
 
-    public List<Group> getStudentGroupsByUserId(long id) {
-        Student student = studentDao.findByUserId(id);
-        if (student == null) {
-            return null;
-        }
-        List<Group> groups = new ArrayList<Group>();
-        groups.add(student.getGroup());
-        groups.addAll(student.getAdditionGroups());
-        return groups;
-
-    }
+  
 
     @Override
     public void createAdditionGroup(List<Student> students, Course course, Date from, Date till) {
@@ -232,18 +225,8 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public void removeGroup(long requestId) {
         Group group = groupDao.findById(requestId);
-        List<Student> students = group.getStudent();
-        for (Student student : students) {
-            student.setGroup(null);
-            studentDao.update(student);
-        }
-        // group.setStudent(new ArrayList<Student>());
-        // groupDao.update(group);
-        List<Student> additionStudents = group.getAddStudent();
-        for (Student student : additionStudents) {
-            student.getAdditionGroups().remove(group);
-            studentDao.update(student);
-        }
+        freeMainGroupFromStudents(group);
+        freeAdditionGroupFromStudents(group);
         List<Schedule> schedule = scheduleDao.findByGroup(group);
         for (Schedule oneLesson : schedule) {
             scheduleDao.remove(oneLesson);
@@ -267,7 +250,7 @@ public class GroupServiceImpl implements GroupService {
         List<Student> studentWithoutGroup = new ArrayList<Student>();
         studentWithoutGroup = studentDao.findAll();
         Teacher teacherGroupTeacher = group.getTeacher();
-        
+
         // if group have teacher add it to list
         if (teacherGroupTeacher != null) {
             TeacherDTO curentGroupTeacherDAO = new TeacherDTO();
@@ -279,14 +262,14 @@ public class GroupServiceImpl implements GroupService {
         String groupName = "";
         if (group.isAdditional()) {
             Course course = group.getAdditionCourse();
-            if(course!=null){
-                groupName= course.getCourseName()+" "+ course.getGroupNumber()+" year";
+            if (course != null) {
+                groupName = course.getCourseName() + " " + course.getGroupNumber() + " year";
             }
             teachers.addAll(getAllTeachers());
             studentsOfGroup = group.getAddStudent();
 
         } else {
-            groupName=group.getNumber()+" - "+group.getLetter();
+            groupName = group.getNumber() + " - " + group.getLetter();
             teachers.addAll(getNotCurators());
             studentsOfGroup = group.getStudent();
             Iterator<Student> studentIter = studentWithoutGroup.iterator();
@@ -307,14 +290,105 @@ public class GroupServiceImpl implements GroupService {
                 studentIter.remove();
             }
         }
+        List<StudentDTO> studentsOfGroupDTO = fillStudentDTO(studentsOfGroup);
+        studentWithoutGroupDTO.removeAll(studentsOfGroupDTO);
         GroupEditHeaderDTO container = new GroupEditHeaderDTO();
         container.setName(groupName);
         container.setDateFrom(date2String(group.getStartDate(), formatterDate));
         container.setDateTill(date2String(group.getEndDate(), formatterDate));
         container.setTeachers(teachers);
-        container.setGroupStudents(fillStudentDTO(studentsOfGroup));
+        container.setGroupStudents(studentsOfGroupDTO);
         container.setAllFreeStudents(studentWithoutGroupDTO);
         return container;
+    }
+
+    @Transactional
+    @Override
+    public void groupUpdate(GroupEditResponseDTO dataForUpdate) {
+        Group group = groupDao.findById(dataForUpdate.getGroupId());
+        // START to parse values
+        Teacher teacher = teacherDao.findById(dataForUpdate.getTeacherId());
+        Date startDate = new Date();
+        Date endDate = null;
+        try {
+            startDate = formatterDate.parse(dataForUpdate.getDateFrom());
+            endDate = formatterDate.parse(dataForUpdate.getDateTill());
+        } catch (Exception e) {
+            // not critical go further
+        }
+        List<Student> newStudents4Group = new ArrayList<Student>();
+        for (StudentDTO studentDTO : dataForUpdate.getStudents()) {
+            Student currentStudent = studentDao.findById(studentDTO.getId());
+            newStudents4Group.add(currentStudent);
+        }
+        // FINISH to parse values
+        // START compare data
+        if (group.getTeacher() == teacher
+                && group.getStartDate() == startDate
+                && group.getEndDate() == endDate
+                && ((group.getStudent() == newStudents4Group) || (group.getAddStudent() == newStudents4Group))) {
+            return;
+        }
+        // FINISH compare data
+        // START fill group
+        group.setTeacher(teacher);
+        group.setStartDate(startDate);
+        group.setEndDate(endDate);
+        if (group.isAdditional()) {
+            freeAdditionGroupFromStudents(group);
+            setAdditionGroup4Students(newStudents4Group, group);
+
+        } else {
+            freeMainGroupFromStudents(group);
+            setMainGroup4Students(newStudents4Group, group);
+        }
+        groupDao.update(group);
+    }
+
+    private void freeMainGroupFromStudents(Group group) {
+        List<Student> students = group.getStudent();
+        for (Student student : students) {
+            student.setGroup(null);
+            studentDao.update(student);
+        }
+    }
+
+    private void setMainGroup4Students(List<Student> students, Group group) {
+        for (Student student : students) {
+            student.setGroup(group);
+            studentDao.update(student);
+        }
+    }
+
+    private void freeAdditionGroupFromStudents(Group group) {
+        List<Student> additionStudents = group.getAddStudent();
+        if (additionStudents == null) {
+            return;
+        }
+        Iterator<Student> studentsIter = additionStudents.iterator();
+        while (studentsIter.hasNext()) {
+            Student student = studentsIter.next();
+            List<Group> additionGroups = student.getAdditionGroups();
+            if (additionGroups != null) {
+                student.getAdditionGroups().remove(group);
+                studentDao.update(student);
+            } else {
+                continue;
+            }
+        }
+    }
+
+    private void setAdditionGroup4Students(List<Student> students, Group group) {
+        for (Student student : students) {
+            List<Group> groups = new ArrayList<Group>();
+            if (student.getAdditionGroups() != null) {
+                groups.addAll(student.getAdditionGroups());
+                groups.add(group);
+                student.setAdditionGroups(groups);
+                studentDao.update(student);
+            }
+
+        }
     }
 
     private List<StudentDTO> fillStudentDTO(List<Student> students) {
@@ -343,4 +417,5 @@ public class GroupServiceImpl implements GroupService {
         }
         return dateStr;
     }
+
 }

@@ -125,8 +125,10 @@ $(".main_submit").click(function() {
 		'data' : JSON.stringify(output),
 		'dataType' : 'json',
 		'success' : function() {
+			
 		}
 	});
+	document.location.href = "groups";
 	// $.post("group-edit-update", JSON.stringify(output),function(){},"json");
 	console.log(output);
 });
