@@ -29,7 +29,7 @@ public interface ConversationService {
 
 	Conversation findById(long id);
 	
-	void createConversation(String subject, long sender, long receiver, long principalId, String text);
+	void createConversation(String subject, long senderId, long receiverId, String text);
 	
 	boolean hasNewMessages(Conversation conversation, long userId);
 }

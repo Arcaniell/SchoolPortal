@@ -15,6 +15,7 @@ import school.dao.MessageDao;
 import school.dao.UserDao;
 import school.dto.message.EmailObjectDTO;
 import school.dto.message.MessageDto;
+import school.dto.message.NewMessagesObjectDTO;
 import school.model.Conversation;
 import school.model.Message;
 import school.model.Role;
@@ -24,7 +25,7 @@ import school.service.MessagesService;
 
 @Service
 public class MessagesServiceImpl implements MessagesService {
-
+	
 	@Autowired
 	private MessageDao messageDao;
 
@@ -50,8 +51,7 @@ public class MessagesServiceImpl implements MessagesService {
 	}
 
 	@Transactional
-	public void createNewMessage(Conversation conversation, String text,
-			long principalId) {
+	public void createNewMessage(Conversation conversation, String text) {
 		Message message = new Message();
 		message.setDateTime(new Date());
 		message.setDeletedReceiver(false);
@@ -232,5 +232,12 @@ public class MessagesServiceImpl implements MessagesService {
 			emailObjectDTOs.add(emailObjectDTO);
 		}
 		return emailObjectDTOs;
+	}
+
+	@Override
+	public NewMessagesObjectDTO constructNewMessagesObjectDTO(Long userId) {
+		NewMessagesObjectDTO newMessagesObjectDTO = new NewMessagesObjectDTO();
+		newMessagesObjectDTO.setNewMessages(String.valueOf(countOfNewMessages(userId)));
+		return newMessagesObjectDTO;
 	}
 }
