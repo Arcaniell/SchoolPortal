@@ -1,15 +1,16 @@
 package school.dao.implementation;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.NoResultException;
 
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import school.dao.HomeTaskDao;
 import school.model.HomeTask;
 
+@Repository
 public class HomeTaskDaoImpl extends BaseDaoImpl<HomeTask, Long> implements
 		HomeTaskDao {
 
@@ -18,11 +19,11 @@ public class HomeTaskDaoImpl extends BaseDaoImpl<HomeTask, Long> implements
 	}
 
 	@Transactional
-	@SuppressWarnings("unchecked")
-	public List<HomeTask> findByDate(Date date) {
+	public HomeTask findBySchedule(long scheduleId) {
 		try {
-			return entityManager.createNamedQuery(HomeTask.FIND_BY_DATE)
-					.setParameter("date", date).getResultList();
+			return (HomeTask) entityManager
+					.createNamedQuery(HomeTask.FIND_BY_SCHEDULE)
+					.setParameter("scheduleId", scheduleId).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		}
@@ -40,12 +41,12 @@ public class HomeTaskDaoImpl extends BaseDaoImpl<HomeTask, Long> implements
 	}
 
 	@Transactional
-	public HomeTask findByGroupAndDate(long groupId, Date date) {
+	public HomeTask findByGroupAndSchedule(long groupId, long scheduleId) {
 		try {
 			return (HomeTask) entityManager
-					.createNamedQuery(HomeTask.FIND_BY_GROUP_DATE)
+					.createNamedQuery(HomeTask.FIND_BY_GROUP_SCHEDULE)
 					.setParameter("groupId", groupId)
-					.setParameter("date", date).getSingleResult();
+					.setParameter("scheduleId", scheduleId).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		}

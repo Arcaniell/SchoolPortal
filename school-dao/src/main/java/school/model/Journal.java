@@ -42,6 +42,18 @@ public class Journal {
 	@Column(nullable = false)
 	private Date date;
 
+	public Journal() {
+	}
+
+	public Journal(Student student, Schedule schedule, byte mark,
+			byte coefficient, Date date) {
+		this.student = student;
+		this.schedule = schedule;
+		this.mark = mark;
+		this.coefficient = coefficient;
+		this.date = date;
+	}
+
 	public long getId() {
 		return id;
 	}

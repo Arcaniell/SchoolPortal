@@ -8,11 +8,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import school.dao.StudentDao;
+import school.model.Group;
 import school.model.Student;
 
 @Repository
-public class StudentDaoImpl extends BaseDaoImpl<Student, Long> implements
-        StudentDao {
+public class StudentDaoImpl extends BaseDaoImpl<Student, Long> implements StudentDao {
 
     public StudentDaoImpl() {
         super(Student.class);
@@ -32,10 +32,13 @@ public class StudentDaoImpl extends BaseDaoImpl<Student, Long> implements
             Student student = (Student) entityManager
                     .createQuery(
                             "select e from " + Student.class.getSimpleName()
-                                    + " e where e.id = :id")
-                    .setParameter("id", id).getSingleResult();
+                                    + " e where e.id = :id").setParameter("id", id)
+                    .getSingleResult();
             student.getUser().getId();
-            student.getGroup().getId();
+            Group group =student.getGroup();
+            if (group != null) {
+                student.getGroup().getId();
+            }
             return student;
         } catch (NoResultException e) {
             return null;
@@ -47,8 +50,7 @@ public class StudentDaoImpl extends BaseDaoImpl<Student, Long> implements
     public List<Student> findAllByStatus(boolean value) {
         try {
             if (entityManager != null) {
-                return (List<Student>) entityManager
-                        .createNamedQuery(Student.FIND_ALL_BY_STATUS)
+                return (List<Student>) entityManager.createNamedQuery(Student.FIND_ALL_BY_STATUS)
                         .setParameter("active", value).getResultList();
             } else {
                 return null;
@@ -62,8 +64,7 @@ public class StudentDaoImpl extends BaseDaoImpl<Student, Long> implements
     public Student findByUserId(long id) {
         try {
             if (entityManager != null) {
-                return (Student) entityManager
-                        .createNamedQuery(Student.FIND_BY_USER_ID)
+                return (Student) entityManager.createNamedQuery(Student.FIND_BY_USER_ID)
                         .setParameter("id", id).getSingleResult();
             } else {
                 return null;

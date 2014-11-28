@@ -1,0 +1,69 @@
+.custom_table td {
+	width: 175px;
+	padding-right: 10px;
+	height: 45px;
+	text-align: right;
+}
+
+.custom_table {
+	width: 700px;
+	margin: auto;
+}
+
+.datepicker {
+	width: 130px;
+	height: 30px;
+}
+
+.right {
+	width: 48%;
+	margin-right: 10px;
+	margin-top: 20px;
+	float: right;
+}
+
+.left {
+	width: 48%;
+	margin-right: 10px;
+	margin-top: 20px;
+	float: left;
+}
+
+h3 {
+	text-align: center;
+}
+
+.main_submit {
+	width: 100%;
+	display: none;
+}
+
+.edit-footer {
+	display: block;
+	width: 100%;
+	float: right;
+}
+
+ul.pagination {
+	 display: table;
+    margin: 0 auto;
+}
+
+.edit-footer .form-control {
+	width: 65px;
+	margin: 10px;
+	float: right;
+}
+.row_count {
+	float: left;
+}
+
+.left_pagination, .right_pagination {
+	float: left;
+	width: 43%;
+	margin: 10px auto;
+	
+}
+.right_pagination {
+	float: right;
+}

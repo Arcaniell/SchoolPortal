@@ -23,34 +23,47 @@ $("input[name = 'checkboxName']").click(function() {
 		$(".remove_button").fadeIn();
 	}
 });
-
-$(".addition_course_checkbox").click(
-		function() {
-			var transfer={"checked" : 0 };
-			if (this.checked == true) {
-				transfer={"checked" : 1 };
-				$(".th_symbol").fadeOut();
-				$("select[name='symbol_value']").fadeOut();
-				$(".th_year").attr('colspan', 2);
-				$("select[name='year_value']").attr('colspan', 2);
-				$(".addition_name_input").fadeIn();
-			} else {
-				transfer={"checked" : 0 };
-				$(".th_symbol").fadeIn();
-				$("select[name='symbol_value']").fadeIn();
-				$(".th_year").attr('colspan', 1);
-				$("select[name='year_value']").attr('colspan', 1);
-				$(".addition_name_input").fadeOut();
-			}
-			$.post("getTeacherSelect", transfer, function(teachers) {
-				var content="";
-				for (var i = 0; i < teachers.length; i++) {
-					content += "<option value=\"";
-					content += teachers[i].id;
-					content += "\">";
-					content += teachers[i].fullName;
-					content += "</option>\n";
-				}
-				$(".teachersSet").html(content);
-			}, "json");
-		});
+$(".remove_button").click(function() {
+	var groupId="";
+	$("input[name = 'checkboxName']").each(function() {
+		if(this.checked == true){
+			groupId=this.value;
+		}
+	});
+	document.location.href = "group-edit"+"?groupId="+groupId;
+});
+$(".addition_course_checkbox").click(function() {
+	var transfer = {
+		"checked" : 0
+	};
+	if (this.checked == true) {
+		transfer = {
+			"checked" : 1
+		};
+		$(".th_symbol").fadeOut();
+		$("select[name='symbol_value']").fadeOut();
+		$(".th_year").attr('colspan', 2);
+		$("select[name='year_value']").attr('colspan', 2);
+		$(".addition_name_input").fadeIn();
+	} else {
+		transfer = {
+			"checked" : 0
+		};
+		$(".th_symbol").fadeIn();
+		$("select[name='symbol_value']").fadeIn();
+		$(".th_year").attr('colspan', 1);
+		$("select[name='year_value']").attr('colspan', 1);
+		$(".addition_name_input").fadeOut();
+	}
+	$.post("getTeacherSelect", transfer, function(teachers) {
+		var content = "";
+		for (var i = 0; i < teachers.length; i++) {
+			content += "<option value=\"";
+			content += teachers[i].id;
+			content += "\">";
+			content += teachers[i].fullName;
+			content += "</option>\n";
+		}
+		$(".teachersSet").html(content);
+	}, "json");
+});
