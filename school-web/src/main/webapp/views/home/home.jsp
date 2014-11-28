@@ -8,9 +8,6 @@
 	<div class="home">
 		<div align="center">
 
-			<c:if test="${pageContext.request.userPrincipal.name != null}">
-				<p>Welcome : ${pageContext.request.userPrincipal.name}</p>
-			</c:if>
 			<img class="home_image"
 				src="<c:url value="/resources/img/school.jpg" />" />
 		</div>

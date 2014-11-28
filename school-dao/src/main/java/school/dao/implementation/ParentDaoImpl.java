@@ -26,4 +26,5 @@ public class ParentDaoImpl extends BaseDaoImpl<Parent, Long> implements
 		}
 	}
 
+
 }

@@ -15,8 +15,10 @@
 %>
 <sec:authorize access="isAuthenticated()">
 	<div class="profile-info"><%=user_name%></div>
-	<img class="logo"
+	<img class="logo" class="hidden_error"
 		src="<c:url value="/resources/img/logos/${pageContext.request.userPrincipal.name}.png" />" />
+	<img class="default_logo" style="display: none;"
+		src="<c:url value="/resources/img/avatar/default/other.png" />" />
 </sec:authorize>
 <sec:authorize access="isAnonymous()">
 	<img class="logo"
@@ -25,7 +27,7 @@
 <div class="internal-buttons">
 	<ul class="nav nav-sidebar">
 		<sec:authorize access="isAuthenticated()">
-			<li><a href="#"><spring:message code="sidebar.profile" /></a></li>
+			<li><a href="profile"><spring:message code="sidebar.profile" /></a></li>
 		</sec:authorize>
 		<li><a href="#"><spring:message code="sidebar.schedule" /></a></li>
 		<sec:authorize access="hasAnyRole('ROLE_STUDENT', 'ROLE_PARENT')">

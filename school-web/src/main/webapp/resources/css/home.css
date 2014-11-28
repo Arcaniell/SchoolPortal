@@ -95,6 +95,12 @@
 	display: inherit;
 	color: red;
 }
+.red_message{
+	color: red;
+}
+.visible_forbiden .visible_error{
+	display: none;
+}
 #signup_from label{
 	color: red;
 	font-size: small;

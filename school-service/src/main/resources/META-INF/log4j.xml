@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!-- <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
@@ -21,7 +21,7 @@
     </appender>
 
 
-    <!--sets the priority log level for org.springframework -->
+    sets the priority log level for org.springframework
     <logger name="ErrorLogs">
     	 <level value="ERROR" />     
          <appender-ref ref="ErrorLogsFile"/>
@@ -34,11 +34,11 @@
     </logger>
 
 
-    <!--sets the default priority log level -->
+    sets the default priority log level
     <root>
         <priority value="all"></priority>
         <appender-ref ref="ErrorLogsFile" />
     </root>
 
 
-</log4j:configuration>
+</log4j:configuration> -->
