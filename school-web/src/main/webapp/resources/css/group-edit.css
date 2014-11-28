@@ -28,10 +28,42 @@
 	margin-top: 20px;
 	float: left;
 }
-h3{
+
+h3 {
 	text-align: center;
 }
-.main_submit{
+
+.main_submit {
 	width: 100%;
 	display: none;
+}
+
+.edit-footer {
+	display: block;
+	width: 100%;
+	float: right;
+}
+
+ul.pagination {
+	 display: table;
+    margin: 0 auto;
+}
+
+.edit-footer .form-control {
+	width: 65px;
+	margin: 10px;
+	float: right;
+}
+.row_count {
+	float: left;
+}
+
+.left_pagination, .right_pagination {
+	float: left;
+	width: 43%;
+	margin: 10px auto;
+	
+}
+.right_pagination {
+	float: right;
 }

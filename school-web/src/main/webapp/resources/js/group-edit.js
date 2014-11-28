@@ -22,6 +22,8 @@ var fillTable = function(listOfRows, checkboxName) {
 var refresh = function() {
 	$(".group_stuff").html(fillTable(students_of_group, "removal_checkbox"));
 	$(".other_stuff").html(fillTable(students_free, "add_checkbox"));
+	$('table.paginated_right').each(makePagesRight);
+	$('table.paginated_left').each(makePagesLeft);
 };
 // init functions
 $(function() {
