@@ -1,7 +1,5 @@
 package school.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,26 +14,36 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "HOME_TASK")
 @NamedQueries({
-		@NamedQuery(name = HomeTask.FIND_BY_DATE, query = "SELECT ht FROM HomeTask ht WHERE ht.date = :from"),
+		@NamedQuery(name = HomeTask.FIND_BY_SCHEDULE, query = "SELECT ht FROM HomeTask ht WHERE ht.schedule.id = :scheduleId"),
 		@NamedQuery(name = HomeTask.FIND_BY_GROUP, query = "SELECT ht FROM HomeTask ht WHERE ht.group.id = :groupId"),
-		@NamedQuery(name = HomeTask.FIND_BY_GROUP_DATE, query = "SELECT ht FROM HomeTask ht WHERE ht.group.id = :groupId AND ht.date = :date"), })
+		@NamedQuery(name = HomeTask.FIND_BY_GROUP_SCHEDULE, query = "SELECT ht FROM HomeTask ht WHERE ht.group.id = :groupId AND ht.schedule.id = :scheduleId"), })
 public class HomeTask {
 
-	public static final String FIND_BY_DATE = "HomeTask.findByDate";
+	public static final String FIND_BY_SCHEDULE = "HomeTask.findByScheduleId";
 	public static final String FIND_BY_GROUP = "HomeTask.findByGroup";
-	public static final String FIND_BY_GROUP_DATE = "Journal.findByGroupAndDate";
+	public static final String FIND_BY_GROUP_SCHEDULE = "Journal.findByGroupAndSchedule";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true)
 	private long id;
 	@OneToOne
-	@JoinColumn(name = "scheduleId", nullable = false)
+	@JoinColumn(name = "groupId", nullable = false)
 	private Group group;
 	@Column(nullable = false, length = 65)
 	private String task;
-	@Column(nullable = false)
-	private Date date;
+	@OneToOne
+	@JoinColumn(name = "scheduleId", nullable = false)
+	private Schedule schedule;
+
+	public HomeTask() {
+	}
+
+	public HomeTask(Group group, String task, Schedule schedule) {
+		this.group = group;
+		this.task = task;
+		this.schedule = schedule;
+	}
 
 	public long getId() {
 		return id;
@@ -61,21 +69,22 @@ public class HomeTask {
 		this.task = task;
 	}
 
-	public Date getDate() {
-		return date;
+	public Schedule getSchedule() {
+		return schedule;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setSchedule(Schedule schedule) {
+		this.schedule = schedule;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((group == null) ? 0 : group.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result
+				+ ((schedule == null) ? 0 : schedule.hashCode());
 		result = prime * result + ((task == null) ? 0 : task.hashCode());
 		return result;
 	}
@@ -89,17 +98,17 @@ public class HomeTask {
 		if (getClass() != obj.getClass())
 			return false;
 		HomeTask other = (HomeTask) obj;
-		if (date == null) {
-			if (other.date != null)
-				return false;
-		} else if (!date.equals(other.date))
-			return false;
 		if (group == null) {
 			if (other.group != null)
 				return false;
 		} else if (!group.equals(other.group))
 			return false;
 		if (id != other.id)
+			return false;
+		if (schedule == null) {
+			if (other.schedule != null)
+				return false;
+		} else if (!schedule.equals(other.schedule))
 			return false;
 		if (task == null) {
 			if (other.task != null)

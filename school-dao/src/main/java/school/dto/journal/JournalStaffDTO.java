@@ -4,19 +4,18 @@ import java.util.Set;
 
 import school.model.Group;
 
-public class JournalTeacherDTO extends JournalDTO {
+public class JournalStaffDTO extends JournalDTO {
 
 	private long teacherId;
 	private String teacherName;
 	private Set<Group> groups;
 	private Set<String> courseNames;
 
-	public JournalTeacherDTO() {
+	public JournalStaffDTO() {
 	}
 
-	public JournalTeacherDTO(long teacherId, String teacherName,
+	public JournalStaffDTO(long teacherId, String teacherName,
 			Set<Group> groups, Set<String> courseNames) {
-		super();
 		this.teacherId = teacherId;
 		this.teacherName = teacherName;
 		this.groups = groups;
@@ -76,7 +75,7 @@ public class JournalTeacherDTO extends JournalDTO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		JournalTeacherDTO other = (JournalTeacherDTO) obj;
+		JournalStaffDTO other = (JournalStaffDTO) obj;
 		if (courseNames == null) {
 			if (other.courseNames != null)
 				return false;

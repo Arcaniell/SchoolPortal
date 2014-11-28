@@ -17,9 +17,12 @@
 	<beans:import resource="localization-context.xml" />
 	<beans:import resource="tiles-context.xml" />
 	<!-- Load @Controllers only -->
-    <context:component-scan base-package="school.controller" use-default-filters="false">
-        <context:include-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
-        <context:include-filter expression="org.springframework.web.bind.annotation.ControllerAdvice" type="annotation"/>
-    </context:component-scan>
-    
+	<context:component-scan base-package="school.controller"
+		use-default-filters="false">
+		<context:include-filter expression="org.springframework.stereotype.Controller"
+			type="annotation" />
+		<context:include-filter
+			expression="org.springframework.web.bind.annotation.ControllerAdvice"
+			type="annotation" />
+	</context:component-scan>
 </beans:beans>

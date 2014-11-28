@@ -8,21 +8,26 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
 import javax.inject.Inject;
 
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import school.dao.EventDao;
 import school.dao.GroupDao;
 import school.dao.JournalDao;
 import school.dao.ScheduleDao;
 import school.dao.StudentDao;
 import school.dao.TeacherDao;
 import school.dao.UserDao;
-import school.dto.journal.StudentMarksDTO;
-import school.dto.journal.JournalTeacherDTO;
-import school.dto.journal.MarkDTO;
+import school.dto.EventDTO;
+import school.dto.journal.AddMarkDTO;
+import school.dto.journal.Mark2DTO;
+import school.dto.journal.JournalStaffDTO;
+import school.dto.journal.StudentWithMarksDTO;
+import school.model.Event;
 import school.model.Group;
 import school.model.Journal;
 import school.model.Role;
@@ -48,10 +53,12 @@ public class JournalServiceImpl implements JournalService {
 	private GroupDao groupDao;
 	@Inject
 	private StudentDao studentDao;
+	@Inject
+	private EventDao eventDao;
 
 	@Secured(Role.Secured.TEACHER)
 	@Transactional
-	public JournalTeacherDTO getTeacherInfo(String id) {
+	public JournalStaffDTO getTeacherInfo(String id) {
 
 		long userId = Long.parseLong(id);
 		Teacher teacher = teacherDao.findByUserId(userId);
@@ -65,71 +72,128 @@ public class JournalServiceImpl implements JournalService {
 			courses.add(schedule.getCourse().getCourseName());
 		}
 
-		return new JournalTeacherDTO(teacher.getId(), getWholeUserName(userId),
+		return new JournalStaffDTO(teacher.getId(), getWholeUserName(userId),
 				groups, courses);
 	}
 
 	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
 			Role.Secured.DIRECTOR, Role.Secured.ADMIN })
 	@Transactional
-	public List<StudentMarksDTO> getMarksOfGroup(String quarter,
-			String idGroup, String courseName) throws ParseException {
+	public List<StudentWithMarksDTO> getMarksOfGroup(String quarter,
+			String groupNumber, String groupLetter, String courseName)
+			throws ParseException {
 
-		long groupId = Long.parseLong(idGroup);
-		Group group = groupDao.findById(groupId);
+		Group group = groupDao.findByNumberAndLetter(
+				Byte.parseByte(groupNumber), groupLetter.charAt(0));
 		Date from = getDatesByQuarter(quarter)[JournalUtil.FIRST_DATE_OF_QUARTER];
 		Date to = getDatesByQuarter(quarter)[JournalUtil.LAST_DATE_OF_QUARTER];
 
 		List<Schedule> schedules = scheduleDao.findByGroupCourseInterval(
-				groupId, courseName, from, to);
+				group.getId(), courseName, from, to);
 		Collections.sort(schedules);
-		List<StudentMarksDTO> studentsWithMarks = new ArrayList<StudentMarksDTO>();
-		Set<MarkDTO> marks = new TreeSet<MarkDTO>();
+		List<StudentWithMarksDTO> studentsWithMarks = new ArrayList<StudentWithMarksDTO>();
+		Set<Mark2DTO> marks = new TreeSet<Mark2DTO>();
 
 		int countId = 0;
 		for (Student student : group.getStudent()) {
-			marks = new TreeSet<MarkDTO>();
+			marks = new TreeSet<Mark2DTO>();
 			for (Schedule schedule : schedules) {
 				countId++;
 				Journal journal = journalDao.findByStudentAndSchedule(
 						student.getId(), schedule.getId());
 				if (journal != null) {
-					marks.add(new MarkDTO(countId, schedule, journal));
+					marks.add(new Mark2DTO(countId, schedule.getId(), schedule
+							.getDate(), journal.getMark(), journal
+							.getCoefficient()));
 				} else if (journal == null) {
-					marks.add(new MarkDTO(countId, schedule, new Journal()));
+					marks.add(new Mark2DTO(countId, schedule.getId(), schedule
+							.getDate()));
 				}
 			}
-			studentsWithMarks.add(new StudentMarksDTO(student.getId(),
+			studentsWithMarks.add(new StudentWithMarksDTO(student.getId(),
 					getWholeUserName(student.getUser().getId()), group, marks));
 		}
 		Collections.sort(studentsWithMarks);
 		return studentsWithMarks;
 	}
 
+	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER })
+	public void addMark(AddMarkDTO addMarkDTO) throws ParseException {
+
+		String[] studentAndSchedule = addMarkDTO.getStudentAndSchedule().split(
+				"j");
+
+		Student student = studentDao.findById(Long
+				.parseLong(studentAndSchedule[0]));
+		Schedule schedule = scheduleDao.findById(Long
+				.parseLong(studentAndSchedule[1]));
+		Event event = eventDao.findEventBySchedule(schedule.getId());
+		byte coefficient = 0;
+
+		if (event == null) {
+			coefficient = 1;
+		} else {
+			coefficient = event.getType();
+		}
+
+		journalDao.save(new Journal(student, schedule, addMarkDTO.getMark(),
+				coefficient, schedule.getDate()));
+	}
+
 	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
 			Role.Secured.DIRECTOR })
-	public List<StudentMarksDTO> addMark(String studentAndSchedule,
-			String mark, String note, String coefficient) throws ParseException {
+	public void addEvent(EventDTO event) {
 
-		String[] studAndSched = studentAndSchedule.split(";");
+		eventDao.save(new Event(scheduleDao.findById(event.getScheduleId()),
+				event.getType(), event.getDescription()));
+	}
 
-		Student student = studentDao.findById(Long.parseLong(studAndSched[0]));
+	public JournalStaffDTO seniorStaffInfo(String id) {
 
-		Schedule schedule = scheduleDao.findById(Long
-				.parseLong(studAndSched[1]));
+		long userId = Long.parseLong(id);
 
-		Journal journal = new Journal();
-		journal.setSchedule(schedule);
-		journal.setStudent(student);
-		journal.setMark(Byte.parseByte(mark));
-		journal.setDate(schedule.getDate());
-		journal.setCoefficient(Byte.parseByte(coefficient));
+		List<Schedule> schedules = scheduleDao.findAll();
 
-		journalDao.update(journal);
+		Set<Group> groups = new TreeSet<Group>();
+		Set<String> courses = new TreeSet<String>();
 
-		return getMarksOfGroup(getQuarterByDate(schedule.getDate()),
-				String.valueOf(student.getGroup().getId()), schedule
-						.getCourse().getCourseName());
+		for (Schedule schedule : schedules) {
+			groups.add(schedule.getGroup());
+			courses.add(schedule.getCourse().getCourseName());
+		}
+
+		return new JournalStaffDTO(userId, getWholeUserName(userId), groups,
+				courses);
+	}
+
+	public Set<String> getGroupNumbers(String id, String subject) {
+
+		List<Schedule> schedules = scheduleDao.findByTeacher(teacherDao
+				.findByUserId(Long.parseLong(id)));
+		Set<String> groupNumbers = new TreeSet<String>();
+		for (Schedule schedule : schedules) {
+			if (schedule.getCourse().getCourseName()
+					.equals(subject.substring(0, subject.length() - 1))) {
+				groupNumbers.add(String
+						.valueOf(schedule.getGroup().getNumber()));
+			}
+		}
+		return groupNumbers;
+	}
+
+	public Set<String> getGroupLetters(String id, String number) {
+
+		List<Schedule> schedules = scheduleDao.findByTeacher(teacherDao
+				.findByUserId(Long.parseLong(id)));
+		Set<String> groupLetters = new TreeSet<String>();
+		for (Schedule schedule : schedules) {
+			if (schedule.getGroup().getNumber() == Byte.parseByte(number
+					.substring(0, number.length() - 1))) {
+				groupLetters.add(String
+						.valueOf(schedule.getGroup().getLetter()));
+			}
+		}
+		return groupLetters;
 	}
 
 	private String getWholeUserName(long userId) {

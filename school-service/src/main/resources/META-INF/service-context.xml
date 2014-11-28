@@ -16,4 +16,6 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	</context:component-scan>
 	<import resource="classpath:/META-INF/dao-context.xml" />
 
+
+
 </beans>
