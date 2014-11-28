@@ -3,10 +3,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="<c:url value="/resources/js/jquery.autocomplete.min.js" />"></script>
 <link href="<c:url value="/resources/css/conversations.css" />"
 	rel="stylesheet">
+
+<link href="resources/css/jquery-ui.css" type="text/css"
+	rel="stylesheet">
+<link href="<c:url value="/resources/css/token-input.css" />"
+	rel="stylesheet">
+<link href="<c:url value="/resources/css/token-input-facebook.css" />"
+	rel="stylesheet">
+
+<script src="<c:url value="/resources/js/jquery.tokeninput.js" />"></script>
 
 <ul class="nav nav-tabs">
 	<li><a href='<c:url value="inbox"/>'>Inbox<span class="badge">${inboxSize}</span>

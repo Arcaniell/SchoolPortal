@@ -1,32 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<script>
-	$(document).ready(function() {
-
-		$('#emailInput').autocomplete({
-			serviceUrl : '${pageContext.request.contextPath}/emailInput',
-			paramName : "tagName",
-			delimiter : ",",
-			transformResult : function(response) {
-
-				return {
-					suggestions : $.map($.parseJSON(response), function(item) {
-
-						return {
-							value : item.nameAndEmail,
-							data : item.id
-						};
-					})
-
-				};
-
-			}
-
-		});
-
+<script type="text/javascript">
+	$(function() {
+		$('#tokenfield-typeahead').tokenInput(
+				"${pageContext.request.contextPath}/emailInput", {
+					theme : "facebook",
+					queryParam : 'tagName',
+					preventDuplicates : true
+				});
 	});
 </script>
+<!-- <script type="text/javascript">
+	$(function() {
+		$('.animated').autosize();
+	});
+</script> -->
 
 <!-- Modal -->
 <div class="modal fade" id="composeModal" tabindex="-1" role="dialog"
@@ -47,8 +36,8 @@
 					<div class="form-group">
 						<label for="inputTo" class="col-sm-2 control-label">To:</label>
 						<div class="col-sm-10">
-							<input id="emailInput" name="to" type="text" class="form-control"
-								placeholder="name" value="">
+							<input type="text" class="form-control" name="to"
+								id="tokenfield-typeahead" placeholder="name or email" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -62,7 +51,7 @@
 						<label for="inputMessage" class="col-sm-2 control-label">Message:</label>
 						<div class="col-sm-10">
 							<textarea placeholder="write a message..." name="text"
-								class="form-control" rows="3"></textarea>
+								class="form-control textInput animated" rows="3"></textarea>
 						</div>
 					</div>
 					<div class="form-group">

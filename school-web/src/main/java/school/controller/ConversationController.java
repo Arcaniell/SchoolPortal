@@ -104,14 +104,17 @@ public class ConversationController {
 			HttpServletRequest request, Principal principal) {
 
 		Long principalId = Long.valueOf(principal.getName());
+		String[] namesAndEmails = to.split(",");
+		
+		for(String s:namesAndEmails) {
+			String email = s.split("-")[1].trim();
+			User receiver = userService.findByEmail(email);
+			Long receiverId = receiver.getId();
 
-		String email = to.split("-")[1].trim();
-		User receiver = userService.findByEmail(email);
-		Long receiverId = receiver.getId();
-
-		conversationService.createConversation(subject, principalId,
-				receiverId, text);
-
+			conversationService.createConversation(subject, principalId,
+					receiverId, text);
+		}
+		
 		String currectPage = (String) request.getSession().getAttribute(
 				"currentPage");
 		return "redirect:/" + currectPage;

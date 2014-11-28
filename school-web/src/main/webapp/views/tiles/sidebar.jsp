@@ -13,6 +13,7 @@
 		user_name = "";
 	}
 %>
+
 <sec:authorize access="isAuthenticated()">
 	<div class="profile-info"><%=user_name%></div>
 	<img class="logo"
@@ -37,9 +38,7 @@
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_PARENT')">
 			<li><a class="sidebarMessage" href='<c:url value="/inbox"/>'><spring:message
-						code="sidebar.message" /> <img
-					src="<c:url value="/resources/img/envelope30.png" />" /> <span
-					id="newMessages" class="badgeMessage"></span></a></li>
+						code="sidebar.message" /> </a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_STUDENT')">
 			<li><a href=courses><spring:message code="sidebar.course" /></a></li>
@@ -61,24 +60,24 @@
 	</ul>
 </div>
 <script>
-(function(poll) {
-	var poll = function() {
-		$.ajax({
-			url : '${pageContext.request.contextPath}/newMessages',
-			dataType : 'json',
-			type : 'get',
-			success : function(data) {
-				$("#newMessages").text(data.newMessages);
-			},
-			error : function() {
-				console.log("Error while counting new messages");
-			}
-		});
-	};
+	(function(poll) {
+		var poll = function() {
+			$.ajax({
+				url : '${pageContext.request.contextPath}/newMessages',
+				dataType : 'json',
+				type : 'get',
+				success : function(data) {
+					$("#newMessages").text(data.newMessages);
+				},
+				error : function() {
+					console.log("Error while counting new messages");
+				}
+			});
+		};
 
-	setInterval(function() {
-		poll();
-	}, 2000);
+		setInterval(function() {
+			poll();
+		}, 2000);
 
-})();
+	})();
 </script>

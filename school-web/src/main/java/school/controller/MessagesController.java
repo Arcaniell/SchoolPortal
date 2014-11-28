@@ -1,6 +1,7 @@
 package school.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -119,6 +120,7 @@ public class MessagesController {
 		boolean isParent = request.isUserInRole("ROLE_PARENT");
 		List<User> users = messagesService.simulateSearchResult(tagName,
 				isParent);
+													
 		return messagesService.contructEmailObjectDTO(users);
 	}
 
@@ -126,9 +128,10 @@ public class MessagesController {
 	public @ResponseBody
 	NewMessagesObjectDTO getNewMessages(Principal principal) {
 		NewMessagesObjectDTO newMessagesObjectDTO = new NewMessagesObjectDTO();
-		if(principal != null) {
-			newMessagesObjectDTO =  messagesService.constructNewMessagesObjectDTO(Long
-					.valueOf(principal.getName()));
+		if (principal != null) {
+			newMessagesObjectDTO = messagesService
+					.constructNewMessagesObjectDTO(Long.valueOf(principal
+							.getName()));
 		} else {
 			newMessagesObjectDTO.setNewMessages("0");
 		}
