@@ -228,30 +228,6 @@ public class MessagesServiceImpl implements MessagesService {
 				}
 			}
 		}
-		
-		for(User u:result) {
-			System.out.println(u);
-		}
-/*		List<User> users = userDao.findAll();
-		for (User u : users) {
-			for (Role r : u.getRoles()) {
-				if (isParent
-						&& r.getName().equals("ROLE_TEACHER")
-						&& (u.getLastName().toLowerCase().contains(tagName)
-								|| u.getFirstName().toLowerCase()
-										.contains(tagName) || u.getEmail()
-								.toLowerCase().contains(tagName))) {
-					result.add(u);
-				} else if (!isParent
-						&& r.getName().equals("ROLE_PARENT")
-						&& (u.getLastName().toLowerCase().contains(tagName)
-								|| u.getFirstName().toLowerCase()
-										.contains(tagName) || u.getEmail()
-								.toLowerCase().contains(tagName))) {
-					result.add(u);
-				}
-			}
-		}*/
 		return result;
 	}
 

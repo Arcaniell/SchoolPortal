@@ -143,7 +143,6 @@ h1,.h1,h2,.h2,h3,.h3 {
 	margin-left: 2px;
 }
 
-
 #empty {
 	margin: 5px;
 	color: #B7B7B7;
@@ -245,4 +244,19 @@ h1,.h1,h2,.h2,h3,.h3 {
 
 .textInput {
 	resize: none;
+	height: auto;
+}
+
+.animated {
+	-webkit-transition: height 0.2s;
+	-moz-transition: height 0.2s;
+	transition: height 0.2s;
+}
+
+.composeText {
+	font-weight: 600 !important;
+}
+
+.has-errorUl {
+	border-color: #a94442 !important;
 }
