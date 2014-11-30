@@ -48,14 +48,14 @@ public class HomeController {
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String logIn(Model model) {
 		model.addAttribute("newsList", homeService.findAllNews());
-		model.addAttribute("visible_login", "visible_error");
+		model.addAttribute("visible_forbiden", "visible_forbiden");
 		return "signinfailure";
 	}
 
 	@RequestMapping(value = "signinfailure", method = RequestMethod.GET)
 	public String signinFailure(Model model) {
 		model.addAttribute("newsList", homeService.findAllNews());
-		model.addAttribute("visible_signinfailure", "visible_error");
+		model.addAttribute("signinfailure", "signinfailure");
 		return "signinfailure";
 	}
 	@RequestMapping(value = "/registration", method = RequestMethod.GET)

@@ -3,8 +3,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="<c:url value="/resources/js/jquery.autocomplete.min.js" />"></script>
+
+<link href="<c:url value="/resources/css/conversations.css" />"
+	rel="stylesheet">
+
+<link href="resources/css/jquery-ui.css" type="text/css"
+	rel="stylesheet">
+<link href="<c:url value="/resources/css/token-input.css" />"
+	rel="stylesheet">
+<link href="<c:url value="/resources/css/token-input-facebook.css" />"
+	rel="stylesheet">
+
+<script src="<c:url value="/resources/js/jquery.autosize.js" />"></script>
+<%-- <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script> --%>
+<script src="<c:url value="/resources/js/jquery.tokeninput.js" />"></script>
 
 <script type="text/javascript">
 	if (window.location.href.indexOf('#') === -1) {
@@ -29,18 +41,15 @@
 	}
 </script>
 
-<link href="<c:url value="/resources/css/conversations.css" />"
-	rel="stylesheet">
-
 <ul class="nav nav-tabs">
-	<li class="active"><a href='<c:url value="../inbox"/>'>Inbox<span
+	<li class="active"><a href='<c:url value="../inbox"/>'><spring:message code="conversation.inbox" /><span
 			class="badge">${inboxSize}</span>
 	</a></li>
-	<li><a href='<c:url value="../sent"/>'>Sent<span class="badge">${sentSize}</span>
+	<li><a href='<c:url value="../sent"/>'><spring:message code="conversation.sent" /><span class="badge">${sentSize}</span>
 	</a></li>
 	<li id="compose">
 		<button type="button" class="btn btn-success" data-toggle="modal"
-			data-target="#composeModal">Compose</button>
+			data-target="#composeModal"><spring:message code="conversation.compose" /></button>
 	</li>
 	<jsp:include page="/views/messages/compose.jsp" />
 </ul>
@@ -75,12 +84,12 @@
 			<input type="hidden" value="${dtos[0].id}" name="messageId" />
 			<div class="mform-group1">
 				<textarea name="replyText" class="form-control" rows="3"
-					placeholder="reply to this message..."></textarea>
+					placeholder="<spring:message code="conversation.replyToThisMessage" />"></textarea>
 			</div>
-			<button type="submit" value="Reply" class="btn btn-primary">Reply</button>
+			<button type="submit" value="Reply" class="btn btn-primary"><spring:message code="conversation.reply" /></button>
 		</form>
 	</c:when>
 	<c:otherwise>
-		<p id="empty">Empty conversation</p>
+		<p id="empty"><spring:message code="conversation.emptyConversation" /></p>
 	</c:otherwise>
 </c:choose>

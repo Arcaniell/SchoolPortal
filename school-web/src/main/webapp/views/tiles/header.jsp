@@ -5,12 +5,13 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <%@ page session="false"%>
 <body>
 	<div class="header">
 
-		<ul class="crumbs">
+				<ul class="crumbs">
 			<li class="first"><a href="home" style="z-index: 9;"><span></span><spring:message code="header.home"/></a></li>
 			<c:if test = "${not empty current}">
 				<c:if test = "${current == 'courses'}">
@@ -30,24 +31,34 @@
 				</c:if>
 			</c:if>
 		</ul>
-		
-		<sec:authorize access="isAnonymous()">
-		
-		<button id="loginButton" class="btn btn-default" data-toggle="modal"
-			data-target="#logIn">
-			<spring:message code="label.login" />
-		</button>
-		
-</sec:authorize>
-<sec:authorize access="isAuthenticated()">
-<a class="btn btn-default" href="<c:url value="/j_spring_security_logout"/>"><spring:message code="label.logout"/></a>
-</sec:authorize>
 
-		
+
+		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_PARENT')">
+		<span class="counterPosition">
+			<a href='<c:url value="/inbox"/>'><img
+					class="newMessageImage"
+					src="<c:url value="/resources/img/envelopeW8.png" />" /> <span
+					id="newMessages" class="badgeMessage"></span></a>
+					</span>
+		</sec:authorize>
+
+		<sec:authorize access="isAnonymous()">
+
+			<button id="loginButton" class="btn btn-sample" data-toggle="modal"
+				data-target="#logIn">
+				<spring:message code="label.login" />
+			</button>
+
+		</sec:authorize>
+		<sec:authorize access="isAuthenticated()">
+			<a id="logoutButton" class="btn btn-sample"
+				href="<c:url value="/j_spring_security_logout"/>"><spring:message
+					code="label.logout" /></a>
+		</sec:authorize>
 
 		<div class="btn-group">
-			<button type="button" class="btn btn-default dropdown-toggle"
-				data-toggle="dropdown">
+			<button id="languageButton" type="button"
+				class="btn btn-sample dropdown-toggle" data-toggle="dropdown">
 				<spring:message code="label.language" />
 				<span class="caret"></span>
 			</button>
@@ -66,7 +77,7 @@
 		<jsp:include page="/views/home/forgotapassword_succes.jsp" />
 		<jsp:include page="/views/home/forgotapassword_failure.jsp" />
 		<input type="hidden" id="root_action" value="${root_action}">
-		
-		
+
+
 
 	</div>

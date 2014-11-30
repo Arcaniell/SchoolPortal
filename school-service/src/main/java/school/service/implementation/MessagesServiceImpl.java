@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import school.dao.ConversationDao;
 import school.dao.MessageDao;
+import school.dao.ParentDao;
+import school.dao.TeacherDao;
 import school.dao.UserDao;
 import school.dto.message.EmailObjectDTO;
 import school.dto.message.MessageDto;
@@ -25,7 +27,7 @@ import school.service.MessagesService;
 
 @Service
 public class MessagesServiceImpl implements MessagesService {
-	
+
 	@Autowired
 	private MessageDao messageDao;
 
@@ -37,6 +39,12 @@ public class MessagesServiceImpl implements MessagesService {
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private ParentDao parentDao;
+
+	@Autowired
+	private TeacherDao teacherDao;
 
 	@Transactional
 	public List<Message> findMessagesOfConversation(long conversationId,
@@ -201,20 +209,21 @@ public class MessagesServiceImpl implements MessagesService {
 	@Override
 	public List<User> simulateSearchResult(String tagName, boolean isParent) {
 		List<User> result = new ArrayList<User>();
-		List<User> users = userDao.findAll();
-		for (User u : users) {
-			for (Role r : u.getRoles()) {
-				if (isParent
-						&& r.getName().equals("ROLE_TEACHER")
-						&& (u.getLastName().contains(tagName)
-								|| u.getFirstName().contains(tagName) || u
-								.getEmail().contains(tagName))) {
+		if (isParent) {
+			List<User> teachers = teacherDao.findAllUsers();
+			for (User u : teachers) {
+				if (u.getFirstName().toLowerCase().contains(tagName)
+						|| u.getLastName().toLowerCase().contains(tagName)
+						|| u.getEmail().toLowerCase().contains(tagName)) {
 					result.add(u);
-				} else if (!isParent
-						&& r.getName().equals("ROLE_PARENT")
-						&& (u.getLastName().contains(tagName)
-								|| u.getFirstName().contains(tagName) || u
-								.getEmail().contains(tagName))) {
+				}
+			}
+		} else {
+			List<User> parents = parentDao.findAllUsers();
+			for (User u : parents) {
+				if (u.getFirstName().toLowerCase().contains(tagName)
+						|| u.getLastName().toLowerCase().contains(tagName)
+						|| u.getEmail().toLowerCase().contains(tagName)) {
 					result.add(u);
 				}
 			}
@@ -225,10 +234,13 @@ public class MessagesServiceImpl implements MessagesService {
 	@Override
 	public List<EmailObjectDTO> contructEmailObjectDTO(List<User> users) {
 		List<EmailObjectDTO> emailObjectDTOs = new ArrayList<EmailObjectDTO>();
+		int id = 1;
 		for (User u : users) {
 			EmailObjectDTO emailObjectDTO = new EmailObjectDTO();
-			emailObjectDTO.setNameAndEmail(u.getFirstName() + " "
-					+ u.getLastName() + " - " + u.getEmail());
+			emailObjectDTO.setName(u.getFirstName() + " " + u.getLastName()
+					+ " - " + u.getEmail());
+			emailObjectDTO.setId(id);
+			id++;
 			emailObjectDTOs.add(emailObjectDTO);
 		}
 		return emailObjectDTOs;
@@ -237,7 +249,8 @@ public class MessagesServiceImpl implements MessagesService {
 	@Override
 	public NewMessagesObjectDTO constructNewMessagesObjectDTO(Long userId) {
 		NewMessagesObjectDTO newMessagesObjectDTO = new NewMessagesObjectDTO();
-		newMessagesObjectDTO.setNewMessages(String.valueOf(countOfNewMessages(userId)));
+		newMessagesObjectDTO.setNewMessages(String
+				.valueOf(countOfNewMessages(userId)));
 		return newMessagesObjectDTO;
 	}
 }

@@ -33,10 +33,12 @@
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
 			<property name="hibernate.jdbc.use_scrollable_resultset"
 				value="false" />
+			<!-- default property -->
 			<property name="hibernate.connection.username" value="root" />
 			<property name="hibernate.connection.password" value="root" />
 
 			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/SchoolDB" />
+			<!-- openshift property -->
 			<!-- <property name="hibernate.connection.username" value="adminR4RSMHK" />
 			<property name="hibernate.connection.password" value="RkdMhlEyB_Ja" />
 
