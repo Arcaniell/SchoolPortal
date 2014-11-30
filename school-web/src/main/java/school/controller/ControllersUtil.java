@@ -4,11 +4,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Formatter;
 import java.util.GregorianCalendar;
 
 public class ControllersUtil {
-    public static Date addOrDelDays(Date fch, int days) {
+    public static final String URL_REDIRECT = "redirect:";
+    public static final String URL_LOGIN = "/login";
+    public static final String URL_GROUP_HEADTEACHER = "headteacher-groups";
+    public static final Date addOrDelDays(Date fch, int days) {
         Calendar cal = new GregorianCalendar();
         cal.setTimeInMillis(fch.getTime());
         cal.add(Calendar.DATE, days);

@@ -12,20 +12,20 @@
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">×</button>
 				<h3 class="modal-title">Group create</h3>
+				<h4>Please choose characteristics of new group</h4>
 			</div>
 			<form action="group-create" method="post">
 				<div class="modal-body">
 					<table class="group_modal_window">
 						<tr class="addition_name_input">
-							<th colspan="2">Name for additional group</th>
+							<th colspan="2">Available additional groups</th>
 						</tr>
 						<tr class="addition_name_input">
-							<td colspan="2">
-								<p>
-									<input name="additional_group_name" type="text"
-										class="form-control" placeholder="Group name">
-								</p>
-							</td>
+							<td colspan="2"><select name="course_id" class="form-control">
+									<option value="1">one</option>
+									<option value="2">two</option>
+									<option value="3">three</option>
+							</select></td>
 						</tr>
 						<tr>
 							<th class="th_name">Year</th>
@@ -47,7 +47,7 @@
 							<th colspan="2">Curator of the group</th>
 						</tr>
 						<tr>
-							<td colspan="2"><select name="curatorId"
+							<td colspan="2"><select name="curator_id"
 								class="form-control teachersSet">
 									<c:forEach items="${notCurator}" var="nCur">
 										<option value="${nCur.id}">${nCur.fullName}</option>
@@ -66,13 +66,15 @@
 		</div>
 	</div>
 </div>
+<!-- ADD GROUP MODAL -->
 <form action="group-remove" method="post">
-	<!-- ADD GROUP MODAL -->
+	<h3>All school groups</h3>
+	<h4>Chose some group to modify</h4>
 	<button type="button" class="btn btn-default" data-toggle="modal"
 		data-target=".add_group_modal">Add group</button>
 	<c:if test="${fn:length(groupList) > 0}">
-		<button class="realy_remove_button btn btn-default" type="submit"
-			>Remove group</button>
+		<button class="realy_remove_button btn btn-default" type="submit">Remove
+			group</button>
 		<button type="button" class="btn btn-default remove_button">Edit
 			group</button>
 	</c:if>

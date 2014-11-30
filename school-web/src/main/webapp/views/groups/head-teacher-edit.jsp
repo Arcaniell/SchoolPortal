@@ -5,6 +5,15 @@
 <link href="<c:url value="/resources/css/sortable-theme-minimal.css" />"
 	rel="stylesheet">
 <input class="hiddenGroup" type="hidden" value="${groupId}">
+<div id="loading_modal" class="modal fade" role="dialog"
+	aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div id="modal_id_spinner" class="modal-content">
+			<h3>Loading please wait</h3>
+			<img class="spinner_gif" alt="Load gif" src="<c:url value="/resources/gif/spinner.gif" />">
+		</div>
+	</div>
+</div>
 <h3>
 	Now you are editing <span class="className"> </span>
 </h3>
@@ -28,7 +37,8 @@
 <div class="left">
 	<button style="width: 100%;" type="button"
 		class="btn btn-default student_remove">Remove student -&gt;</button>
-	<table class="table table-hover paginated_left sortable-theme-bootstrap"
+	<table
+		class="table table-hover paginated_left sortable-theme-bootstrap"
 		data-sortable>
 		<thead>
 			<tr>
@@ -44,7 +54,8 @@
 <div class="right">
 	<button style="width: 100%;" type="button"
 		class="btn btn-default student_add">&lt;- Add student</button>
-	<table class="table table-hover paginated_right sortable-theme-bootstrap"
+	<table
+		class="table table-hover paginated_right sortable-theme-bootstrap"
 		data-sortable>
 		<thead>
 			<tr>
@@ -58,23 +69,22 @@
 	</table>
 </div>
 <div class="edit-footer">
-<select class="form-control row_count">		
+	<select class="form-control row_count">
 		<option value="20">20</option>
 		<option value="30">30</option>
 		<option value="50">50</option>
 	</select>
-	
+
 	<div class="left_pagination"></div>
 	<div class="right_pagination"></div>
-	
+
 </div>
-<script src="<c:url value="https://code.jquery.com/jquery-1.10.2.js" />">
-	
-</script>
+
 <script
 	src="<c:url value="https://code.jquery.com/ui/1.11.2/jquery-ui.js" />"></script>
 <script src="<c:url value="/resources/js/group-edit.js" />"
 	type="text/javascript"></script>
+	
 <script src="<c:url value="/resources/js/utils/sortable.js" />"
 	type="text/javascript"></script>
 

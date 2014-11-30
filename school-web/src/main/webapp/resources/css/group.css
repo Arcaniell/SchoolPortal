@@ -17,3 +17,9 @@ td {
 .addition_name_input {
 	display: none;
 }
+thead {
+	background-color: #d9edf7;
+}
+table{
+	margin-top: 10px;
+}

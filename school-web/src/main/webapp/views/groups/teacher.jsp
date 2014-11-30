@@ -5,13 +5,11 @@
 <link href="<c:url value="/resources/css/course.css" />"
 	rel="stylesheet">
 <div align="center" class="text">
-
-	<h2>
-		<spring:message code="course.data" />
-	</h2>
+<h3>Groups where I am teaching</h3>
+	
 	<form method="POST" action="groups">
 		<p>
-			<spring:message code="course.data.from" />
+			Period from:
 			<input name="dateFrom" value="${dateFrom}" type="text"
 				class="datepicker">
 			<spring:message code="course.data.till" />

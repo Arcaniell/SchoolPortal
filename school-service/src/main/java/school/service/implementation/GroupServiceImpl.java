@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import school.dao.CourseDao;
 import school.dao.GroupDao;
 import school.dao.ScheduleDao;
 import school.dao.StudentDao;
@@ -53,7 +54,8 @@ public class GroupServiceImpl implements GroupService {
     GroupDao groupDao;
     @Autowired
     ScheduleDao scheduleDao;
-
+    @Autowired
+    CourseDao courseDao;
   
 
     @Override
@@ -207,17 +209,20 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public void createNewGroup(byte year, String symbol, long teacherId, String additionalName,
+    public void createNewGroup(byte year, String symbol, long teacherId, long courseId,
             String branch) {
+        Teacher teacher = teacherDao.findById(teacherId);
+        Course course = courseDao.findById(courseId);
+        
         Group group = new Group();
         group.setNumber(year);
-        Teacher teacher = teacherDao.findById(teacherId);
         group.setTeacher(teacher);
         group.setStartDate(new Date());
         if (branch == null) {
             group.setLetter(symbol.charAt(0));
         } else {
             group.setAdditional(true);
+            group.setAdditionCourse(course);
         }
         groupDao.save(group);
     }
