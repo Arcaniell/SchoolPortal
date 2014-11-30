@@ -1,4 +1,4 @@
-package school.controller;
+package school.service.utils;
 
 import org.springframework.web.multipart.MultipartFile;  
 

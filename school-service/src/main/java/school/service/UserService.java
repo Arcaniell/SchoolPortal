@@ -18,6 +18,9 @@ public interface UserService {
 
 	User findByEmail(String email);
 	
+	boolean setAvatar(long id, MultipartFile multipartFile);
 	boolean setAvatar(long id, MultipartFile multipartFile, String path);
+	byte[] getAvatar(String photo);
+	byte[] getAvatar(String photo, String path);
 
 }

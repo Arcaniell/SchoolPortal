@@ -72,7 +72,7 @@ public class ProfileServiceImpl implements ProfileService {
 					parentDTO.setProfileRole(generateParentProfileRole(parent));
 					parents.add(parentDTO);
 				}
-				profileDTO.setParents(parents);
+				profileDTO.setFamily(parents);
 				profileDTO.setProfileRole(generateStudentProfileRole(student));
 
 			}
@@ -86,7 +86,7 @@ public class ProfileServiceImpl implements ProfileService {
 					chieldrenDTO.setProfileRole(generateStudentProfileRole(student));
 					chieldren.add(chieldrenDTO);
 				}
-				profileDTO.setChieldren(chieldren);
+				profileDTO.setFamily(chieldren);
 				profileDTO.setProfileRole(generateParentProfileRole(parent));
 
 			}

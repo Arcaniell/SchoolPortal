@@ -7,8 +7,7 @@ public class ProfileDTO {
 	private String profileName;
 	private String profileEmail;
 	private String profileRole;
-	private List<ProfileDTO> chieldren;
-	private List<ProfileDTO> parents;
+	private List<ProfileDTO> family;
 
 	public ProfileDTO() {
 		super();
@@ -46,20 +45,13 @@ public class ProfileDTO {
 		this.profileRole = profileRole;
 	}
 
-	public List<ProfileDTO> getChieldren() {
-		return chieldren;
+	public List<ProfileDTO> getFamily() {
+		return family;
 	}
 
-	public void setChieldren(List<ProfileDTO> chieldren) {
-		this.chieldren = chieldren;
+	public void setFamily(List<ProfileDTO> family) {
+		this.family = family;
 	}
-
-	public List<ProfileDTO> getParents() {
-		return parents;
-	}
-
-	public void setParents(List<ProfileDTO> parents) {
-		this.parents = parents;
-	}
+	
 
 }

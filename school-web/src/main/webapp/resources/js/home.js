@@ -17,15 +17,6 @@ $(document).ready(function(){
 	  $(".fquestion").click(function(){
 		  $("#fquestion").val($("."+$(this).attr('id')).attr("value"));
 		  $("#forgotQuestionNumber").val($(this).attr('id'));
-		  });
-	  /*$("<img/>").each(function() {
-	    $(this).load(function() {alert("b");})
-	    .error(function() { alert("a"); })
-	    .attr("src", $(".logo").attr("src"));
-	})*/
-	  $(".logo").load(function() {})
-		    .error(function() { $(this).attr("src", $(".default_logo").attr("src")); });
-		
-	
+		  });	
 
 });

@@ -9,9 +9,6 @@
 	rel="stylesheet">
 <script type="text/javascript"
 	src="<c:url value="/resources/js/profile.js" />"></script>
-	
-<script type="text/javascript"
-	src="<c:url value="/resources/js/profile_information.js" />"></script>
 
 <div style="padding-left: 150px;">
 
