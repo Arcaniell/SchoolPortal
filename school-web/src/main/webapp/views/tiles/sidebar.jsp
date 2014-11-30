@@ -44,9 +44,14 @@
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_STUDENT')">
 			<li><a href=courses><spring:message code="sidebar.course" /></a></li>
 		</sec:authorize>
-		<sec:authorize
-			access="hasAnyRole('ROLE_HEAD_TEACHER','ROLE_TEACHER', 'ROLE_STUDENT')">
-			<li><a href=groups><spring:message code="sidebar.groups" /></a></li>
+		<sec:authorize access="hasAnyRole('ROLE_STUDENT')">
+			<li><a href=student-groups><spring:message code="sidebar.groups" /></a></li>
+		</sec:authorize>
+		<sec:authorize access="hasAnyRole('ROLE_TEACHER')">
+			<li><a href=teacher-groups><spring:message code="sidebar.groups" /></a></li>
+		</sec:authorize>
+		<sec:authorize access="hasAnyRole('ROLE_HEAD_TEACHER')">
+			<li><a href=headteacher-groups><spring:message code="sidebar.groups" /></a></li>
 		</sec:authorize>
 		<sec:authorize
 			access="hasAnyRole('ROLE_HEAD_TEACHER', 'ROLE_STUDENT')">
@@ -78,7 +83,7 @@
 
 	setInterval(function() {
 		poll();
-	}, 2000);
+	}, 2000000);
 
 })();
 </script>

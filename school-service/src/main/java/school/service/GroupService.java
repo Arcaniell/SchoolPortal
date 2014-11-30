@@ -39,7 +39,7 @@ public interface GroupService {
 
     List<TeacherDTO> getAllTeachers();
 
-    void createNewGroup(byte year, String symbol, long teacherId, String additionalName,
+    void createNewGroup(byte year, String symbol, long teacherId, long courseId,
             String branch);
 
     void removeGroup(long requestId);

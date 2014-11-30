@@ -22,7 +22,7 @@ var makePagesLeft = function() {
 	$bootstraplist.appendTo($pager);
 	//$pager.appendTo($(".smallHeader")).find('li.page-number:first').addClass('active');
 	$(".left_pagination").html($pager);
-	$('li.page-number:first').addClass('active');
+	$(".pagination li").first().addClass('active');
 };
 var makePagesRight = function() {
 	var currentPage = 0;
@@ -47,7 +47,7 @@ var makePagesRight = function() {
 	$bootstraplist.appendTo($pager);
 	//$pager.appendTo($(".smallHeader")).find('li.page-number:first').addClass('active');
 	$(".right_pagination").html($pager);
-	$('li.page-number:first').addClass('active');
+	$(".pagination li").first().addClass('active');
 };
 $('table.paginated_right').each(makePagesRight);
 $('table.paginated_left').each(makePagesLeft);

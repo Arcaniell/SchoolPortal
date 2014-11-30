@@ -1,3 +1,9 @@
+var modal_options = {
+	"backdrop" : "static",
+	"keyboard" : "false",
+	"show":"true"
+}
+
 var students_of_group = [];
 var students_free = [];
 var fillSelect = function(listOfItems) {
@@ -20,15 +26,20 @@ var fillTable = function(listOfRows, checkboxName) {
 };
 // refresh tables with students
 var refresh = function() {
+	
 	$(".group_stuff").html(fillTable(students_of_group, "removal_checkbox"));
 	$(".other_stuff").html(fillTable(students_free, "add_checkbox"));
 	$('table.paginated_right').each(makePagesRight);
 	$('table.paginated_left').each(makePagesLeft);
+	
 };
 // init functions
 $(function() {
+	$("#loading_modal").modal(modal_options);
 	$(".datepicker").datepicker();
+	//$("#loading_modal").modal(modal_options);
 	fillHeader();
+	$("#loading_modal").modal("hide");
 });
 // fill header with data
 var fillHeader = function() {
@@ -46,28 +57,33 @@ var fillHeader = function() {
 		refresh();
 	}, "json");
 };
-//REMOVE STUDENT TO GROUP
+// REMOVE STUDENT TO GROUP
 $(".student_remove").click(function() {
+	//$("#loading_modal").modal("show");
 	$('#select_for_remove').prop('checked', false);
 	$("input[name='removal_checkbox']").each(function() {
 		if (this.checked == true) {
 			var index = findIndex(students_of_group, this.value);
-			transferElement(index,  students_of_group,students_free);
-			refresh();
+			transferElement(index, students_of_group, students_free);
+			
 		}
 	});
+	refresh();
+	//$("#loading_modal").modal("hide");
 
 });
-//ADD STUDENT TO GROUP
+// ADD STUDENT TO GROUP
 $(".student_add").click(function() {
+	//$("#loading_modal").modal("show");
 	$('#select_for_add').prop('checked', false);
 	$("input[name='add_checkbox']").each(function() {
 		if (this.checked == true) {
 			var index = findIndex(students_free, this.value);
-			transferElement(index, students_free,students_of_group);
-			refresh();
+			transferElement(index, students_free, students_of_group);
 		}
 	});
+	refresh();
+	//$("#loading_modal").modal("hide");
 });
 var transferElement = function(fromId, arreyFrom, arreyTo) {
 	arreyTo.push(arreyFrom[fromId]);
@@ -127,10 +143,10 @@ $(".main_submit").click(function() {
 		'data' : JSON.stringify(output),
 		'dataType' : 'json',
 		'success' : function() {
-			
+
 		}
 	});
-	document.location.href = "groups";
+	document.location.href = "headteacher-groups";
 	// $.post("group-edit-update", JSON.stringify(output),function(){},"json");
 	console.log(output);
 });
