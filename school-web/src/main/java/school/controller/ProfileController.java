@@ -29,8 +29,8 @@ public class ProfileController {
 	
 	@RequestMapping(value = "/photo/{photo}", method = RequestMethod.GET)
 	public @ResponseBody byte[] getPhoto(@PathVariable String photo, HttpServletRequest request) {
-//		return userService.getAvatar(photo, request.getServletContext().getRealPath(""));
-		return userService.getAvatar(photo);
+		return userService.getAvatar(photo, request.getServletContext().getRealPath(""));
+//		return userService.getAvatar(photo);
 	}
 
 
@@ -59,8 +59,8 @@ public class ProfileController {
 		if (principal == null) {
 			return "redirect:/login";
 		}
-//		userService.setAvatar(Long.parseLong(principal.getName()), uploadedFile.getFile(), request.getServletContext().getRealPath(""));
-		userService.setAvatar(Long.parseLong(principal.getName()), uploadedFile.getFile());
+		userService.setAvatar(Long.parseLong(principal.getName()), uploadedFile.getFile(), request.getServletContext().getRealPath(""));
+//		userService.setAvatar(Long.parseLong(principal.getName()), uploadedFile.getFile());
 		
 		return "redirect:/profile";
 	}
