@@ -25,6 +25,7 @@
 		<class>school.model.RegistrationData</class>
 		<class>school.model.RestorePassword</class>
 		<class>school.model.HomeTask</class>
+		<class>school.model.Event</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 			<property name="hibernate.connection.show_sql" value="true" />

@@ -2,17 +2,28 @@ package school.service;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Set;
 
-import school.dto.journal.StudentMarksDTO;
-import school.dto.journal.JournalTeacherDTO;
+import school.dto.EventDTO;
+import school.dto.journal.AddMarkDTO;
+import school.dto.journal.JournalStaffDTO;
+import school.dto.journal.StudentWithMarksDTO;
 
 public interface JournalService {
 
-	JournalTeacherDTO getTeacherInfo(String userId);
+	JournalStaffDTO getTeacherInfo(String userId);
 
-	List<StudentMarksDTO> getMarksOfGroup(String quarter, String idGroup,
-			String course) throws ParseException;
+	JournalStaffDTO seniorStaffInfo(String id);
 
-	public List<StudentMarksDTO> addMark(String studentAndSchedule,
-			String mark, String note, String coefficient) throws ParseException;
+	List<StudentWithMarksDTO> getMarksOfGroup(String quarter,
+			String groupNumber, String groupLetter, String course)
+			throws ParseException;
+
+	void addMark(AddMarkDTO addMarkDTO) throws ParseException;
+	
+	void addEvent(EventDTO event);
+
+	Set<String> getGroupLetters(String userId, String number);
+
+	Set<String> getGroupNumbers(String id, String subject);
 }

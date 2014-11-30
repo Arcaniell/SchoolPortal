@@ -54,6 +54,13 @@
 	width: 150px;
 }
 
+.btn-group, .btn-group-vertical {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 5px;
+}
+
 .btn {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	text-decoration: none;
@@ -68,5 +75,4 @@
 .btn2:hover {
 	background-color: #eee;
 	color: #2a6496;
-}
 }

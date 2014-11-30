@@ -8,6 +8,8 @@ import org.springframework.security.access.annotation.Secured;
 
 import school.dto.GroupDTO;
 import school.dto.GroupDataDTO;
+import school.dto.GroupEditHeaderDTO;
+import school.dto.GroupEditResponseDTO;
 import school.dto.TeacherDTO;
 import school.model.Course;
 import school.model.Group;
@@ -20,7 +22,6 @@ import school.model.Student;
 public interface GroupService {
 
     // @Secured(Role.Secured.STUDENT)
-    List<Group> getStudentGroupsByUserId(long id);
 
     void createAdditionGroup(List<Student> students, Course course, Date from, Date till);
 
@@ -42,5 +43,9 @@ public interface GroupService {
             String branch);
 
     void removeGroup(long requestId);
+
+    GroupEditHeaderDTO getGroupEditHeaderInfo(long id);
+
+    void groupUpdate(GroupEditResponseDTO dataForUpdate);
 
 }

@@ -2,13 +2,24 @@ package school.dto.message;
 
 public class EmailObjectDTO {
 
-	private String nameAndEmail;
+	private String name;
+	private int id;
 
-	public String getNameAndEmail() {
-		return nameAndEmail;
+	public String getName() {
+		return name;
 	}
 
-	public void setNameAndEmail(String nameAndEmail) {
-		this.nameAndEmail = nameAndEmail;
+	public void setName(String name) {
+		this.name = name;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	
 }

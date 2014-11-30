@@ -6,19 +6,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import school.dto.EventDTO;
+import school.dto.journal.AddMarkDTO;
 import school.dto.journal.JournalDTO;
-import school.dto.journal.JournalTeacherDTO;
-import school.dto.journal.StudentMarksDTO;
+import school.dto.journal.JournalSearch;
+import school.dto.journal.JournalStaffDTO;
+import school.dto.journal.StudentWithMarksDTO;
 import school.model.Role;
 import school.service.JournalService;
 import school.service.utils.JournalUtil;
@@ -45,54 +50,46 @@ public class JournalController {
 	}
 
 	@RequestMapping(value = "journal-group-marks", method = RequestMethod.POST)
-	public String getByGroup(Principal user,
-			@RequestParam(value = "quarter") String quarter,
-			@RequestParam(value = "idGroup") String idGroup,
-			@RequestParam(value = "course") String course, Model model,
-			HttpServletRequest request) throws ParseException {
+	public @ResponseBody List<StudentWithMarksDTO> getByGroup(
+			@RequestBody JournalSearch journalSearch, HttpServletRequest request)
+			throws ParseException {
 
-		if (user == null) {
-			return "redirect:/login";
-		}
+		List<StudentWithMarksDTO> groupMarks = journalService.getMarksOfGroup(
+				journalSearch.getQuarter(),
+				String.valueOf(journalSearch.getGroupNumber()),
+				String.valueOf(journalSearch.getGroupLetter()),
+				journalSearch.getSubject());
 
-		List<StudentMarksDTO> groupMarks = journalService.getMarksOfGroup(
-				quarter, idGroup, course);
-		model.addAttribute(JournalUtil.MOD_ATT_DATES, groupMarks.get(0)
-				.getDiaryMark());
-		model.addAttribute(JournalUtil.MOD_ATT_GROUP_MARKS, groupMarks);
-		Map<String, JournalDTO> DTOs = getDTOsByRole(user, request);
-		for (Entry<String, JournalDTO> entry : DTOs.entrySet()) {
-			model.addAttribute(entry.getKey(), entry.getValue());
-		}
-
-		return "journal-group-marks";
+		return groupMarks;
 	}
 
-	@RequestMapping(value = "journal-group-marks-add-mark", method = RequestMethod.POST)
-	public String addMark(
-			Principal user,
-			Model model,
-			@RequestParam(value = "studentAndSchedule") String studentAndSchedule,
-			@RequestParam(value = "markSelect") String mark,
-			@RequestParam(value = "note") String note,
-			@RequestParam(value = "coefficient") String coefficient,
-			HttpServletRequest request) throws ParseException {
+	@RequestMapping(value = "journal-add-mark", method = RequestMethod.POST)
+	public @ResponseBody byte addMark(@RequestBody AddMarkDTO addMarkDTO)
+			throws ParseException {
 
-		if (user == null) {
-			return "redirect:/login";
-		}
+		journalService.addMark(addMarkDTO);
 
-		List<StudentMarksDTO> groupMarks = journalService.addMark(
-				studentAndSchedule, mark, note, coefficient);
+		return addMarkDTO.getMark();
 
-		model.addAttribute(JournalUtil.MOD_ATT_DATES, groupMarks.get(0)
-				.getDiaryMark());
-		model.addAttribute(JournalUtil.MOD_ATT_GROUP_MARKS, groupMarks);
-		Map<String, JournalDTO> DTOs = getDTOsByRole(user, request);
-		for (Entry<String, JournalDTO> entry : DTOs.entrySet()) {
-			model.addAttribute(entry.getKey(), entry.getValue());
-		}
-		return "journal-group-marks";
+	}
+
+	@RequestMapping(value = "journal-add-event", method = RequestMethod.POST)
+	public @ResponseBody EventDTO addEvent(@RequestBody EventDTO event)
+			throws ParseException {
+		journalService.addEvent(event);
+		return event;
+	}
+
+	@RequestMapping(value = "journal-subject")
+	public @ResponseBody Set<String> getNumbers(@RequestBody String subject,
+			Principal user) {
+		return journalService.getGroupNumbers(user.getName(), subject);
+	}
+
+	@RequestMapping(value = "journal-letter")
+	public @ResponseBody Set<String> getLetters(@RequestBody String number,
+			Principal user) {
+		return journalService.getGroupLetters(user.getName(), number);
 	}
 
 	private Map<String, JournalDTO> getDTOsByRole(Principal user,
@@ -101,15 +98,14 @@ public class JournalController {
 		Map<String, JournalDTO> DTOs = new HashMap<String, JournalDTO>();
 
 		if (request.isUserInRole(Role.Secured.TEACHER)) {
-			JournalTeacherDTO teacherDTO = journalService.getTeacherInfo(user
+			JournalStaffDTO teacherDTO = journalService.getTeacherInfo(user
 					.getName());
 			DTOs.put(JournalUtil.TEACHER, teacherDTO);
 		} else if (request.isUserInRole(Role.Secured.HEAD_TEACHER)) {
-
-		} else if (request.isUserInRole(Role.Secured.DIRECTOR)) {
-
+			JournalStaffDTO seniorStaffDTO = journalService
+					.seniorStaffInfo(user.getName());
+			DTOs.put(JournalUtil.TEACHER, seniorStaffDTO);
 		}
-
 		return DTOs;
 	}
 }

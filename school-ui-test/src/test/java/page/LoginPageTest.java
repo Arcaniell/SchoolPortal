@@ -36,16 +36,15 @@ public class LoginPageTest {
 
 	@Test
 	public void testLogin() throws InterruptedException {
-//		LoginPage loginPage = homePage.gotoLoginPage();
-//		Thread.sleep(2000);
-//		User user = new User();
-//		user.setEmail("headteacher@gmail.com");
-//		user.setPassword("headteacher");
-////		user.setFirstName("asd");
-////		user.setLastName("asd");
-//		loginPage.logIn(user);
-////		Assert.assertEquals(user.getFirstName()+" "+user.getLastName(), homePage.getUserName());
-		
+		/*LoginPage loginPage = homePage.gotoLoginPage();
+		Thread.sleep(2000);
+		User user = new User();
+		user.setEmail("schoolportalservice@mail.ru");
+		user.setPassword("4wiky6eoouj8");
+		user.setFirstName("asd");
+		user.setLastName("asd");
+		loginPage.logIn(user);
+		Assert.assertEquals(user.getFirstName()+" "+user.getLastName(), homePage.getUserName());*/
 	}
 
 }

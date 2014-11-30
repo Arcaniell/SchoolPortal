@@ -10,28 +10,35 @@
 		method="post">
 		<input name="date" value="${diaryMarks[0].date}" type="hidden">
 		<button class="btn btn2 btn-lg" type="submit" name="changePage"
-			value="previous">
+			value="previous" disabled="disabled">
 			<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
 			<spring:message code="diary.previous" />
 		</button>
 		<button style="float: right;" class="btn btn2 btn-lg" type="submit"
-			name="changePage" value="next">
+			name="changePage" value="next" disabled="disabled">
 			<spring:message code="diary.next" />
 			<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
 		</button>
 	</form>
-
 	<div class="btn-group">
-		<button type="button" class="btn btn2 btn-lg dropdown-toggle"
-			data-toggle="dropdown" aria-expanded="false">
-			Kids <span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu" role="menu">
-			<c:forEach items="${kids}" var="kid">
-				<li><a href='<c:url value="/diary-parent-${kid.user.id}"/>'>${kid.user.firstName }${kid.user.lastName}</a></li>
-			</c:forEach>
+
+		<ul class="nav nav-pills">
+			<li role="presentation" class="dropdown"><a
+				class="btn btn2 btn-lg dropdown-toggle" data-toggle="dropdown"
+				href="#" role="button" aria-expanded="false"> Kids <span
+					class="caret"></span>
+			</a>
+				<ul class="dropdown-menu" role="menu">
+					<c:forEach items="${kids}" var="kid">
+						<li><a href='<c:url value="/diary-parent-${kid.user.id}"/>'>${kid.user.firstName}
+								${kid.user.lastName}</a></li>
+					</c:forEach>
+				</ul></li>
+			<li role="presentation"><a class="btn btn2 btn-lg" href="#">Rating</a></li>
 		</ul>
 	</div>
+
+
 </nav>
 <c:if test="${diaryMarks ne null}">
 	<table id="noBorder" class="table tableOnBack">
@@ -68,7 +75,7 @@
 													<tr>
 														<td><c:out value="${mark.id }">
 															</c:out></td>
-														<td data-toggle="tooltip"
+														<td
 															title="Teacher-${mark.schedule.teacher.user.firstName} ${mark.schedule.teacher.user.lastName}"><c:out
 																value="${mark.schedule.course.courseName}"></c:out></td>
 														<td></td>

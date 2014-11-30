@@ -19,6 +19,7 @@ import school.model.User;
 import school.service.ConversationService;
 import school.service.MessagesService;
 import school.service.utils.ConversationsUtils;
+import school.service.utils.DateUtil;
 
 @Service
 public class ConversationServiceImpl implements ConversationService {
@@ -95,8 +96,6 @@ public class ConversationServiceImpl implements ConversationService {
 			List<Conversation> conversations, long id, Locale loc) {
 		List<ConversationDto> dtos = new ArrayList<ConversationDto>();
 		List<Date> dates = getDates(conversations, id);
-		DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM,
-				loc);
 
 		conversationsUtils.sortConversations(conversations, dates);
 
@@ -106,7 +105,8 @@ public class ConversationServiceImpl implements ConversationService {
 			ConversationDto dto = new ConversationDto();
 			dto.setSubject(conversations.get(i).getSubject());
 			dto.setId(String.valueOf(conversations.get(i).getId()));
-			String date = dateFormat.format(dates.get(i));
+			String date = DateUtil.getFormattedDate(dates.get(i),
+					DateUtil.MEDIUM, loc);
 			dto.setDate(date);
 			dto.setFirstName(fNames.get(i));
 			dto.setLastName(lNames.get(i));
@@ -121,8 +121,6 @@ public class ConversationServiceImpl implements ConversationService {
 			List<Conversation> conversations, long id, Locale loc) {
 		List<ConversationDto> dtos = new ArrayList<ConversationDto>();
 		List<Date> dates = getDates(conversations, id);
-		DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM,
-				loc);
 
 		conversationsUtils.sortConversations(conversations, dates);
 
@@ -132,7 +130,8 @@ public class ConversationServiceImpl implements ConversationService {
 			ConversationDto dto = new ConversationDto();
 			dto.setSubject(conversations.get(i).getSubject());
 			dto.setId(String.valueOf(conversations.get(i).getId()));
-			String date = dateFormat.format(dates.get(i));
+			String date = DateUtil.getFormattedDate(dates.get(i),
+					DateUtil.MEDIUM, loc);
 			dto.setDate(date);
 			dto.setFirstName(fNames.get(i));
 			dto.setLastName(lNames.get(i));
@@ -176,7 +175,8 @@ public class ConversationServiceImpl implements ConversationService {
 	}
 
 	@Override
-	public void createConversation(String subject, long sender, long receiver, String text) {
+	public void createConversation(String subject, long sender, long receiver,
+			String text) {
 		Conversation conversation = new Conversation();
 		conversation.setSubject(subject);
 		conversation.setAnsweredReceiver(false);
@@ -199,11 +199,8 @@ public class ConversationServiceImpl implements ConversationService {
 				conversation.getId(), userId);
 		for (Message m : messages) {
 			if (conversation.getReceiverId().getId() == userId) {
-				if (!m.isReadReceiver() && m.isFromSender()) {
-					return true;
-				}
-			} else {
-				if (!m.isReadSender() && !m.isFromSender()) {
+				if ((!m.isReadReceiver() && m.isFromSender())
+						|| (!m.isReadSender() && !m.isFromSender())) {
 					return true;
 				}
 			}

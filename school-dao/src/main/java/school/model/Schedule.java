@@ -180,13 +180,13 @@ public class Schedule implements Comparable<Schedule> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((course == null) ? 0 : course.hashCode());
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((group == null) ? 0 : group.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((journal == null) ? 0 : journal.hashCode());
 		result = prime * result + ((lesson == null) ? 0 : lesson.hashCode());
 		result = prime * result + ((room == null) ? 0 : room.hashCode());
-		result = prime * result + ((course == null) ? 0 : course.hashCode());
 		result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
 		return result;
 	}
@@ -200,6 +200,11 @@ public class Schedule implements Comparable<Schedule> {
 		if (getClass() != obj.getClass())
 			return false;
 		Schedule other = (Schedule) obj;
+		if (course == null) {
+			if (other.course != null)
+				return false;
+		} else if (!course.equals(other.course))
+			return false;
 		if (date == null) {
 			if (other.date != null)
 				return false;
@@ -229,11 +234,6 @@ public class Schedule implements Comparable<Schedule> {
 			if (other.room != null)
 				return false;
 		} else if (!room.equals(other.room))
-			return false;
-		if (course == null) {
-			if (other.course != null)
-				return false;
-		} else if (!course.equals(other.course))
 			return false;
 		if (teacher == null) {
 			if (other.teacher != null)

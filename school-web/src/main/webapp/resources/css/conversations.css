@@ -237,3 +237,26 @@ h1,.h1,h2,.h2,h3,.h3 {
 	border-top: 0px solid #d8d8d8;
 	padding-top: 10px;
 }
+
+.emailInputClass {
+	resize: none;
+}
+
+.textInput {
+	resize: none;
+	height: auto;
+}
+
+.animated {
+	-webkit-transition: height 0.2s;
+	-moz-transition: height 0.2s;
+	transition: height 0.2s;
+}
+
+.composeText {
+	font-weight: 600 !important;
+}
+
+.has-errorUl {
+	border-color: #a94442 !important;
+}
