@@ -131,7 +131,7 @@ public class UserServiceImpl implements UserService {
 			try{
 			fileName = id + ".png";
 			InputStream inputStream = multipartFile.getInputStream();
-			File image = new File(System.getenv("OPENSHIFT_DATA_DIR")+"photo/" + 0 + ".png");
+			File image = new File(System.getenv("OPENSHIFT_DATA_DIR")+"photo/" + id + ".png");
 			if (!image.exists()) {
 				image.createNewFile();
 			}
