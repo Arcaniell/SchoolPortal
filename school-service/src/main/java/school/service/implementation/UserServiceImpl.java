@@ -100,9 +100,26 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public byte[] getAvatar(String photo) {
-		File file = new File(System.getenv("OPENSHIFT_DATA_DIR")+"photo/"+photo+".png");
-		if(!file.exists()) file = new File(System.getenv("OPENSHIFT_DATA_DIR")+"photo/0.png");
+	public byte[] getAvatar(String id) {
+		File file = new File(System.getenv("OPENSHIFT_DATA_DIR")+"photo/"+id+".png");
+		String sexName = null;
+		if(!file.exists()) {
+			switch (userDao.findById(Long.parseLong(id)).getSex()) {
+			case User.SexType.MALE: sexName = "male";
+				
+				break;
+			case User.SexType.FEMALE: sexName = "female";
+			
+			break;
+			case User.SexType.OTHER: sexName = "other";
+			
+			break;
+
+			default:
+				break;
+			}
+			file = new File(System.getenv("OPENSHIFT_DATA_DIR")+"photo/"+sexName+".png");
+		}
 		try {
 			InputStream is = new FileInputStream(file);
 			return IOUtils.toByteArray(is);
@@ -112,9 +129,26 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public byte[] getAvatar(String photo, String path) {
-		File file = new File(path+"/resources/img/photo/"+photo+".png");
-		if(!file.exists()) file = new File(path+"/resources/img/photo/0.png");
+	public byte[] getAvatar(String id, String path) {
+		File file = new File(path+"/resources/img/photo/"+id+".png");
+		String sexName = null;
+		if(!file.exists()) {
+			switch (userDao.findById(Long.parseLong(id)).getSex()) {
+			case User.SexType.MALE: sexName = "male";
+				
+				break;
+			case User.SexType.FEMALE: sexName = "female";
+			
+			break;
+			case User.SexType.OTHER: sexName = "other";
+			
+			break;
+
+			default:
+				break;
+			}
+			file = new File(path+"/resources/img/photo/"+sexName+".png");
+		}
 		try {
 			InputStream is = new FileInputStream(file);
 			return IOUtils.toByteArray(is);

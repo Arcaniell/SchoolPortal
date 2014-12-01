@@ -8,6 +8,7 @@ public class ProfileDTO {
 	private String profileEmail;
 	private String profileRole;
 	private List<ProfileDTO> family;
+	private String profileFamilyDescription;
 
 	public ProfileDTO() {
 		super();
@@ -52,6 +53,15 @@ public class ProfileDTO {
 	public void setFamily(List<ProfileDTO> family) {
 		this.family = family;
 	}
+
+	public String getProfileFamilyDescription() {
+		return profileFamilyDescription;
+	}
+
+	public void setProfileFamilyDescription(String profileFamilyDescription) {
+		this.profileFamilyDescription = profileFamilyDescription;
+	}
+
 	
 
 }

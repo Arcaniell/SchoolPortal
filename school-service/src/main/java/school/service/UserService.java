@@ -17,10 +17,14 @@ public interface UserService {
 	User createUser(User user);
 
 	User findByEmail(String email);
-	
+
+	@Secured("IS_AUTHENTICATED_FULLY")
 	boolean setAvatar(long id, MultipartFile multipartFile);
+	@Secured("IS_AUTHENTICATED_FULLY")
 	boolean setAvatar(long id, MultipartFile multipartFile, String path);
-	byte[] getAvatar(String photo);
-	byte[] getAvatar(String photo, String path);
+	@Secured("IS_AUTHENTICATED_FULLY")
+	byte[] getAvatar(String id);
+	@Secured("IS_AUTHENTICATED_FULLY")
+	byte[] getAvatar(String id, String path);
 
 }

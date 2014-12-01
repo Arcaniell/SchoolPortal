@@ -19,6 +19,8 @@
 				value="profile_information">
 				<jsp:include
 						page="/views/profile/profile_information.jsp" />
+				<jsp:include
+						page="/views/profile/profile_information_runner.jsp" />		
 				<div class="hidden_error profile_options">
 					<jsp:include page="/views/profile/profile_options.jsp" /></div>
 				<div class="hidden_error profile_avatar"><jsp:include
