@@ -18,6 +18,7 @@ import school.dto.GroupDTO;
 import school.dto.TeacherDTO;
 import school.model.Role;
 import school.service.GroupService;
+import school.service.utils.DateUtil;
 
 @Controller
 public class GroupController {
@@ -63,7 +64,7 @@ public class GroupController {
                 return TILES_VIEW_GROUP_STUDENT;
             }
         }
-        return ControllersUtil.URL_REDIRECT + ControllersUtil.URL_LOGIN;
+        return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
     }
 
     @RequestMapping(value = URL_GROUP_TEACHER)
@@ -74,9 +75,9 @@ public class GroupController {
         if (principal != null) {
             if (request.isUserInRole(Role.Secured.TEACHER)) {
                 // parse dates from form
-                Date from = ControllersUtil.dateProceed(dateFrom, formatterDate,
+                Date from = DateUtil.dateProceed(dateFrom, formatterDate,
                         TWO_MONTHS_IN_DAYS, FORWARD_TRUE);
-                Date till = ControllersUtil.dateProceed(dateTill, formatterDate,
+                Date till = DateUtil.dateProceed(dateTill, formatterDate,
                         TWO_MONTHS_IN_DAYS, FORWARD_FALSE);
                 if (from.after(till)) {
                     Date swap = from;
@@ -91,7 +92,7 @@ public class GroupController {
                 return TILES_VIEW_GROUP_TEACHER;
             }
         }
-        return ControllersUtil.URL_REDIRECT + ControllersUtil.URL_LOGIN;
+        return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
     }
 
     @RequestMapping(value = URL_GROUP_HEADTEACHER)
@@ -107,7 +108,7 @@ public class GroupController {
                 return TILES_VIEW_GROUP_HEAD_TEACHER;
             }
         }
-        return ControllersUtil.URL_REDIRECT + ControllersUtil.URL_LOGIN;
+        return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
     }
 
     @RequestMapping(value = URL_AJAX_GET_TEACHERS)
@@ -130,7 +131,7 @@ public class GroupController {
             @RequestParam(value = JSP_INPUT_CREATE_GROUP_CHECKBOX, required = false) String branch,
             HttpServletRequest request, Principal principal) {
         if (principal == null || request.isUserInRole(Role.Secured.HEAD_TEACHER) != true) {
-            return ControllersUtil.URL_REDIRECT + ControllersUtil.URL_LOGIN;
+            return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
         }
         Long courseId = null;
         try {
@@ -140,14 +141,14 @@ public class GroupController {
         }
         groupService.createNewGroup(Byte.parseByte(yearString), symbolString,
                 Long.parseLong(curatorIdString), courseId, branch);
-        return ControllersUtil.URL_REDIRECT + URL_GROUP_HEADTEACHER;
+        return URLContainer.URL_REDIRECT + URL_GROUP_HEADTEACHER;
 
     }
 
     @RequestMapping(value = URL_MODEL_GROUP_REMOVE)
     public String removeGroups(HttpServletRequest request, Principal principal) {
         if (principal == null || request.isUserInRole(Role.Secured.HEAD_TEACHER) != true) {
-            return ControllersUtil.URL_REDIRECT + ControllersUtil.URL_LOGIN;
+            return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
         }
         String[] checkboxNamesList = request.getParameterValues(JSP_INPUT_CHECKBOX_ARRAY);
         if (checkboxNamesList != null) {
@@ -163,6 +164,6 @@ public class GroupController {
                 }
             }
         }
-        return ControllersUtil.URL_REDIRECT + URL_GROUP_HEADTEACHER;
+        return URLContainer.URL_REDIRECT + URL_GROUP_HEADTEACHER;
     }
 }

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,10 @@ import school.service.CourseService;
  */
 @Service
 public class CourseServiceImpl implements CourseService {
-    final boolean COURSE_STATUS = true;
+    private final boolean COURSE_STATUS = true;
+    private final String TRUE_IN_JSP ="YES";
+    private final String FALSE_IN_JSP ="NO";
+    private final String NO_DATA_IN_JSP ="-";
     SimpleDateFormat formatterDate = new SimpleDateFormat("MM/dd/yyyy");
     @Autowired
     CourseDao courseDao;
@@ -57,8 +59,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> findCanRequestCourses(Principal user) {
-        long userId = Long.parseLong(user.getName());
+    public List<Course> findCanRequestCourses(Principal principal) {
+        long userId = Long.parseLong(principal.getName());
         Student student = studentDao.findByUserId(userId);
         Group mainGroup = student.getGroup();
         if (student == null || mainGroup == null) {
@@ -97,13 +99,13 @@ public class CourseServiceImpl implements CourseService {
             temporaryCourseDTO.setName(currentCourse.getCourseName());
             temporaryCourseDTO.setYear(currentCourse.getGroupNumber());
             if (currentCourse.isAdditional()) {
-                temporaryCourseDTO.setAdditional("YES");
+                temporaryCourseDTO.setAdditional(TRUE_IN_JSP);
             } else {
-                temporaryCourseDTO.setAdditional("NO");
+                temporaryCourseDTO.setAdditional(FALSE_IN_JSP);
             }
             temporaryCourseDTO.setRate(currentCourse.getCoeficient());
-            temporaryCourseDTO.setFrom("-");
-            temporaryCourseDTO.setTill("-");
+            temporaryCourseDTO.setFrom(NO_DATA_IN_JSP);
+            temporaryCourseDTO.setTill(NO_DATA_IN_JSP);
             Iterator<Course> additionCourse = coursesFromSchedule.iterator();
             while (additionCourse.hasNext()) {
                 if (currentCourse.getId() == additionCourse.next().getId()) {
@@ -125,9 +127,9 @@ public class CourseServiceImpl implements CourseService {
             temporaryCourseDTO.setName(additionCourse.getCourseName());
             temporaryCourseDTO.setYear(additionCourse.getGroupNumber());
             if (additionCourse.isAdditional()) {
-                temporaryCourseDTO.setAdditional("YES");
+                temporaryCourseDTO.setAdditional(TRUE_IN_JSP);
             } else {
-                temporaryCourseDTO.setAdditional("NO");
+                temporaryCourseDTO.setAdditional(FALSE_IN_JSP);
             }
             temporaryCourseDTO.setRate(additionCourse.getCoeficient());
             temporaryCourseDTO.setFrom(formatterDate.format(from));
@@ -165,9 +167,9 @@ public class CourseServiceImpl implements CourseService {
             currentCourseDTO.setName(course.getCourseName());
             currentCourseDTO.setYear(course.getGroupNumber());
             if (course.isAdditional()) {
-                currentCourseDTO.setAdditional("YES");
+                currentCourseDTO.setAdditional(TRUE_IN_JSP);
             } else {
-                currentCourseDTO.setAdditional("NO");
+                currentCourseDTO.setAdditional(FALSE_IN_JSP);
             }
             currentCourseDTO.setFrom(formatterDate.format(from));
             currentCourseDTO.setTill(formatterDate.format(till));

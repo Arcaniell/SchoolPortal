@@ -3,7 +3,9 @@ package school.service.utils;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class DateUtil {
@@ -49,4 +51,40 @@ public class DateUtil {
 
 		return sdf.parse(date);
 	}
+
+	/*
+	 * Method for add or remove days from some given date; Sample; Add : 10
+	 * March + 5 days = 15 March; Remove : 10 March - 5 days = 5 March;
+	 */
+	public static Date addOrDelDays(Date fch, int days) {
+		Calendar cal = new GregorianCalendar();
+		cal.setTimeInMillis(fch.getTime());
+		cal.add(Calendar.DATE, days);
+		return new Date(cal.getTimeInMillis());
+	}
+
+	/* Specific method for date picker date generation */
+	public static Date dateProceed(String date, SimpleDateFormat format,
+			int days, boolean forwardFlag) {
+		Date generatedDate;
+		try {
+			if (date == null) {
+				if (forwardFlag) {
+					generatedDate = addOrDelDays(new Date(), -days);
+				} else {
+					generatedDate = addOrDelDays(new Date(), days);
+				}
+				return generatedDate;
+			}
+			generatedDate = format.parse(date);
+		} catch (ParseException e) {
+			if (forwardFlag) {
+				generatedDate = addOrDelDays(new Date(), -days);
+			} else {
+				generatedDate = addOrDelDays(new Date(), days);
+			}
+		}
+		return generatedDate;
+	}
+
 }
