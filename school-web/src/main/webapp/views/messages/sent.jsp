@@ -14,7 +14,6 @@
 	rel="stylesheet">
 	
 <script src="<c:url value="/resources/js/jquery.autosize.js" />"></script>
-<%-- <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script> --%>
 <script src="<c:url value="/resources/js/jquery.tokeninput.js" />"></script>
 
 <ul class="nav nav-tabs">
@@ -45,8 +44,7 @@
 								value="${conversation.id}" /></td>
 							<td
 								class="${conversation.hasNewMessages == 'true' ? 'name bold' : 'name'}"><a
-								href='<c:url value="/sent/${conversation.id}"/>'>${conversation.firstName}
-									${conversation.lastName}</a></td>
+								href='<c:url value="/sent/${conversation.id}"/>'>${conversation.name}</a></td>
 							<td
 								class="${conversation.hasNewMessages == 'true' ? 'subject bold' : 'subject'}"><a
 								href='<c:url value="/sent/${conversation.id}"/>'>${conversation.subject}</a></td>

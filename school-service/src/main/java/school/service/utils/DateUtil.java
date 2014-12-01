@@ -19,23 +19,22 @@ public class DateUtil {
 	public static int LONG = DateFormat.LONG;
 	public static int FULL = DateFormat.FULL;
 
-	//example
-	public static String MYFORMAT = "yyyy-MM-dd";
+	public static String MESSAGE_DATE_FORMAT = "yyyy-MM-dd hh:mm";
 
-	/* Method to convert String to Date */
+	/* Method to convert Date to String */
 	public static String getFormattedDate(Date date, int size, Locale loc) {
 		DateFormat dateFormat = DateFormat.getDateInstance(size, loc);
 		return dateFormat.format(date);
 	}
 
-	/* Method to convert String to Date */
+	/* Method to convert Date to String */
 	public static String getFormattedDate(Date date, String format, Locale loc) {
 		SimpleDateFormat sdf = new SimpleDateFormat(format, loc);
 
 		return sdf.format(date);
 	}
 
-	/* Method to convert Date to String */
+	/* Method to convert String to Date */
 	public static Date getFormattedDate(String date, int size)
 			throws ParseException {
 		DateFormat dateFormat = DateFormat.getDateInstance(size);
@@ -43,7 +42,7 @@ public class DateUtil {
 		return dateFormat.parse(date);
 	}
 
-	/* Method to convert Date to String */
+	/* Method to convert String to Date */
 	public static Date getFormattedDate(String date, String format)
 			throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);

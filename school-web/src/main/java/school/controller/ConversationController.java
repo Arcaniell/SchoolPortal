@@ -39,15 +39,15 @@ public class ConversationController {
 			HttpServletRequest request) {
 		long principalId = Long.valueOf(principal.getName());
 		List<Conversation> conversationsS = conversationService
-				.findSent(principalId);
+				.findConversations(principalId, "sent");
 		List<Conversation> conversationsI = conversationService
-				.findInbox(principalId);
+				.findConversations(principalId, "inbox");
 		int sentSize = conversationsS.size();
 		List<ConversationDto> conversationsDto = new ArrayList<ConversationDto>();
 		if (conversationsI.size() > 0) {
 			Locale loc = RequestContextUtils.getLocale(request);
 			conversationsDto = conversationService
-					.constructInboxConversationsDto(conversationsI,
+					.constructConversationDto(conversationsI,
 							principalId, loc);
 		}
 		model.addAttribute("conversationsDto", conversationsDto);
@@ -62,16 +62,16 @@ public class ConversationController {
 	public String sent(Model model, Principal principal,
 			HttpServletRequest request) {
 		long principalId = Long.valueOf(principal.getName());
-		List<Conversation> conversationsI = conversationService
-				.findInbox(principalId);
 		List<Conversation> conversationsS = conversationService
-				.findSent(principalId);
+				.findConversations(principalId, "sent");
+		List<Conversation> conversationsI = conversationService
+				.findConversations(principalId, "inbox");
 		int inboxSize = conversationsI.size();
 		List<ConversationDto> conversationsDto = new ArrayList<ConversationDto>();
 		if (conversationsS.size() > 0) {
 			Locale loc = RequestContextUtils.getLocale(request);
 			conversationsDto = conversationService
-					.constructSentConversationsDto(conversationsS, principalId,
+					.constructConversationDto(conversationsS, principalId,
 							loc);
 		}
 		model.addAttribute("conversationsDto", conversationsDto);
