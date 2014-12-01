@@ -25,7 +25,7 @@ $(document).ready(function() {
 
 			},
 			error : function(e) {
-				alert('Internal server erroriiii');
+				alert('Internal server error');
 			}
 		});
 		return result;
@@ -146,7 +146,7 @@ $(document).ready(function() {
 					}
 				},
 				error : function() {
-					alert('Internal server erroreeeeee');
+					alert('Internal server error');
 				}
 			});
 

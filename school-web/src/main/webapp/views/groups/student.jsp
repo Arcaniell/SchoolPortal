@@ -2,6 +2,7 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <table class="table table-hover">
+	<h3>All student groups</h3>
 	<thead>
 		<tr>
 			<th><spring:message code="groups.table.name" /></th>

@@ -16,8 +16,7 @@
 
 <sec:authorize access="isAuthenticated()">
 	<div class="profile-info"><%=user_name%></div>
-	<img class="logo"
-		src="<c:url value="/resources/img/logos/${pageContext.request.userPrincipal.name}.png" />" />
+	<img class="logo"  src="<c:url value="/photo/${pageContext.request.userPrincipal.name}" />" />	
 </sec:authorize>
 <sec:authorize access="isAnonymous()">
 	<img class="logo"
@@ -26,7 +25,7 @@
 <div class="internal-buttons">
 	<ul class="nav nav-sidebar">
 		<sec:authorize access="isAuthenticated()">
-			<li><a href="#"><spring:message code="sidebar.profile" /></a></li>
+			<li><a href="profile"><spring:message code="sidebar.profile" /></a></li>
 		</sec:authorize>
 		<li><a href="#"><spring:message code="sidebar.schedule" /></a></li>
 		<sec:authorize access="hasAnyRole('ROLE_STUDENT', 'ROLE_PARENT')">
@@ -43,9 +42,14 @@
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_STUDENT')">
 			<li><a href=courses><spring:message code="sidebar.course" /></a></li>
 		</sec:authorize>
-		<sec:authorize
-			access="hasAnyRole('ROLE_HEAD_TEACHER','ROLE_TEACHER', 'ROLE_STUDENT')">
-			<li><a href=groups><spring:message code="sidebar.groups" /></a></li>
+		<sec:authorize access="hasAnyRole('ROLE_STUDENT')">
+			<li><a href=student-groups><spring:message code="sidebar.groups" /></a></li>
+		</sec:authorize>
+		<sec:authorize access="hasAnyRole('ROLE_TEACHER')">
+			<li><a href=teacher-groups><spring:message code="sidebar.groups" /></a></li>
+		</sec:authorize>
+		<sec:authorize access="hasAnyRole('ROLE_HEAD_TEACHER')">
+			<li><a href=headteacher-groups><spring:message code="sidebar.groups" /></a></li>
 		</sec:authorize>
 		<sec:authorize
 			access="hasAnyRole('ROLE_HEAD_TEACHER', 'ROLE_STUDENT')">
@@ -74,10 +78,8 @@
 				}
 			});
 		};
-
 		setInterval(function() {
 			poll();
 		}, 2000);
-
 	})();
 </script>
