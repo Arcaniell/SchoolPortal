@@ -8,6 +8,14 @@ public class MessageDto {
 	private String dateTime;
 	private String text;
 	
+	public MessageDto(String id, String name, String dateTime,
+			String text) {
+		this.id = id;
+		this.name = name;
+		this.dateTime = dateTime;
+		this.text = text;
+	}
+	
 	public String getName() {
 		return name;
 	}

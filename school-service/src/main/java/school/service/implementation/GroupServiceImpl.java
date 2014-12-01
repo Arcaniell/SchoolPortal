@@ -209,7 +209,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public void createNewGroup(byte year, String symbol, long teacherId, long courseId,
+    public void createNewGroup(byte year, String symbol, Long teacherId, Long courseId,
             String branch) {
         Teacher teacher = teacherDao.findById(teacherId);
         Course course = courseDao.findById(courseId);

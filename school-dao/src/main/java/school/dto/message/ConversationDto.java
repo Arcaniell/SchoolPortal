@@ -2,24 +2,26 @@ package school.dto.message;
 
 public class ConversationDto {
 
-	private String firstName;
-	private String lastName;
+	private String name;
 	private String subject;
 	private String date;
 	private String id;
 	private boolean hasNewMessages;
 	
-	public String getFirstName() {
-		return firstName;
+	public ConversationDto(String name, String subject, String date, String id,
+			boolean hasNewMessages) {
+		this.name = name;
+		this.subject = subject;
+		this.date = date;
+		this.id = id;
+		this.hasNewMessages = hasNewMessages;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	
+	public String getName() {
+		return name;
 	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getSubject() {
 		return subject;
@@ -45,5 +47,4 @@ public class ConversationDto {
 	public void setHasNewMessages(boolean hasNewMessages) {
 		this.hasNewMessages = hasNewMessages;
 	}
-	
 }

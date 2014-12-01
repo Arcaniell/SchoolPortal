@@ -66,6 +66,20 @@ public class Conversation {
 
 	@Column(nullable = false)
 	private boolean isDeletedSender;
+	
+	public Conversation() {}
+
+	public Conversation(User senderId, User receiverId, String subject, boolean isAnsweredReceiver,
+			boolean isAnsweredSender, boolean isDeletedReceiver,
+			boolean isDeletedSender) {
+		this.senderId = senderId;
+		this.receiverId = receiverId;
+		this.subject = subject;
+		this.isAnsweredReceiver = isAnsweredReceiver;
+		this.isAnsweredSender = isAnsweredSender;
+		this.isDeletedReceiver = isDeletedReceiver;
+		this.isDeletedSender = isDeletedSender;
+	}
 
 	public long getId() {
 		return id;

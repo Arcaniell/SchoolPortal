@@ -144,14 +144,10 @@ public class GroupController {
         if (principal == null || request.isUserInRole(Role.Secured.HEAD_TEACHER) != true) {
             return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
         }
-        Long courseId = null;
-        try {
-            courseId = Long.parseLong(courseIdStr);
-        } catch (NumberFormatException e) {
-            // can`t parse? no problems, continue
+        if (courseIdStr != null) {
+            groupService.createNewGroup(Byte.parseByte(yearString), symbolString,
+                    Long.parseLong(curatorIdString), Long.parseLong(courseIdStr), branch);
         }
-        groupService.createNewGroup(Byte.parseByte(yearString), symbolString,
-                Long.parseLong(curatorIdString), courseId, branch);
         return URLContainer.URL_REDIRECT + URL_GROUP_HEADTEACHER;
 
     }

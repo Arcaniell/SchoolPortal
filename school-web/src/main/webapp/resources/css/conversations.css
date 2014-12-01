@@ -96,8 +96,8 @@ h1,.h1,h2,.h2,h3,.h3 {
 	border-radius: 4px;
 	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 	box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
-	width: 98.5%;
-	float: right;
+	width: 96.5%;
+	margin-left: 37px;
 }
 
 .messageUl>li {
@@ -230,6 +230,7 @@ h1,.h1,h2,.h2,h3,.h3 {
 	width: 30px;
 	margin-bottom: 2px;
 	border: none;
+	border-radius: 4px;
 }
 
 .mform-group1 {
@@ -259,4 +260,25 @@ h1,.h1,h2,.h2,h3,.h3 {
 
 .has-errorUl {
 	border-color: #a94442 !important;
+}
+
+.textUnder {
+	color: #a94442;
+	padding: 0 !important;
+	margin: 0 !important;
+	font-weight: bold;
+}
+
+.textUnderS {
+	color: #a94442;
+	padding: 0 !important;
+	margin: 0 !important;
+	font-weight: bold;
+}
+
+.textUnderC {
+	color: #a94442;
+	padding: 0 !important;
+	margin: 0 !important;
+	font-weight: bold;
 }

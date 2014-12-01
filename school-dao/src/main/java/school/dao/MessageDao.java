@@ -8,6 +8,8 @@ import school.model.User;
 
 public interface MessageDao extends BaseDao<Message, Long> {
 	List<Message> findReceiversMessagesOfConversation(Conversation conversation);
+
 	List<Message> findSendersMessagesOfConversation(Conversation conversation);
-	List<Message> countOfNewMessages(List<Conversation> conversations);
+
+	List<Message> getListOfMessages(List<Conversation> conversations);
 }
