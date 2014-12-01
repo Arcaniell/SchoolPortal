@@ -36,7 +36,8 @@
 			<property name="hibernate.connection.username" value="root" />
 			<property name="hibernate.connection.password" value="root" />
 
-			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/SchoolTestDB" />
+			<property name="hibernate.connection.url"
+				value="jdbc:mysql://localhost:3306/SchoolTestDB" />
 		</properties>
 
 	</persistence-unit>

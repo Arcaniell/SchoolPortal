@@ -36,11 +36,12 @@
 			<property name="hibernate.connection.username" value="root" />
 			<property name="hibernate.connection.password" value="root" />
 
-			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/SchoolDB" />
-			<!-- <property name="hibernate.connection.username" value="adminR4RSMHK" />
-			<property name="hibernate.connection.password" value="RkdMhlEyB_Ja" />
-
-			<property name="hibernate.connection.url" value="jdbc:mysql://127.8.141.2:3306/SchoolDB" /> -->
+			<property name="hibernate.connection.url"
+				value="jdbc:mysql://localhost:3306/SchoolDB" />
+			<!-- <property name="hibernate.connection.username" value="adminR4RSMHK" 
+				/> <property name="hibernate.connection.password" value="RkdMhlEyB_Ja" /> 
+				<property name="hibernate.connection.url" value="jdbc:mysql://127.8.141.2:3306/SchoolDB" 
+				/> -->
 		</properties>
 
 	</persistence-unit>
