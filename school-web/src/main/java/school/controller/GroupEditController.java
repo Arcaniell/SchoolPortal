@@ -39,7 +39,7 @@ public class GroupEditController {
             model.addAttribute(JSP_OUTPUT_CURRENT_PAGE, JSP_OUTPUT_CURRENT_PAGE_VALUE_GROUP_EDIT);
             return TILES_VIEW_URL;
         }
-        return ControllersUtil.URL_REDIRECT + ControllersUtil.URL_GROUP_HEADTEACHER;
+        return URLContainer.URL_REDIRECT + URLContainer.URL_GROUP_HEADTEACHER;
     }
 
     @RequestMapping(value = URL_GROUP_EDIT_HEADER_FILL)

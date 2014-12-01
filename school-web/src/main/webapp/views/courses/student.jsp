@@ -9,7 +9,7 @@
 	<h2>
 		<spring:message code="course.data" />
 	</h2>
-	<form method="POST" action="courses">
+	<form method="POST" action="student-courses">
 		<p>
 			<spring:message code="course.data.from" />
 			<input name="dateFrom" value="${dateFrom}" type="text"
@@ -17,7 +17,7 @@
 			<spring:message code="course.data.till" />
 			<input name="dateTill" value="${dateTill}" type="text"
 				class="datepicker">
-			<button type="submit" class="btn btn-default">
+			<button type="submit" class="btn btn-sample">
 				<spring:message code="course.btn.show" />
 			</button>
 		</p>
