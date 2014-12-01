@@ -1,3 +1,33 @@
+$(function() {
+	var year = $("select[name='year_value']").val();
+	renewCourseSelect(year);
+	$("select[name='year_value']").change(function() {
+		var year = $("select[name='year_value']").val();
+		renewCourseSelect(year);
+	});
+});
+
+var renewCourseSelect = function(year) {
+	$.ajax({
+		headers : {
+			'Accept' : 'application/json',
+			'Content-Type' : 'application/json'
+		},
+		'type' : 'POST',
+		'url' : "getCoursesSelect",
+		'data' : JSON.stringify(year),
+		'dataType' : 'json',
+		'success' : function(data) {
+			var container = "";
+			for (i in data) {
+				container += "<option " + "value=\"" + data[i].id + "\">"
+						+ data[i].name + "</option>\n";
+			}
+			$("select[name='course_id']").html(container);
+		}
+	});
+};
+// $("select[name='year_value']").change(renewCourseSelect(this.value));
 $('#select-all').click(function(event) {
 	if (this.checked) {
 		$(':checkbox').each(function() {
@@ -24,13 +54,13 @@ $("input[name = 'checkboxName']").click(function() {
 	}
 });
 $(".remove_button").click(function() {
-	var groupId="";
+	var groupId = "";
 	$("input[name = 'checkboxName']").each(function() {
-		if(this.checked == true){
-			groupId=this.value;
+		if (this.checked == true) {
+			groupId = this.value;
 		}
 	});
-	document.location.href = "group-edit"+"?groupId="+groupId;
+	document.location.href = "group-edit" + "?groupId=" + groupId;
 });
 $(".addition_course_checkbox").click(function() {
 	var transfer = {

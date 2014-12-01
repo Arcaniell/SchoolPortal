@@ -10,13 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import school.dto.CourseDTO;
 import school.dto.GroupDTO;
 import school.dto.TeacherDTO;
 import school.model.Role;
+import school.service.CourseService;
 import school.service.GroupService;
 import school.service.utils.DateUtil;
 
@@ -28,6 +31,7 @@ public class GroupController {
     private final String URL_GROUP_STUDENT = "student-groups";
     private final String URL_GROUP_TEACHER = "teacher-groups";
     private final String URL_GROUP_HEADTEACHER = "headteacher-groups";
+    private final String URL_AJAX_GET_COURSES = "getCoursesSelect";
     private final String URL_AJAX_GET_TEACHERS = "/getTeacherSelect";
     private final String URL_MODAL_GROUP_ADD = "group-create";
     private final String URL_MODEL_GROUP_REMOVE = "group-remove";
@@ -53,6 +57,8 @@ public class GroupController {
     private final SimpleDateFormat formatterDate = new SimpleDateFormat("MM/dd/yyyy");
     @Autowired
     GroupService groupService;
+    @Autowired
+    CourseService courseService;
 
     @RequestMapping(value = URL_GROUP_STUDENT)
     public String getStudentGroups(HttpServletRequest request, Principal principal, Model model) {
@@ -75,10 +81,10 @@ public class GroupController {
         if (principal != null) {
             if (request.isUserInRole(Role.Secured.TEACHER)) {
                 // parse dates from form
-                Date from = DateUtil.dateProceed(dateFrom, formatterDate,
-                        TWO_MONTHS_IN_DAYS, FORWARD_TRUE);
-                Date till = DateUtil.dateProceed(dateTill, formatterDate,
-                        TWO_MONTHS_IN_DAYS, FORWARD_FALSE);
+                Date from = DateUtil.dateProceed(dateFrom, formatterDate, TWO_MONTHS_IN_DAYS,
+                        FORWARD_TRUE);
+                Date till = DateUtil.dateProceed(dateTill, formatterDate, TWO_MONTHS_IN_DAYS,
+                        FORWARD_FALSE);
                 if (from.after(till)) {
                     Date swap = from;
                     from = till;
@@ -120,6 +126,11 @@ public class GroupController {
         } else {
             return groupService.getNotCurators();
         }
+    }
+
+    @RequestMapping(value = URL_AJAX_GET_COURSES)
+    public @ResponseBody List<CourseDTO> getCoursesForYear(@RequestBody int year) {
+        return courseService.getCoursesForYear(year);
     }
 
     @RequestMapping(value = URL_MODAL_GROUP_ADD)

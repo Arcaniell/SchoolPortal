@@ -21,12 +21,10 @@
 							<th colspan="2">Available additional groups</th>
 						</tr>
 						<tr class="addition_name_input">
-							<td colspan="2"><select name="course_id"
-								class="form-control">
-									<option value="1">one</option>
-									<option value="2">two</option>
-									<option value="3">three</option>
-							</select></td>
+							<td colspan="2">
+								<select name="course_id" class="form-control">
+								</select>
+							</td>
 						</tr>
 						<tr>
 							<th class="th_name">Year</th>

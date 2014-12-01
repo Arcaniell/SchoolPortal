@@ -11,12 +11,12 @@ import school.model.Course;
 
 public interface CourseService {
     // @Secured("ROLE_TEACHER")
-    List<CourseDTO> allCoursesInDateRangeForStudent(Principal principal,
-            Date from, Date till);
+    List<CourseDTO> allCoursesInDateRangeForStudent(Principal principal, Date from, Date till);
 
     List<Course> findCanRequestCourses(Principal principal);
 
-    List<CourseDTO> allCoursesInDateRangeForTeacher(Principal principal,
-            Date from, Date till);
+    List<CourseDTO> allCoursesInDateRangeForTeacher(Principal principal, Date from, Date till);
+
+    List<CourseDTO> getCoursesForYear(int year);
 
 }
