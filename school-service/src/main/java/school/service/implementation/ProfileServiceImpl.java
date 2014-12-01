@@ -73,6 +73,10 @@ public class ProfileServiceImpl implements ProfileService {
 					parents.add(parentDTO);
 				}
 				profileDTO.setFamily(parents);
+				if(profileDTO.getFamily().size() == 1)
+					profileDTO.setProfileFamilyDescription("Parent");
+				else if(profileDTO.getFamily().size() >1)
+					profileDTO.setProfileFamilyDescription("Parents");
 				profileDTO.setProfileRole(generateStudentProfileRole(student));
 
 			}
@@ -87,6 +91,10 @@ public class ProfileServiceImpl implements ProfileService {
 					chieldren.add(chieldrenDTO);
 				}
 				profileDTO.setFamily(chieldren);
+				if(profileDTO.getFamily().size() == 1)
+					profileDTO.setProfileFamilyDescription("Chield");
+				else if(profileDTO.getFamily().size() >1)
+					profileDTO.setProfileFamilyDescription("Children");
 				profileDTO.setProfileRole(generateParentProfileRole(parent));
 
 			}

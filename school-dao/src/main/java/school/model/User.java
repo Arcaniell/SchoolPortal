@@ -195,9 +195,9 @@ public class User {
     }
 
     public class SexType {
-        public static final byte MALE = (byte) 0;
-        public static final byte FEMALE = (byte) 1;
-        public static final byte OTHER = (byte) 2;
+        public static final byte MALE = (byte) 1;
+        public static final byte FEMALE = (byte) 2;
+        public static final byte OTHER = (byte) 3;
     }
 
     public class ConfirmType {

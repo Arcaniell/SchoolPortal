@@ -27,10 +27,12 @@ public class ProfileController {
 	@Inject
 	UserService userService;
 	
-	@RequestMapping(value = "/photo/{photo}", method = RequestMethod.GET)
-	public @ResponseBody byte[] getPhoto(@PathVariable String photo, HttpServletRequest request) {
-		return userService.getAvatar(photo, request.getServletContext().getRealPath(""));
-//		return userService.getAvatar(photo);
+	@RequestMapping(value = "/photo/{id}", method = RequestMethod.GET)
+	public @ResponseBody byte[] getPhoto(@PathVariable String id, HttpServletRequest request) {
+		/*Local service method*/
+		return userService.getAvatar(id, request.getServletContext().getRealPath(""));
+		/*OpenShift service method*/
+//		return userService.getAvatar(id);
 	}
 
 
@@ -59,7 +61,9 @@ public class ProfileController {
 		if (principal == null) {
 			return "redirect:/login";
 		}
+		/*Local service method*/
 		userService.setAvatar(Long.parseLong(principal.getName()), uploadedFile.getFile(), request.getServletContext().getRealPath(""));
+		/*OpenShift service method*/
 //		userService.setAvatar(Long.parseLong(principal.getName()), uploadedFile.getFile());
 		
 		return "redirect:/profile";
