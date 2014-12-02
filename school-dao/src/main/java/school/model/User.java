@@ -43,7 +43,7 @@ public class User {
     private byte sex;
     @Column(nullable = false)
     private Date registration;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private boolean confirmed;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "USER_ROLE_REF", joinColumns = { @JoinColumn(name = "userId", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "roleId", nullable = false) })

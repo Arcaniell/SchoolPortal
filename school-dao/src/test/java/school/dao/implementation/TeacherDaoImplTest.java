@@ -76,6 +76,7 @@ public class TeacherDaoImplTest extends DBUnitConfig {
         int rate = (Integer) actualTable.getValue(2, "rate");
         boolean isActive = (Boolean) actualTable.getValue(2, "isActive");
         // get teacher by tested method and check result
+        while(teacherDaoImpl.findByUserId(3)==null){}
         Teacher teacher = teacherDaoImpl.findByUserId(3);
         Assert.assertEquals(teacher.getUser().getId(), userId);
         Assert.assertEquals(teacher.getRate(), rate);
