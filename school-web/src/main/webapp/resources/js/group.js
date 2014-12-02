@@ -1,4 +1,5 @@
 $(function() {
+	checkboxCounter();
 	var year = $("select[name='year_value']").val();
 	renewCourseSelect(year);
 	$("select[name='year_value']").change(function() {
@@ -39,19 +40,22 @@ $('#select-all').click(function(event) {
 		});
 	}
 });
-
-$("input[name = 'checkboxName']").click(function() {
+var checkboxCounter = function() {
 	var counter = 0;
 	$(':checkbox').each(function() {
 		if (this.checked == true) {
 			counter++;
 		}
 	});
-	if (counter > 1) {
+	if (counter > 1 || counter == 0) {
 		$(".remove_button").fadeOut();
 	} else {
 		$(".remove_button").fadeIn();
 	}
+};
+
+$("input[name = 'checkboxName']").click(function() {
+	checkboxCounter();
 });
 $(".remove_button").click(function() {
 	var groupId = "";
