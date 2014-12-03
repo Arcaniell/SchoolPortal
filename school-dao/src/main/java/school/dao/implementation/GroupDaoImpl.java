@@ -19,12 +19,10 @@ public class GroupDaoImpl extends BaseDaoImpl<Group, Long> implements GroupDao {
     }
 
     public List<Group> findAllAdditional() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public List<Group> findAllNotAdditional() {
-        // TODO Auto-generated method stub
         return null;
     }
 

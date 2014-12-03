@@ -56,11 +56,6 @@ ul.pagination {
 	float: right;
 }
 
-.teachers, .datepicker {
-	border: 1px solid #E4E7F5 !important;
-	border-radius: 4px;
-}
-
 .row_count {
 	float: left;
 }
@@ -82,33 +77,17 @@ ul.pagination {
 	margin-bottom: 30px;
 }
 
-table {
-	margin-top: 10px;
-}
-
-.table tr:nth-child(even) {
-	background-color: #f9f9f9;
-}
-
-thead {
-	background-color: #d9edf7;
-}
-
-.pagination>.active>a {
-	z-index: 2;
-	color: #fff;
-	cursor: default;
-	/* background-color: #428bca; */
-	background-color: #d9edf7;
-	border-color: #ddd;
-	color: #428bca;
-	/* border-color: #d9edf7; */
-}
-
 h3 {
 	margin-top: 0px;
 }
 
-input {
-	text-indent: 10px;
+/*Our pagination buttons style. Changed from bootstrap.*/
+.pagination>.active>a {
+	z-index: 2;
+	color: #fff;
+	cursor: default;
+	background-color: #d9edf7;
+	border-color: #ddd;
+	color: #428bca;
 }
+/*---------------------------*/

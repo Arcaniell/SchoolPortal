@@ -84,7 +84,7 @@ public class GroupController {
             HttpServletRequest request, Principal principal, Model model) {
         if (principal != null) {
             if (request.isUserInRole(Role.Secured.TEACHER)) {
-                // parse dates from formURL_AJAX_GET_YEAR
+                // parse dates from form
                 Date from = DateUtil.dateProceed(dateFrom, formatterDate, TWO_MONTHS_IN_DAYS,
                         FORWARD_TRUE);
                 Date till = DateUtil.dateProceed(dateTill, formatterDate, TWO_MONTHS_IN_DAYS,

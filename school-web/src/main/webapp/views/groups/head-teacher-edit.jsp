@@ -38,7 +38,7 @@
 	<button style="width: 100%;" type="button"
 		class="btn btn-sample student_remove">Remove student -&gt;</button>
 	<table
-		class="table table-hover paginated_left sortable-theme-bootstrap"
+		class="default_table table table-hover paginated_left sortable-theme-bootstrap"
 		data-sortable>
 		<thead>
 			<tr>
@@ -55,7 +55,7 @@
 	<button style="width: 100%;" type="button"
 		class="btn btn-sample student_add">&lt;- Add student</button>
 	<table
-		class="table table-hover paginated_right sortable-theme-bootstrap"
+		class="default_table table table-hover paginated_right sortable-theme-bootstrap"
 		data-sortable>
 		<thead>
 			<tr>

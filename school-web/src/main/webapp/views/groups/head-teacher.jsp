@@ -102,7 +102,7 @@
 		<button type="button" class="btn btn-sample remove_button">Edit
 			group</button>
 	</c:if>
-	<table class="table table-hover">
+	<table class="table table-hover default_table">
 		<thead>
 			<tr>
 				<th><input name="checkboxName"

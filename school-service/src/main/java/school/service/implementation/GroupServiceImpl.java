@@ -56,7 +56,6 @@ public class GroupServiceImpl implements GroupService {
     ScheduleDao scheduleDao;
     @Autowired
     CourseDao courseDao;
-  
 
     @Override
     public void createAdditionGroup(List<Student> students, Course course, Date from, Date till) {
@@ -67,7 +66,7 @@ public class GroupServiceImpl implements GroupService {
         group.setStartDate(from);
         group.setEndDate(till);
         groupDao.update(group);
-        //
+        //TODO:fix bug with multiply groups
         group = groupDao.findByCourseId(course.getId());
         for (Student student : students) {
             List<Group> container = student.getAdditionGroups();
@@ -78,14 +77,18 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<GroupDTO> getStudentGroups(Principal user) {
-        long userId = Long.parseLong(user.getName());
+    public List<GroupDTO> getStudentGroups(Principal principal) {
+        long userId = Long.parseLong(principal.getName());
         Student student = studentDao.findByUserId(userId);
         Group mainGroup = student.getGroup();
         List<Group> additionalGroups = student.getAdditionGroups();
         List<Group> allGroups = new ArrayList<Group>();
-        allGroups.add(mainGroup);
-        allGroups.addAll(additionalGroups);
+        if (mainGroup != null) {
+            allGroups.add(mainGroup);
+        }
+        if (additionalGroups != null) {
+            allGroups.addAll(additionalGroups);
+        }
         List<GroupDTO> jspGroupsDTO = fillDTOWithGroupList(allGroups);
         return jspGroupsDTO;
     }
@@ -109,6 +112,9 @@ public class GroupServiceImpl implements GroupService {
     List<GroupDTO> fillDTOWithGroupList(List<Group> groups) {
         List<GroupDTO> jspGroupsDTO = new ArrayList<GroupDTO>();
         for (Group group : groups) {
+            if (group == null) {
+                continue;
+            }
             GroupDTO currentGroupDTO = new GroupDTO();
             currentGroupDTO.setId(group.getId());
 
@@ -213,7 +219,7 @@ public class GroupServiceImpl implements GroupService {
             String branch) {
         Teacher teacher = teacherDao.findById(teacherId);
         Course course = courseDao.findById(courseId);
-        
+
         Group group = new Group();
         group.setNumber(year);
         group.setTeacher(teacher);
