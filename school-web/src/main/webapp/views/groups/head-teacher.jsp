@@ -97,7 +97,7 @@
 	<button type="button" class="btn btn-sample" data-toggle="modal"
 		data-target=".add_group_modal">Add group</button>
 	<c:if test="${fn:length(groupList) > 0}">
-		<button type="button" class="btn btn-sample" data-toggle="modal"
+		<button type="button" class="btn btn-sample real_dell_btn" data-toggle="modal"
 			data-target=".group_delete_modal">Remove group</button>
 		<button type="button" class="btn btn-sample remove_button">Edit
 			group</button>
