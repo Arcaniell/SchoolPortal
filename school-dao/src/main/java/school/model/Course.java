@@ -67,7 +67,7 @@ public class Course implements Comparable<Course> {
     private int price;
 
     private boolean additional;
-
+    @Column(nullable = true)
     private boolean archive;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "course")
