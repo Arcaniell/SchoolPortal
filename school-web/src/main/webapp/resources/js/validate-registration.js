@@ -122,6 +122,7 @@ $(document).ready(function() {
 						"firstName" : firstname,
 						"lastName" : lastname,
 						"registration" : 0,
+						"sex" : sex,
 						"confirmed" : false,
 						"roles" : [ {
 							"id" : role,

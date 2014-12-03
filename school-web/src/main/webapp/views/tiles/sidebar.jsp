@@ -59,6 +59,9 @@
 		<sec:authorize access="hasRole('ROLE_TEACHER')">
 			<li><a href=salary><spring:message code="sidebar.salary" /></a></li>
 		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+			<li><a href=admin>Admin Panel</a></li>
+		</sec:authorize>
 		<li><a href="#"><spring:message code="sidebar.contacts" /></a></li>
 		<li><a href="#"><spring:message code="sidebar.about" /></a></li>
 	</ul>
