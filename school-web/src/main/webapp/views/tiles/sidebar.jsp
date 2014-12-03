@@ -39,8 +39,14 @@
 			<li><a class="sidebarMessage" href='<c:url value="/inbox"/>'><spring:message
 						code="sidebar.message" /> </a></li>
 		</sec:authorize>
-		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_STUDENT')">
-			<li><a href=courses><spring:message code="sidebar.course" /></a></li>
+		<sec:authorize access="hasAnyRole('ROLE_STUDENT')">
+			<li><a href=student-courses><spring:message code="sidebar.course" /></a></li>
+		</sec:authorize>
+		<sec:authorize access="hasAnyRole('ROLE_TEACHER')">
+			<li><a href=teacher-courses><spring:message code="sidebar.course" /></a></li>
+		</sec:authorize>
+		<sec:authorize access="hasAnyRole('ROLE_HEAD_TEACHER')">
+			<li><a href=headteacher-courses><spring:message code="sidebar.course" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_STUDENT')">
 			<li><a href=student-groups><spring:message code="sidebar.groups" /></a></li>
@@ -83,6 +89,6 @@
 		};
 		setInterval(function() {
 			poll();
-		}, 2000);
+		}, 200000);
 	})();
 </script>

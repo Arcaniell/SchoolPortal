@@ -29,16 +29,16 @@
 		<td><input name="dateTill" type="text" class="datepicker"></td>
 		<td></td>
 		<td>
-			<button type="button" class="btn btn-default main_submit">Submit</button>
+			<button type="button" class="btn btn-sample main_submit">Submit</button>
 		</td>
 	</tr>
 </table>
 
 <div class="left">
 	<button style="width: 100%;" type="button"
-		class="btn btn-default student_remove">Remove student -&gt;</button>
+		class="btn btn-sample student_remove">Remove student -&gt;</button>
 	<table
-		class="table table-hover paginated_left sortable-theme-bootstrap"
+		class="default_table table table-hover paginated_left sortable-theme-bootstrap"
 		data-sortable>
 		<thead>
 			<tr>
@@ -53,9 +53,9 @@
 </div>
 <div class="right">
 	<button style="width: 100%;" type="button"
-		class="btn btn-default student_add">&lt;- Add student</button>
+		class="btn btn-sample student_add">&lt;- Add student</button>
 	<table
-		class="table table-hover paginated_right sortable-theme-bootstrap"
+		class="default_table table table-hover paginated_right sortable-theme-bootstrap"
 		data-sortable>
 		<thead>
 			<tr>

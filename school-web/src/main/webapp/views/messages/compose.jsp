@@ -4,7 +4,7 @@
 
 <script type="text/javascript">
 	$(function() {
-		$('#tokenfield-typeahead').tokenInput(
+		$('#tokenfieldtypeahead').tokenInput(
 				"${pageContext.request.contextPath}/emailInput", {
 					theme : "facebook",
 					queryParam : 'tagName',
@@ -45,15 +45,14 @@
 	$(document).ready(
 			function() {
 				$("#sendMessageButton").click(
-
 						function() {
-
 							if (validateText("textArea")
 									&& validateText("subjectArea")
-									&& validateEmail("tokenfield-typeahead")) {
+									&& validateEmail("tokenfieldtypeahead")) {
 								$("form#composeForm").submit();
+							} else {
+								$('#textUnderC').removeAttr("style");
 							}
-
 						});
 			}
 
@@ -82,9 +81,9 @@
 						<label for="inputTo" class="col-sm-2 control-label composeText"><spring:message
 								code="conversation.to" /></label>
 						<div class="col-sm-10">
-						<input type="text" class="form-control" name="to"
-							id="tokenfield-typeahead"
-							placeholder="<spring:message code="conversation.toWhom" />" />
+							<input type="text" class="form-control" name="to"
+								id="tokenfieldtypeahead"
+								placeholder="<spring:message code="conversation.toWhom" />" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -106,6 +105,8 @@
 								placeholder="<spring:message code="conversation.writeAMessage" />"
 								name="text" class="form-control textInput animated"
 								id="textArea" rows="3"></textarea>
+							<span id="textUnderC" class="textUnderC" style="display: none;">All
+								fields are required!</span>
 						</div>
 					</div>
 					<div class="form-group">

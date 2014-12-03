@@ -5,22 +5,20 @@
 <link href="<c:url value="/resources/css/course.css" />"
 	rel="stylesheet">
 <div align="center" class="text">
-<h3>Groups where I am teaching</h3>
-	
-	<form method="POST" action="groups">
+	<h3>Groups where I am teaching</h3>
+	<form method="POST" action="teacher-groups">
 		<p>
-			Period from:
-			<input name="dateFrom" value="${dateFrom}" type="text"
+			Period from: <input name="dateFrom" value="${dateFrom}" type="text"
 				class="datepicker">
 			<spring:message code="course.data.till" />
 			<input name="dateTill" value="${dateTill}" type="text"
 				class="datepicker">
-			<button type="submit" class="btn btn-default">
+			<button type="submit" class="btn btn-sample">
 				<spring:message code="course.btn.show" />
 			</button>
 		</p>
 	</form>
-	<table class="table table-hover">
+	<table class="table table-hover default_table">
 		<thead>
 			<tr>
 				<th><spring:message code="groups.table.name" /></th>

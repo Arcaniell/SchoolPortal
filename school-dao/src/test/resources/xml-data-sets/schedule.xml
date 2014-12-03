@@ -38,13 +38,13 @@
 
 	
 	<COURSE id="1" additional="0" coeficient="75" courseName="Math" groupNumber="5"
-	price="0"/>
+	price="0" archive="FALSE"/>
 	<COURSE id="2" additional="0" coeficient="75" courseName="English" groupNumber="5"
-	price="0"/>
+	price="0" archive="FALSE"/>
 	<COURSE id="3" additional="0" coeficient="75" courseName="Ukrainian" groupNumber="6"
-	price="0"/>
+	price="0" archive="FALSE"/>
 	<COURSE id="4" additional="0" coeficient="75" courseName="Math" groupNumber="10"
-	price="0"/>
+	price="0" archive="FALSE"/>
 	
 
 	

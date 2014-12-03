@@ -1,3 +1,58 @@
+var additionYearSelect = [];
+var yearSelect = [];
+
+$(function() {
+	// getYears("getAdditionYearsSelect");
+	// getYears("getYearsSelect");
+	checkboxCounter();
+	var year = $("select[name='year_value']").val();
+	renewCourseSelect(year);
+	$("select[name='year_value']").change(function() {
+		var year = $("select[name='year_value']").val();
+		renewCourseSelect(year);
+	});
+});
+
+var renewCourseSelect = function(year) {
+	$.ajax({
+		headers : {
+			'Accept' : 'application/json',
+			'Content-Type' : 'application/json'
+		},
+		'type' : 'POST',
+		'url' : "getCoursesSelect",
+		'data' : JSON.stringify(year),
+		'dataType' : 'json',
+		'success' : function(data) {
+			var container = "";
+			for (i in data) {
+				container += "<option " + "value=\"" + data[i].id + "\">"
+						+ data[i].name + "</option>\n";
+			}
+			$("select[name='course_id']").html(container);
+		}
+	});
+};
+
+var getYears = function(controllerName) {
+	$.ajax({
+		headers : {
+			'Accept' : 'application/json',
+			'Content-Type' : 'application/json'
+		},
+		'type' : 'POST',
+		'url' : controllerName,
+		'success' : function(data) {
+			var container = "";
+			for (i in data) {
+				container += "<option>" + data[i] + "</option>\n";
+			}
+			console.log(container);
+			$("select[name='year_value']").html(container);
+		}
+	});
+}
+// $("select[name='year_value']").change(renewCourseSelect(this.value));
 $('#select-all').click(function(event) {
 	if (this.checked) {
 		$(':checkbox').each(function() {
@@ -11,26 +66,37 @@ $('#select-all').click(function(event) {
 });
 
 $("input[name = 'checkboxName']").click(function() {
+	checkboxCounter();
+});
+
+var checkboxCounter = function() {
 	var counter = 0;
 	$(':checkbox').each(function() {
 		if (this.checked == true) {
 			counter++;
 		}
 	});
-	if (counter > 1) {
+	if (counter > 1 || counter == 0) {
 		$(".remove_button").fadeOut();
 	} else {
 		$(".remove_button").fadeIn();
 	}
-});
+	if (counter < 1) {
+		$(".real_dell_btn").fadeOut();
+	} else {
+		$(".real_dell_btn").fadeIn();
+	}
+
+};
+
 $(".remove_button").click(function() {
-	var groupId="";
+	var groupId = "";
 	$("input[name = 'checkboxName']").each(function() {
-		if(this.checked == true){
-			groupId=this.value;
+		if (this.checked == true) {
+			groupId = this.value;
 		}
 	});
-	document.location.href = "group-edit"+"?groupId="+groupId;
+	document.location.href = "group-edit" + "?groupId=" + groupId;
 });
 $(".addition_course_checkbox").click(function() {
 	var transfer = {
@@ -45,6 +111,7 @@ $(".addition_course_checkbox").click(function() {
 		$(".th_year").attr('colspan', 2);
 		$("select[name='year_value']").attr('colspan', 2);
 		$(".addition_name_input").fadeIn();
+		getYears("getAdditionYearsSelect");
 	} else {
 		transfer = {
 			"checked" : 0
@@ -54,6 +121,7 @@ $(".addition_course_checkbox").click(function() {
 		$(".th_year").attr('colspan', 1);
 		$("select[name='year_value']").attr('colspan', 1);
 		$(".addition_name_input").fadeOut();
+		getYears("getYearsSelect");
 	}
 	$.post("getTeacherSelect", transfer, function(teachers) {
 		var content = "";

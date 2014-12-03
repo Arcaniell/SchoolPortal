@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <link href="<c:url value="/resources/css/course.css" />"
 	rel="stylesheet">
@@ -22,7 +22,9 @@
 				</div>
 				<form action="course-request/request" method="post">
 					<div class="modal-body">
-						<p><spring:message code="course.request.student.msg" /></p>
+						<p>
+							<spring:message code="course.request.student.msg" />
+						</p>
 						<select name="courseId" class="selectpicker">
 							<c:forEach items="${haveCourses}" var="crs">
 								<option value="${crs.id}">${crs.courseName}</option>
@@ -53,15 +55,15 @@
 						</h3>
 					</div>
 					<div class="modal-body">
-
-						<button name="yes" type="submit" class="btn btn-default">
-							<spring:message code="course.request.btn.yes" />
-						</button>
-						<button name="no" type="button" data-dismiss="modal"
-							class="btn btn-default">
-							<spring:message code="course.request.btn.no" />
-						</button>
-
+						<p>
+							<button name="yes" type="submit" class="btn btn-default">
+								<spring:message code="course.request.btn.yes" />
+							</button>
+							<button name="no" type="button" data-dismiss="modal"
+								class="btn btn-default">
+								<spring:message code="course.request.btn.no" />
+							</button>
+						</p>
 					</div>
 				</div>
 			</div>

@@ -2,6 +2,7 @@ package school.controller;
 
 import java.security.Principal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,14 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import school.dto.CourseDTO;
 import school.dto.GroupDTO;
 import school.dto.TeacherDTO;
 import school.model.Role;
+import school.service.CourseService;
 import school.service.GroupService;
+import school.service.implementation.GroupServiceImpl;
+import school.service.utils.DateUtil;
 
 @Controller
 public class GroupController {
@@ -27,6 +33,9 @@ public class GroupController {
     private final String URL_GROUP_STUDENT = "student-groups";
     private final String URL_GROUP_TEACHER = "teacher-groups";
     private final String URL_GROUP_HEADTEACHER = "headteacher-groups";
+    private final String URL_AJAX_GET_YEAR = "getYearsSelect";
+    private final String URL_AJAX_GET_ADITIONAL_YEAR = "getAdditionYearsSelect";
+    private final String URL_AJAX_GET_COURSES = "getCoursesSelect";
     private final String URL_AJAX_GET_TEACHERS = "/getTeacherSelect";
     private final String URL_MODAL_GROUP_ADD = "group-create";
     private final String URL_MODEL_GROUP_REMOVE = "group-remove";
@@ -52,6 +61,8 @@ public class GroupController {
     private final SimpleDateFormat formatterDate = new SimpleDateFormat("MM/dd/yyyy");
     @Autowired
     GroupService groupService;
+    @Autowired
+    CourseService courseService;
 
     @RequestMapping(value = URL_GROUP_STUDENT)
     public String getStudentGroups(HttpServletRequest request, Principal principal, Model model) {
@@ -63,7 +74,7 @@ public class GroupController {
                 return TILES_VIEW_GROUP_STUDENT;
             }
         }
-        return ControllersUtil.URL_REDIRECT + ControllersUtil.URL_LOGIN;
+        return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
     }
 
     @RequestMapping(value = URL_GROUP_TEACHER)
@@ -74,10 +85,10 @@ public class GroupController {
         if (principal != null) {
             if (request.isUserInRole(Role.Secured.TEACHER)) {
                 // parse dates from form
-                Date from = ControllersUtil.dateProceed(dateFrom, formatterDate,
-                        TWO_MONTHS_IN_DAYS, FORWARD_TRUE);
-                Date till = ControllersUtil.dateProceed(dateTill, formatterDate,
-                        TWO_MONTHS_IN_DAYS, FORWARD_FALSE);
+                Date from = DateUtil.dateProceed(dateFrom, formatterDate, TWO_MONTHS_IN_DAYS,
+                        FORWARD_TRUE);
+                Date till = DateUtil.dateProceed(dateTill, formatterDate, TWO_MONTHS_IN_DAYS,
+                        FORWARD_FALSE);
                 if (from.after(till)) {
                     Date swap = from;
                     from = till;
@@ -91,7 +102,7 @@ public class GroupController {
                 return TILES_VIEW_GROUP_TEACHER;
             }
         }
-        return ControllersUtil.URL_REDIRECT + ControllersUtil.URL_LOGIN;
+        return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
     }
 
     @RequestMapping(value = URL_GROUP_HEADTEACHER)
@@ -107,7 +118,7 @@ public class GroupController {
                 return TILES_VIEW_GROUP_HEAD_TEACHER;
             }
         }
-        return ControllersUtil.URL_REDIRECT + ControllersUtil.URL_LOGIN;
+        return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
     }
 
     @RequestMapping(value = URL_AJAX_GET_TEACHERS)
@@ -121,6 +132,28 @@ public class GroupController {
         }
     }
 
+    @RequestMapping(value = URL_AJAX_GET_COURSES)
+    public @ResponseBody List<CourseDTO> getCoursesForYear(@RequestBody int year) {
+        return courseService.getCoursesForYear(year);
+    }
+
+    @RequestMapping(value = URL_AJAX_GET_ADITIONAL_YEAR)
+    public @ResponseBody List<Integer> getAddiitionGroupYear() {
+        Integer[] allYears = GroupServiceImpl.YEARS_OF_STUDY;
+        List<Integer> allAdditionYear = new ArrayList<Integer>();
+        for (Integer currentYear : allYears) {
+            if (courseService.getCoursesForYear(currentYear).size()>0){
+                allAdditionYear.add(currentYear);
+            }
+        }
+        return allAdditionYear;
+    }
+    @RequestMapping(value = URL_AJAX_GET_YEAR)
+    public @ResponseBody Integer[] getYear() {
+        return GroupServiceImpl.YEARS_OF_STUDY;
+    }
+    
+
     @RequestMapping(value = URL_MODAL_GROUP_ADD)
     public String addNewGroup(
             @RequestParam(value = JSP_INPUT_CREATE_GROUP_YEAR) String yearString,
@@ -130,24 +163,20 @@ public class GroupController {
             @RequestParam(value = JSP_INPUT_CREATE_GROUP_CHECKBOX, required = false) String branch,
             HttpServletRequest request, Principal principal) {
         if (principal == null || request.isUserInRole(Role.Secured.HEAD_TEACHER) != true) {
-            return ControllersUtil.URL_REDIRECT + ControllersUtil.URL_LOGIN;
+            return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
         }
-        Long courseId = null;
-        try {
-            courseId = Long.parseLong(courseIdStr);
-        } catch (NumberFormatException e) {
-            // can`t parse? no problems, continue
+        if (courseIdStr != null) {
+            groupService.createNewGroup(Byte.parseByte(yearString), symbolString,
+                    Long.parseLong(curatorIdString), Long.parseLong(courseIdStr), branch);
         }
-        groupService.createNewGroup(Byte.parseByte(yearString), symbolString,
-                Long.parseLong(curatorIdString), courseId, branch);
-        return ControllersUtil.URL_REDIRECT + URL_GROUP_HEADTEACHER;
+        return URLContainer.URL_REDIRECT + URL_GROUP_HEADTEACHER;
 
     }
 
     @RequestMapping(value = URL_MODEL_GROUP_REMOVE)
     public String removeGroups(HttpServletRequest request, Principal principal) {
         if (principal == null || request.isUserInRole(Role.Secured.HEAD_TEACHER) != true) {
-            return ControllersUtil.URL_REDIRECT + ControllersUtil.URL_LOGIN;
+            return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
         }
         String[] checkboxNamesList = request.getParameterValues(JSP_INPUT_CHECKBOX_ARRAY);
         if (checkboxNamesList != null) {
@@ -163,6 +192,6 @@ public class GroupController {
                 }
             }
         }
-        return ControllersUtil.URL_REDIRECT + URL_GROUP_HEADTEACHER;
+        return URLContainer.URL_REDIRECT + URL_GROUP_HEADTEACHER;
     }
 }

@@ -7,7 +7,7 @@
 
 .custom_table {
 	width: 700px;
-	left:0;
+	left: 0;
 	/*margin: auto;*/
 }
 
@@ -76,9 +76,18 @@ ul.pagination {
 	margin-right: auto;
 	margin-bottom: 30px;
 }
-thead {
+
+h3 {
+	margin-top: 0px;
+}
+
+/*Our pagination buttons style. Changed from bootstrap.*/
+.pagination>.active>a {
+	z-index: 2;
+	color: #fff;
+	cursor: default;
 	background-color: #d9edf7;
+	border-color: #ddd;
+	color: #428bca;
 }
-table{
-	margin-top: 10px;
-}
+/*---------------------------*/
