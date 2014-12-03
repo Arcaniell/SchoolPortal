@@ -234,6 +234,7 @@ body {
 /*Our default style for table*/
 .default_table {
 	margin-top: 10px;
+	margin-bottom: 0 !important;
 }
 
 .default_table thead {

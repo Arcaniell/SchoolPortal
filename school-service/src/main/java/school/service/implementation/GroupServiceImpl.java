@@ -9,6 +9,7 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ import school.model.Schedule;
 import school.model.Student;
 import school.model.Teacher;
 import school.service.GroupService;
+import school.service.utils.DateUtil;
 import school.model.Course;
 
 /**
@@ -40,6 +42,7 @@ import school.model.Course;
 
 @Service
 public class GroupServiceImpl implements GroupService {
+    Locale loc = null;
     public static final Integer[] YEARS_OF_STUDY = { 5, 6, 7, 8, 9, 10, 11 };
     private final SimpleDateFormat formatterDate = new SimpleDateFormat("MM/dd/yyyy");
     public static final String[] SYMBOLS_FOR_CLASS = { "A", "B", "C", "D", "E", "F", "G", "H", "I",
@@ -65,9 +68,7 @@ public class GroupServiceImpl implements GroupService {
         group.setNumber((byte) course.getGroupNumber());
         group.setStartDate(from);
         group.setEndDate(till);
-        groupDao.update(group);
-        //TODO:fix bug with multiply groups
-        group = groupDao.findByCourseId(course.getId());
+        group = groupDao.update(group);
         for (Student student : students) {
             List<Group> container = student.getAdditionGroups();
             container.add(group);
@@ -249,7 +250,8 @@ public class GroupServiceImpl implements GroupService {
 
     @Transactional
     @Override
-    public GroupEditHeaderDTO getGroupEditHeaderInfo(long id) {
+    public GroupEditHeaderDTO getGroupEditHeaderInfo(long id, Locale loc) {
+        this.loc = loc;
         Group group = groupDao.findById(id);
         if (group == null) {
             return null;
@@ -410,9 +412,13 @@ public class GroupServiceImpl implements GroupService {
             if (student.getUser() != null) {
                 curentStudentDTO.setName(student.getUser().getFirstName() + " "
                         + student.getUser().getLastName());
+
                 Calendar birthday = new GregorianCalendar();
                 birthday.setTime(student.getUser().getBirthday());
                 curentStudentDTO.setYear(birthday.get(Calendar.YEAR));
+                curentStudentDTO.setYearStr(DateUtil.getFormattedDate(student.getUser()
+                        .getBirthday(), DateUtil.MEDIUM, loc));
+
             }
             containerOfStudentDTO.add(curentStudentDTO);
         }

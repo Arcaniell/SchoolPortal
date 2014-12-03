@@ -44,7 +44,7 @@
 			<tr>
 				<th><input type="checkbox" id="select_for_remove"></th>
 				<th>Name</th>
-				<th>Approx year</th>
+				<th>Birthday</th>
 			</tr>
 		</thead>
 		<tbody class="group_stuff">
@@ -61,7 +61,7 @@
 			<tr>
 				<th><input type="checkbox" id="select_for_add"></th>
 				<th>Name</th>
-				<th>Approx year</th>
+				<th>Birthday</th>
 			</tr>
 		</thead>
 		<tbody class="other_stuff">
@@ -88,5 +88,5 @@
 <script src="<c:url value="/resources/js/utils/sortable.js" />"
 	type="text/javascript"></script>
 
-<script src="<c:url value="/resources/js/utils/pagination.js" />"
+<script src="<c:url value="/resources/js/utils/pagination-multiply.js" />"
 	type="text/javascript"></script>

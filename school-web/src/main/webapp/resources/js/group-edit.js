@@ -19,7 +19,7 @@ var fillTable = function(listOfRows, checkboxName) {
 		content += "<tr><td><input name=\"" + checkboxName
 				+ "\" type=\"checkbox\" value = " + listOfRows[i].id
 				+ "></td><td>" + listOfRows[i].name + "</td><td>"
-				+ listOfRows[i].year + "</td></tr>\n";
+				+ listOfRows[i].yearStr + "</td></tr>\n";
 	}
 	return content;
 };
