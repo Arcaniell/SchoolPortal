@@ -4,12 +4,10 @@
 <%@ page session="true"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
-<div class="profile_buttons">
+<div class="admin_buttons">
 	<table>
-	<tr><td><p id="profile_information">Information</p></td></tr>
-	<tr><td><p id="profile_options">Options</p></td></tr>
-	<tr><td><p id="profile_avatar">Avatar</p></td></tr>
-	<tr><td><p id="profile_requests">Requests</p></td></tr>
+	<tr><td><p id="admin_role_requests">Role requests</p></td></tr>
+	<tr><td><p id="admin_profile_edits">Profile edits</p></td></tr>
 	</table>
 
 

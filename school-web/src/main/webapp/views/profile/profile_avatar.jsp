@@ -13,7 +13,7 @@
 <form id="upload_image_form" action="profile/upload_avatar" method="post" enctype="multipart/form-data">
 <input type="file" name="file" accept="image/*" style="padding-left: 60px;"/>
 <br><br>
-<input type="button" class="btn btn-default uploadButton"
+<input type="button" class="btn btn-sample uploadButton"
 									value="Upload" />
 <input id="uploadButton" class = "hidden" type="submit"/>
 </form>
