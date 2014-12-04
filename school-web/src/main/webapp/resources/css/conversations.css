@@ -6,6 +6,13 @@
 	border-bottom: 1px solid #CCCCCC;
 }
 
+.selectCompose {
+	margin-bottom: 5px;
+	width: 150px;
+	left: 417px;
+	position: inherit;
+}
+
 .tablem tr:hover {
 	background: #f5f5f5;
 }
@@ -143,7 +150,21 @@ h1,.h1,h2,.h2,h3,.h3 {
 	margin-left: 2px;
 }
 
-#empty {
+.inboxEmpty {
+	margin: 5px;
+	color: #B7B7B7;
+	font-style: italic;
+}
+
+#inboxButton {
+	cursor: pointer;
+}
+
+#sentButton {
+	cursor: pointer;
+}
+
+.sentEmpty {
 	margin: 5px;
 	color: #B7B7B7;
 	font-style: italic;

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,8 +20,10 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import school.dto.message.EmailObjectDTO;
 import school.dto.message.MessageDto;
+import school.dto.message.MessageReceiverSelect;
 import school.dto.message.NewMessagesObjectDTO;
 import school.model.Conversation;
+import school.model.Group;
 import school.model.Message;
 import school.model.User;
 import school.service.ConversationService;
@@ -44,8 +47,8 @@ public class MessagesController {
 				.findConversations(userId, "inbox");
 		List<Conversation> conversationsS = conversationService
 				.findConversations(userId, "sent");
-		List<Message> messages = messagesService.findMessagesOfConversation(conversation,
-				userId);
+		List<Message> messages = messagesService.findMessagesOfConversation(
+				conversation, userId);
 		messagesService.markMessagesAsRead(messages, userId);
 		Locale loc = RequestContextUtils.getLocale(request);
 		List<MessageDto> messagesDto = messagesService.constructMessagesDto(
@@ -71,8 +74,8 @@ public class MessagesController {
 				.findConversations(userId, "inbox");
 		List<Conversation> conversationsS = conversationService
 				.findConversations(userId, "sent");
-		List<Message> messages = messagesService.findMessagesOfConversation(conversation,
-				userId);
+		List<Message> messages = messagesService.findMessagesOfConversation(
+				conversation, userId);
 		messagesService.markMessagesAsRead(messages, userId);
 		Locale loc = RequestContextUtils.getLocale(request);
 		List<MessageDto> messagesDto = messagesService.constructMessagesDto(
@@ -117,15 +120,28 @@ public class MessagesController {
 		return "redirect:/" + currentPage;
 	}
 
-	@RequestMapping(value = "/emailInput", method = RequestMethod.GET)
+	@RequestMapping(value = "/emailInput", method = RequestMethod.POST)
 	public @ResponseBody
 	List<EmailObjectDTO> getEmails(@RequestParam String tagName,
-			HttpServletRequest request) {
+			HttpServletRequest request, @RequestParam String emailOrGroup) {
 		boolean isParent = request.isUserInRole("ROLE_PARENT");
-		List<User> users = messagesService.simulateSearchResult(tagName,
-				isParent);
-													
-		return messagesService.contructEmailObjectDTO(users);
+		List<Object> usersOrGroups = messagesService.simulateSearchResult(tagName,
+				isParent, emailOrGroup);
+		
+		System.out.println(emailOrGroup);
+		System.out.println(emailOrGroup);
+		System.out.println(emailOrGroup);
+		System.out.println(emailOrGroup);
+		System.out.println(emailOrGroup);
+		System.out.println(emailOrGroup);
+		System.out.println(emailOrGroup);
+		System.out.println(emailOrGroup);
+		System.out.println(emailOrGroup);
+		System.out.println();
+		System.out.println();
+		System.out.println(tagName.contains("5"));
+		
+		return messagesService.contructEmailObjectDTO(usersOrGroups);
 	}
 
 	@RequestMapping(value = "/newMessages", method = RequestMethod.GET)

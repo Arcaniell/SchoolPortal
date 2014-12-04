@@ -8,6 +8,7 @@ import java.util.List;
 
 import school.dto.message.ConversationDate;
 import school.model.Conversation;
+import school.model.Group;
 import school.model.Message;
 import school.model.User;
 
@@ -114,5 +115,13 @@ public class ConversationUtils {
 			conversation.setDeletedSender(true);
 			conversation.setAnsweredSender(false);
 		}
+	}
+
+	public static boolean groupContainsLetter(Group g, String tagName) {
+		if (tagName.contains(Character.toString(g.getLetter()).toLowerCase())
+				|| tagName.contains(String.valueOf(g.getNumber()))) {
+			return true;
+		} else
+			return false;
 	}
 }

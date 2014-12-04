@@ -17,6 +17,7 @@
 			<h4>Position: ${profile.profileRole}</h4>
 			<h4>Birthday: 11.11.1111</h4>
 			<h4>Email: ${profile.profileEmail}</h4>
+			<input class="btn btn-sample" type="button" value="Write message" id="profile_message_button">
 		</td>
 	</tr>
 	<c:if test="${profile.family != null }">

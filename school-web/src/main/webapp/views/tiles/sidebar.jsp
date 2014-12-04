@@ -36,7 +36,7 @@
 			<li><a href="journal"><spring:message code="sidebar.journal" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_PARENT')">
-			<li><a class="sidebarMessage" href='<c:url value="/inbox"/>'><spring:message
+			<li><a class="sidebarMessage" href='<c:url value="/messages"/>'><spring:message
 						code="sidebar.message" /> </a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_STUDENT')">

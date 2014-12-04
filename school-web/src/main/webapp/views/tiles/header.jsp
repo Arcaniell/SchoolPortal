@@ -35,7 +35,7 @@
 
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_PARENT')">
 		<span class="counterPosition">
-			<a href='<c:url value="/inbox"/>'><img
+			<a href='<c:url value="/messages"/>'><img
 					class="newMessageImage"
 					src="<c:url value="/resources/img/envelopeW8.png" />" /> <span
 					id="newMessages" class="badgeMessage"></span></a>

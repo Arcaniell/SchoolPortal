@@ -24,5 +24,6 @@ $(document).ready(function() {
 	$(".profile_modal").css("cursor", "pointer");
 	$(".profile_modal").css("text-decoration", "underline");
 	$(".profile_modal").css("text-decoration-color", "blue");
+	$("#profile_message-button").hide();
 
 });

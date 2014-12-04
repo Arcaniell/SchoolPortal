@@ -10,12 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import school.dto.message.ConversationDto;
+import school.dto.message.MessageButton;
 import school.model.Conversation;
 import school.model.User;
 import school.service.ConversationService;
@@ -34,52 +37,49 @@ public class ConversationController {
 	@Autowired
 	public UserService userService;
 
-	@RequestMapping("inbox")
-	public String inbox(Model model, Principal principal,
+	@RequestMapping(value = "inboxOrSentButton", method = RequestMethod.POST)
+	public @ResponseBody
+	List<ConversationDto> buildConversations(
+			@RequestBody MessageButton messageButton, Principal principal,
 			HttpServletRequest request) {
+
 		long principalId = Long.valueOf(principal.getName());
-		List<Conversation> conversationsS = conversationService
-				.findConversations(principalId, "sent");
-		List<Conversation> conversationsI = conversationService
-				.findConversations(principalId, "inbox");
-		int sentSize = conversationsS.size();
-		List<ConversationDto> conversationsDto = new ArrayList<ConversationDto>();
-		if (conversationsI.size() > 0) {
-			Locale loc = RequestContextUtils.getLocale(request);
-			conversationsDto = conversationService
-					.constructConversationDto(conversationsI,
-							principalId, loc);
+		Locale loc = RequestContextUtils.getLocale(request);
+		
+		List<Conversation> conversations;
+		if(messageButton.getButton().equals("inbox")) {
+			conversations = conversationService
+					.findConversations(principalId, "inbox");
+		} else {
+			conversations = conversationService
+					.findConversations(principalId, "sent");
 		}
-		model.addAttribute("conversationsDto", conversationsDto);
-		model.addAttribute("sentSize", sentSize);
-		int newMessages = messagesService.countOfNewMessages(principalId);
-		request.getSession(false).setAttribute("newMessages", newMessages);
-		request.getSession(false).setAttribute("currentPage", "inbox");
-		return "inbox";
+		
+		List<ConversationDto> dtos = conversationService
+				.constructConversationDto(conversations, principalId, loc);
+
+		return dtos;
 	}
 
-	@RequestMapping("sent")
-	public String sent(Model model, Principal principal,
+	@RequestMapping("messages")
+	public String inbox(Model model, Principal principal,
 			HttpServletRequest request) {
+		
 		long principalId = Long.valueOf(principal.getName());
-		List<Conversation> conversationsS = conversationService
-				.findConversations(principalId, "sent");
+				
 		List<Conversation> conversationsI = conversationService
 				.findConversations(principalId, "inbox");
-		int inboxSize = conversationsI.size();
+				
 		List<ConversationDto> conversationsDto = new ArrayList<ConversationDto>();
-		if (conversationsS.size() > 0) {
+		
 			Locale loc = RequestContextUtils.getLocale(request);
-			conversationsDto = conversationService
-					.constructConversationDto(conversationsS, principalId,
-							loc);
-		}
+			conversationsDto = conversationService.constructConversationDto(
+					conversationsI, principalId, loc);
+		
 		model.addAttribute("conversationsDto", conversationsDto);
-		model.addAttribute("inboxSize", inboxSize);
-		int newMessages = messagesService.countOfNewMessages(principalId);
-		request.getSession(false).setAttribute("newMessages", newMessages);
-		request.getSession(false).setAttribute("currentPage", "sent");
-		return "sent";
+		
+		request.getSession(false).setAttribute("currentPage", "messages");
+		return "messages";
 	}
 
 	@RequestMapping(value = "delete-conversations", method = RequestMethod.POST)
@@ -105,8 +105,8 @@ public class ConversationController {
 
 		Long principalId = Long.valueOf(principal.getName());
 		String[] namesAndEmails = to.split(",");
-		
-		for(String s:namesAndEmails) {
+
+		for (String s : namesAndEmails) {
 			String email = s.split("-")[1].trim();
 			User receiver = userService.findByEmail(email);
 			Long receiverId = receiver.getId();
@@ -114,9 +114,30 @@ public class ConversationController {
 			conversationService.createConversation(subject, principalId,
 					receiverId, text);
 		}
-		
+
 		String currectPage = (String) request.getSession().getAttribute(
 				"currentPage");
 		return "redirect:/" + currectPage;
+	}
+	
+	@RequestMapping("message")
+	public String sent(Model model, Principal principal,
+			HttpServletRequest request) {
+		
+		long principalId = Long.valueOf(principal.getName());
+				
+		List<Conversation> conversationsI = conversationService
+				.findConversations(principalId, "sent");
+				
+		List<ConversationDto> conversationsDto = new ArrayList<ConversationDto>();
+		
+			Locale loc = RequestContextUtils.getLocale(request);
+			conversationsDto = conversationService.constructConversationDto(
+					conversationsI, principalId, loc);
+		
+		model.addAttribute("conversationsDto", conversationsDto);
+		
+		request.getSession(false).setAttribute("currentPage", "message");
+		return "message";
 	}
 }

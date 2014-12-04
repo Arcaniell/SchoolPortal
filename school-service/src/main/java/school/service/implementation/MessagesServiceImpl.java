@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import school.dao.ConversationDao;
+import school.dao.GroupDao;
 import school.dao.MessageDao;
 import school.dao.ParentDao;
 import school.dao.TeacherDao;
@@ -18,6 +19,7 @@ import school.dto.message.EmailObjectDTO;
 import school.dto.message.MessageDto;
 import school.dto.message.NewMessagesObjectDTO;
 import school.model.Conversation;
+import school.model.Group;
 import school.model.Message;
 import school.model.User;
 import school.service.ConversationService;
@@ -45,6 +47,9 @@ public class MessagesServiceImpl implements MessagesService {
 
 	@Autowired
 	private TeacherDao teacherDao;
+
+	@Autowired
+	private GroupDao groupDao;
 
 	@Transactional
 	@Override
@@ -98,8 +103,8 @@ public class MessagesServiceImpl implements MessagesService {
 					messages.get(i).getText());
 			if (messages.get(i).isFromSender()) {
 				dto.setUserId(senderId);
-			}
-		    else dto.setUserId(receiverId);
+			} else
+				dto.setUserId(receiverId);
 			dtos.add(dto);
 		}
 		return dtos;
@@ -173,31 +178,83 @@ public class MessagesServiceImpl implements MessagesService {
 
 	@Transactional
 	@Override
-	public List<User> simulateSearchResult(String tagName, boolean isParent) {
-		List<User> result = new ArrayList<User>();
+	public List<Object> simulateSearchResult(String tagName, boolean isParent,
+			String emailOrGroup) {
+
+		List<Object> usersOrGroups = new ArrayList<Object>();
 		if (isParent) {
-			List<User> teachers = teacherDao.findAllUsers();
-			for (User u : teachers) {
-				if (ConversationUtils.userContainsLetter(u, tagName)) result.add(u);
+			if (emailOrGroup.equals("Name or email")) {
+				List<User> teachers = teacherDao.findAllUsers();
+				for (User u : teachers) {
+					if (ConversationUtils.userContainsLetter(u, tagName))
+						usersOrGroups.add(u);
+				}
+			} else if (emailOrGroup.equals("Group")) {
+				List<Group> groups = groupDao.findAll();
+				for (Group g : groups) {
+					if (ConversationUtils.groupContainsLetter(g, tagName)) {
+						usersOrGroups.add(g);
+					}
+				}
 			}
+
 		} else {
-			List<User> parents = parentDao.findAllUsers();
-			for (User u : parents) {
-				if (ConversationUtils.userContainsLetter(u, tagName)) result.add(u);
+			if (emailOrGroup.equals("Name or email")) {
+				System.out.println(emailOrGroup + " Name or email");
+				System.out.println(emailOrGroup + " Name or email");
+				System.out.println(emailOrGroup + " Name or email");
+				System.out.println(emailOrGroup + " Name or email");
+				System.out.println(emailOrGroup + " Name or email");
+				List<User> parents = parentDao.findAllUsers();
+				for (User u : parents) {
+					if (ConversationUtils.userContainsLetter(u, tagName))
+						usersOrGroups.add(u);
+				}
+			} else {
+				System.out.println(emailOrGroup + " Group");
+				System.out.println(emailOrGroup + " Group");
+				System.out.println(emailOrGroup + " Group");
+				System.out.println(emailOrGroup + " Group");
+				System.out.println(emailOrGroup + " Group");
+				System.out.println();
+				List<Group> groups = groupDao.findAll();
+				
+				for(Group g:groups) {
+					System.out.println(g.getNumber() + " - " + g.getLetter());
+				}
+				System.out.println();
+				System.out.println(tagName.contains(String.valueOf(groups.get(0).getNumber())));
+				for (Group g : groups) {
+					if (ConversationUtils.groupContainsLetter(g, tagName)) {
+						System.out.println(g.getNumber());
+						usersOrGroups.add(g);
+					}
+				}
 			}
 		}
-		return result;
+		return usersOrGroups;
 	}
 
 	@Override
-	public List<EmailObjectDTO> contructEmailObjectDTO(List<User> users) {
+	public List<EmailObjectDTO> contructEmailObjectDTO(List<Object> usersOrGroups) {
 		List<EmailObjectDTO> emailObjectDTOs = new ArrayList<EmailObjectDTO>();
 		int id = 1;
-		for (User u : users) {
-			emailObjectDTOs.add(new EmailObjectDTO(u.getFirstName() + " "
-					+ u.getLastName() + " - " + u.getEmail(), id));
-			id++;
+		if(usersOrGroups.size() > 0) {
+			if(usersOrGroups.get(0) instanceof User) {
+				for (Object u : usersOrGroups) {
+					emailObjectDTOs.add(new EmailObjectDTO(((User) u).getFirstName() + " "
+							+ ((User) u).getLastName() + " - " + ((User) u).getEmail(), id));
+					id++;
+				}
+			} else if(usersOrGroups.get(0) instanceof Group) {
+				for (Object g : usersOrGroups) {
+					emailObjectDTOs.add(new EmailObjectDTO(((Group) g).getNumber() + " - "
+							+ ((Group) g).getLetter(), id));
+					id++;
+				}
+			}
 		}
+		
 		return emailObjectDTOs;
 	}
 
