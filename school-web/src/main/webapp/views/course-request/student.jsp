@@ -7,6 +7,8 @@
 	rel="stylesheet">
 <link href="<c:url value="/resources/css/bootstrap-select.min.css" />"
 	rel="stylesheet">
+<link href="<c:url value="/resources/css/sortable-theme-minimal.css" />"
+	rel="stylesheet">
 <div class="text">
 	<!-- COURSE REQUEST MODAL -->
 	<div class="modal fade course_request_modal" tabindex="-1"
@@ -25,17 +27,16 @@
 						<p>
 							<spring:message code="course.request.student.msg" />
 						</p>
-						<select name="courseId" class="selectpicker">
+						<select name="courseId" class="form-control">
 							<c:forEach items="${haveCourses}" var="crs">
 								<option value="${crs.id}">${crs.courseName}</option>
 							</c:forEach>
 						</select>
-					</div>
-					<div class="modal-footer">
-						<button name="courserequest" type="submit" class="btn btn-default">
+						<button name="courserequest" type="submit" class="btn btn-sample">
 							<spring:message code="course.request.btn.request.for.new" />
 						</button>
 					</div>
+
 				</form>
 			</div>
 		</div>
@@ -54,34 +55,37 @@
 							<spring:message code="course.request.delete.msg" />
 						</h3>
 					</div>
-					<div class="modal-body">
-						<p>
-							<button name="yes" type="submit" class="btn btn-default">
-								<spring:message code="course.request.btn.yes" />
-							</button>
-							<button name="no" type="button" data-dismiss="modal"
-								class="btn btn-default">
-								<spring:message code="course.request.btn.no" />
-							</button>
-						</p>
+					<div class="modal-body button_body">
+						<button name="yes" type="submit" class="btn btn-info">
+							<spring:message code="course.request.btn.yes" />
+						</button>
+						<button name="no" type="button" data-dismiss="modal"
+							class="btn btn-sample">
+							<spring:message code="course.request.btn.no" />
+						</button>
 					</div>
 				</div>
 			</div>
 		</div>
 		<!-- COURSE DELETE MODAL -->
+		<h3>All student course requests</h3>
 		<p>
-			<button type="button" class="btn btn-default" data-toggle="modal"
-				data-target=".course_request_modal">
-				<spring:message code="course.request.btn.request.new" />
-			</button>
+			<c:if test="${fn:length(haveCourses) > 0}">
+				<button type="button" class="btn btn-sample" data-toggle="modal"
+					data-target=".course_request_modal">
+					<spring:message code="course.request.btn.request.new" />
+				</button>
+			</c:if>
 			<c:if test="${fn:length(courseList) > 0}">
-				<button type="button" class="btn btn-default" data-toggle="modal"
-					data-target=".course_delete_modal">
+				<button type="button" class="btn btn-sample remove_button"
+					data-toggle="modal" data-target=".course_delete_modal">
 					<spring:message code="course.request.btn.delete.request" />
 				</button>
 			</c:if>
 		</p>
-		<table class="table table-hover">
+		<table
+			class="table table-hover default_table sortable-theme-bootstrap"
+			data-sortable>
 			<thead>
 				<tr>
 					<th><input value="justSomeLongMockValueForFormProcessing"
@@ -107,12 +111,11 @@
 		</table>
 	</form>
 </div>
-<script src="<c:url value="https://code.jquery.com/jquery-1.10.2.js" />">
-	
-</script>
 <script
 	src="<c:url value="https://code.jquery.com/ui/1.11.2/jquery-ui.js" />"></script>
 <script src="<c:url value="/resources/js/course-request.js" />"
 	type="text/javascript"></script>
 <script src="<c:url value="/resources/js/bootstrap-select.min.js" />"
+	type="text/javascript"></script>
+<script src="<c:url value="/resources/js/utils/sortable.js" />"
 	type="text/javascript"></script>

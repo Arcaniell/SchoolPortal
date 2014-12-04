@@ -4,7 +4,6 @@ var yearSelect = [];
 $(function() {
 	// getYears("getAdditionYearsSelect");
 	// getYears("getYearsSelect");
-	checkboxCounter();
 	var year = $("select[name='year_value']").val();
 	renewCourseSelect(year);
 	$("select[name='year_value']").change(function() {

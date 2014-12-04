@@ -61,7 +61,7 @@
 								Additional course </input></td>
 						</tr>
 					</table>
-					<button type="submit" class="btn btn-sample">Create</button>
+					<button type="submit" class="btn btn-info">Create</button>
 				</div>
 			</form>
 		</div>
@@ -83,7 +83,7 @@
 					</h3>
 				</div>
 				<div class="modal-body button_body">
-					<button name="yes" type="submit" class="btn btn-danger">
+					<button name="yes" type="submit" class="btn btn-info">
 						<spring:message code="course.request.btn.yes" />
 					</button>
 					<button name="no" type="button" data-dismiss="modal"

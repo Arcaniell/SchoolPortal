@@ -29,7 +29,7 @@
 		<td><input name="dateTill" type="text" class="datepicker"></td>
 		<td></td>
 		<td>
-			<button type="button" class="btn btn-sample main_submit">Submit</button>
+			<button type="button" class="btn btn-info main_submit">Submit</button>
 		</td>
 	</tr>
 </table>
