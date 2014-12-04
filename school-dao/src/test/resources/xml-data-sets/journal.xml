@@ -20,7 +20,7 @@
 		lastName="Petrovsky" password="password" registration="2013-10-20 23:09:10"
 		sex="0"  confirmed="0"/>
 	<COURSE id="1" courseName="Math" groupNumber="5" additional="0"
-		coeficient="1" price="10" />
+		coeficient="1" price="10"  archive="FALSE"/>
 
 	<STUDENT id="1" userId="1" isActive="0" />
 	<STUDENT id="2" userId="2" isActive="0" />

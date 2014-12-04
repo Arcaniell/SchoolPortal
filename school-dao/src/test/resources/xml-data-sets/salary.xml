@@ -22,9 +22,9 @@
 		startDate="2010-09-01 08:30:00" teacherId="2" endDate="2020-05-31 10:30:00" />
 
 	<COURSE id="1" additional="0" coeficient="75" courseName="Math"
-		groupNumber="5" price="0" />
+		groupNumber="5" price="0"  archive="FALSE"/>
 	<COURSE id="2" additional="0" coeficient="75" courseName="English"
-		groupNumber="5" price="0" />
+		groupNumber="5" price="0"  archive="FALSE"/>
 
 	<SCHEDULE id="1" date="2014-10-23 08:08:10" groupId="1"
 		lessonId="1" teacherId="1" courseId="1" roomId="1" />
