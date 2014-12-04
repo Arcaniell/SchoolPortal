@@ -128,4 +128,18 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule, Long> implements
 			return null;
 		}
 	}
+
+	@Transactional
+	public Schedule findByTeacherDateLesson(long teacherId, Date date,
+			long lessonId) {
+		try {
+			return (Schedule) entityManager
+					.createNamedQuery(Schedule.FIND_BY_TEACHER_DATE_LESSON)
+					.setParameter("teacherId", teacherId)
+					.setParameter("date", date)
+					.setParameter("lessonId", lessonId).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 }

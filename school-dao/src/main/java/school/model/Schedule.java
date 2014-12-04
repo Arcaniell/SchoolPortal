@@ -26,7 +26,8 @@ import javax.persistence.Table;
 		@NamedQuery(name = Schedule.FIND_BY_TEACHER_INTERVAL, query = Schedule.FIND_BY_TEACHER_INTERVAL_QUERY),
 		@NamedQuery(name = Schedule.FIND_BY_ROOM_INTERVAL, query = Schedule.FIND_BY_ROOM_INTERVAL_QUERY),
 		@NamedQuery(name = Schedule.FIND_BY_GROUP_INTERVAL, query = Schedule.FIND_BY_GROUP_INTERVAL_QUERY),
-		@NamedQuery(name = Schedule.FIND_BY_GROUP_COURSE_INTERVAL, query = Schedule.FIND_BY_GROUP_COURSE_INTERVAL_QUERY), })
+		@NamedQuery(name = Schedule.FIND_BY_GROUP_COURSE_INTERVAL, query = Schedule.FIND_BY_GROUP_COURSE_INTERVAL_QUERY),
+		@NamedQuery(name = Schedule.FIND_BY_TEACHER_DATE_LESSON, query = Schedule.FIND_BY_TEACHER_DATE_LESSON_QUERY),})
 public class Schedule implements Comparable<Schedule> {
 
 	public static final String FIND_BY_DATES = "Schedule.findByDates";
@@ -35,6 +36,10 @@ public class Schedule implements Comparable<Schedule> {
 	public static final String FIND_BY_GROUP_COURSE_INTERVAL = "Schedule.findByGroupCourseInterval";
 	public static final String FIND_BY_GROUP_COURSE_INTERVAL_QUERY = "SELECT sch FROM Schedule sch WHERE sch.group.id = :groupId AND sch.course.courseName = :courseName AND sch.date BETWEEN :from AND :till";
 
+	public static final String FIND_BY_TEACHER_DATE_LESSON = "Schedule.findByTeacherDateLesson";
+	public static final String FIND_BY_TEACHER_DATE_LESSON_QUERY = "SELECT sch FROM Schedule sch WHERE sch.teacher.id = :teacherId AND sch.date = :date AND sch.lesson.id = :lessonId";
+
+	
 	public static final String FIND_BY_GROUP = "Schedule.findByGroup";
 	public static final String FIND_BY_GROUP_QUERY = "SELECT sch FROM Schedule sch WHERE sch.group = :group";
 

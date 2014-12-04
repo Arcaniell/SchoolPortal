@@ -78,7 +78,7 @@
 
 	setInterval(function() {
 		poll();
-	}, 2000);
+	}, 20000000);
 
 })();
 </script>

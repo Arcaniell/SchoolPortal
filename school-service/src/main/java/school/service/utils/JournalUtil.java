@@ -54,6 +54,21 @@ public class JournalUtil extends SchoolUtil {
 		}
 
 		return week;
-
 	}
+
+	public static long getClosestValue(long currentNumber, List<Long> numbers) {
+
+		long distance = Math.abs(numbers.get(0) - currentNumber);
+		int idx = 0;
+		for (int c = 1; c < numbers.size(); c++) {
+			long cdistance = Math.abs(numbers.get(c) - currentNumber);
+			if (cdistance < distance) {
+				idx = c;
+				distance = cdistance;
+			}
+		}
+
+		return numbers.get(idx);
+	}
+
 }

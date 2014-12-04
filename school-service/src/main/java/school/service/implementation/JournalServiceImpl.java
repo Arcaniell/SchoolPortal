@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -17,19 +18,23 @@ import org.springframework.transaction.annotation.Transactional;
 
 import school.dao.EventDao;
 import school.dao.GroupDao;
+import school.dao.HomeTaskDao;
 import school.dao.JournalDao;
 import school.dao.ScheduleDao;
 import school.dao.StudentDao;
 import school.dao.TeacherDao;
 import school.dao.UserDao;
-import school.dto.EventDTO;
-import school.dto.journal.AddMarkDTO;
+import school.dto.journal.EditMarkDTO;
+import school.dto.journal.EditDateDTO;
+import school.dto.journal.JournalSearch;
 import school.dto.journal.Mark2DTO;
 import school.dto.journal.JournalStaffDTO;
 import school.dto.journal.StudentWithMarksDTO;
 import school.model.Event;
 import school.model.Group;
+import school.model.HomeTask;
 import school.model.Journal;
+import school.model.Lesson;
 import school.model.Role;
 import school.model.Schedule;
 import school.model.Student;
@@ -55,6 +60,8 @@ public class JournalServiceImpl implements JournalService {
 	private StudentDao studentDao;
 	@Inject
 	private EventDao eventDao;
+	@Inject
+	private HomeTaskDao homeTaskDao;
 
 	@Secured(Role.Secured.TEACHER)
 	@Transactional
@@ -64,88 +71,103 @@ public class JournalServiceImpl implements JournalService {
 		Teacher teacher = teacherDao.findByUserId(userId);
 		List<Schedule> schedules = scheduleDao.findByTeacher(teacher);
 
-		Set<Group> groups = new TreeSet<Group>();
 		Set<String> courses = new TreeSet<String>();
+		Set<Byte> groupNumbers = new TreeSet<Byte>();
+		Set<Character> groupLetters = new TreeSet<Character>();
 
 		for (Schedule schedule : schedules) {
-			groups.add(schedule.getGroup());
+			groupNumbers.add(schedule.getGroup().getNumber());
+			groupLetters.add(schedule.getGroup().getLetter());
 			courses.add(schedule.getCourse().getCourseName());
 		}
 
-		return new JournalStaffDTO(teacher.getId(), getWholeUserName(userId),
-				groups, courses);
+		return new JournalStaffDTO(userId, getWholeUserName(userId),
+				groupNumbers, groupLetters, courses);
 	}
 
 	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
 			Role.Secured.DIRECTOR, Role.Secured.ADMIN })
 	@Transactional
-	public List<StudentWithMarksDTO> getMarksOfGroup(String quarter,
-			String groupNumber, String groupLetter, String courseName)
+	public List<StudentWithMarksDTO> getMarksOfGroup(JournalSearch search)
 			throws ParseException {
 
-		Group group = groupDao.findByNumberAndLetter(
-				Byte.parseByte(groupNumber), groupLetter.charAt(0));
-		Date from = getDatesByQuarter(quarter)[JournalUtil.FIRST_DATE_OF_QUARTER];
-		Date to = getDatesByQuarter(quarter)[JournalUtil.LAST_DATE_OF_QUARTER];
+		Group group = groupDao.findByNumberAndLetter(search.getGroupNumber(),
+				search.getGroupLetter());
+		Date from = getDatesByQuarter(search.getQuarter())[JournalUtil.FIRST_DATE_OF_QUARTER];
+		Date to = getDatesByQuarter(search.getQuarter())[JournalUtil.LAST_DATE_OF_QUARTER];
 
 		List<Schedule> schedules = scheduleDao.findByGroupCourseInterval(
-				group.getId(), courseName, from, to);
+				group.getId(), search.getSubject(), from, to);
 		Collections.sort(schedules);
-		List<StudentWithMarksDTO> studentsWithMarks = new ArrayList<StudentWithMarksDTO>();
-		Set<Mark2DTO> marks = new TreeSet<Mark2DTO>();
+		List<StudentWithMarksDTO> studentsWithMarks = new ArrayList<>();
+		Set<Mark2DTO> marks = new HashSet<>();
 
-		int countId = 0;
 		for (Student student : group.getStudent()) {
 			marks = new TreeSet<Mark2DTO>();
 			for (Schedule schedule : schedules) {
-				countId++;
+				
 				Journal journal = journalDao.findByStudentAndSchedule(
 						student.getId(), schedule.getId());
+				
+				Event event = eventDao.findEventBySchedule(schedule.getId());
+				
 				if (journal != null) {
-					marks.add(new Mark2DTO(countId, schedule.getId(), schedule
-							.getDate(), journal.getMark(), journal
-							.getCoefficient()));
+					marks.add(new Mark2DTO(schedule.getId(),
+							schedule.getDate(), journal.getMark(), journal
+									.getCoefficient()));
 				} else if (journal == null) {
-					marks.add(new Mark2DTO(countId, schedule.getId(), schedule
-							.getDate()));
+					marks.add(new Mark2DTO(schedule.getId(),
+							schedule.getDate(), event.getType()));
 				}
 			}
 			studentsWithMarks.add(new StudentWithMarksDTO(student.getId(),
-					getWholeUserName(student.getUser().getId()), group, marks));
+					getWholeUserName(student.getUser().getId()), new Date(),
+					marks));
 		}
 		Collections.sort(studentsWithMarks);
 		return studentsWithMarks;
 	}
 
 	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER })
-	public void addMark(AddMarkDTO addMarkDTO) throws ParseException {
+	public void editMark(EditMarkDTO editMarkDTO) throws ParseException {
 
-		String[] studentAndSchedule = addMarkDTO.getStudentAndSchedule().split(
-				"j");
+		String[] studentAndSchedule = editMarkDTO.getStudentAndSchedule()
+				.split("j");
 
 		Student student = studentDao.findById(Long
 				.parseLong(studentAndSchedule[0]));
 		Schedule schedule = scheduleDao.findById(Long
 				.parseLong(studentAndSchedule[1]));
-		Event event = eventDao.findEventBySchedule(schedule.getId());
-		byte coefficient = 0;
 
-		if (event == null) {
-			coefficient = 1;
+		if (editMarkDTO.getMark() == 0) {
+			journalDao.remove(journalDao.findByStudentAndSchedule(
+					student.getId(), schedule.getId()));
 		} else {
-			coefficient = event.getType();
+			Event event = eventDao.findEventBySchedule(schedule.getId());
+			byte coefficient = 0;
+			if (event == null) {
+				coefficient = 1;
+			} else {
+				coefficient = event.getType();
+			}
+			journalDao.save(new Journal(student, schedule, editMarkDTO
+					.getMark(), coefficient, schedule.getDate()));
 		}
 
-		journalDao.save(new Journal(student, schedule, addMarkDTO.getMark(),
-				coefficient, schedule.getDate()));
 	}
 
 	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
 			Role.Secured.DIRECTOR })
-	public void addEvent(EventDTO event) {
+	public void editDate(EditDateDTO editedDateDTO) {
 
-		eventDao.save(new Event(scheduleDao.findById(event.getScheduleId()),
-				event.getType(), event.getDescription()));
+		Schedule schedule = scheduleDao.findById(editedDateDTO.getScheduleId());
+
+		eventDao.save(new Event(schedule, editedDateDTO.getEventType(),
+				editedDateDTO.getEventDescription()));
+
+		homeTaskDao.save(new HomeTask(schedule.getGroup(), editedDateDTO
+				.getHomeTask(), schedule));
+
 	}
 
 	public JournalStaffDTO seniorStaffInfo(String id) {
@@ -194,6 +216,59 @@ public class JournalServiceImpl implements JournalService {
 			}
 		}
 		return groupLetters;
+	}
+
+	public JournalSearch getDeafaultData(String id, Date currentDate)
+			throws ParseException {
+
+		long userId = Long.parseLong(id);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd:MM:yyyy");
+		Teacher teacher = teacherDao.findByUserId(userId);
+		String quarter = getQuarterByDate(currentDate);
+		Date from = getDatesByQuarter(quarter)[JournalUtil.FIRST_DATE_OF_QUARTER];
+		Date to = getDatesByQuarter(quarter)[JournalUtil.LAST_DATE_OF_QUARTER];
+		List<Long> datesValues = new ArrayList<Long>();
+
+		for (Schedule schedule : scheduleDao.findByTeacherInterval(
+				teacher.getId(), from, to)) {
+			datesValues.add(schedule.getDate().getTime());
+		}
+
+		Date closestDate = new Date(JournalUtil.getClosestValue(
+				currentDate.getTime(), datesValues));
+
+		List<Lesson> lessons = new ArrayList<>();
+
+		for (Schedule schedule : scheduleDao.findByTeacherInterval(
+				teacher.getId(),
+				dateFormat.parse(dateFormat.format(closestDate)),
+				dateFormat.parse(dateFormat.format(closestDate)))) {
+			lessons.add(schedule.getLesson());
+		}
+
+		Schedule schedule = scheduleDao.findByTeacherDateLesson(
+				teacher.getId(), closestDate,
+				getClosestLesson(currentDate, lessons));
+
+		return new JournalSearch(schedule.getCourse().getCourseName(), schedule
+				.getGroup().getNumber(), schedule.getGroup().getLetter(),
+				quarter);
+
+	}
+
+	private long getClosestLesson(Date date, List<Lesson> lessons)
+			throws ParseException {
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+
+		List<Long> lessonsValues = new ArrayList<Long>();
+		for (Lesson lesson : lessons) {
+			lessonsValues.add(lesson.getLesId());
+		}
+
+		return JournalUtil.getClosestValue(
+				dateFormat.parse(dateFormat.format(date)).getTime(),
+				lessonsValues);
 	}
 
 	private String getWholeUserName(long userId) {
