@@ -35,7 +35,7 @@
 				value="false" />
 			<!-- default property -->
 			<property name="hibernate.connection.username" value="root" />
-			<property name="hibernate.connection.password" value="1234" />
+			<property name="hibernate.connection.password" value="root" />
 
 			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/SchoolDB" />
 			<!-- openshift property -->
