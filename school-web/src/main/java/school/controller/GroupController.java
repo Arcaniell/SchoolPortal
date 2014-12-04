@@ -2,6 +2,7 @@ package school.controller;
 
 import java.security.Principal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import school.dto.TeacherDTO;
 import school.model.Role;
 import school.service.CourseService;
 import school.service.GroupService;
+import school.service.implementation.GroupServiceImpl;
 import school.service.utils.DateUtil;
 
 @Controller
@@ -31,6 +33,8 @@ public class GroupController {
     private final String URL_GROUP_STUDENT = "student-groups";
     private final String URL_GROUP_TEACHER = "teacher-groups";
     private final String URL_GROUP_HEADTEACHER = "headteacher-groups";
+    private final String URL_AJAX_GET_YEAR = "getYearsSelect";
+    private final String URL_AJAX_GET_ADITIONAL_YEAR = "getAdditionYearsSelect";
     private final String URL_AJAX_GET_COURSES = "getCoursesSelect";
     private final String URL_AJAX_GET_TEACHERS = "/getTeacherSelect";
     private final String URL_MODAL_GROUP_ADD = "group-create";
@@ -132,6 +136,23 @@ public class GroupController {
     public @ResponseBody List<CourseDTO> getCoursesForYear(@RequestBody int year) {
         return courseService.getCoursesForYear(year);
     }
+
+    @RequestMapping(value = URL_AJAX_GET_ADITIONAL_YEAR)
+    public @ResponseBody List<Integer> getAddiitionGroupYear() {
+        Integer[] allYears = GroupServiceImpl.YEARS_OF_STUDY;
+        List<Integer> allAdditionYear = new ArrayList<Integer>();
+        for (Integer currentYear : allYears) {
+            if (courseService.getCoursesForYear(currentYear).size()>0){
+                allAdditionYear.add(currentYear);
+            }
+        }
+        return allAdditionYear;
+    }
+    @RequestMapping(value = URL_AJAX_GET_YEAR)
+    public @ResponseBody Integer[] getYear() {
+        return GroupServiceImpl.YEARS_OF_STUDY;
+    }
+    
 
     @RequestMapping(value = URL_MODAL_GROUP_ADD)
     public String addNewGroup(

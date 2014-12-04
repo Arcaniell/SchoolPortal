@@ -18,7 +18,7 @@
 			</button>
 		</p>
 	</form>
-	<table class="table table-hover">
+	<table class="table table-hover default_table">
 		<thead>
 			<tr>
 				<th><spring:message code="groups.table.name" /></th>

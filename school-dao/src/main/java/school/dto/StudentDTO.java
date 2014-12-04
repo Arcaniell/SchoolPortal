@@ -4,6 +4,7 @@ public class StudentDTO {
     private long id;
     private String name;
     private int year;
+    private String yearStr;
 
     public long getId() {
         return id;
@@ -29,6 +30,14 @@ public class StudentDTO {
         this.year = year;
     }
 
+    public String getYearStr() {
+        return yearStr;
+    }
+
+    public void setYearStr(String yearStr) {
+        this.yearStr = yearStr;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -36,6 +45,7 @@ public class StudentDTO {
         result = prime * result + (int) (id ^ (id >>> 32));
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + year;
+        result = prime * result + ((yearStr == null) ? 0 : yearStr.hashCode());
         return result;
     }
 
@@ -57,7 +67,13 @@ public class StudentDTO {
             return false;
         if (year != other.year)
             return false;
+        if (yearStr == null) {
+            if (other.yearStr != null)
+                return false;
+        } else if (!yearStr.equals(other.yearStr))
+            return false;
         return true;
     }
+
 
 }

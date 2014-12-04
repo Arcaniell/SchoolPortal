@@ -176,7 +176,7 @@
 					<div align="center">
 						<table>
 							<tr>
-								<td><input type="button" class="btn btn-default"
+								<td><input type="button" class="btn btn-sample"
 									id="signup_button"
 									value="<spring:message code="label.signup"/>" /> <input
 									type="button" class="hidden_error" id="signUpSuccesButton"
