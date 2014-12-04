@@ -84,14 +84,21 @@ public class ConversationServiceImpl implements ConversationService {
 		List<String> names = getNames(conversations);
 		/* Construct dtos */
 		List<ConversationDto> dtos = new ArrayList<ConversationDto>();
+		String inboxCount = String.valueOf(findConversations(id, "inbox")
+				.size());
+		String sentCount = String.valueOf(findConversations(id, "sent")
+				.size());
 		for (int i = 0; i < conversations.size(); i++) {
 			ConversationDto dto = new ConversationDto(names.get(i),
 					conversations.get(i).getSubject(),
 					DateUtil.getFormattedDate(dates.get(i), DateUtil.MEDIUM,
 							loc), String.valueOf(conversations.get(i).getId()),
-					hasNewMessages(conversations.get(i), id));
+					hasNewMessages(conversations.get(i), id), inboxCount,
+					sentCount);
+
 			dtos.add(dto);
 		}
+		if(conversations.size() == 0) dtos.add(new ConversationDto(inboxCount, sentCount));
 		return dtos;
 	}
 

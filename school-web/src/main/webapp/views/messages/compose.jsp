@@ -59,6 +59,8 @@
 	);
 </script>
 
+
+
 <!-- Modal -->
 <div class="modal fade" id="composeModal" tabindex="-1" role="dialog"
 	aria-labelledby="composeModalLabel" aria-hidden="true">
@@ -72,8 +74,29 @@
 					<spring:message code="conversation.composeMessage" />
 				</h4>
 			</div>
-			<div class="modal-body">
 
+			<div class="modal-body">
+					<!-- <p style="float: left;">Select by:</p> -->
+					<select id="mySelectBox" class="selectCompose form-control">
+						<option>Name or email</option>
+						<option>Group</option>
+					</select>
+
+<!-- 				<script>
+					$("#mySelectBox")
+							.change(
+									function() {
+										$("select option:selected")
+												.each(
+														function() {
+															alert($(
+																	'#mySelectBox option')
+																	.filter(
+																			':selected')
+																	.text());
+														});
+									}).trigger("change");
+				</script> -->
 				<form action="${pageContext.request.contextPath}/compose"
 					name="composeTable" class="form-horizontal" method="post"
 					role="form" id="composeForm">

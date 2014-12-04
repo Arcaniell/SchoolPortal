@@ -13,14 +13,15 @@
 
 <script src="<c:url value="/resources/js/jquery.autosize.js" />"></script>
 <script src="<c:url value="/resources/js/jquery.tokeninput.js" />"></script>
-<script src="<c:url value="/resources/js/jquery.validate.js" />"></script>
+
 
 <ul class="nav nav-tabs">
-	<li class="active"><a href='<c:url value="inbox"/>'><spring:message
-				code="conversation.inbox" /><span class="badge">${conversationsDto.size()}</span>
+	<li class="active" id="inboxButton"><a><spring:message
+				code="conversation.inbox" /><span id="inboxCount" class="badge">${conversationsDto[0].inboxCount}</span>
 	</a></li>
-	<li><a href='<c:url value="sent"/>'><spring:message
-				code="conversation.sent" /><span class="badge">${sentSize}</span> </a></li>
+	<li id="sentButton"><a><spring:message
+				code="conversation.sent" /><span id="sentCount" class="badge">${conversationsDto[0].sentCount}</span>
+	</a></li>
 	<li id="compose">
 		<button type="button" class="btn btn-success" data-toggle="modal"
 			data-target="#composeModal">
@@ -35,11 +36,12 @@
 		</button>
 	</li>
 </ul>
-<table class="table table-hover">
-	<tbody>
-		<c:choose>
-			<c:when test="${conversationsDto.size() > 0}">
-				<form id="cForm" action="delete-conversations" method="post">
+<form id="cForm" action="delete-conversations" method="post">
+	<table class="table table-hover" id="conversationTable" style="display: ;">
+		<tbody id="conversationBody">
+			<c:choose>
+				<c:when test="${conversationsDto[0].inboxCount != 0}">
+
 					<c:forEach items="${conversationsDto}" var="conversation"
 						varStatus="status">
 						<tr>
@@ -56,13 +58,22 @@
 								href='<c:url value="/inbox/${conversation.id}"/>'>${conversation.date}</a></td>
 						</tr>
 					</c:forEach>
-				</form>
-			</c:when>
-			<c:otherwise>
-				<p id="empty">
-					<spring:message code="conversation.noInboxMessages" />
-				</p>
-			</c:otherwise>
-		</c:choose>
-	</tbody>
-</table>
+
+				</c:when>
+				<c:otherwise>
+					<p id="inboxEmptyDefault" class="inboxEmpty" style="display:;">
+						<spring:message code="conversation.noInboxMessages" />
+					</p>
+				</c:otherwise>
+			</c:choose>
+		</tbody>
+	</table>
+	<p id="inboxEmpty" class="inboxEmpty" style="display: none;">
+		<spring:message code="conversation.noInboxMessages" />
+	</p>
+	<p id="sentEmpty" class="sentEmpty" style="display: none;">
+		<spring:message code="conversation.noSentMessages" />
+	</p>
+</form>
+
+<script src="<c:url value="/resources/js/messages.js" />"></script>

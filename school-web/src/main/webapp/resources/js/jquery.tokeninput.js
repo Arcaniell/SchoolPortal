@@ -12,7 +12,7 @@
 	// Default settings
 	var DEFAULT_SETTINGS = {
 		// Search settings
-		method : "GET",
+		method : "POST",
 		contentType : "json",
 		queryParam : "q",
 		searchDelay : 300,
@@ -801,6 +801,12 @@
 					var url = computeURL();
 					// Extract exisiting get params
 					var ajax_params = {};
+					
+					/*var stringSelect = $('#mySelectBox').val();
+					var json = {
+							"emailOrGroup" : "GROUP"
+					};
+					ajax_params.data = JSON.stringify(json);*/
 					ajax_params.data = {};
 					if (url.indexOf("?") > -1) {
 						var parts = url.split("?");
@@ -817,6 +823,8 @@
 
 					// Prepare the request
 					ajax_params.data[settings.queryParam] = query;
+					var stringSelect = $('#mySelectBox').val();
+					ajax_params.data["emailOrGroup"] = stringSelect;
 					ajax_params.type = settings.method;
 					ajax_params.dataType = settings.contentType;
 					if (settings.crossDomain) {

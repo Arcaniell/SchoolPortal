@@ -66,11 +66,43 @@
 		});
 	});
 </script>
+<script>
+	$(document).ready(function() {
+
+		$(".panel-title").click(function() {
+			var id = $(this).attr("id");
+			$.ajax({
+				type : "GET",
+				url : "../profile/information",
+				data : "id=" + id,
+				headers : {
+					Accept : "text/plain; charset=utf-8",
+					"Content-Type" : "text/plain; charset=utf-8"
+				},
+				async : false,
+				success : function(response) {
+					$("#profile_modal_content").html(response);
+					$("#profileModalButton").click();
+				},
+				error : function(e) {
+					alert('Internal Server Error');
+				}
+			});
+		});
+
+		$(".panel-title").css("cursor", "pointer");
+		$(".panel-title").css("text-decoration", "underline");
+		$(".panel-title").css("text-decoration-color", "blue");
+
+	});
+</script>
+
 <ul class="nav nav-tabs">
-	<li><a href='<c:url value="../inbox"/>'><spring:message
+
+	<li><a href='<c:url value="../messages"/>'><spring:message
 				code="conversation.inbox" /><span class="badge">${inboxSize}</span>
 	</a></li>
-	<li class="active"><a href='<c:url value="../sent"/>'><spring:message
+	<li class="active"><a href='<c:url value="../message"/>'><spring:message
 				code="conversation.sent" /><span class="badge">${sentSize}</span> </a></li>
 	<li id="compose">
 		<button type="button" class="btn btn-success" data-toggle="modal"
@@ -88,11 +120,11 @@
 			<c:forEach items="${messagesDto}" var="messageDto">
 				<div style="float: left; padding-right: 7px;">
 					<img class="messageLogo"
-						src="<c:url value="/resources/img/logos/${messageDto.userId}.png" />" />
+						src="<c:url value="/resources/img/photo/${messageDto.userId}.png" />" />
 				</div>
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">${messageDto.name}</h3>
+						<h3 id="${messageDto.userId}" class="panel-title">${messageDto.name}</h3>
 						<span class="messageDate">${messageDto.dateTime}</span>
 						<button type="submit" value="${messageDto.id}" name="messageId"
 							class="closeMessage close" data-dismiss="modal">
@@ -121,8 +153,11 @@
 		</form>
 	</c:when>
 	<c:otherwise>
-		<p id="empty">
+		<p id="sentEmpty" class="sentEmpty">
 			<spring:message code="conversation.emptyConversation" />
 		</p>
 	</c:otherwise>
 </c:choose>
+
+<script src="<c:url value="/resources/js/messages.js" />"></script>
+<jsp:include page="/views/profile/profile_information_runner.jsp" />
