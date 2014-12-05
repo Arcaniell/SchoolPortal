@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import school.dto.SalaryDTO;
 import school.model.Role;
 import school.service.SalaryService;
+import school.service.utils.DateUtil;
 
 @Controller
 public class SalaryController {
@@ -38,9 +39,9 @@ public class SalaryController {
 			return "redirect:/login";
 		}
 		if (request.isUserInRole(Role.Secured.TEACHER)) {
-			Date from = ControllersUtil.dateProceed(dateFrom, formatterDate,
+			Date from = DateUtil.dateProceed(dateFrom, formatterDate,
 					THREE_MONTHS_IN_DAYS, FORWARD_TRUE);
-			Date until = ControllersUtil.dateProceed(dateUntil, formatterDate,
+			Date until = DateUtil.dateProceed(dateUntil, formatterDate,
 					0, FORWARD_FALSE);
 			if (from.after(until)) {
 				Date swap = from;

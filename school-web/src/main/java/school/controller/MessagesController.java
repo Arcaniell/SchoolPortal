@@ -1,7 +1,9 @@
 package school.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,15 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import school.dto.message.EmailObjectDTO;
 import school.dto.message.MessageDto;
+import school.dto.message.MessageReceiverSelect;
 import school.dto.message.NewMessagesObjectDTO;
 import school.model.Conversation;
+import school.model.Group;
 import school.model.Message;
 import school.model.User;
 import school.service.ConversationService;
@@ -38,15 +44,16 @@ public class MessagesController {
 		long userId = Long.valueOf(principal.getName());
 		Conversation conversation = conversationService.findById(id);
 		List<Conversation> conversationsI = conversationService
-				.findInbox(userId);
+				.findConversations(userId, "inbox");
 		List<Conversation> conversationsS = conversationService
-				.findSent(userId);
-		List<Message> messages = messagesService.findMessagesOfConversation(id,
-				userId);
-		messagesService.markAsRead(messages, userId);
+				.findConversations(userId, "sent");
+		List<Message> messages = messagesService.findMessagesOfConversation(
+				conversation, userId);
+		messagesService.markMessagesAsRead(messages, userId);
+		Locale loc = RequestContextUtils.getLocale(request);
 		List<MessageDto> messagesDto = messagesService.constructMessagesDto(
 				messages, conversation.getReceiverId().getId(), conversation
-						.getSenderId().getId());
+						.getSenderId().getId(), loc);
 		model.addAttribute("messagesDto", messagesDto);
 		model.addAttribute("inboxSize", conversationsI.size());
 		model.addAttribute("sentSize", conversationsS.size());
@@ -64,15 +71,16 @@ public class MessagesController {
 		long userId = Long.valueOf(principal.getName());
 		Conversation conversation = conversationService.findById(id);
 		List<Conversation> conversationsI = conversationService
-				.findInbox(userId);
+				.findConversations(userId, "inbox");
 		List<Conversation> conversationsS = conversationService
-				.findSent(userId);
-		List<Message> messages = messagesService.findMessagesOfConversation(id,
-				userId);
-		messagesService.markAsRead(messages, userId);
+				.findConversations(userId, "sent");
+		List<Message> messages = messagesService.findMessagesOfConversation(
+				conversation, userId);
+		messagesService.markMessagesAsRead(messages, userId);
+		Locale loc = RequestContextUtils.getLocale(request);
 		List<MessageDto> messagesDto = messagesService.constructMessagesDto(
 				messages, conversation.getReceiverId().getId(), conversation
-						.getSenderId().getId());
+						.getSenderId().getId(), loc);
 		model.addAttribute("messagesDto", messagesDto);
 		model.addAttribute("inboxSize", conversationsI.size());
 		model.addAttribute("sentSize", conversationsS.size());
@@ -112,25 +120,40 @@ public class MessagesController {
 		return "redirect:/" + currentPage;
 	}
 
-	@RequestMapping(value = "/emailInput", method = RequestMethod.GET)
+	@RequestMapping(value = "/emailInput", method = RequestMethod.POST)
 	public @ResponseBody
 	List<EmailObjectDTO> getEmails(@RequestParam String tagName,
-			HttpServletRequest request) {
+			HttpServletRequest request, @RequestParam String emailOrGroup) {
 		boolean isParent = request.isUserInRole("ROLE_PARENT");
-		List<User> users = messagesService.simulateSearchResult(tagName,
-				isParent);
-		return messagesService.contructEmailObjectDTO(users);
+		List<Object> usersOrGroups = messagesService.simulateSearchResult(tagName,
+				isParent, emailOrGroup);
+		
+		System.out.println(emailOrGroup);
+		System.out.println(emailOrGroup);
+		System.out.println(emailOrGroup);
+		System.out.println(emailOrGroup);
+		System.out.println(emailOrGroup);
+		System.out.println(emailOrGroup);
+		System.out.println(emailOrGroup);
+		System.out.println(emailOrGroup);
+		System.out.println(emailOrGroup);
+		System.out.println();
+		System.out.println();
+		System.out.println(tagName.contains("5"));
+		
+		return messagesService.contructEmailObjectDTO(usersOrGroups);
 	}
 
 	@RequestMapping(value = "/newMessages", method = RequestMethod.GET)
 	public @ResponseBody
 	NewMessagesObjectDTO getNewMessages(Principal principal) {
-		NewMessagesObjectDTO newMessagesObjectDTO = new NewMessagesObjectDTO();
-		if(principal != null) {
-			newMessagesObjectDTO =  messagesService.constructNewMessagesObjectDTO(Long
-					.valueOf(principal.getName()));
+		NewMessagesObjectDTO newMessagesObjectDTO;
+		if (principal != null) {
+			newMessagesObjectDTO = messagesService
+					.constructNewMessagesObjectDTO(Long.valueOf(principal
+							.getName()));
 		} else {
-			newMessagesObjectDTO.setNewMessages("0");
+			newMessagesObjectDTO = new NewMessagesObjectDTO("0");
 		}
 		return newMessagesObjectDTO;
 	}

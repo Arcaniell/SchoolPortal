@@ -25,7 +25,7 @@ $(document).ready(function() {
 
 			},
 			error : function(e) {
-				alert('Internal server erroriiii');
+				alert('Internal server error');
 			}
 		});
 		return result;
@@ -122,6 +122,7 @@ $(document).ready(function() {
 						"firstName" : firstname,
 						"lastName" : lastname,
 						"registration" : 0,
+						"sex" : sex,
 						"confirmed" : false,
 						"roles" : [ {
 							"id" : role,
@@ -146,7 +147,7 @@ $(document).ready(function() {
 					}
 				},
 				error : function() {
-					alert('Internal server erroreeeeee');
+					alert('Internal server error');
 				}
 			});
 

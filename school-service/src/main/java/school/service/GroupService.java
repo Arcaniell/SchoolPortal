@@ -3,6 +3,7 @@ package school.service;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.security.access.annotation.Secured;
 
@@ -39,12 +40,12 @@ public interface GroupService {
 
     List<TeacherDTO> getAllTeachers();
 
-    void createNewGroup(byte year, String symbol, long teacherId, String additionalName,
+    void createNewGroup(byte year, String symbol, Long teacherId, Long courseId,
             String branch);
 
     void removeGroup(long requestId);
 
-    GroupEditHeaderDTO getGroupEditHeaderInfo(long id);
+    GroupEditHeaderDTO getGroupEditHeaderInfo(long id, Locale loc);
 
     void groupUpdate(GroupEditResponseDTO dataForUpdate);
 

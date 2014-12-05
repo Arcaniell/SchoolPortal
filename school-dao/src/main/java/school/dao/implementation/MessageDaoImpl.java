@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import school.dao.MessageDao;
 import school.model.Conversation;
 import school.model.Message;
-import school.model.User;
 
 @Repository
 public class MessageDaoImpl extends BaseDaoImpl<Message, Long> implements
@@ -60,7 +59,7 @@ public class MessageDaoImpl extends BaseDaoImpl<Message, Long> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<Message> countOfNewMessages(List<Conversation> conversations) {
+	public List<Message> getListOfMessages(List<Conversation> conversations) {
 		try {	
 			return entityManager
 					.createNamedQuery("Message.FIND_NEW_MESSAGES")

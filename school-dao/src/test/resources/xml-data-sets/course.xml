@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
 	<COURSE id="1" courseName="Math" groupNumber="5" additional="FALSE"
-		coeficient="2" price="0" />
+		coeficient="2" price="0" archive="FALSE"/>
 	<COURSE id="2" courseName="Math" groupNumber="4" additional="FALSE"
-		coeficient="3" price="0" />
+		coeficient="3" price="0" archive="FALSE"/>
 	<COURSE id="3" courseName="English" groupNumber="4" additional="TRUE"
-		coeficient="1" price="1000" />
+		coeficient="1" price="1000" archive="FALSE"/>
 	<COURSE id="4" courseName="Philosophy" groupNumber="5"
-		additional="TRUE" coeficient="1" price="1200" />
+		additional="TRUE" coeficient="1" price="1200" archive="FALSE"/>
 	<COURSE id="5" courseName="Programming" groupNumber="5"
-		additional="TRUE" coeficient="1" price="2000" />
+		additional="TRUE" coeficient="1" price="2000" archive="FALSE"/>
 </dataset>  

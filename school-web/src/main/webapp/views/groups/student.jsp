@@ -1,7 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<table class="table table-hover">
+<link href="<c:url value="/resources/css/course.css" />"
+	rel="stylesheet">
+	<link href="<c:url value="/resources/css/sortable-theme-minimal.css" />"
+	rel="stylesheet">
+<h3>All student groups</h3>
+<table class="table table-hover default_table sortable-theme-bootstrap" data-sortable>
 	<thead>
 		<tr>
 			<th><spring:message code="groups.table.name" /></th>
@@ -23,3 +28,5 @@
 		</c:forEach>
 	</tbody>
 </table>
+<script src="<c:url value="/resources/js/utils/sortable.js" />"
+	type="text/javascript"></script>

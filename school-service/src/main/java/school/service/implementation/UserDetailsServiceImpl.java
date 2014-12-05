@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,13 +27,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     	
         school.model.User userEntity = userDao.findByEmail(email);
 
+        if(userEntity == null) throw new UsernameNotFoundException("Error in email, or password");
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
         
         for (Role role : userEntity.getRoles()) {
             authorities.add(new SimpleGrantedAuthority(role.getName()));
             System.out.println(role.getName());
         }
-        return new User(String.valueOf(userEntity.getId()), userEntity.getPassword(), authorities);
+        return new User(String.valueOf(userEntity.getId()), userEntity.getPassword(), userEntity.isConfirmed(), true, true, true, authorities);
     }
     
 }

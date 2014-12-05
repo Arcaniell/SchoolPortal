@@ -17,6 +17,6 @@ $(document).ready(function(){
 	  $(".fquestion").click(function(){
 		  $("#fquestion").val($("."+$(this).attr('id')).attr("value"));
 		  $("#forgotQuestionNumber").val($(this).attr('id'));
-		  });
-	  
-	});
+		  });	
+
+});

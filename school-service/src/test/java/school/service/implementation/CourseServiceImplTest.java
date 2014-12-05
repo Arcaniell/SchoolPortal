@@ -12,6 +12,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+import school.dto.CourseDTO;
 import school.dto.CourseRequestTeacherDTO;
 import school.service.CourseRequestService;
 import school.service.CourseService;
@@ -22,6 +23,8 @@ import school.service.CourseService;
 public class CourseServiceImplTest {
     @Autowired
     CourseRequestService courseRequestService;
+    @Autowired
+    CourseService courseService;
 
     @Test
     public void testCreateUser() {
@@ -50,8 +53,10 @@ public class CourseServiceImplTest {
          * System.out.println(courseRequestTeacherDTO.getSize());
          * System.out.println(courseRequestTeacherDTO.getId()); }
          */
-        //courseRequestService.altDeleteAllRequestsWithCourseId(73L);
-        //courseRequestService.formGroupAndCloseRequests(74L,new Date(),new Date());
+        // courseRequestService.altDeleteAllRequestsWithCourseId(73L);
+        // courseRequestService.formGroupAndCloseRequests(74L,new Date(),new
+        // Date());
+        //List<CourseDTO> temp = courseService.getCoursesForYear(5);
         Assert.assertNotNull(44);
 
     }

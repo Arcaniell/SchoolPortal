@@ -45,7 +45,6 @@ public class LoginPageTest {
 		user.setLastName("asd");
 		loginPage.logIn(user);
 		Assert.assertEquals(user.getFirstName()+" "+user.getLastName(), homePage.getUserName());*/
-		
 	}
 
 }

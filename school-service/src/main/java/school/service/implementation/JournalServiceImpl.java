@@ -99,8 +99,8 @@ public class JournalServiceImpl implements JournalService {
 		List<Schedule> schedules = scheduleDao.findByGroupCourseInterval(
 				group.getId(), search.getSubject(), from, to);
 		Collections.sort(schedules);
-		List<StudentWithMarksDTO> studentsWithMarks = new ArrayList<>();
-		Set<Mark2DTO> marks = new HashSet<>();
+		List<StudentWithMarksDTO> studentsWithMarks = new ArrayList<StudentWithMarksDTO>();
+		Set<Mark2DTO> marks = new HashSet<Mark2DTO>();
 
 		for (Student student : group.getStudent()) {
 			marks = new TreeSet<Mark2DTO>();
@@ -237,7 +237,7 @@ public class JournalServiceImpl implements JournalService {
 		Date closestDate = new Date(JournalUtil.getClosestValue(
 				currentDate.getTime(), datesValues));
 
-		List<Lesson> lessons = new ArrayList<>();
+		List<Lesson> lessons = new ArrayList<Lesson>();
 
 		for (Schedule schedule : scheduleDao.findByTeacherInterval(
 				teacher.getId(),

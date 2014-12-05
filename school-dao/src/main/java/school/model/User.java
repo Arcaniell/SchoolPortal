@@ -43,7 +43,7 @@ public class User {
 	private byte sex;
 	@Column(nullable = false)
 	private Date registration;
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private boolean confirmed;
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "USER_ROLE_REF", joinColumns = { @JoinColumn(name = "userId", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "roleId", nullable = false) })
@@ -199,9 +199,9 @@ public class User {
 	}
 
 	public class SexType {
-		public static final byte MALE = (byte) 0;
-		public static final byte FEMALE = (byte) 1;
-		public static final byte OTHER = (byte) 2;
+		public static final byte MALE = (byte) 1;
+		public static final byte FEMALE = (byte) 2;
+		public static final byte OTHER = (byte) 3;
 	}
 
 	public class ConfirmType {

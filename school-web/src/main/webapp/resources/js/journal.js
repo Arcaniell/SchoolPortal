@@ -1,8 +1,8 @@
 $(function() {
-	var buttonClick = $("#clickSearchButton").val();
-	if (buttonClick == "click") {
+//	var buttonClick = $("#clickSearchButton").val();
+//	if (buttonClick == "click") {
 		$("#submitSearch").click();
-	}
+//	}
 });
 
 $("#groupNumberSelect").change(

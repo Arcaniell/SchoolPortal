@@ -1,3 +1,20 @@
+function hideRemoveButton() {
+	var counter = 0;
+	$(':checkbox').each(function() {
+		if (this.checked == true) {
+			counter++;
+		}
+	});
+	if (counter == 0) {
+		$(".remove_button").fadeOut();
+	} else {
+		$(".remove_button").fadeIn();
+	}
+}
+
+$(':checkbox').click(function(){
+	hideRemoveButton();
+});
 /*$(document).ready(function() {
 	var currentName = 0;
 	$.post("getUserNameController",function(data){

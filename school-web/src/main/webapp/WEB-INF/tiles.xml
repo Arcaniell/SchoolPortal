@@ -19,6 +19,18 @@
 		<put-attribute name="title" value="Home page" />
 		<put-attribute name="main_content" value="/views/home/signinfailure.jsp" />
 	</definition>
+	
+	<definition name="profile" extends="base.definition">
+		<put-attribute name="title" value="Profile" />
+		<put-attribute name="main_content" value="/views/profile/profile.jsp" />
+	</definition>
+	<definition name="profile_information" template="/views/profile/profile_information.jsp">
+	</definition>
+	
+	<definition name="admin" extends="base.definition">
+		<put-attribute name="title" value="Admin Panel" />
+		<put-attribute name="main_content" value="/views/admin/admin.jsp" />
+	</definition>
 
 	<definition name="journal" extends="base.definition">
 		<put-attribute name="title" value="Journal" />
@@ -73,14 +85,14 @@
 		<put-attribute name="main_content" value="/views/course-request/{1}.jsp" />
 	</definition>
 
-	<definition name="inbox" extends="base.definition">
+	<definition name="messages" extends="base.definition">
 		<put-attribute name="title" value="Conversations" />
-		<put-attribute name="main_content" value="/views/messages/inbox.jsp" />
+		<put-attribute name="main_content" value="/views/messages/messages.jsp" />
 	</definition>
-
-	<definition name="sent" extends="base.definition">
+	
+	<definition name="message" extends="base.definition">
 		<put-attribute name="title" value="Conversations" />
-		<put-attribute name="main_content" value="/views/messages/sent.jsp" />
+		<put-attribute name="main_content" value="/views/messages/message.jsp" />
 	</definition>
 
 	<definition name="inboxMessages" extends="base.definition">
