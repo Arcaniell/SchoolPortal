@@ -105,12 +105,12 @@ public class JournalServiceImpl implements JournalService {
 		for (Student student : group.getStudent()) {
 			marks = new TreeSet<Mark2DTO>();
 			for (Schedule schedule : schedules) {
-				
+
 				Journal journal = journalDao.findByStudentAndSchedule(
 						student.getId(), schedule.getId());
-				
+
 				Event event = eventDao.findEventBySchedule(schedule.getId());
-				
+
 				if (journal != null) {
 					marks.add(new Mark2DTO(schedule.getId(),
 							schedule.getDate(), journal.getMark(), journal
@@ -162,11 +162,15 @@ public class JournalServiceImpl implements JournalService {
 
 		Schedule schedule = scheduleDao.findById(editedDateDTO.getScheduleId());
 
-		eventDao.save(new Event(schedule, editedDateDTO.getEventType(),
-				editedDateDTO.getEventDescription()));
-
-		homeTaskDao.save(new HomeTask(schedule.getGroup(), editedDateDTO
-				.getHomeTask(), schedule));
+		if (editedDateDTO.getEventType() != 0) {
+			eventDao.save(new Event(schedule, editedDateDTO.getEventType(),
+					editedDateDTO.getEventDescription()));
+		}
+		
+		if (editedDateDTO.getHomeTask() != "") {
+			homeTaskDao.save(new HomeTask(schedule.getGroup(), editedDateDTO
+					.getHomeTask(), schedule));
+		}
 
 	}
 
