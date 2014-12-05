@@ -2,10 +2,10 @@ package school.controller;
 
 import java.security.Principal;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import school.dto.EventDTO;
-import school.dto.journal.AddMarkDTO;
+import school.dto.journal.EditMarkDTO;
+import school.dto.journal.EditDateDTO;
 import school.dto.journal.JournalDTO;
 import school.dto.journal.JournalSearch;
 import school.dto.journal.JournalStaffDTO;
@@ -35,61 +35,74 @@ public class JournalController {
 	private JournalService journalService;
 
 	@RequestMapping(value = "journal")
-	public String index(Principal user, Model model, HttpServletRequest request) {
+	public String index(Principal principal, Model model,
+			HttpServletRequest request) throws ParseException {
 
-		if (user == null) {
+		if (principal == null) {
 			return "redirect:/login";
 		}
+		JournalStaffDTO staff = null;
 
-		Map<String, JournalDTO> DTOs = getDTOsByRole(user, request);
-		for (Entry<String, JournalDTO> entry : DTOs.entrySet()) {
-			model.addAttribute(entry.getKey(), entry.getValue());
+		if (request.isUserInRole(Role.Secured.TEACHER)) {
+			staff = journalService.getTeacherInfo(principal.getName());
+
+			JournalSearch search = journalService.getDeafaultData(
+					principal.getName(), new Date());
+			List<StudentWithMarksDTO> groupMarks = journalService
+					.getMarksOfGroup(search);
+			model.addAttribute("searchData", search);
+//			model.addAttribute("groupMarks", groupMarks);
+			model.addAttribute("clickSearch", "click");
+		} else if (request.isUserInRole(Role.Secured.HEAD_TEACHER)) {
 		}
 
+		model.addAttribute("teacher", staff);
 		return "journal";
 	}
 
 	@RequestMapping(value = "journal-group-marks", method = RequestMethod.POST)
 	public @ResponseBody List<StudentWithMarksDTO> getByGroup(
-			@RequestBody JournalSearch journalSearch, HttpServletRequest request)
-			throws ParseException {
+			@RequestBody JournalSearch journalSearch) throws ParseException {
 
-		List<StudentWithMarksDTO> groupMarks = journalService.getMarksOfGroup(
-				journalSearch.getQuarter(),
-				String.valueOf(journalSearch.getGroupNumber()),
-				String.valueOf(journalSearch.getGroupLetter()),
-				journalSearch.getSubject());
+		List<StudentWithMarksDTO> groupMarks = journalService
+				.getMarksOfGroup(journalSearch);
 
 		return groupMarks;
 	}
 
-	@RequestMapping(value = "journal-add-mark", method = RequestMethod.POST)
-	public @ResponseBody byte addMark(@RequestBody AddMarkDTO addMarkDTO)
+	@RequestMapping(value = "journal-edit-mark", method = RequestMethod.POST)
+	public @ResponseBody byte editMark(@RequestBody EditMarkDTO editMarkDTO)
 			throws ParseException {
 
-		journalService.addMark(addMarkDTO);
+		journalService.editMark(editMarkDTO);
 
-		return addMarkDTO.getMark();
+		return editMarkDTO.getMark();
 
 	}
 
-	@RequestMapping(value = "journal-add-event", method = RequestMethod.POST)
-	public @ResponseBody EventDTO addEvent(@RequestBody EventDTO event)
-			throws ParseException {
-		journalService.addEvent(event);
-		return event;
+	@RequestMapping(value = "journal-edit-date", method = RequestMethod.POST)
+	public @ResponseBody EditDateDTO addEvent(
+			@RequestBody EditDateDTO editedDateDTO) throws ParseException {
+
+		journalService.editDate(editedDateDTO);
+
+		return editedDateDTO;
 	}
 
 	@RequestMapping(value = "journal-subject")
 	public @ResponseBody Set<String> getNumbers(@RequestBody String subject,
 			Principal user) {
+
 		return journalService.getGroupNumbers(user.getName(), subject);
+
 	}
 
 	@RequestMapping(value = "journal-letter")
 	public @ResponseBody Set<String> getLetters(@RequestBody String number,
 			Principal user) {
+
 		return journalService.getGroupLetters(user.getName(), number);
+
 	}
 
 	private Map<String, JournalDTO> getDTOsByRole(Principal user,

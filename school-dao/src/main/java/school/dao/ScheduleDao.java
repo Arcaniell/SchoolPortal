@@ -37,4 +37,6 @@ public interface ScheduleDao extends BaseDao<Schedule, Long> {
 
 	List<Schedule> findByGroupCourseInterval(long groupId, String courseName,
 			Date from, Date till);
+
+	Schedule findByTeacherDateLesson(long teacherId, Date date, long lessonId);
 }
