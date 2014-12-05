@@ -48,11 +48,7 @@ public class JournalController {
 
 			JournalSearch search = journalService.getDeafaultData(
 					principal.getName(), new Date());
-			List<StudentWithMarksDTO> groupMarks = journalService
-					.getMarksOfGroup(search);
 			model.addAttribute("searchData", search);
-//			model.addAttribute("groupMarks", groupMarks);
-			model.addAttribute("clickSearch", "click");
 		} else if (request.isUserInRole(Role.Secured.HEAD_TEACHER)) {
 		}
 

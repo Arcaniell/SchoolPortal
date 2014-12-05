@@ -1,8 +1,5 @@
 $(function() {
-//	var buttonClick = $("#clickSearchButton").val();
-//	if (buttonClick == "click") {
 		$("#submitSearch").click();
-//	}
 });
 
 $("#groupNumberSelect").change(
@@ -295,7 +292,6 @@ $(document).on("click", ".addMark", function() {
 });
 
 $(document).on("click", ".futureDate", function() {
-	console.log($(this).data('value'))
 	$("#editedDate").val($(this).data('value'));
 });
 
