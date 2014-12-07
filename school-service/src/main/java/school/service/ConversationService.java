@@ -25,4 +25,8 @@ public interface ConversationService {
 	void createConversation(String subject, long senderId, long receiverId, String text);
 	
 	boolean hasNewMessages(Conversation conversation, long userId);
+
+	boolean isGroup(String to);
+
+	void sendToGroup(String subject, Long principalId, String to, String text);
 }
