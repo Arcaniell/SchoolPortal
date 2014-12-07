@@ -34,4 +34,6 @@ public interface CourseDao extends BaseDao<Course, Long> {
     
     List<Course> findAdditionCourseByYearAndArchiveFlag(int year, boolean flag);
 
+    List<Course> findAllByArchiveFlag(boolean flag);
+
 }

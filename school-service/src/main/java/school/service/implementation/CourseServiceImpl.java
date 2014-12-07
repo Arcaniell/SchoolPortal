@@ -29,6 +29,7 @@ import school.service.CourseService;
 @Service
 public class CourseServiceImpl implements CourseService {
     private final boolean COURSE_STATUS = true;
+    private final boolean COURSE_IS_NOT_ARCHIVE = false;
     private final String TRUE_IN_JSP = "YES";
     private final String FALSE_IN_JSP = "NO";
     private final String NO_DATA_IN_JSP = "-";
@@ -69,6 +70,12 @@ public class CourseServiceImpl implements CourseService {
         List<CourseRequest> additionCourses = courseRequestDao.findAllByStudentId(student.getId());
         List<Course> canSignCourses = courseDao.findAllByStatusAndYear(COURSE_STATUS,
                 mainGroup.getNumber());
+        Iterator<Course> steratorCanSignCourse =canSignCourses.iterator();
+        while(steratorCanSignCourse.hasNext()){
+            if(steratorCanSignCourse.next().isArchive()){
+                steratorCanSignCourse.remove();
+            }
+        }
         // check if user already sign to one of the list of available courses
         for (int i = 0; i < additionCourses.size(); i++) {
             for (int j = 0; j < canSignCourses.size(); j++) {
@@ -172,14 +179,48 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseDTO> getCoursesForYear(int year) {
-        List<Course> courses = courseDao.findAdditionCourseByYearAndArchiveFlag(year, false);
-        List<CourseDTO> courseDTOs = new ArrayList<CourseDTO>();
-        for (Course course : courses) {
-            CourseDTO currentCourseDTO = new CourseDTO();
-            currentCourseDTO.setId(course.getId());
-            currentCourseDTO.setName(course.getCourseName());
-            courseDTOs.add(currentCourseDTO);
+        List<Course> courses = courseDao.findAdditionCourseByYearAndArchiveFlag(year,
+                COURSE_IS_NOT_ARCHIVE);
+        return fillCourseDTOList(courses);
+    }
+
+    @Override
+    public List<CourseDTO> getAllCourses() {
+        List<Course> courses = courseDao.findAllByArchiveFlag(COURSE_IS_NOT_ARCHIVE);
+        return fillCourseDTOList(courses);
+    }
+
+    private List<CourseDTO> fillCourseDTOList(List<Course> courses) {
+        List<CourseDTO> container = new ArrayList<CourseDTO>();
+        if (courses != null) {
+            for (Course course : courses) {
+                CourseDTO currentDTO = new CourseDTO();
+                currentDTO.setId(course.getId());
+                currentDTO.setName(course.getCourseName());
+                if (course.isAdditional()) {
+                    currentDTO.setAdditional(TRUE_IN_JSP);
+                } else {
+                    currentDTO.setAdditional(FALSE_IN_JSP);
+                }
+                currentDTO.setYear(course.getGroupNumber());
+                container.add(currentDTO);
+            }
         }
-        return courseDTOs;
+        return container;
+    }
+
+    @Override
+    public void deleteAllCoursesWithIds(Long[] IdArray) {
+        for (Long id : IdArray) {
+            Course current = courseDao.findById(id);
+            current.setArchive(true);
+            courseDao.update(current);
+        }
+    }
+
+    @Override
+    public void saveNewCourse(Course course) {
+        courseDao.save(course);
+
     }
 }

@@ -36,9 +36,13 @@ $('#select-all').click(function(event) {
 			this.checked = false;
 		});
 	}
+	hideRemoveButton();
 });
 $(".requests").click(function() {
 	$("#exportedVal").val($(this).data('value'));
 	console.log(this);
 	console.log(event.target);
+});
+$(".name_value").change(function(){
+	alert(this.value);
 });

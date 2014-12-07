@@ -19,4 +19,10 @@ public interface CourseService {
 
     List<CourseDTO> getCoursesForYear(int year);
 
+    List<CourseDTO> getAllCourses();
+
+    void deleteAllCoursesWithIds(Long[] IdArray);
+
+    void saveNewCourse(Course createdCourse);
+
 }
