@@ -3,6 +3,9 @@
 	<name>school</name>
 	<comment></comment>
 	<projects>
+		<project>school-dao</project>
+		<project>school-service</project>
+		<project>school-web</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

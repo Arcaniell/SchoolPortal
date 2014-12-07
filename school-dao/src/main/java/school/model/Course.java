@@ -29,7 +29,8 @@ import javax.persistence.Table;
         @NamedQuery(name = Course.FIND_BY_GROUP_ID_AND_DATA_RANGE, query = Course.FIND_BY_GROUP_ID_AND_DATA_RANGE_QUERY),
         @NamedQuery(name = Course.FIND_BY_STATUS_AND_YEAR, query = Course.FIND_BY_STATUS_AND_YEAR_QUERY),
         @NamedQuery(name = Course.FIND_BY_TEACHER_ID_AND_DATA_RANGE, query = Course.FIND_BY_TEACHER_ID_AND_DATA_RANGE_QUERY),
-        @NamedQuery(name = Course.FIND_ADDITION_COURSE_BY_YEAR_AND_ARCHIVE_FLAG, query = Course.FIND_ADDITION_COURSE_BY_YEAR_AND_ARCHIVE_FLAG_QUERY) })
+        @NamedQuery(name = Course.FIND_ADDITION_COURSE_BY_YEAR_AND_ARCHIVE_FLAG, query = Course.FIND_ADDITION_COURSE_BY_YEAR_AND_ARCHIVE_FLAG_QUERY),
+        @NamedQuery(name = Course.FIND_COURSE_BY_ARCHIVE_FLAG, query = Course.FIND_COURSE_BY_ARCHIVE_FLAG_QUERY) })
 public class Course implements Comparable<Course> {
     public static final String FIND_BY_STATUS = "Course.findAllByStatus";
     public static final String FIND_BY_STATUS_AND_YEAR = "Course.findAllByStatusAndYear";
@@ -41,6 +42,7 @@ public class Course implements Comparable<Course> {
     public static final String FIND_BY_GROUP_ID_AND_DATA_RANGE = "Course.findByGroupIdAndDataRange";
     public static final String FIND_BY_TEACHER_ID_AND_DATA_RANGE = "Course.findByTeacherIdAndDataRange";
     public static final String FIND_ADDITION_COURSE_BY_YEAR_AND_ARCHIVE_FLAG = "Course.findAdditionCourseByYearAndArchiveFlag";
+    public static final String FIND_COURSE_BY_ARCHIVE_FLAG = "Course.findAllByArchiveFlag";
 
     public static final String FIND_BY_STATUS_QUERY = "SELECT DISTINCT c FROM Course c WHERE c.additional = :active";
     public static final String FIND_BY_STATUS_AND_YEAR_QUERY = "SELECT DISTINCT c FROM Course c WHERE c.additional = :active AND c.groupNumber = :year";
@@ -52,6 +54,7 @@ public class Course implements Comparable<Course> {
     public static final String FIND_BY_GROUP_ID_AND_DATA_RANGE_QUERY = "SELECT DISTINCT c FROM Course c INNER JOIN c.schedule s WHERE s.group.id = :groupId AND (s.date BETWEEN :from AND :till)";
     public static final String FIND_BY_TEACHER_ID_AND_DATA_RANGE_QUERY = "SELECT DISTINCT c FROM Course c INNER JOIN c.schedule s WHERE s.teacher.id = :teacherId AND (s.date BETWEEN :from AND :till)";
     public static final String FIND_ADDITION_COURSE_BY_YEAR_AND_ARCHIVE_FLAG_QUERY = "SELECT DISTINCT c FROM Course c WHERE c.groupNumber=:year AND c.additional=true AND archive=:flag";
+    public static final String FIND_COURSE_BY_ARCHIVE_FLAG_QUERY = "SELECT DISTINCT c FROM Course c WHERE archive=:flag";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

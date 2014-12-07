@@ -30,8 +30,7 @@ public class CourseRequestController {
     private final String URL_COURSE_REQUEST_TEACHER_MANAGE = "/course-request-manage-group";
     private final String URL_COURSE_REQUEST_STUDENT_ADD = "/course-request/request";
     private final String URL_COURSE_REQUEST_STUDENT_RM = "/course-request/delete";
-    private final String JSP_INPUT_TEACHER_COURSE_ID = "exportedVal";
-    private final String JSP_INPUT_TEACHER_BRANCH = "groupChange";
+    private final String JSP_INPUT_TEACHER_BRANCH = "yes";
     private final String JSP_INPUT_TEACHER_APPROVE = "approve";
     private final String JSP_INPUT_TEACHER_DENY = "deny";
     private final String JSP_INPUT_CHECKBOXS_NAME = "checkboxName";
@@ -108,19 +107,29 @@ public class CourseRequestController {
 
     // teacher request manage, creating new group
     @RequestMapping(value = URL_COURSE_REQUEST_TEACHER_MANAGE)
-    public String groupCreate(@RequestParam(value = JSP_INPUT_TEACHER_COURSE_ID) String id,
+    public String groupCreate(HttpServletRequest request,
             @RequestParam(value = JSP_INPUT_TEACHER_BRANCH) String branch, Model model) {
-        int courseId = Integer.parseInt(id);
-        if (courseId != 0 && branch != null) {
-            if (branch.equals(JSP_INPUT_TEACHER_APPROVE)) {
-                Date currentDate = new Date();
-                Date futureDate = DateUtil.addOrDelDays(currentDate, ONE_MONTH_IN_DAYS);
-                courseRequestService.formGroupAndCloseRequests(courseId, currentDate, futureDate);
-                courseRequestService.deleteAllRequestsWithCourseId(courseId);
+        String[] checkboxNamesList = request.getParameterValues(JSP_INPUT_CHECKBOXS_NAME);
+        if (checkboxNamesList != null && branch != null) {
+            for (String courseIdStr : checkboxNamesList) {
+                long courseId = 0;
+                try {
+                    courseId = Long.parseLong(courseIdStr);
+                } catch (NumberFormatException e) {
+                    // nothing special, go on
+                }
+                if (courseId != 0 && branch.equals(JSP_INPUT_TEACHER_APPROVE)) {
+                    Date currentDate = new Date();
+                    Date futureDate = DateUtil.addOrDelDays(currentDate, ONE_MONTH_IN_DAYS);
+                    courseRequestService.formGroupAndCloseRequests(courseId, currentDate,
+                            futureDate);
+                    courseRequestService.deleteAllRequestsWithCourseId(courseId);
+                }
+                if (courseId != 0 && branch.equals(JSP_INPUT_TEACHER_DENY)) {
+                    courseRequestService.deleteAllRequestsWithCourseId(courseId);
+                }
             }
-            if (branch.equals(JSP_INPUT_TEACHER_DENY)) {
-                courseRequestService.deleteAllRequestsWithCourseId(courseId);
-            }
+
         }
         return URLContainer.URL_REDIRECT + URL_COURSE_REQUEST;
     }

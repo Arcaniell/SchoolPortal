@@ -30,10 +30,6 @@ td {
 	margin-right: 5px !important;
 }
 
-.addition_name_input {
+.addition_name_input, .real_dell_btn, .remove_button {
 	display: none;
-}
-
-h3 {
-	margin-top: 0px;
 }

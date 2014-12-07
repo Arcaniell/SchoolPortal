@@ -220,6 +220,7 @@ public class GroupServiceImpl implements GroupService {
             String branch) {
         Teacher teacher = teacherDao.findById(teacherId);
         Course course = courseDao.findById(courseId);
+        List<Group> existingGroups = groupDao.findByCourseId(courseId);
 
         Group group = new Group();
         group.setNumber(year);
@@ -230,6 +231,11 @@ public class GroupServiceImpl implements GroupService {
         } else {
             group.setAdditional(true);
             group.setAdditionCourse(course);
+            if (existingGroups != null) {
+                group.setAdditionalIndex(existingGroups.size() + 1);
+            } else {
+                group.setAdditionalIndex(1);
+            }
         }
         groupDao.save(group);
     }
@@ -356,6 +362,19 @@ public class GroupServiceImpl implements GroupService {
             setMainGroup4Students(newStudents4Group, group);
         }
         groupDao.update(group);
+    }
+
+    @Override
+    public List<String> getAvailableSymbols(byte year) {
+        String[] allSymbols = GroupServiceImpl.SYMBOLS_FOR_CLASS;
+        List<String> current = new ArrayList<String>();
+        for (String symbol : allSymbols) {
+            Group group = groupDao.findByNumberAndLetter(year, symbol.charAt(symbol.length() - 1));
+            if (group == null) {
+                current.add(symbol);
+            }
+        }
+        return current;
     }
 
     private void freeMainGroupFromStudents(Group group) {

@@ -3,8 +3,6 @@ package school.dto.journal;
 import java.util.Date;
 import java.util.Set;
 
-import school.model.Group;
-
 public class StudentWithMarksDTO implements Comparable<StudentWithMarksDTO> {
 
 	private long studentId;
@@ -13,13 +11,6 @@ public class StudentWithMarksDTO implements Comparable<StudentWithMarksDTO> {
 	private Set<Mark2DTO> markList;
 
 	public StudentWithMarksDTO() {
-	}
-
-	public StudentWithMarksDTO(long studentId, String studentName, Group group,
-			Set<Mark2DTO> markList) {
-		this.studentId = studentId;
-		this.studentName = studentName;
-		this.markList = markList;
 	}
 
 	public StudentWithMarksDTO(long studentId, String studentName, Date date,

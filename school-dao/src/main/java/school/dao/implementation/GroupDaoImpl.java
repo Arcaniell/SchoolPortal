@@ -82,12 +82,13 @@ public class GroupDaoImpl extends BaseDaoImpl<Group, Long> implements GroupDao {
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Transactional
     @Override
-    public Group findByCourseId(long courseId) {
+    public List<Group> findByCourseId(long courseId) {
         try {
-            return (Group) entityManager.createNamedQuery(Group.FIND_BY_COURSE)
-                    .setParameter("courseId", courseId).getSingleResult();
+            return (List<Group>) entityManager.createNamedQuery(Group.FIND_BY_COURSE)
+                    .setParameter("courseId", courseId).getResultList();
         } catch (NoResultException e) {
             return null;
         }

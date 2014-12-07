@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class Mark2DTO implements Comparable<Mark2DTO> {
 
-	private int id;
 	private long scheduleId;
 	private Date date;
 	private byte mark;
@@ -14,28 +13,17 @@ public class Mark2DTO implements Comparable<Mark2DTO> {
 
 	}
 
-	public Mark2DTO(int id, long scheduleId, Date date, byte mark,
-			byte markCoefficient) {
-		this.id = id;
+	public Mark2DTO(long scheduleId, Date date, byte mark, byte markCoefficient) {
 		this.scheduleId = scheduleId;
 		this.date = date;
 		this.mark = mark;
 		this.markCoefficient = markCoefficient;
 	}
 
-	public Mark2DTO(int id, long scheduleId, Date date) {
-		super();
-		this.id = id;
+	public Mark2DTO(long scheduleId, Date date, byte markCoefficient) {
 		this.scheduleId = scheduleId;
 		this.date = date;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+		this.markCoefficient = markCoefficient;
 	}
 
 	public long getScheduleId() {
@@ -72,9 +60,9 @@ public class Mark2DTO implements Comparable<Mark2DTO> {
 
 	@Override
 	public int compareTo(Mark2DTO markDTO) {
-		if (this.id < markDTO.getId()) {
+		if (this.date.before(markDTO.getDate())) {
 			return -1;
-		} else if (this.id > markDTO.getId()) {
+		} else if (this.date.after(markDTO.getDate())) {
 			return 1;
 		}
 		return 0;

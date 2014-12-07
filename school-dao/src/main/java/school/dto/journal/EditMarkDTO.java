@@ -1,6 +1,6 @@
 package school.dto.journal;
 
-public class AddMarkDTO {
+public class EditMarkDTO {
 
 	private String studentAndSchedule;
 	private byte mark;

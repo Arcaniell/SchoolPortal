@@ -22,7 +22,7 @@ public class EventDaoImpl extends BaseDaoImpl<Event, Long> implements EventDao {
 					.createNamedQuery(Event.FIND_BY_SCHEDULE)
 					.setParameter("scheduleId", scheduleId).getSingleResult();
 		} catch (NoResultException e) {
-			return null;
+			return new Event();
 		}
 	}
 
