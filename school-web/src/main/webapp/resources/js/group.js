@@ -6,10 +6,13 @@ $(function() {
 	// getYears("getYearsSelect");
 	var year = $("select[name='year_value']").val();
 	renewCourseSelect(year);
+	renewSymbolSelect(year);
 	$("select[name='year_value']").change(function() {
 		var year = $("select[name='year_value']").val();
 		renewCourseSelect(year);
+		renewSymbolSelect(year);
 	});
+
 });
 
 var renewCourseSelect = function(year) {
@@ -29,6 +32,25 @@ var renewCourseSelect = function(year) {
 						+ data[i].name + "</option>\n";
 			}
 			$("select[name='course_id']").html(container);
+		}
+	});
+};
+var renewSymbolSelect = function(year) {
+	$.ajax({
+		headers : {
+			'Accept' : 'application/json',
+			'Content-Type' : 'application/json'
+		},
+		'type' : 'POST',
+		'url' : "getSymbolsForYear",
+		'data' : JSON.stringify(year),
+		'dataType' : 'json',
+		'success' : function(data) {
+			var container = "";
+			for (i in data) {
+				container += "<option>" + data[i] + "</option>\n";
+			}
+			$("select[name='symbol_value']").html(container);
 		}
 	});
 };

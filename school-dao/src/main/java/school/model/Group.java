@@ -16,7 +16,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import javax.persistence.CascadeType;
 
 @Entity
@@ -63,6 +62,8 @@ public class Group implements Comparable<Group> {
     private byte number;
     private char letter;
     private boolean additional;
+    @Column(nullable = true)
+    private Integer additionalIndex;
     @Column(nullable = false)
     private Date startDate;
     private Date endDate;
@@ -158,6 +159,14 @@ public class Group implements Comparable<Group> {
         this.additionCourse = additionCourse;
     }
 
+    public int getAdditionalIndex() {
+        return additionalIndex;
+    }
+
+    public void setAdditionalIndex(int additionalIndex) {
+        this.additionalIndex = additionalIndex;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -165,6 +174,7 @@ public class Group implements Comparable<Group> {
         result = prime * result + ((addStudent == null) ? 0 : addStudent.hashCode());
         result = prime * result + ((additionCourse == null) ? 0 : additionCourse.hashCode());
         result = prime * result + (additional ? 1231 : 1237);
+        result = prime * result + additionalIndex;
         result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
         result = prime * result + (int) (id ^ (id >>> 32));
         result = prime * result + letter;
@@ -196,6 +206,8 @@ public class Group implements Comparable<Group> {
         } else if (!additionCourse.equals(other.additionCourse))
             return false;
         if (additional != other.additional)
+            return false;
+        if (additionalIndex != other.additionalIndex)
             return false;
         if (endDate == null) {
             if (other.endDate != null)
