@@ -6,6 +6,8 @@
 <link href="<c:url value="/resources/css/sortable-theme-minimal.css" />"
 	rel="stylesheet">
 <link href="<c:url value="/resources/css/base-pagination.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/profile.css" />"
+	rel="stylesheet">
 <!-- ADD GROUP MODAL -->
 <div class="modal fade add_group_modal" tabindex="-1" role="dialog"
 	aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -129,7 +131,7 @@
 					<td>${element.year}</td>
 					<td>${element.additional}</td>
 					<td>${element.members}</td>
-					<td>${element.teacher}</td>
+					<td><a class="anchor" data-value ="${element.teacherUserId}">${element.teacher}</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -146,6 +148,7 @@
 	<div class="pages"></div>
 </div>
 <!-- Pagination footer -->
+<jsp:include page="/views/profile/profile_information_runner.jsp" />
 <script src="<c:url value="https://code.jquery.com/jquery-1.10.2.js" />">
 	
 </script>

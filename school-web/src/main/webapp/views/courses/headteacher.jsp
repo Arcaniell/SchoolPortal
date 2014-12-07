@@ -19,7 +19,7 @@
 						aria-hidden="true">×</button>
 					<h3 class="modal-title">Course create</h3>
 				</div>
-				<div class="modal-body create_course_view">
+				<div class="modal-body create_course_view courses-modal-body">
 					<p>Enter course name</p>
 					<input name="name_value" type="text" class="form-control" placeholder = "Course name">
 					<table class="modal_table">

@@ -16,7 +16,7 @@
 	background-color: #E8E8E8;
 }
 .profile_table{
-	width: 600px;
+	width: 520px;
 }
 .small_logo{
 	width: 90px;
@@ -24,7 +24,7 @@
 	margin: 0px;
 }
 .chield_and_parent_container{
-	max-width: 600px;
+	max-width: 520px;
 	overflow: auto;
 }
 .uploadButton{

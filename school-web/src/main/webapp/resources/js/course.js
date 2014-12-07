@@ -21,3 +21,23 @@ $(".submit").click(function(){
 	}
 	
 });
+$(".anchor").click(function() {
+	var id = $(this).data("value");
+	$.ajax({
+		type : "GET",
+		url : "profile/information",
+		data : "id=" + id,
+		headers : {
+			Accept : "text/plain; charset=utf-8",
+			"Content-Type" : "text/plain; charset=utf-8"
+		},
+		async : false,
+		success : function(response) {
+			$("#profile_modal_content").html(response);
+			$("#profileModalButton").click();
+		},
+		error : function() {
+			alert('Internal Server Error');
+		}
+	});
+});
