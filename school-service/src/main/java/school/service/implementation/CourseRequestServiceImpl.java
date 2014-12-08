@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import school.service.utils.SchoolUtil;
 public class CourseRequestServiceImpl implements CourseRequestService {
     private final boolean ADDITIONAL_GROUP_FLAG = true;
     private final boolean COURSE_REQUEST_ACTIVE_FLAG = true;
+    private final boolean COURSE_ARCHIVE_FLAG = true;
     @Autowired
     CourseRequestDao courseRequestDao;
     @Autowired
@@ -36,7 +38,8 @@ public class CourseRequestServiceImpl implements CourseRequestService {
     StudentDao studentDao;
     @Autowired
     GroupService groupService;
-    //find all requests for current user
+
+    // find all requests for current user
     @Override
     public List<CourseRequestStudentDTO> findUserCourseRequests(Principal user) {
         long id = Long.parseLong(user.getName());
@@ -48,7 +51,16 @@ public class CourseRequestServiceImpl implements CourseRequestService {
         if (requests == null) {
             return null;
         }
-        //setting DTO object
+        List<Course> archivedCourses = courseDao.findAllByArchiveFlag(COURSE_ARCHIVE_FLAG);
+        for (Course course : archivedCourses) {
+            Iterator<CourseRequest> requestIterator = requests.iterator();
+            while (requestIterator.hasNext()) {
+                if (requestIterator.next().getCourse().equals(course)) {
+                    requestIterator.remove();
+                }
+            }
+        }
+        // setting DTO object
         ArrayList<CourseRequestStudentDTO> listCourseRequestsDTO = new ArrayList<CourseRequestStudentDTO>();
         for (CourseRequest courseRequest : requests) {
             CourseRequestStudentDTO courseRequestDTO = new CourseRequestStudentDTO();
@@ -57,18 +69,16 @@ public class CourseRequestServiceImpl implements CourseRequestService {
             if (courseFromCurrentRequest != null) {
                 courseRequestDTO.setCourseName(courseFromCurrentRequest.getCourseName());
                 courseRequestDTO.setCourseYear(courseFromCurrentRequest.getGroupNumber());
-                courseRequestDTO.setMembers(courseRequestDao
-                        .findAllBySubjectId(courseFromCurrentRequest.getId()).size());
+                courseRequestDTO.setMembers(courseRequestDao.findAllBySubjectId(
+                        courseFromCurrentRequest.getId()).size());
             }
-            SimpleDateFormat formatterDate = new SimpleDateFormat(
-                    SchoolUtil.UI_DATE_FORMAT);
-            courseRequestDTO.setDateOfRequest(formatterDate
-                    .format(courseRequest.getDate()));
+            SimpleDateFormat formatterDate = new SimpleDateFormat(SchoolUtil.UI_DATE_FORMAT);
+            courseRequestDTO.setDateOfRequest(formatterDate.format(courseRequest.getDate()));
             listCourseRequestsDTO.add(courseRequestDTO);
         }
         return listCourseRequestsDTO;
     }
-    
+
     @Override
     public void addCourseRequest(long userId, long courseId) {
         CourseRequest courseRequest = new CourseRequest();
@@ -96,15 +106,14 @@ public class CourseRequestServiceImpl implements CourseRequestService {
     @Override
     public List<CourseRequestTeacherDTO> showAllRequests() {
         List<CourseRequestTeacherDTO> listOfCourseRequests = new ArrayList<CourseRequestTeacherDTO>();
-        List<Course> additionCourses = courseDao
-                .findAllByStatus(ADDITIONAL_GROUP_FLAG);
+        List<Course> additionCourses = courseDao.findAllByStatus(ADDITIONAL_GROUP_FLAG);
+        List<Course> archivedCourses = courseDao.findAllByArchiveFlag(COURSE_ARCHIVE_FLAG);
+        additionCourses.removeAll(archivedCourses);
         for (Course course : additionCourses) {
             long idOfCurrentCourse = course.getId();
             List<CourseRequest> requestsForCurrentCourse = courseRequestDao
-                    .findByCourseIdAndStatus(idOfCurrentCourse,
-                            COURSE_REQUEST_ACTIVE_FLAG);
-            if (requestsForCurrentCourse == null
-                    || requestsForCurrentCourse.size() == 0) {
+                    .findByCourseIdAndStatus(idOfCurrentCourse, COURSE_REQUEST_ACTIVE_FLAG);
+            if (requestsForCurrentCourse == null || requestsForCurrentCourse.size() == 0) {
                 continue;
             }
             CourseRequestTeacherDTO currentElementDTO = new CourseRequestTeacherDTO();
@@ -125,8 +134,8 @@ public class CourseRequestServiceImpl implements CourseRequestService {
 
     @Override
     public void formGroupAndCloseRequests(long courseId, Date from, Date till) {
-        List<CourseRequest> requestsForCurrentCourse = courseRequestDao
-                .findByCourseIdAndStatus(courseId, COURSE_REQUEST_ACTIVE_FLAG);
+        List<CourseRequest> requestsForCurrentCourse = courseRequestDao.findByCourseIdAndStatus(
+                courseId, COURSE_REQUEST_ACTIVE_FLAG);
         List<Student> students = new ArrayList<Student>();
         for (CourseRequest request : requestsForCurrentCourse) {
             students.add(request.getStudent());
@@ -134,6 +143,5 @@ public class CourseRequestServiceImpl implements CourseRequestService {
         Course course = courseDao.findById(courseId);
         groupService.createAdditionGroup(students, course, from, till);
     }
-
 
 }

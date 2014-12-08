@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import school.dao.GroupDao;
 import school.dto.CourseDTO;
 import school.dto.GroupDTO;
 import school.dto.TeacherDTO;
@@ -37,6 +38,7 @@ public class GroupController {
     private final String URL_AJAX_GET_ADITIONAL_YEAR = "getAdditionYearsSelect";
     private final String URL_AJAX_GET_COURSES = "getCoursesSelect";
     private final String URL_AJAX_GET_TEACHERS = "/getTeacherSelect";
+    private final String URL_AJAX_GET_AVAILABLE_SYMBOLS = "getSymbolsForYear";
     private final String URL_MODAL_GROUP_ADD = "group-create";
     private final String URL_MODEL_GROUP_REMOVE = "group-remove";
     private final String TILES_VIEW_GROUP_HEAD_TEACHER = "groups-head-teacher";
@@ -142,17 +144,22 @@ public class GroupController {
         Integer[] allYears = GroupServiceImpl.YEARS_OF_STUDY;
         List<Integer> allAdditionYear = new ArrayList<Integer>();
         for (Integer currentYear : allYears) {
-            if (courseService.getCoursesForYear(currentYear).size()>0){
+            if (courseService.getCoursesForYear(currentYear).size() > 0) {
                 allAdditionYear.add(currentYear);
             }
         }
         return allAdditionYear;
     }
+
     @RequestMapping(value = URL_AJAX_GET_YEAR)
     public @ResponseBody Integer[] getYear() {
         return GroupServiceImpl.YEARS_OF_STUDY;
     }
-    
+
+    @RequestMapping(value = URL_AJAX_GET_AVAILABLE_SYMBOLS)
+    public @ResponseBody List<String> getAvailableSymbols(@RequestBody byte year) {
+        return groupService.getAvailableSymbols(year);
+    }
 
     @RequestMapping(value = URL_MODAL_GROUP_ADD)
     public String addNewGroup(

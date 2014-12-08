@@ -7,39 +7,66 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page session="false"%>
+
 <body>
 	<div class="header">
 
-				<ul class="crumbs">
-			<li class="first"><a href="home" style="z-index: 9;"><span></span><spring:message code="header.home"/></a></li>
-			<c:if test = "${not empty current}">
-				<c:if test = "${current == 'courses'}">
-					<li class="active"><a href="courses" style="z-index: 8;"><spring:message code="sidebar.course"/></a></li>
+		<ul class="crumbs">
+			<li class="first"><a href="${root_action}home" style="z-index: 9;"><span></span>
+					<spring:message code="header.home" /></a></li>
+			<c:if test="${not empty subject}">
+				<li class="active"><a href="../messages" style="z-index: 8;"><spring:message
+							code="sidebar.messages" /></a></li>
+				<c:if test="${subject.length() > 10}">
+					<c:set var="tenMore" value="${fn:substring(subject, 0, 10)}..." />
+					<li class="active"><a href="" style="z-index: 7;">${tenMore}</a></li>
 				</c:if>
-				<c:if test = "${current == 'group'||current == 'group_edit'}">
-					<li class="active"><a href="groups" style="z-index: 8;"><spring:message code="sidebar.groups"/></a></li>
+				<c:if test="${subject.length() < 10}">
+					<li class="active"><a href="" style="z-index: 7;">${subject}</a></li>
 				</c:if>
-				<c:if test = "${current == 'group_edit'}">
-					<li class="active"><a href="" style="z-index: 7;">Group edit</a></li>
+			</c:if>
+			<c:if test="${not empty current}">
+				<c:if test="${current == 'courses'}">
+					<li class="active"><a href="courses" style="z-index: 8;"><spring:message
+								code="sidebar.course" /></a></li>
 				</c:if>
-				<c:if test = "${current == 'request'}">
-					<li class="active"><a href="course-request" style="z-index: 8;"><spring:message code="sidebar.request"/></a></li>
+				<c:if test="${current == 'group'||current == 'group_edit'}">
+					<li class="active"><a href="groups" style="z-index: 8;"><spring:message
+								code="sidebar.groups" /></a></li>
 				</c:if>
-				<c:if test = "${current == 'salary'}">
-					<li class="active"><a href="salary" style="z-index: 8;"><spring:message code="sidebar.salary"/></a></li>
+				<c:if test="${current == 'group_edit'}">
+					<li class="active"><a href="" style="z-index: 7;">Group
+							edit</a></li>
 				</c:if>
+				<c:if test="${current == 'request'}">
+					<li class="active"><a href="course-request"
+						style="z-index: 8;"><spring:message code="sidebar.request" /></a></li>
+				</c:if>
+				<c:if test="${current == 'salary'}">
+					<li class="active"><a href="salary" style="z-index: 8;"><spring:message
+								code="sidebar.salary" /></a></li>
+				</c:if>
+				<c:if test="${current == 'conversation'}">
+					<li class="active"><a href="message" style="z-index: 8;"><spring:message
+								code="sidebar.messages" /></a></li>
+				</c:if>
+				<c:if test="${current == 'conversations'}">
+					<li class="active"><a href="messages" style="z-index: 8;"><spring:message
+								code="sidebar.messages" /></a></li>
+				</c:if>
+
 			</c:if>
 		</ul>
 
 
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_PARENT')">
-		<span class="counterPosition">
-			<a href='<c:url value="/messages"/>'><img
-					class="newMessageImage"
+			<span class="counterPosition"> <a
+				href='<c:url value="/messages"/>'><img class="newMessageImage"
 					src="<c:url value="/resources/img/envelopeW8.png" />" /> <span
 					id="newMessages" class="badgeMessage"></span></a>
-					</span>
+			</span>
 		</sec:authorize>
 
 		<sec:authorize access="isAnonymous()">

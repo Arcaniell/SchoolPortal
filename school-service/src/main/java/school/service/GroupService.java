@@ -49,4 +49,6 @@ public interface GroupService {
 
     void groupUpdate(GroupEditResponseDTO dataForUpdate);
 
+    List<String> getAvailableSymbols(byte year);
+
 }

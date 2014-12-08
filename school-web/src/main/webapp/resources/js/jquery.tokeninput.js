@@ -514,8 +514,11 @@
 			return this_token;
 		}
 
+
+		
 		// Add a token to the token list based on user input
 		function add_token(item) {
+			
 			var callback = settings.onAdd;
 
 			// See if the token already exists and select it if we don't want

@@ -8,6 +8,8 @@
 	rel="stylesheet">
 <link href="<c:url value="/resources/css/base-pagination.css" />"
 	rel="stylesheet">
+<link href="<c:url value="/resources/css/profile.css" />"
+	rel="stylesheet">
 <div align="center" class="text">
 	<h3>All the groups where teacher teaching for some period.</h3>
 	<form method="POST" action="teacher-groups">
@@ -42,7 +44,7 @@
 					<td>${element.year}</td>
 					<td>${element.additional}</td>
 					<td>${element.members}</td>
-					<td>${element.teacher}</td>
+					<td><a class="anchor" data-value ="${element.teacherUserId}">${element.teacher}</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -59,6 +61,7 @@
 	<div class="pages"></div>
 </div>
 <!-- Pagination footer -->
+<jsp:include page="/views/profile/profile_information_runner.jsp" />
 <script
 	src="<c:url value="https://code.jquery.com/ui/1.11.2/jquery-ui.js" />"></script>
 <script src="<c:url value="/resources/js/course.js" />"

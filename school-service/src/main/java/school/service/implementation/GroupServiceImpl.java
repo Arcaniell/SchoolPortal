@@ -25,7 +25,7 @@ import school.dto.GroupDTO;
 import school.dto.GroupDataDTO;
 import school.dto.GroupEditHeaderDTO;
 import school.dto.GroupEditResponseDTO;
-import school.dto.StudentDTO;
+import school.dto.UserDTO;
 import school.dto.TeacherDTO;
 import school.dto.journal.StudentMarksDTO;
 import school.model.Group;
@@ -136,6 +136,7 @@ public class GroupServiceImpl implements GroupService {
             }
             currentGroupDTO.setYear(group.getNumber());
             if (group.getTeacher() != null) {
+                currentGroupDTO.setTeacherUserId(group.getTeacher().getUser().getId());
                 currentGroupDTO.setTeacher(group.getTeacher().getUser().getFirstName() + " "
                         + group.getTeacher().getUser().getLastName());
             }
@@ -220,6 +221,7 @@ public class GroupServiceImpl implements GroupService {
             String branch) {
         Teacher teacher = teacherDao.findById(teacherId);
         Course course = courseDao.findById(courseId);
+        List<Group> existingGroups = groupDao.findByCourseId(courseId);
 
         Group group = new Group();
         group.setNumber(year);
@@ -230,6 +232,11 @@ public class GroupServiceImpl implements GroupService {
         } else {
             group.setAdditional(true);
             group.setAdditionCourse(course);
+            if (existingGroups != null) {
+                group.setAdditionalIndex(existingGroups.size() + 1);
+            } else {
+                group.setAdditionalIndex(1);
+            }
         }
         groupDao.save(group);
     }
@@ -293,17 +300,17 @@ public class GroupServiceImpl implements GroupService {
             }
         }
 
-        List<StudentDTO> studentWithoutGroupDTO = fillStudentDTO(studentWithoutGroup);
+        List<UserDTO> studentWithoutGroupDTO = fillStudentDTO(studentWithoutGroup);
 
-        Iterator<StudentDTO> studentIter = studentWithoutGroupDTO.iterator();
+        Iterator<UserDTO> studentIter = studentWithoutGroupDTO.iterator();
         while (studentIter.hasNext()) {
-            StudentDTO student4Condition = studentIter.next();
+            UserDTO student4Condition = studentIter.next();
             if ((student4Condition.getYear() < (aproxYear - 1))
                     || (student4Condition.getYear() > (aproxYear + 1))) {
                 studentIter.remove();
             }
         }
-        List<StudentDTO> studentsOfGroupDTO = fillStudentDTO(studentsOfGroup);
+        List<UserDTO> studentsOfGroupDTO = fillStudentDTO(studentsOfGroup);
         studentWithoutGroupDTO.removeAll(studentsOfGroupDTO);
         GroupEditHeaderDTO container = new GroupEditHeaderDTO();
         container.setName(groupName);
@@ -330,7 +337,7 @@ public class GroupServiceImpl implements GroupService {
             // not critical go further
         }
         List<Student> newStudents4Group = new ArrayList<Student>();
-        for (StudentDTO studentDTO : dataForUpdate.getStudents()) {
+        for (UserDTO studentDTO : dataForUpdate.getStudents()) {
             Student currentStudent = studentDao.findById(studentDTO.getId());
             newStudents4Group.add(currentStudent);
         }
@@ -356,6 +363,19 @@ public class GroupServiceImpl implements GroupService {
             setMainGroup4Students(newStudents4Group, group);
         }
         groupDao.update(group);
+    }
+
+    @Override
+    public List<String> getAvailableSymbols(byte year) {
+        String[] allSymbols = GroupServiceImpl.SYMBOLS_FOR_CLASS;
+        List<String> current = new ArrayList<String>();
+        for (String symbol : allSymbols) {
+            Group group = groupDao.findByNumberAndLetter(year, symbol.charAt(symbol.length() - 1));
+            if (group == null) {
+                current.add(symbol);
+            }
+        }
+        return current;
     }
 
     private void freeMainGroupFromStudents(Group group) {
@@ -404,11 +424,12 @@ public class GroupServiceImpl implements GroupService {
         }
     }
 
-    private List<StudentDTO> fillStudentDTO(List<Student> students) {
-        List<StudentDTO> containerOfStudentDTO = new ArrayList<StudentDTO>();
+    private List<UserDTO> fillStudentDTO(List<Student> students) {
+        List<UserDTO> containerOfStudentDTO = new ArrayList<UserDTO>();
         for (Student student : students) {
-            StudentDTO curentStudentDTO = new StudentDTO();
-            curentStudentDTO.setId(student.getId());
+            UserDTO curentStudentDTO = new UserDTO();
+            curentStudentDTO.setId(student.getUser().getId());
+            curentStudentDTO.setForeignId(student.getId());
             if (student.getUser() != null) {
                 curentStudentDTO.setName(student.getUser().getFirstName() + " "
                         + student.getUser().getLastName());

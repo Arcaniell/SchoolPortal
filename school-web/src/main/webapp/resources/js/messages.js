@@ -14,60 +14,80 @@ $("#inboxButton").click(function() {
 		data : JSON.stringify(json),
 
 		success : function(ConversationDto) {
-			$("#inboxEmptyDefault").css("display", "none");
-			
-            if($("#sentButton").hasClass("active")) {
-            	$("#sentButton").removeClass("active");
-			}
-            if(!$("#inboxButton").hasClass("active")) {
-            	$("#inboxButton").addClass("active");
-            }
-            
-			$("#inboxCount").html(ConversationDto[inboxCount]);
-			$("#sentCount").html(ConversationDto[sentCount]);
-			
-			var tableBody = " ";
-			
-			if(ConversationDto[0].inboxCount != "0"){
-				$("#conversationTable").css("display", "");
+			if(ConversationDto[0].id != "null") {
 				$("#inboxEmptyDefault").css("display", "none");
-				$("#inboxEmpty").css("display", "none");
-				$("#sentEmpty").css("display", "none");
-				for(dto in ConversationDto) {
-					$("#inboxEmpty").css("display", "none");
-					tableBody += "<tr>";
-					tableBody += "<td class=\"checkBox\"><input type=\"checkbox\" name=\"selected\"";
-					tableBody += "value=\""+ConversationDto[dto].id+"\" /></td>";
-					
-					if(ConversationDto[dto].hasNewMessages == true) {
-						tableBody += "<td class=\"name bold\"><a ";
-					} else {
-						tableBody += "<td class=\"name\"><a ";
-					}
-					tableBody += "href=\"/school-web/inbox/"+ConversationDto[dto].id+"\">"+ConversationDto[dto].name+"</a></td>";
-					if(ConversationDto[dto].hasNewMessages == true) {
-						tableBody += "<td class=\"subject bold\"><a ";
-					} else {
-						tableBody += "<td class=\"subject\"><a ";
-					}
-					tableBody += "href=\"/school-web/inbox/"+ConversationDto[dto].id+"\">"+ConversationDto[dto].subject+"</a></td>";
-					if(ConversationDto[dto].hasNewMessages == true) {
-						tableBody += "<td class=\"date bold\"><a ";
-					} else {
-						tableBody += "<td class=\"date\"><a ";
-					}
-					tableBody += "href=\"/school-web/inbox/"+ConversationDto[dto].id+"\">"+ConversationDto[dto].date+"</a></td>";
-					tableBody += "</tr>";
-				}
-			} else {
 				
-				$("#conversationTable").css("display", "none");
-				$("#sentEmpty").css("display", "none");
-				$("#inboxEmpty").css("display", "");
-			}
+	            if($("#sentButton").hasClass("active")) {
+	            	$("#sentButton").removeClass("active");
+				}
+	            if(!$("#inboxButton").hasClass("active")) {
+	            	$("#inboxButton").addClass("active");
+	            }
+	            
+				$("#inboxCount").html(ConversationDto[inboxCount]);
+				$("#sentCount").html(ConversationDto[sentCount]);
+				
+				var tableBody = " ";
+				
+				if(ConversationDto[0].inboxCount != "0"){
+					$("#conversationTable").css("display", "");
+					$("#inboxEmptyDefault").css("display", "none");
+					$("#inboxEmpty").css("display", "none");
+					$("#sentEmpty").css("display", "none");
+					for(dto in ConversationDto) {
+						$("#inboxEmpty").css("display", "none");
+						tableBody += "<tr>";
+						tableBody += "<td class=\"checkBox\"><input type=\"checkbox\" name=\"selected\"";
+						tableBody += "value=\""+ConversationDto[dto].id+"\" /></td>";
+						
+						if(ConversationDto[dto].hasNewMessages == true) {
+							tableBody += "<td class=\"name bold\"><a ";
+						} else {
+							tableBody += "<td class=\"name\"><a ";
+						}
+						tableBody += "href=\"/school-web/inbox/"+ConversationDto[dto].id+"\">"+ConversationDto[dto].name+"</a></td>";
+						if(ConversationDto[dto].hasNewMessages == true) {
+							tableBody += "<td class=\"subject bold\"><a ";
+						} else {
+							tableBody += "<td class=\"subject\"><a ";
+						}
+						tableBody += "href=\"/school-web/inbox/"+ConversationDto[dto].id+"\">"+ConversationDto[dto].subject+"</a></td>";
+						if(ConversationDto[dto].hasNewMessages == true) {
+							tableBody += "<td class=\"date bold\"><a ";
+						} else {
+							tableBody += "<td class=\"date\"><a ";
+						}
+						tableBody += "href=\"/school-web/inbox/"+ConversationDto[dto].id+"\">"+ConversationDto[dto].date+"</a></td>";
+						tableBody += "</tr>";
+					}
+					
+				} else {
+					$("#conversationTable").css("display", "none");
+					$("#sentEmpty").css("display", "none");
+					$("#inboxEmpty").css("display", "");
+				}
 
-			$("#conversationBody").html(tableBody);
-			
+				$("#conversationBody").html(tableBody);
+				
+				if(ConversationDto.length <= 10) {
+					document.getElementById("select").value = "10";
+					$(".row_count").change();
+				} else {
+					document.getElementById("select").value = "15";
+					$(".row_count").change();
+				}
+				
+			} else {
+				var url = document.URL. split('/');
+				var newUrl = "";
+				for (var i = 0; i < url.length - 1; i++) {
+					newUrl += url[i];
+					newUrl += "/";
+				}
+				newUrl += "signinfailure";
+				window.location.href = newUrl;
+			}
+						
 		}
 	});
 });
@@ -88,6 +108,7 @@ $("#sentButton").click(function() {
 		data : JSON.stringify(json),
 
 		success : function(ConversationDto) {
+			if(ConversationDto[0].id != "null") {
 			$("#inboxEmptyDefault").css("display", "none");
 			$("#inboxEmpty").css("display", "none");
 			$("#sentEmpty").css("display", "none");
@@ -141,7 +162,23 @@ $("#sentButton").click(function() {
 			}
 			
 			$("#conversationBody").html(tableBody);
-			
+			if(ConversationDto.length <= 10) {
+				document.getElementById("select").value = "10";
+				$(".row_count").change();
+			} else {
+				document.getElementById("select").value = "15";
+				$(".row_count").change();
+			}
+			} else {
+				var url = document.URL. split('/');
+				var newUrl = "";
+				for (var i = 0; i < url.length - 1; i++) {
+					newUrl += url[i];
+					newUrl += "/";
+				}
+				newUrl += "signinfailure";
+				window.location.href = newUrl;
+			}
 		}
 	});
 });

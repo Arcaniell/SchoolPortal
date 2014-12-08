@@ -10,8 +10,8 @@ public class GroupEditHeaderDTO {
     private String dateFrom;
     private String dateTill;
     private List<TeacherDTO> teachers;
-    private List<StudentDTO> groupStudents;
-    private List<StudentDTO> allFreeStudents;
+    private List<UserDTO> groupStudents;
+    private List<UserDTO> allFreeStudents;
 
     public String getName() {
         return name;
@@ -45,19 +45,19 @@ public class GroupEditHeaderDTO {
         this.teachers = teachers;
     }
 
-    public List<StudentDTO> getGroupStudents() {
+    public List<UserDTO> getGroupStudents() {
         return groupStudents;
     }
 
-    public void setGroupStudents(List<StudentDTO> groupStudents) {
+    public void setGroupStudents(List<UserDTO> groupStudents) {
         this.groupStudents = groupStudents;
     }
 
-    public List<StudentDTO> getAllFreeStudents() {
+    public List<UserDTO> getAllFreeStudents() {
         return allFreeStudents;
     }
 
-    public void setAllFreeStudents(List<StudentDTO> allFreeStudents) {
+    public void setAllFreeStudents(List<UserDTO> allFreeStudents) {
         this.allFreeStudents = allFreeStudents;
     }
 

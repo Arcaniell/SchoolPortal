@@ -7,8 +7,9 @@
 <link href="<c:url value="/resources/css/conversations.css" />"
 	rel="stylesheet">
 
-<link href="resources/css/jquery-ui.css" type="text/css"
+<link href="<c:url value="/resources/css/profile.css" />"
 	rel="stylesheet">
+	
 <link href="<c:url value="/resources/css/token-input.css" />"
 	rel="stylesheet">
 <link href="<c:url value="/resources/css/token-input-facebook.css" />"
@@ -160,6 +161,17 @@
 		</p>
 	</c:otherwise>
 </c:choose>
+<script>
+$(document).ready(
+		function() {
+			$(".btn-success").click(
+					function() {
+						$(".token-input-token-facebook").remove();
+					});
+		}
+
+);
+</script>
 
 <script src="<c:url value="/resources/js/messages.js" />"></script>
 <jsp:include page="/views/profile/profile_information_runner.jsp" />

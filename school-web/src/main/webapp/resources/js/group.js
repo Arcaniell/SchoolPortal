@@ -2,14 +2,15 @@ var additionYearSelect = [];
 var yearSelect = [];
 
 $(function() {
-	// getYears("getAdditionYearsSelect");
-	// getYears("getYearsSelect");
 	var year = $("select[name='year_value']").val();
 	renewCourseSelect(year);
+	renewSymbolSelect(year);
 	$("select[name='year_value']").change(function() {
 		var year = $("select[name='year_value']").val();
 		renewCourseSelect(year);
+		renewSymbolSelect(year);
 	});
+
 });
 
 var renewCourseSelect = function(year) {
@@ -29,6 +30,25 @@ var renewCourseSelect = function(year) {
 						+ data[i].name + "</option>\n";
 			}
 			$("select[name='course_id']").html(container);
+		}
+	});
+};
+var renewSymbolSelect = function(year) {
+	$.ajax({
+		headers : {
+			'Accept' : 'application/json',
+			'Content-Type' : 'application/json'
+		},
+		'type' : 'POST',
+		'url' : "getSymbolsForYear",
+		'data' : JSON.stringify(year),
+		'dataType' : 'json',
+		'success' : function(data) {
+			var container = "";
+			for (i in data) {
+				container += "<option>" + data[i] + "</option>\n";
+			}
+			$("select[name='symbol_value']").html(container);
 		}
 	});
 };
@@ -133,4 +153,24 @@ $(".addition_course_checkbox").click(function() {
 		}
 		$(".teachersSet").html(content);
 	}, "json");
+});
+$(".anchor").click(function() {
+	var id = $(this).data("value");
+	$.ajax({
+		type : "GET",
+		url : "profile/information",
+		data : "id=" + id,
+		headers : {
+			Accept : "text/plain; charset=utf-8",
+			"Content-Type" : "text/plain; charset=utf-8"
+		},
+		async : false,
+		success : function(response) {
+			$("#profile_modal_content").html(response);
+			$("#profileModalButton").click();
+		},
+		error : function() {
+			alert('Internal Server Error');
+		}
+	});
 });

@@ -37,7 +37,8 @@
 	</li>
 </ul>
 <form id="cForm" action="delete-conversations" method="post">
-	<table class="table table-hover" id="conversationTable" style="display: ;">
+	<table class="table table-hover paginated" id="conversationTable"
+		style="display:;">
 		<tbody id="conversationBody">
 			<c:choose>
 				<c:when test="${conversationsDto[0].inboxCount != 0}">
@@ -75,5 +76,26 @@
 		<spring:message code="conversation.noSentMessages" />
 	</p>
 </form>
+<div class="context-footer">
+	<select id="select" class="form-control row_count">
+		<option value="10">10</option>
+		<option value="15">15</option>
+		<option value="20">20</option>
+		<option value="30">30</option>
+		<option value="50">50</option>
+	</select>
+	<div class="pages"></div>
+</div>
+<script>
+$(document).ready(
+		function() {
+			$(".btn-success").click(
+					function() {
+						$(".token-input-token-facebook").remove();
+					});
+		}
 
+);
+</script>
+<script src="<c:url value="/resources/js/messagesPagination.js" />" type="text/javascript"></script>
 <script src="<c:url value="/resources/js/messages.js" />"></script>
