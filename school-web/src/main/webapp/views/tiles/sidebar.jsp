@@ -40,22 +40,22 @@
 						code="sidebar.message" /> </a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_STUDENT')">
-			<li><a href="${root_action}student-courses"><spring:message code="sidebar.course" /></a></li>
+			<li><a href="${root_action}student-courses"><spring:message code="sidebar.course.student" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER')">
-			<li><a href="${root_action}teacher-courses"><spring:message code="sidebar.course" /></a></li>
+			<li><a href="${root_action}teacher-courses"><spring:message code="sidebar.course.teacher" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_HEAD_TEACHER')">
-			<li><a href="${root_action}headteacher-courses"><spring:message code="sidebar.course" /></a></li>
+			<li><a href="${root_action}headteacher-courses"><spring:message code="sidebar.course.h.teacher" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_STUDENT')">
-			<li><a href="${root_action}student-groups"><spring:message code="sidebar.groups" /></a></li>
+			<li><a href="${root_action}student-groups"><spring:message code="sidebar.group.student" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER')">
-			<li><a href="${root_action}teacher-groups"><spring:message code="sidebar.groups" /></a></li>
+			<li><a href="${root_action}teacher-groups"><spring:message code="sidebar.group.teacher" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_HEAD_TEACHER')">
-			<li><a href="${root_action}headteacher-groups"><spring:message code="sidebar.groups" /></a></li>
+			<li><a href="${root_action}headteacher-groups"><spring:message code="sidebar.group.h.teacher" /></a></li>
 		</sec:authorize>
 		<sec:authorize
 			access="hasAnyRole('ROLE_HEAD_TEACHER', 'ROLE_STUDENT')">
