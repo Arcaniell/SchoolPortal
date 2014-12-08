@@ -80,3 +80,8 @@ h3 {
 .hidden_for_default_group, .btn-delete {
 	display: none;
 }
+
+.name_error, .price_error {
+	color: red;
+	display: none;
+}

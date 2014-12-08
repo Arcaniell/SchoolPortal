@@ -9,7 +9,9 @@
 <link href="<c:url value="/resources/css/base-pagination.css" />"
 	rel="stylesheet">
 <div align="center" class="text">
-	<h3>All the courses which teacher teaching for some period.</h3>
+	<h3>
+		<spring:message code="course.header.teacher" />
+	</h3>
 	<form method="POST" action="teacher-courses">
 		<p>
 			<spring:message code="course.data" />
@@ -71,5 +73,5 @@
 	type="text/javascript"></script>
 <script src="<c:url value="/resources/js/utils/sortable.js" />"
 	type="text/javascript"></script>
-	<script src="<c:url value="/resources/js/utils/pagination.js" />"
+<script src="<c:url value="/resources/js/utils/pagination.js" />"
 	type="text/javascript"></script>
