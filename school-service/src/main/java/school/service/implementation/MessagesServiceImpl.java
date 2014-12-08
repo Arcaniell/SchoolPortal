@@ -200,33 +200,16 @@ public class MessagesServiceImpl implements MessagesService {
 
 		} else {
 			if (emailOrGroup.equals("Name or email")) {
-				System.out.println(emailOrGroup + " Name or email");
-				System.out.println(emailOrGroup + " Name or email");
-				System.out.println(emailOrGroup + " Name or email");
-				System.out.println(emailOrGroup + " Name or email");
-				System.out.println(emailOrGroup + " Name or email");
 				List<User> parents = parentDao.findAllUsers();
 				for (User u : parents) {
 					if (ConversationUtils.userContainsLetter(u, tagName))
 						usersOrGroups.add(u);
 				}
 			} else {
-				System.out.println(emailOrGroup + " Group");
-				System.out.println(emailOrGroup + " Group");
-				System.out.println(emailOrGroup + " Group");
-				System.out.println(emailOrGroup + " Group");
-				System.out.println(emailOrGroup + " Group");
-				System.out.println();
 				List<Group> groups = groupDao.findAll();
 				
-				for(Group g:groups) {
-					System.out.println(g.getNumber() + " - " + g.getLetter());
-				}
-				System.out.println();
-				System.out.println(tagName.contains(String.valueOf(groups.get(0).getNumber())));
 				for (Group g : groups) {
 					if (ConversationUtils.groupContainsLetter(g, tagName)) {
-						System.out.println(g.getNumber());
 						usersOrGroups.add(g);
 					}
 				}

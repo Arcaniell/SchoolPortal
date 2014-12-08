@@ -66,6 +66,7 @@ public class Conversation {
 
 	@Column(nullable = false)
 	private boolean isDeletedSender;
+	private int countOfReceivers;
 	
 	public Conversation() {}
 
@@ -79,6 +80,20 @@ public class Conversation {
 		this.isAnsweredSender = isAnsweredSender;
 		this.isDeletedReceiver = isDeletedReceiver;
 		this.isDeletedSender = isDeletedSender;
+	}
+
+	public Conversation(User senderId, User receiverId, String subject, boolean isAnsweredReceiver,
+			boolean isAnsweredSender, boolean isDeletedReceiver,
+			boolean isDeletedSender, int countOfReceivers) {
+		super();
+		this.senderId = senderId;
+		this.receiverId = receiverId;
+		this.subject = subject;
+		this.isAnsweredReceiver = isAnsweredReceiver;
+		this.isAnsweredSender = isAnsweredSender;
+		this.isDeletedReceiver = isDeletedReceiver;
+		this.isDeletedSender = isDeletedSender;
+		this.countOfReceivers = countOfReceivers;
 	}
 
 	public long getId() {
@@ -153,10 +168,19 @@ public class Conversation {
 		this.isDeletedSender = isDeletedSender;
 	}
 
+	public int getCountOfReceivers() {
+		return countOfReceivers;
+	}
+
+	public void setCountOfReceivers(int countOfReceivers) {
+		this.countOfReceivers = countOfReceivers;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + countOfReceivers;
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + (isAnsweredReceiver ? 1231 : 1237);
 		result = prime * result + (isAnsweredSender ? 1231 : 1237);
@@ -181,6 +205,8 @@ public class Conversation {
 		if (getClass() != obj.getClass())
 			return false;
 		Conversation other = (Conversation) obj;
+		if (countOfReceivers != other.countOfReceivers)
+			return false;
 		if (id != other.id)
 			return false;
 		if (isAnsweredReceiver != other.isAnsweredReceiver)

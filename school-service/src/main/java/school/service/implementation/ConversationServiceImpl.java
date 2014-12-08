@@ -2,6 +2,7 @@ package school.service.implementation;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -14,9 +15,11 @@ import school.dao.UserDao;
 import school.dto.message.ConversationDto;
 import school.model.Conversation;
 import school.model.Message;
+import school.model.Parent;
 import school.model.User;
 import school.service.ConversationService;
 import school.service.MessagesService;
+import school.service.ParentService;
 import school.service.utils.ConversationUtils;
 import school.service.utils.DateUtil;
 
@@ -33,14 +36,19 @@ public class ConversationServiceImpl implements ConversationService {
 	private UserDao userDao;
 	private User user;
 
+	@Autowired
+	private ParentService parentService;
+
 	@Transactional
 	@Override
 	public List<Conversation> findConversations(long userId, String inboxOrSent) {
 		User user = userDao.findById(userId);
 		if (inboxOrSent.equals("inbox")) {
-			return conversationDao.findInboxConversations(user);
+			return ConversationUtils.removeDoubledConversations(conversationDao
+					.findInboxConversations(user));
 		} else {
-			return conversationDao.findSentConversations(user);
+			return ConversationUtils.removeDoubledConversations(conversationDao
+					.findSentConversations(user));
 		}
 	}
 
@@ -86,10 +94,12 @@ public class ConversationServiceImpl implements ConversationService {
 		List<ConversationDto> dtos = new ArrayList<ConversationDto>();
 		String inboxCount = String.valueOf(findConversations(id, "inbox")
 				.size());
-		String sentCount = String.valueOf(findConversations(id, "sent")
-				.size());
+		String sentCount = String.valueOf(findConversations(id, "sent").size());
 		for (int i = 0; i < conversations.size(); i++) {
-			ConversationDto dto = new ConversationDto(names.get(i),
+			int countOfReceivers = conversations.get(i).getCountOfReceivers();
+			ConversationDto dto = new ConversationDto(
+					countOfReceivers > 1 ? names.get(i) + " ("
+							+ countOfReceivers + ")" : names.get(i),
 					conversations.get(i).getSubject(),
 					DateUtil.getFormattedDate(dates.get(i), DateUtil.MEDIUM,
 							loc), String.valueOf(conversations.get(i).getId()),
@@ -98,7 +108,8 @@ public class ConversationServiceImpl implements ConversationService {
 
 			dtos.add(dto);
 		}
-		if(conversations.size() == 0) dtos.add(new ConversationDto(inboxCount, sentCount));
+		if (conversations.size() == 0)
+			dtos.add(new ConversationDto(inboxCount, sentCount));
 		return dtos;
 	}
 
@@ -126,7 +137,8 @@ public class ConversationServiceImpl implements ConversationService {
 	public void createConversation(String subject, long sender, long receiver,
 			String text) {
 		Conversation conversation = new Conversation(userDao.findById(sender),
-				userDao.findById(receiver), subject, false, true, false, false);
+				userDao.findById(receiver), subject, false, true, false, false,
+				1);
 		conversationDao.save(conversation);
 		messagesService.createNewMessage(conversation, text);
 	}
@@ -152,5 +164,32 @@ public class ConversationServiceImpl implements ConversationService {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public boolean isGroup(String to) {
+		String[] splitted = to.split(" ");
+		if (splitted[1].equals("-")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public void sendToGroup(String subject, Long principalId, String group,
+			String text) {
+		User sender = userDao.findById(principalId);
+		List<Parent> parents = parentService.getAllParentsOfGroup(group);
+		Conversation conversation;
+		int counter = 0;
+		for (Parent p : parents) {
+			conversation = new Conversation(sender, p.getUserId(), subject,
+					false, true, false, false, counter == 0 ? parents.size()
+							: -1);
+			counter++;
+			conversationDao.save(conversation);
+			messagesService.createNewMessage(conversation, text);
+		}
 	}
 }

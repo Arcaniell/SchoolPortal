@@ -1,7 +1,6 @@
 package school.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,12 +18,9 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import school.dto.message.EmailObjectDTO;
 import school.dto.message.MessageDto;
-import school.dto.message.MessageReceiverSelect;
 import school.dto.message.NewMessagesObjectDTO;
 import school.model.Conversation;
-import school.model.Group;
 import school.model.Message;
-import school.model.User;
 import school.service.ConversationService;
 import school.service.MessagesService;
 
@@ -41,6 +36,11 @@ public class MessagesController {
 	@RequestMapping(value = "/inbox/{id}")
 	public String inboxConversationMessages(Model model, @PathVariable long id,
 			Principal principal, HttpServletRequest request) {
+		
+		if(principal == null) {
+			return "redirect:/signinfailure";
+		}
+		
 		long userId = Long.valueOf(principal.getName());
 		Conversation conversation = conversationService.findById(id);
 		List<Conversation> conversationsI = conversationService
@@ -58,6 +58,7 @@ public class MessagesController {
 		model.addAttribute("inboxSize", conversationsI.size());
 		model.addAttribute("sentSize", conversationsS.size());
 		model.addAttribute("subject", conversation.getSubject());
+		model.addAttribute("root_action", "../");
 		int newMessages = messagesService.countOfNewMessages(userId);
 		request.getSession(false).setAttribute("newMessages", newMessages);
 		request.getSession(false).setAttribute("currentPage", "inbox/" + id);
@@ -68,6 +69,11 @@ public class MessagesController {
 	@RequestMapping(value = "/sent/{id}")
 	public String sentConversationMessages(Model model, @PathVariable long id,
 			Principal principal, HttpServletRequest request) {
+		
+		if(principal == null) {
+			return "redirect:/signinfailure";
+		}
+		
 		long userId = Long.valueOf(principal.getName());
 		Conversation conversation = conversationService.findById(id);
 		List<Conversation> conversationsI = conversationService
@@ -85,6 +91,7 @@ public class MessagesController {
 		model.addAttribute("inboxSize", conversationsI.size());
 		model.addAttribute("sentSize", conversationsS.size());
 		model.addAttribute("subject", conversation.getSubject());
+		model.addAttribute("root_action", "../");
 		request.getSession().setAttribute("currentPage", "sent/" + id);
 		return "sentMessages";
 
@@ -128,18 +135,6 @@ public class MessagesController {
 		List<Object> usersOrGroups = messagesService.simulateSearchResult(tagName,
 				isParent, emailOrGroup);
 		
-		System.out.println(emailOrGroup);
-		System.out.println(emailOrGroup);
-		System.out.println(emailOrGroup);
-		System.out.println(emailOrGroup);
-		System.out.println(emailOrGroup);
-		System.out.println(emailOrGroup);
-		System.out.println(emailOrGroup);
-		System.out.println(emailOrGroup);
-		System.out.println(emailOrGroup);
-		System.out.println();
-		System.out.println();
-		System.out.println(tagName.contains("5"));
 		
 		return messagesService.contructEmailObjectDTO(usersOrGroups);
 	}

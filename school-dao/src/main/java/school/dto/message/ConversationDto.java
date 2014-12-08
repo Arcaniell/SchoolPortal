@@ -15,6 +15,10 @@ public class ConversationDto {
 		this.sentCount = sentCount;
 	}
 	
+	public ConversationDto(String id) {
+		this.id = id;
+	}
+	
 	public ConversationDto(String name, String subject, String date, String id,
 			boolean hasNewMessages, String inboxCount, String sentCount) {
 		this.name = name;

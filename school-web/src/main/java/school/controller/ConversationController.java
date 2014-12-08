@@ -43,18 +43,24 @@ public class ConversationController {
 			@RequestBody MessageButton messageButton, Principal principal,
 			HttpServletRequest request) {
 
+		if (principal == null) {
+			List<ConversationDto> list = new ArrayList<ConversationDto>();
+			list.add(new ConversationDto("null"));
+			return list;
+		}
+
 		long principalId = Long.valueOf(principal.getName());
 		Locale loc = RequestContextUtils.getLocale(request);
-		
+
 		List<Conversation> conversations;
-		if(messageButton.getButton().equals("inbox")) {
-			conversations = conversationService
-					.findConversations(principalId, "inbox");
+		if (messageButton.getButton().equals("inbox")) {
+			conversations = conversationService.findConversations(principalId,
+					"inbox");
 		} else {
-			conversations = conversationService
-					.findConversations(principalId, "sent");
+			conversations = conversationService.findConversations(principalId,
+					"sent");
 		}
-		
+
 		List<ConversationDto> dtos = conversationService
 				.constructConversationDto(conversations, principalId, loc);
 
@@ -64,20 +70,24 @@ public class ConversationController {
 	@RequestMapping("messages")
 	public String inbox(Model model, Principal principal,
 			HttpServletRequest request) {
-		
+
+		if (principal == null) {
+			return "redirect:/signinfailure";
+		}
+
 		long principalId = Long.valueOf(principal.getName());
-				
+
 		List<Conversation> conversationsI = conversationService
 				.findConversations(principalId, "inbox");
-				
+
 		List<ConversationDto> conversationsDto = new ArrayList<ConversationDto>();
-		
-			Locale loc = RequestContextUtils.getLocale(request);
-			conversationsDto = conversationService.constructConversationDto(
-					conversationsI, principalId, loc);
-		
+
+		Locale loc = RequestContextUtils.getLocale(request);
+		conversationsDto = conversationService.constructConversationDto(
+				conversationsI, principalId, loc);
+
 		model.addAttribute("conversationsDto", conversationsDto);
-		
+		model.addAttribute("current", "conversations");
 		request.getSession(false).setAttribute("currentPage", "messages");
 		return "messages";
 	}
@@ -85,7 +95,7 @@ public class ConversationController {
 	@RequestMapping(value = "delete-conversations", method = RequestMethod.POST)
 	public String deleteSentConversations(
 			@RequestParam(value = "selected", required = false) String[] ids,
-			Principal principal, HttpServletRequest request) {
+			Principal principal, HttpServletRequest request, Model model) {
 
 		long id = Long.valueOf(principal.getName());
 		if (ids != null) {
@@ -104,39 +114,48 @@ public class ConversationController {
 			HttpServletRequest request, Principal principal) {
 
 		Long principalId = Long.valueOf(principal.getName());
-		String[] namesAndEmails = to.split(",");
+		if (!conversationService.isGroup(to)) {
 
-		for (String s : namesAndEmails) {
-			String email = s.split("-")[1].trim();
-			User receiver = userService.findByEmail(email);
-			Long receiverId = receiver.getId();
+			String[] namesAndEmails = to.split(",");
 
-			conversationService.createConversation(subject, principalId,
-					receiverId, text);
+			for (String s : namesAndEmails) {
+				String email = s.split("-")[1].trim();
+				User receiver = userService.findByEmail(email);
+				Long receiverId = receiver.getId();
+
+				conversationService.createConversation(subject, principalId,
+						receiverId, text);
+			}
+		} else {
+			conversationService.sendToGroup(subject, principalId,
+					to, text);
 		}
 
-		String currectPage = (String) request.getSession().getAttribute(
+		String currentPage = (String) request.getSession().getAttribute(
 				"currentPage");
-		return "redirect:/" + currectPage;
+		return "redirect:/" + currentPage;
 	}
-	
+
 	@RequestMapping("message")
 	public String sent(Model model, Principal principal,
 			HttpServletRequest request) {
-		
+
+		if (principal == null) {
+			return "redirect:/signinfailure";
+		}
 		long principalId = Long.valueOf(principal.getName());
-				
+
 		List<Conversation> conversationsI = conversationService
 				.findConversations(principalId, "sent");
-				
+
 		List<ConversationDto> conversationsDto = new ArrayList<ConversationDto>();
-		
-			Locale loc = RequestContextUtils.getLocale(request);
-			conversationsDto = conversationService.constructConversationDto(
-					conversationsI, principalId, loc);
-		
+
+		Locale loc = RequestContextUtils.getLocale(request);
+		conversationsDto = conversationService.constructConversationDto(
+				conversationsI, principalId, loc);
+
 		model.addAttribute("conversationsDto", conversationsDto);
-		
+		model.addAttribute("current", "conversation");
 		request.getSession(false).setAttribute("currentPage", "message");
 		return "message";
 	}
