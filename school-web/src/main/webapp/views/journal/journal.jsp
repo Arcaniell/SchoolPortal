@@ -7,9 +7,9 @@
 <link href="<c:url value="/resources/css/journal.css" />"
 	rel="stylesheet">
 
-
-<h3>Journal</h3>
-
+<div class="journalTitle" >
+	<h3>Journal</h3>
+</div>
 <div>
 	<table class="table tableOnBackMark">
 		<tbody class="bodyJournal">
@@ -105,6 +105,12 @@
 				</td>
 				<td id="RightSideBarJournal">
 					<table class="table tableSider">
+						<tr class="info trHeaderRow trSideHeader">
+							<th id="RightSideBarJournal" class="thButton">
+								<h4 style="text-align: center;">Journal search</h4>
+							</th>
+						</tr>
+
 						<tr class="trSize trSide">
 							<th id="RightSideBarJournal" class="thButton">
 								<h4>
@@ -199,7 +205,7 @@
 							</select></th>
 						<tr class="trSize trSide">
 							<th id="RightSideBarJournal" class="thButton"><button
-									id="submitSearch" class="btn btn2" type="button">
+									id="submitSearch" class="btn btn-sample" type="button">
 									<spring:message code="journal.submit" />
 								</button></th>
 						</tr>

@@ -39,4 +39,9 @@ public interface ScheduleDao extends BaseDao<Schedule, Long> {
 			Date from, Date till);
 
 	Schedule findByTeacherDateLesson(long teacherId, Date date, long lessonId);
+
+	List<Schedule> findByTeacherAndCourse(long teacherId, String courseName);
+
+	List<Schedule> findByCourse(String courseName);
+
 }

@@ -16,14 +16,6 @@ public class JournalStaffDTO extends JournalDTO {
 	public JournalStaffDTO() {
 	}
 
-	public JournalStaffDTO(long id, String teacherName, Set<Group> groups,
-			Set<String> courseNames) {
-		this.id = id;
-		this.name = teacherName;
-		this.groups = groups;
-		this.courseNames = courseNames;
-	}
-
 	public JournalStaffDTO(long id, String name, Set<Byte> groupNumbers,
 			Set<Character> groupLetters, Set<String> courseNames) {
 		this.id = id;
