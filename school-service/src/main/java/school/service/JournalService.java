@@ -13,9 +13,9 @@ import school.dto.journal.StudentWithMarksDTO;
 
 public interface JournalService {
 
-	JournalStaffDTO getTeacherInfo(String userId);
+	// JournalStaffDTO getTeacherInfo(long userId);
 
-	JournalStaffDTO seniorStaffInfo(String id);
+	JournalStaffDTO getStaffInfo(long userId, String role);
 
 	List<StudentWithMarksDTO> getMarksOfGroup(JournalSearch search)
 			throws ParseException;
@@ -24,10 +24,10 @@ public interface JournalService {
 
 	void editDate(EditDateDTO event);
 
-	Set<String> getGroupLetters(String userId, String number);
+	Set<Character> getGroupLetters(long userId, String role, String subject, byte number);
 
-	Set<String> getGroupNumbers(String id, String subject);
+	Set<Byte> getGroupNumbers(long userId, String role, String subject);
 
-	JournalSearch getDeafaultData(String id, Date currentDate)
+	JournalSearch getDeafaultData(long userId, Date currentDate)
 			throws ParseException;
 }

@@ -1,14 +1,26 @@
 $(function() {
-		$("#submitSearch").click();
+	$("#submitSearch").click();
 });
 
 $("#groupNumberSelect").change(
 		function() {
+			var subject = $("#subjectSelect").val();
+			var groupNumber = $("#groupNumberSelect").val();
+			var groupLetter = $("#groupLetterSelect").val();
+			var quarter = $("#quarterSelect").val();
+			var json = {
+				"subject" : subject,
+				"groupNumber" : groupNumber,
+				"groupLetter" : groupLetter,
+				"quarter" : quarter
+			}
 			$.ajax({
 				url : 'journal-letter',
-				type : 'post',
-				data : $("#groupNumberSelect").val(),
-
+				type : 'POST',
+				data : JSON.stringify(json),
+				dataType : 'json',
+				contentType : 'application/json',
+				mimeType : 'application/json',
 				success : function(groupLetters) {
 					var content = " ";
 					for (letter in groupLetters) {
@@ -20,38 +32,70 @@ $("#groupNumberSelect").change(
 			});
 		});
 
-$("#subjectSelect").change(
-		function() {
-			$.ajax({
-				url : 'journal-subject',
-				type : 'post',
-				data : $("#subjectSelect").val(),
-
-				success : function(groupNumbers) {
-					var content = " ";
-					for (number in groupNumbers) {
-						content += "<option value=\"" + groupNumbers[number]
-								+ "\">" + groupNumbers[number] + "</option>\n";
+$("#subjectSelect")
+		.change(
+				function() {
+					var subject = $("#subjectSelect").val();
+					var groupNumber = $("#groupNumberSelect").val();
+					var groupLetter = $("#groupLetterSelect").val();
+					var quarter = $("#quarterSelect").val();
+					var json = {
+						"subject" : subject,
+						"groupNumber" : groupNumber,
+						"groupLetter" : groupLetter,
+						"quarter" : quarter
 					}
-					$("#groupNumberSelect").html(content);
 					$.ajax({
-						url : 'journal-letter',
-						type : 'post',
-						data : $("#groupNumberSelect").val(),
+						url : 'journal-subject',
+						type : 'POST',
+						data : JSON.stringify(json),
+						dataType : 'json',
+						contentType : 'application/json',
+						mimeType : 'application/json',
+						success : function(groupNumbers) {
+						var content = " ";
+						for (number in groupNumbers) {
+							content += "<option value=\""
+								+ groupNumbers[number] + "\">"
+								+ groupNumbers[number]
+								+ "</option>\n";
+						}
+						$("#groupNumberSelect").html(content);
+						$("#groupNumberSelect").ready(function() {
+						var subject = $("#subjectSelect").val();
+						var groupNumber = $("#groupNumberSelect").val();
+						var groupLetter = $("#groupLetterSelect").val();
+						var quarter = $("#quarterSelect").val();
+						var json = {
+								"subject" : subject,
+								"groupNumber" : groupNumber,
+								"groupLetter" : groupLetter,
+								"quarter" : quarter
+						}
 
+						$.ajax({
+						url : 'journal-letter',
+						type : 'POST',
+						data : JSON.stringify(json),
+						dataType : 'json',
+						contentType : 'application/json',
+						mimeType : 'application/json',
 						success : function(groupLetters) {
 							var content = " ";
 							for (letter in groupLetters) {
 								content += "<option value=\""
-										+ groupLetters[letter] + "\">"
-										+ groupLetters[letter] + "</option>\n";
+									+ groupLetters[letter]
+									+ "\">"
+									+ groupLetters[letter]
+									+ "</option>\n";
 							}
-							$("#groupLetterSelect").html(content);
+						$("#groupLetterSelect").html(content);
 						}
 					});
-				}
 			});
-		});
+		}
+	});
+});
 
 $("#submitSearch")
 		.click(

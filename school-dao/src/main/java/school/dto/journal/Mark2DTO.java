@@ -4,7 +4,10 @@ import java.util.Date;
 
 public class Mark2DTO implements Comparable<Mark2DTO> {
 
+	private Long lessonId;
 	private long scheduleId;
+	private String courseName;
+	private String homeTask;
 	private Date date;
 	private byte mark;
 	private byte markCoefficient;
@@ -13,17 +16,54 @@ public class Mark2DTO implements Comparable<Mark2DTO> {
 
 	}
 
-	public Mark2DTO(long scheduleId, Date date, byte mark, byte markCoefficient) {
+	// for diary
+	public Mark2DTO(long lessonId, long scheduleId, String courseName,
+			String homeTask, Date date, byte markCoefficient) {
+		this.lessonId = lessonId;
+		this.scheduleId = scheduleId;
+		this.courseName = courseName;
+		this.homeTask = homeTask;
+		this.date = date;
+		this.markCoefficient = markCoefficient;
+	}
+
+	// for diary
+	public Mark2DTO(long lessonId, long scheduleId, String courseName,
+			String homeTask, Date date, byte mark, byte markCoefficient) {
+		this.lessonId = lessonId;
+		this.scheduleId = scheduleId;
+		this.courseName = courseName;
+		this.homeTask = homeTask;
+		this.date = date;
+		this.mark = mark;
+		this.markCoefficient = markCoefficient;
+	}
+
+	// for journal
+	public Mark2DTO(long lessonId, long scheduleId, Date date,
+			byte markCoefficient) {
+		this.lessonId = lessonId;
+		this.scheduleId = scheduleId;
+		this.date = date;
+		this.markCoefficient = markCoefficient;
+	}
+
+	// for journal
+	public Mark2DTO(long lessonId, long scheduleId, Date date, byte mark,
+			byte markCoefficient) {
+		this.lessonId = lessonId;
 		this.scheduleId = scheduleId;
 		this.date = date;
 		this.mark = mark;
 		this.markCoefficient = markCoefficient;
 	}
 
-	public Mark2DTO(long scheduleId, Date date, byte markCoefficient) {
-		this.scheduleId = scheduleId;
-		this.date = date;
-		this.markCoefficient = markCoefficient;
+	public Long getLessonId() {
+		return lessonId;
+	}
+
+	public void setLessonId(Long lessonId) {
+		this.lessonId = lessonId;
 	}
 
 	public long getScheduleId() {
@@ -32,6 +72,22 @@ public class Mark2DTO implements Comparable<Mark2DTO> {
 
 	public void setScheduleId(long scheduleId) {
 		this.scheduleId = scheduleId;
+	}
+
+	public String getCourseName() {
+		return courseName;
+	}
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
+	public String getHomeTask() {
+		return homeTask;
+	}
+
+	public void setHomeTask(String homeTask) {
+		this.homeTask = homeTask;
 	}
 
 	public Date getDate() {
@@ -65,6 +121,6 @@ public class Mark2DTO implements Comparable<Mark2DTO> {
 		} else if (this.date.after(markDTO.getDate())) {
 			return 1;
 		}
-		return 0;
+		return this.lessonId.compareTo(markDTO.getLessonId());
 	}
 }
