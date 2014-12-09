@@ -11,11 +11,11 @@
 <link href="<c:url value="/resources/css/profile.css" />"
 	rel="stylesheet">
 <div align="center" class="text">
-	<h3>All the groups where teacher teaching for some period.</h3>
+	<h3><spring:message code="group.new.header.teacher" /></h3>
 	<form method="POST" action="teacher-groups">
 		<p>
 			<spring:message code="course.data" />
-			from: <input name="dateFrom" value="${dateFrom}" type="text"
+			<spring:message code="course.data.from" /> <input name="dateFrom" value="${dateFrom}" type="text"
 				class="datepicker">
 			<spring:message code="course.data.till" />
 			<input name="dateTill" value="${dateTill}" type="text"

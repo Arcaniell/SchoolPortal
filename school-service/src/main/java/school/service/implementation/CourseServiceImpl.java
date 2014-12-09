@@ -146,13 +146,13 @@ public class CourseServiceImpl implements CourseService {
         return fillCourseDTOList(courses);
     }
 
-    // HEADTEACHER GROUP MANAGE CONTROLLER CALL
+    // HEADTEACHER COURSE MANAGE CONTROLLER CALL
     @Override
     public void saveNewCourse(Course course) {
         courseDao.save(course);
     }
 
-    // HEADTEACHER GROUP MANAGE CONTROLLER CALL
+    // HEADTEACHER COURSE MANAGE CONTROLLER CALL
     @Override
     public void deleteAllCoursesWithIds(Long[] IdArray) {
         for (Long id : IdArray) {
@@ -196,6 +196,7 @@ public class CourseServiceImpl implements CourseService {
         return container;
     }
 
+    // HEADTEACHER GROUP CONTROLLER CALL
     @Override
     public List<CourseDTO> getCoursesForYear(int year) {
         List<Course> courses = courseDao.findAdditionCourseByYearAndArchiveFlag(year,
