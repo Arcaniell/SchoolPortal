@@ -20,8 +20,8 @@
 		src="<c:url value="/photo/${pageContext.request.userPrincipal.name}" />" />
 </sec:authorize>
 <sec:authorize access="isAnonymous()">
-	<img class="logo"
-		src="<c:url value="/resources/img/logos/school-logo.png" />" />
+<img class="logo"
+src="<c:url value="/resources/img/logos/school-logo.jpg" />" />
 </sec:authorize>
 <div class="internal-buttons">
 	<ul class="nav nav-sidebar">

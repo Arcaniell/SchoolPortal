@@ -10,7 +10,7 @@ import school.service.AdminService;
 import school.service.RoleRequestService;
 
 @Service
-public class AdminServiceImpl implements AdminService{
+public class AdminServiceImpl implements AdminService {
 
 	@Autowired
 	RoleRequestService roleRequestService;
@@ -29,6 +29,5 @@ public class AdminServiceImpl implements AdminService{
 	public RoleRequest findRoleRequest(long id) {
 		return roleRequestService.findRoleRequest(id);
 	}
-	
 
 }

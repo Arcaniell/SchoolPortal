@@ -15,26 +15,28 @@ import org.springframework.transaction.annotation.Transactional;
 import school.dao.UserDao;
 import school.model.Role;
 
-
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private UserDao userDao;
+	@Autowired
+	private UserDao userDao;
 
-    @Transactional
-    public UserDetails loadUserByUsername(String email){
-    	
-        school.model.User userEntity = userDao.findByEmail(email);
+	@Transactional
+	public UserDetails loadUserByUsername(String email) {
 
-        if(userEntity == null) throw new UsernameNotFoundException("Error in email, or password");
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
-        
-        for (Role role : userEntity.getRoles()) {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-            System.out.println(role.getName());
-        }
-        return new User(String.valueOf(userEntity.getId()), userEntity.getPassword(), userEntity.isConfirmed(), true, true, true, authorities);
-    }
-    
+		school.model.User userEntity = userDao.findByEmail(email);
+
+		if (userEntity == null)
+			throw new UsernameNotFoundException("Error in email, or password");
+		Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
+
+		for (Role role : userEntity.getRoles()) {
+			authorities.add(new SimpleGrantedAuthority(role.getName()));
+			System.out.println(role.getName());
+		}
+		return new User(String.valueOf(userEntity.getId()),
+				userEntity.getPassword(), userEntity.isConfirmed(), true, true,
+				true, authorities);
+	}
+
 }

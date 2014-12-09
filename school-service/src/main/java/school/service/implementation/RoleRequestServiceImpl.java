@@ -30,7 +30,6 @@ public class RoleRequestServiceImpl implements RoleRequestService {
 	private ParentDao parentDao;
 	@Autowired
 	private TeacherDao teacherDao;
-	
 
 	@Override
 	public void createRoleRequest(User user, List<Role> roles, Long groupId) {

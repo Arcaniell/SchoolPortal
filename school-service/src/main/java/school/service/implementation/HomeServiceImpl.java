@@ -52,18 +52,21 @@ public class HomeServiceImpl implements HomeService {
 		return newsDao.findAll();
 	}
 
-
 	@Override
 	public boolean registrateUser(RegistrationDTO registrationDTO, String url) {
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		RegistrationData registrationData = registrationDTO.getRegistrationData();
-		registrationData.getUser().setPassword(passwordEncoder
-				.encode(registrationData.getUser().getPassword()));
+		RegistrationData registrationData = registrationDTO
+				.getRegistrationData();
+		registrationData.getUser().setPassword(
+				passwordEncoder
+						.encode(registrationData.getUser().getPassword()));
 		List<Role> roles = registrationData.getUser().getRoles();
 		registrationData.getUser().setRoles(null);
 		registrationData.getUser().setRegistration(new Date());
-		registrationData.setUser(userService.createUser(registrationData.getUser()));
-		roleRequestService.createRoleRequest(registrationData.getUser(), roles, registrationDTO.getGroupId());
+		registrationData.setUser(userService.createUser(registrationData
+				.getUser()));
+		roleRequestService.createRoleRequest(registrationData.getUser(), roles,
+				registrationDTO.getGroupId());
 		Random random = new Random();
 		registrationData.setRegistrationCode(Math.abs(random.nextInt(10000)));
 		registrationData = registrationDataDao.update(registrationData);
@@ -74,20 +77,22 @@ public class HomeServiceImpl implements HomeService {
 	public User confirmUser(long userId, int code) {
 		RegistrationData registrationData = registrationDataDao
 				.findByUserAndCode(userId, code);
-		if (registrationData != null){
+		if (registrationData != null) {
 			User user = userDao.findById(userId);
 			user.setConfirmed(User.ConfirmType.CONFIRMED);
 			return userDao.update(user);
-			
-		}return null;
+
+		}
+		return null;
 	}
 
 	@Override
 	public boolean forgotAPassword(RegistrationData registrationData, String url) {
 		User user = userDao.findByEmail(registrationData.getUser().getEmail());
 		registrationData.setUser(user);
-		registrationData = registrationDataDao.findByUserQuestionAnswer(registrationData);
-		if(registrationData != null){
+		registrationData = registrationDataDao
+				.findByUserQuestionAnswer(registrationData);
+		if (registrationData != null) {
 			RestorePassword restorePassword = new RestorePassword();
 			Random random = new Random();
 			restorePassword.setRestoreCode(Math.abs(random.nextInt(10000)));
@@ -98,36 +103,35 @@ public class HomeServiceImpl implements HomeService {
 		}
 		return false;
 	}
-	
-	private String generateRandomString(int length){
+
+	private String generateRandomString(int length) {
 		char[] chars = "abcdefghijklmnopqrstuvwxyz123456789".toCharArray();
 		StringBuilder sb = new StringBuilder();
 		Random random = new Random();
 		for (int i = 0; i < length; i++) {
-		    char c = chars[random.nextInt(chars.length)];
-		    sb.append(c);
+			char c = chars[random.nextInt(chars.length)];
+			sb.append(c);
 		}
 		return sb.toString();
 	}
 
-
 	@Override
 	public User confirmPassword(long userId, int code) {
-		RestorePassword restorePassword = restorePasswordDao.findByUserAndCode(userId, code);
-		if(restorePassword != null){
-		User user = userDao.findById(userId);
-		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		user.setPassword(passwordEncoder
-				.encode(restorePassword.getNewPassword()));
-		return userDao.update(user);
-		}return null;
+		RestorePassword restorePassword = restorePasswordDao.findByUserAndCode(
+				userId, code);
+		if (restorePassword != null) {
+			User user = userDao.findById(userId);
+			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			user.setPassword(passwordEncoder.encode(restorePassword
+					.getNewPassword()));
+			return userDao.update(user);
+		}
+		return null;
 	}
-
 
 	@Override
 	public List<Group> findAllNotAdditionalGroups() {
 		return groupDao.findAllNotAdditional();
 	}
-	
 
 }

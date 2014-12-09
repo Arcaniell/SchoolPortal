@@ -4,7 +4,7 @@
 <%@ page session="true"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
-<div>
+<div class="home_page">
 	<div class="home">
 		<div align="center">
 

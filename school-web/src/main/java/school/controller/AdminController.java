@@ -15,24 +15,32 @@ import school.service.AdminService;
 
 @Controller
 public class AdminController {
-	
+
+	private static final String ROLE_REQUEST = "role_request";
+	private static final String ROLE_REQUSTS = "role_requsts";
+	private static final String URL_CONFIRM_ROLE = "/confirm_role";
+	private static final String URL_ROLE_CONFIRMATION = "/role_confirmation";
+	private static final String URL_ADMIN = "admin";
 	@Inject
 	AdminService adminService;
-	
-	@RequestMapping(value = "admin")
+
+	@RequestMapping(value = URL_ADMIN)
 	public String index(Model model, Principal principal) {
-		model.addAttribute("role_requsts", adminService.findAllNotConfirmedRoleRequests());
-		return "admin";
+		model.addAttribute(ROLE_REQUSTS,
+				adminService.findAllNotConfirmedRoleRequests());
+		return URL_ADMIN;
 	}
 
-	@RequestMapping(value = "/role_confirmation", method = RequestMethod.GET)
-	public String roleRequestInfo(Model model, @RequestParam(value = "id") long id) {
-				model.addAttribute("role_request", adminService.findRoleRequest(id));
+	@RequestMapping(value = URL_ROLE_CONFIRMATION, method = RequestMethod.GET)
+	public String roleRequestInfo(Model model,
+			@RequestParam(value = "id") long id) {
+		model.addAttribute(ROLE_REQUEST, adminService.findRoleRequest(id));
 		return "role_confirmation";
 	}
-	
-	@RequestMapping(value = "/confirm_role", method = RequestMethod.GET)
-	public @ResponseBody boolean check(@RequestParam(value = "roleRequestId") long roleRequestId,
+
+	@RequestMapping(value = URL_CONFIRM_ROLE, method = RequestMethod.GET)
+	public @ResponseBody boolean check(
+			@RequestParam(value = "roleRequestId") long roleRequestId,
 			@RequestParam(value = "studentId") long studentId) {
 		return adminService.addRoleToUser(roleRequestId, studentId);
 	}

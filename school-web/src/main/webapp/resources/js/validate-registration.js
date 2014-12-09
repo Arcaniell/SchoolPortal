@@ -3,7 +3,7 @@ $(document).ready(function() {
 	var root_action = $("#root_action").val();
 
 	$.validator.addMethod("regexName", function(value, element) {
-		return /^[a-zA-Z]+$/.test(value);
+		return /^[a-zA-Zа-яА-Я]+$/.test(value);
 	}, "Only letters are allowed!");
 
 	$.validator.addMethod("birhDay", function(value, element) {

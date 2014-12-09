@@ -4,6 +4,12 @@ public class URLContainer {
 	public static final String URL_REDIRECT = "redirect:";
 	public static final String URL_LOGIN = "/login";
 	public static final String URL_HOME = "/home";
+	public static final String URL_SIGNIN_FAILURE = "/signinfailure";
+	public static final String URL_REGISTRATION = "/registration";
+	public static final String URL_FORGOTPASSWORD = "/forgotpassword";
+	public static final String URL_EMAIL_CHECK = "/email/check";
+	public static final String URL_REGISTRATION_GROUPS = "registration/groups";
+	
 	public static final String URL_GROUP_HEADTEACHER = "headteacher-groups";
 
 	/* Journal */
