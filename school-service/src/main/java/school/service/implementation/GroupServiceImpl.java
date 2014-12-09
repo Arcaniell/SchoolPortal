@@ -59,8 +59,8 @@ public class GroupServiceImpl implements GroupService {
     @Autowired
     CourseDao courseDao;
 
- 
-
+    // STUDENT CONTROLLER CALL
+    // get student groups
     @Override
     public List<GroupDTO> getStudentGroups(Principal principal) {
         long userId = Long.parseLong(principal.getName());
@@ -78,6 +78,8 @@ public class GroupServiceImpl implements GroupService {
         return jspGroupsDTO;
     }
 
+    // TEACHER CONTROLLER CALL
+    // get teacher groups
     @Override
     public List<GroupDTO> getTeacherGroups(Principal user, Date from, Date till) {
         long userId = Long.parseLong(user.getName());
@@ -87,6 +89,8 @@ public class GroupServiceImpl implements GroupService {
         return jspGroupsDTO;
     }
 
+    // HEAD TEACHER CONTROLLER CALL
+    // get all groups
     @Override
     public List<GroupDTO> getHeadTeacherGroups() {
         List<Group> allGroups = groupDao.findAll();
@@ -94,6 +98,8 @@ public class GroupServiceImpl implements GroupService {
         return jspGroupsDTO;
     }
 
+    // HELP METHOD FOR STUDENT, TEACHER AND HEADTEACHER SERVICE
+    // Setting DTO with groups
     List<GroupDTO> fillDTOWithGroupList(List<Group> groups) {
         List<GroupDTO> jspGroupsDTO = new ArrayList<GroupDTO>();
         for (Group group : groups) {
@@ -129,17 +135,8 @@ public class GroupServiceImpl implements GroupService {
         return jspGroupsDTO;
     }
 
-    @Override
-    public List<GroupDataDTO> getYears() {
-        List<GroupDataDTO> container = new ArrayList<GroupDataDTO>();
-        for (Integer year : YEARS_OF_STUDY) {
-            GroupDataDTO oneOfTheYear = new GroupDataDTO();
-            oneOfTheYear.setId(year);
-            container.add(oneOfTheYear);
-        }
-        return container;
-    }
-
+    // HEAD TEACHER CONTROLLER CALL
+    // get info about symbols of class for modal fill
     @Override
     public List<GroupDataDTO> getSymbols() {
         List<GroupDataDTO> container = new ArrayList<GroupDataDTO>();
@@ -151,6 +148,21 @@ public class GroupServiceImpl implements GroupService {
         return container;
     }
 
+    // HEAD TEACHER CONTROLLER CALL
+    // get info about years of class for modal fill
+    @Override
+    public List<GroupDataDTO> getYears() {
+        List<GroupDataDTO> container = new ArrayList<GroupDataDTO>();
+        for (Integer year : YEARS_OF_STUDY) {
+            GroupDataDTO oneOfTheYear = new GroupDataDTO();
+            oneOfTheYear.setId(year);
+            container.add(oneOfTheYear);
+        }
+        return container;
+    }
+
+    // HEAD TEACHER CONTROLLER CALL AND AJAX CALL
+    // get info about teachers that not curators at this moment
     @Transactional
     @Override
     public List<TeacherDTO> getNotCurators() {
@@ -180,6 +192,8 @@ public class GroupServiceImpl implements GroupService {
         return notCuratorsList;
     }
 
+    // HEAD TEACHER AJAX CALL
+    // get info about all teachers
     @Transactional
     @Override
     public List<TeacherDTO> getAllTeachers() {
@@ -200,13 +214,29 @@ public class GroupServiceImpl implements GroupService {
         return allTeachersList;
     }
 
+    // HEAD TEACHER AJAX CALL
+    // get info all available letters(similar classes not allowed )
+    @Override
+    public List<String> getAvailableSymbols(byte year) {
+        String[] allSymbols = GroupServiceImpl.SYMBOLS_FOR_CLASS;
+        List<String> current = new ArrayList<String>();
+        for (String symbol : allSymbols) {
+            Group group = groupDao.findByNumberAndLetter(year, symbol.charAt(symbol.length() - 1));
+            if (group == null) {
+                current.add(symbol);
+            }
+        }
+        return current;
+    }
+
+    // HEAD TEACHER CONTROLLER CALL
+    // create new group with parameters
     @Override
     public void createNewGroup(byte year, String symbol, Long teacherId, Long courseId,
             String branch) {
         Teacher teacher = teacherDao.findById(teacherId);
         Course course = courseDao.findById(courseId);
         List<Group> existingGroups = groupDao.findByCourseId(courseId);
-
         Group group = new Group();
         group.setNumber(year);
         group.setTeacher(teacher);
@@ -225,6 +255,8 @@ public class GroupServiceImpl implements GroupService {
         groupDao.save(group);
     }
 
+    // HEAD TEACHER CONTROLLER CALL
+    // remove group with id
     @Override
     public void removeGroup(long requestId) {
         Group group = groupDao.findById(requestId);
@@ -239,6 +271,8 @@ public class GroupServiceImpl implements GroupService {
         }
     }
 
+    // HEAD TEACHER AJAX CALL
+    // get all info for current group
     @Transactional
     @Override
     public GroupEditHeaderDTO getGroupEditHeaderInfo(long id, Locale loc) {
@@ -306,6 +340,8 @@ public class GroupServiceImpl implements GroupService {
         return container;
     }
 
+    // HEAD TEACHER AJAX CALL
+    // update group by parameters
     @Transactional
     @Override
     public void groupUpdate(GroupEditResponseDTO dataForUpdate) {
@@ -322,7 +358,7 @@ public class GroupServiceImpl implements GroupService {
         }
         List<Student> newStudents4Group = new ArrayList<Student>();
         for (UserDTO studentDTO : dataForUpdate.getStudents()) {
-            Student currentStudent = studentDao.findById(studentDTO.getId());
+            Student currentStudent = studentDao.findById(studentDTO.getForeignId());
             newStudents4Group.add(currentStudent);
         }
         // FINISH to parse values
@@ -349,19 +385,8 @@ public class GroupServiceImpl implements GroupService {
         groupDao.update(group);
     }
 
-    @Override
-    public List<String> getAvailableSymbols(byte year) {
-        String[] allSymbols = GroupServiceImpl.SYMBOLS_FOR_CLASS;
-        List<String> current = new ArrayList<String>();
-        for (String symbol : allSymbols) {
-            Group group = groupDao.findByNumberAndLetter(year, symbol.charAt(symbol.length() - 1));
-            if (group == null) {
-                current.add(symbol);
-            }
-        }
-        return current;
-    }
-
+    // HELP METHOD HEADTEACHER GROUP EDIT SERVICE
+    // free group from students
     private void freeMainGroupFromStudents(Group group) {
         List<Student> students = group.getStudent();
         for (Student student : students) {
@@ -370,13 +395,8 @@ public class GroupServiceImpl implements GroupService {
         }
     }
 
-    private void setMainGroup4Students(List<Student> students, Group group) {
-        for (Student student : students) {
-            student.setGroup(group);
-            studentDao.update(student);
-        }
-    }
-
+    // HELP METHOD HEADTEACHER GROUP EDIT SERVICE
+    // free group from students
     private void freeAdditionGroupFromStudents(Group group) {
         List<Student> additionStudents = group.getAddStudent();
         if (additionStudents == null) {
@@ -395,19 +415,34 @@ public class GroupServiceImpl implements GroupService {
         }
     }
 
+    // HELP METHOD HEADTEACHER GROUP EDIT SERVICE
+    // add to group students
+    private void setMainGroup4Students(List<Student> students, Group group) {
+        for (Student student : students) {
+            student.setGroup(group);
+            studentDao.update(student);
+        }
+    }
+
+    // HELP METHOD HEADTEACHER GROUP EDIT SERVICE
+    // add to group students
     private void setAdditionGroup4Students(List<Student> students, Group group) {
         for (Student student : students) {
             List<Group> groups = new ArrayList<Group>();
-            if (student.getAdditionGroups() != null) {
-                groups.addAll(student.getAdditionGroups());
-                groups.add(group);
-                student.setAdditionGroups(groups);
-                studentDao.update(student);
+            if (student != null) {
+                if (student.getAdditionGroups() != null) {
+                    groups.addAll(student.getAdditionGroups());
+                    groups.add(group);
+                    student.setAdditionGroups(groups);
+                    studentDao.update(student);
+                }
             }
 
         }
     }
 
+    // HELP METHOD GROUP SERVICE
+    // fill DTO with info
     private List<UserDTO> fillStudentDTO(List<Student> students) {
         List<UserDTO> containerOfStudentDTO = new ArrayList<UserDTO>();
         for (Student student : students) {

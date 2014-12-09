@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import org.springframework.security.access.annotation.Secured;
 
+import school.dto.CourseDTO;
 import school.dto.GroupDTO;
 import school.dto.GroupDataDTO;
 import school.dto.GroupEditHeaderDTO;
@@ -48,5 +49,7 @@ public interface GroupService {
     void groupUpdate(GroupEditResponseDTO dataForUpdate);
 
     List<String> getAvailableSymbols(byte year);
+
+
 
 }

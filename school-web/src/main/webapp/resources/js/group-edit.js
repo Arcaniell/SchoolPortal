@@ -32,9 +32,9 @@ var refresh = function() {
 	$('table.paginated_right').each(makePagesRight);
 	$('table.paginated_left').each(makePagesLeft);
 	profileSet();
-	
+
 };
-function profileSet(){
+function profileSet() {
 	$(".anchor").click(function() {
 		var id = $(this).data("value");
 		$.ajax({
@@ -169,7 +169,10 @@ $(".main_submit").click(function() {
 
 		}
 	});
-	document.location.href = "headteacher-groups";
+	setTimeout(function() {
+		window.open("headteacher-groups", "_self");
+	}, 500);
+	// document.location.href = "headteacher-groups";
 	// $.post("group-edit-update", JSON.stringify(output),function(){},"json");
 	console.log(output);
 });

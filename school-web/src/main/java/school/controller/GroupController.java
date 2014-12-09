@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import school.dao.GroupDao;
 import school.dto.CourseDTO;
 import school.dto.GroupDTO;
 import school.dto.TeacherDTO;
@@ -66,6 +65,7 @@ public class GroupController {
     @Autowired
     CourseService courseService;
 
+    // get student group main JSP
     @RequestMapping(value = URL_GROUP_STUDENT)
     public String getStudentGroups(HttpServletRequest request, Principal principal, Model model) {
         if (principal != null) {
@@ -79,6 +79,7 @@ public class GroupController {
         return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
     }
 
+    // get teacher group main JSP
     @RequestMapping(value = URL_GROUP_TEACHER)
     public String getTeacherGroups(
             @RequestParam(value = JSP_INPUT_DATE_FROM, required = false) String dateFrom,
@@ -107,6 +108,7 @@ public class GroupController {
         return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
     }
 
+    // get head teacher group main JSP and fill header info
     @RequestMapping(value = URL_GROUP_HEADTEACHER)
     public String getHeadTeacherGroups(HttpServletRequest request, Principal principal, Model model) {
         if (principal != null) {
@@ -123,44 +125,7 @@ public class GroupController {
         return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
     }
 
-    @RequestMapping(value = URL_AJAX_GET_TEACHERS)
-    public @ResponseBody List<TeacherDTO> getTeacherSelect(
-            @RequestParam(value = JSP_INPUT_CHECKBOX, required = false) String branch) {
-        int intBranch = Integer.parseInt(branch);
-        if (intBranch == JSP_INPUT_CHECKBOX_CHECKED) {
-            return groupService.getAllTeachers();
-        } else {
-            return groupService.getNotCurators();
-        }
-    }
-
-    @RequestMapping(value = URL_AJAX_GET_COURSES)
-    public @ResponseBody List<CourseDTO> getCoursesForYear(@RequestBody int year) {
-        return courseService.getCoursesForYear(year);
-    }
-
-    @RequestMapping(value = URL_AJAX_GET_ADITIONAL_YEAR)
-    public @ResponseBody List<Integer> getAddiitionGroupYear() {
-        Integer[] allYears = GroupServiceImpl.YEARS_OF_STUDY;
-        List<Integer> allAdditionYear = new ArrayList<Integer>();
-        for (Integer currentYear : allYears) {
-            if (courseService.getCoursesForYear(currentYear).size() > 0) {
-                allAdditionYear.add(currentYear);
-            }
-        }
-        return allAdditionYear;
-    }
-
-    @RequestMapping(value = URL_AJAX_GET_YEAR)
-    public @ResponseBody Integer[] getYear() {
-        return GroupServiceImpl.YEARS_OF_STUDY;
-    }
-
-    @RequestMapping(value = URL_AJAX_GET_AVAILABLE_SYMBOLS)
-    public @ResponseBody List<String> getAvailableSymbols(@RequestBody byte year) {
-        return groupService.getAvailableSymbols(year);
-    }
-
+    // create new group main JSP
     @RequestMapping(value = URL_MODAL_GROUP_ADD)
     public String addNewGroup(
             @RequestParam(value = JSP_INPUT_CREATE_GROUP_YEAR) String yearString,
@@ -180,6 +145,7 @@ public class GroupController {
 
     }
 
+    // remove new group main JSP
     @RequestMapping(value = URL_MODEL_GROUP_REMOVE)
     public String removeGroups(HttpServletRequest request, Principal principal) {
         if (principal == null || request.isUserInRole(Role.Secured.HEAD_TEACHER) != true) {
@@ -201,4 +167,48 @@ public class GroupController {
         }
         return URLContainer.URL_REDIRECT + URL_GROUP_HEADTEACHER;
     }
+
+    // AJAX header fill. Get all addition groups for year
+    @RequestMapping(value = URL_AJAX_GET_COURSES)
+    public @ResponseBody List<CourseDTO> getCoursesForYear(@RequestBody int year) {
+        return courseService.getCoursesForYear(year);
+    }
+
+    // AJAX header fill. Get 4 created group
+    @RequestMapping(value = URL_AJAX_GET_TEACHERS)
+    public @ResponseBody List<TeacherDTO> getTeacherSelect(
+            @RequestParam(value = JSP_INPUT_CHECKBOX, required = false) String branch) {
+        int intBranch = Integer.parseInt(branch);
+        if (intBranch == JSP_INPUT_CHECKBOX_CHECKED) {
+            return groupService.getAllTeachers();
+        } else {
+            return groupService.getNotCurators();
+        }
+    }
+
+    // AJAX header fill. Get all years for available addition courses
+    @RequestMapping(value = URL_AJAX_GET_ADITIONAL_YEAR)
+    public @ResponseBody List<Integer> getAddiitionGroupYear() {
+        Integer[] allYears = GroupServiceImpl.YEARS_OF_STUDY;
+        List<Integer> allAdditionYear = new ArrayList<Integer>();
+        for (Integer currentYear : allYears) {
+            if (courseService.getCoursesForYear(currentYear).size() > 0) {
+                allAdditionYear.add(currentYear);
+            }
+        }
+        return allAdditionYear;
+    }
+
+    // AJAX header fill. Get all available years
+    @RequestMapping(value = URL_AJAX_GET_YEAR)
+    public @ResponseBody Integer[] getYear() {
+        return GroupServiceImpl.YEARS_OF_STUDY;
+    }
+
+    // AJAX header fill. Get all available symbols 4 current year
+    @RequestMapping(value = URL_AJAX_GET_AVAILABLE_SYMBOLS)
+    public @ResponseBody List<String> getAvailableSymbols(@RequestBody byte year) {
+        return groupService.getAvailableSymbols(year);
+    }
+
 }

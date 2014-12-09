@@ -33,6 +33,7 @@ public class GroupEditController {
     @Autowired
     GroupService groupService;
 
+    // get group edit skeleton
     @RequestMapping(value = URL_GROUP_EDIT)
     public String groupEdit(
             @RequestParam(value = JSP_INPUT_CHECKBOX, required = false) String groupId,
@@ -45,6 +46,7 @@ public class GroupEditController {
         return URLContainer.URL_REDIRECT + URLContainer.URL_GROUP_HEADTEACHER;
     }
 
+    // AJAX on skeleton load fill skeleton with info
     @RequestMapping(value = URL_GROUP_EDIT_HEADER_FILL)
     public @ResponseBody GroupEditHeaderDTO groupEditHeaderView(HttpServletRequest request,
             @RequestParam(value = JSP_INPUT_GROUP_ID, required = false) String groupId) {
@@ -60,6 +62,7 @@ public class GroupEditController {
         return null;
     }
 
+    // AJAX update group
     @RequestMapping(value = URL_GROUP_UPDATE, headers = { JSP_INPUT_CONTENT_TYPE })
     public @ResponseBody void groupUpdate(HttpServletRequest request,
             @RequestBody GroupEditResponseDTO dataForUpdate) {
