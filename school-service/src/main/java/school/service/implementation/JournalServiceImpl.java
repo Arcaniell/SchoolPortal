@@ -27,7 +27,7 @@ import school.dao.UserDao;
 import school.dto.journal.EditMarkDTO;
 import school.dto.journal.EditDateDTO;
 import school.dto.journal.JournalSearch;
-import school.dto.journal.Mark2DTO;
+import school.dto.journal.MarkDTO;
 import school.dto.journal.JournalStaffDTO;
 import school.dto.journal.StudentWithMarksDTO;
 import school.model.Event;
@@ -110,25 +110,28 @@ public class JournalServiceImpl implements JournalService {
 				group.getId(), search.getSubject(), from, to);
 		Collections.sort(schedules);
 		List<StudentWithMarksDTO> studentsWithMarks = new ArrayList<StudentWithMarksDTO>();
-		Set<Mark2DTO> marks = new HashSet<Mark2DTO>();
+		Set<MarkDTO> marks = new HashSet<MarkDTO>();
 
 		for (Student student : group.getStudent()) {
-			marks = new TreeSet<Mark2DTO>();
+			marks = new TreeSet<MarkDTO>();
 			for (Schedule schedule : schedules) {
 
 				Journal journal = journalDao.findByStudentAndSchedule(
 						student.getId(), schedule.getId());
 
+				HomeTask homeTask = homeTaskDao
+						.findBySchedule(schedule.getId());
 				Event event = eventDao.findEventBySchedule(schedule.getId());
 
 				if (journal != null) {
-					marks.add(new Mark2DTO(schedule.getLesson().getLesId(),
-							schedule.getId(), schedule.getDate(), journal
-									.getMark(), journal.getCoefficient()));
+					marks.add(new MarkDTO(schedule.getLesson().getLesId(),
+							schedule.getId(), homeTask.getTask(), schedule
+									.getDate(), journal.getMark(), journal
+									.getCoefficient()));
 				} else if (journal == null) {
-					marks.add(new Mark2DTO(schedule.getLesson().getLesId(),
-							schedule.getId(), schedule.getDate(), event
-									.getType()));
+					marks.add(new MarkDTO(schedule.getLesson().getLesId(),
+							schedule.getId(), homeTask.getTask(), schedule
+									.getDate(), event.getType()));
 				}
 			}
 			studentsWithMarks.add(new StudentWithMarksDTO(student.getId(),
@@ -142,7 +145,7 @@ public class JournalServiceImpl implements JournalService {
 	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
 			Role.Secured.DIRECTOR })
 	@Transactional
-	public void editMark(EditMarkDTO editMarkDTO) throws ParseException {
+	public void editMark(EditMarkDTO editMarkDTO) {
 
 		String[] studentAndSchedule = editMarkDTO.getStudentAndSchedule()
 				.split("j");
@@ -186,6 +189,23 @@ public class JournalServiceImpl implements JournalService {
 					.getHomeTask(), schedule));
 		}
 
+	}
+
+	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
+			Role.Secured.DIRECTOR })
+	public void deleteEvent(EditDateDTO editedDateDTO) {
+
+		eventDao.remove(eventDao.findEventBySchedule(scheduleDao.findById(
+				editedDateDTO.getScheduleId()).getId()));
+
+	}
+
+	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
+			Role.Secured.DIRECTOR })
+	public void deleteHomeTask(EditDateDTO editedDateDTO) {
+
+		homeTaskDao.remove(homeTaskDao.findBySchedule(scheduleDao.findById(
+				editedDateDTO.getScheduleId()).getId()));
 	}
 
 	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,

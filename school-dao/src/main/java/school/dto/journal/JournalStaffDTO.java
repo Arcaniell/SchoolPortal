@@ -4,7 +4,7 @@ import java.util.Set;
 
 import school.model.Group;
 
-public class JournalStaffDTO extends JournalDTO {
+public class JournalStaffDTO {
 
 	private long id;
 	private String name;

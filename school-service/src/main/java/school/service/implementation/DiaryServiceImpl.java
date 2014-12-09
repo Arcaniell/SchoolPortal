@@ -19,7 +19,7 @@ import school.dao.ParentDao;
 import school.dao.ScheduleDao;
 import school.dao.StudentDao;
 import school.dao.UserDao;
-import school.dto.journal.Mark2DTO;
+import school.dto.journal.MarkDTO;
 import school.dto.journal.StudentWithMarksDTO;
 import school.model.Event;
 import school.model.Group;
@@ -68,7 +68,7 @@ public class DiaryServiceImpl implements DiaryService {
 		List<StudentWithMarksDTO> diaryMarksDTO = new ArrayList<>();
 
 		for (Date date : currentWeek) {
-			Set<Mark2DTO> markDTOs = new TreeSet<>();
+			Set<MarkDTO> markDTOs = new TreeSet<>();
 
 			for (Schedule schedule : schedules) {
 				if (date.equals(schedule.getDate())) {
@@ -80,7 +80,7 @@ public class DiaryServiceImpl implements DiaryService {
 					for (Journal journal : journals) {
 						if (journal.getSchedule().getId() == schedule.getId()) {
 
-							markDTOs.add(new Mark2DTO(schedule.getLesson()
+							markDTOs.add(new MarkDTO(schedule.getLesson()
 									.getLesId(), schedule.getId(), schedule
 									.getCourse().getCourseName(), homeTask
 									.getTask(), date, journal.getMark(),
@@ -88,7 +88,7 @@ public class DiaryServiceImpl implements DiaryService {
 						}
 					}
 
-					markDTOs.add(new Mark2DTO(schedule.getLesson().getLesId(),
+					markDTOs.add(new MarkDTO(schedule.getLesson().getLesId(),
 							schedule.getId(), schedule.getCourse()
 									.getCourseName(), homeTask.getTask(), date,
 							event.getType()));

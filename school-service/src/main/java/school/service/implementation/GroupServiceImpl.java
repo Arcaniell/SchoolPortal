@@ -27,7 +27,6 @@ import school.dto.GroupEditHeaderDTO;
 import school.dto.GroupEditResponseDTO;
 import school.dto.UserDTO;
 import school.dto.TeacherDTO;
-import school.dto.journal.StudentMarksDTO;
 import school.model.Group;
 import school.model.Schedule;
 import school.model.Student;
