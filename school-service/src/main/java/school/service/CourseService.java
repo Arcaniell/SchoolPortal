@@ -15,8 +15,6 @@ public interface CourseService {
 
     List<CourseDTO> allCoursesInDateRange4Teacher(Principal principal, Date from, Date till);
 
-    List<Course> findCanRequestCourses(Principal principal);
-
     List<CourseDTO> getCoursesForYear(int year);
 
     List<CourseDTO> getAllCourses();

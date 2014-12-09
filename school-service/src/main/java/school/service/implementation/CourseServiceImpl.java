@@ -28,7 +28,7 @@ import school.service.CourseService;
  */
 @Service
 public class CourseServiceImpl implements CourseService {
-    private final boolean COURSE_STATUS = true;
+
     private final boolean COURSE_IS_NOT_ARCHIVE = false;
     private final String TRUE_IN_JSP = "YES";
     private final String FALSE_IN_JSP = "NO";
@@ -194,35 +194,6 @@ public class CourseServiceImpl implements CourseService {
             }
         }
         return container;
-    }
-
-    @Override
-    public List<Course> findCanRequestCourses(Principal principal) {
-        long userId = Long.parseLong(principal.getName());
-        Student student = studentDao.findByUserId(userId);
-        Group mainGroup = student.getGroup();
-        if (student == null || mainGroup == null) {
-            return null;
-        }
-
-        List<CourseRequest> additionCourses = courseRequestDao.findAllByStudentId(student.getId());
-        List<Course> canSignCourses = courseDao.findAllByStatusAndYear(COURSE_STATUS,
-                mainGroup.getNumber());
-        Iterator<Course> steratorCanSignCourse = canSignCourses.iterator();
-        while (steratorCanSignCourse.hasNext()) {
-            if (steratorCanSignCourse.next().isArchive()) {
-                steratorCanSignCourse.remove();
-            }
-        }
-        // check if user already sign to one of the list of available courses
-        for (int i = 0; i < additionCourses.size(); i++) {
-            for (int j = 0; j < canSignCourses.size(); j++) {
-                if (additionCourses.get(i).getCourse().getId() == canSignCourses.get(j).getId()) {
-                    canSignCourses.remove(j);
-                }
-            }
-        }
-        return canSignCourses;
     }
 
     @Override
