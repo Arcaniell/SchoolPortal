@@ -35,4 +35,4 @@
 	</table>
 
 </div>
-<div style="position: fixed; right:0px; top: 120px;"><jsp:include page="/views/profile/profile_buttons.jsp" /></div>
+<div><jsp:include page="/views/profile/profile_buttons.jsp" /></div>

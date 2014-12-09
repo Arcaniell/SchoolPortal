@@ -4,7 +4,7 @@
 
 <script type="text/javascript">
 	$(function() {
-		$('#tokenfield-typeahead').tokenInput(
+		$('#tokenfieldtypeahead').tokenInput(
 				"${pageContext.request.contextPath}/emailInput", {
 					theme : "facebook",
 					queryParam : 'tagName',
@@ -45,15 +45,14 @@
 	$(document).ready(
 			function() {
 				$("#sendMessageButton").click(
-
 						function() {
-
 							if (validateText("textArea")
 									&& validateText("subjectArea")
-									&& validateEmail("tokenfield-typeahead")) {
+									&& validateEmail("tokenfieldtypeahead")) {
 								$("form#composeForm").submit();
+							} else {
+								$('#textUnderC').removeAttr("style");
 							}
-
 						});
 			}
 
@@ -73,7 +72,13 @@
 					<spring:message code="conversation.composeMessage" />
 				</h4>
 			</div>
+
 			<div class="modal-body">
+				<!-- <p style="float: left;">Select by:</p> -->
+				<select id="mySelectBox" class="selectCompose form-control">
+					<option>Name or email</option>
+					<option>Group</option>
+				</select>
 
 				<form action="${pageContext.request.contextPath}/compose"
 					name="composeTable" class="form-horizontal" method="post"
@@ -82,16 +87,16 @@
 						<label for="inputTo" class="col-sm-2 control-label composeText"><spring:message
 								code="conversation.to" /></label>
 						<div class="col-sm-10">
-						<input type="text" class="form-control" name="to"
-							id="tokenfield-typeahead"
-							placeholder="<spring:message code="conversation.toWhom" />" />
+							<input type="text" class="form-control" name="to"
+								id="tokenfieldtypeahead"
+								placeholder="<spring:message code="conversation.toWhom" />" />
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="inputSubject"
 							class="col-sm-2 control-label composeText"><spring:message
 								code="conversation.subject" /></label>
-						<div class="col-sm-10">
+						<div class="col-sm-10" id="subj">
 							<input name="subject" type="text" class="form-control"
 								id="subjectArea"
 								placeholder="<spring:message code="conversation.writeASubject" />">
@@ -106,6 +111,8 @@
 								placeholder="<spring:message code="conversation.writeAMessage" />"
 								name="text" class="form-control textInput animated"
 								id="textArea" rows="3"></textarea>
+							<span id="textUnderC" class="textUnderC" style="display: none;">All
+								fields are required!</span>
 						</div>
 					</div>
 					<div class="form-group">
@@ -126,3 +133,15 @@
 		</div>
 	</div>
 </div>
+<script>
+	$(document).ready(function() {
+		var count = 0;
+		$(".col-sm-10 ul").each(function() {
+			if (count == 0) {
+				count++;
+			} else {
+				$(this).remove();
+			}
+		});
+	});
+</script>

@@ -9,20 +9,13 @@ import school.model.Conversation;
 
 public interface ConversationService {
 
-	List<Conversation> findInbox(long id);
+	List<Conversation> findConversations(long id, String inboxOrSent);
 
-	List<Conversation> findSent(long id);
-
-	List<String> getFirstNames(List<Conversation> conversations);
-
-	List<String> getLastNames(List<Conversation> conversations);
+	List<String> getNames(List<Conversation> conversations);
 
 	List<Date> getDates(List<Conversation> conversations, long id);
 
-	List<ConversationDto> constructInboxConversationsDto(
-			List<Conversation> conversations, long id, Locale loc);
-
-	List<ConversationDto> constructSentConversationsDto(
+	List<ConversationDto> constructConversationDto(
 			List<Conversation> conversations, long id, Locale loc);
 
 	void deleteConversations(String[] ids, long id);
@@ -32,4 +25,8 @@ public interface ConversationService {
 	void createConversation(String subject, long senderId, long receiverId, String text);
 	
 	boolean hasNewMessages(Conversation conversation, long userId);
+
+	boolean isGroup(String to);
+
+	void sendToGroup(String subject, Long principalId, String to, String text);
 }

@@ -12,6 +12,8 @@ public class JournalUtil extends SchoolUtil {
 	public static final String MOD_ATT_DATES = "dates";
 	public static final String MOD_ATT_GROUP_MARKS = "groupMarks";
 	public static final String MOD_ATT_DIARY_MARKS = "diaryMarks";
+	public static final String MOD_ATT_STAFF = "teacher";
+	public static final String MOD_ATT_SEARCH_DATA = "searchData";
 
 	public static final String FIRST_QUARTER = "1";
 	public static final String SECOND_QUARTER = "2";
@@ -22,9 +24,6 @@ public class JournalUtil extends SchoolUtil {
 	public static final int FIRST_DATE_OF_QUARTER = 0;
 	public static final int LAST_DATE_OF_QUARTER = 1;
 
-	public static final int FIRST_DATE_OF_WEEK = 0;
-	public static final int LAST_DATE_OF_WEEK = 6;
-
 	public static final String FIRST_DAY_FIRST_QUARTER = "09/01/2014";
 	public static final String LAST_DAY_FIRST_QUARTER = "10/31/2014";
 	public static final String FIRST_DAY_SECOND_QUARTER = "11/01/2014";
@@ -34,8 +33,7 @@ public class JournalUtil extends SchoolUtil {
 	public static final String FIRST_DAY_FOURTH_QUARTER = "04/01/2015";
 	public static final String LAST_DAY_FOURTH_QUARTER = "05/31/2015";
 
-	public static final String NEXT_WEEK = "next";
-	public static final String PREVIOUS_WEEK = "previous";
+	
 
 	public static List<Date> getWeek(Calendar date) throws ParseException {
 
@@ -52,8 +50,21 @@ public class JournalUtil extends SchoolUtil {
 			week.add(date.getTime());
 			date.add(Calendar.DATE, 1);
 		}
-
 		return week;
-
 	}
+
+	public static long getClosestValue(long currentNumber, List<Long> numbers) {
+
+		long distance = Math.abs(numbers.get(0) - currentNumber);
+		int idx = 0;
+		for (int c = 1; c < numbers.size(); c++) {
+			long cdistance = Math.abs(numbers.get(c) - currentNumber);
+			if (cdistance < distance) {
+				idx = c;
+				distance = cdistance;
+			}
+		}
+		return numbers.get(idx);
+	}
+
 }

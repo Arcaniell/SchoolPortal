@@ -23,11 +23,12 @@ import school.model.Course;
 import school.model.Salary;
 import school.model.Teacher;
 import school.service.SalaryService;
+import school.service.utils.DateUtil;
 import school.service.utils.SalaryUtil;
 
 @Service
 public class SalaryServiceImpl implements SalaryService {
-	SimpleDateFormat formatterDate = new SimpleDateFormat("MM/dd/yyyy");
+	private final SimpleDateFormat formatterDate = new SimpleDateFormat("MM/dd/yyyy");
 	private final String ISSUE_DAY = "/10/";
 	private final int INITIAL_RATE = 15;
 	@Autowired
@@ -35,19 +36,12 @@ public class SalaryServiceImpl implements SalaryService {
 	@Autowired
 	private TeacherDao teacherDao;
 
-	public Date getCurrentDate() throws ParseException {
-		Calendar currentDate = Calendar.getInstance();
-		String modifiedDate = formatterDate.format(currentDate.getTime());
-		Date formattedCurrentDate = formatterDate.parse(modifiedDate);
-		return formattedCurrentDate;
-	}
-
-	public long getHours(Date lastSalaryDate, Teacher teacher)
+	public int getHours(Date lastSalaryDate, Teacher teacher)
 			throws ParseException {
-		Date currentDate = getCurrentDate();
+		Date currentDate = DateUtil.getCurrentDate(formatterDate);
 		long hours = salaryDao.findHoursByPeriod(teacher.getId(),
 				lastSalaryDate, currentDate);
-		return hours;
+		return (int) hours;
 	}
 
 	@Transactional
@@ -156,13 +150,14 @@ public class SalaryServiceImpl implements SalaryService {
 		}
 		return payrolls;
 	}
-
+	
+	@Transactional
 	@Override
 	public void addSalary(String[] additionalPay) throws ParseException {
 		List<SalaryPayrollDTO> payrolls = getPayrollInfo();
 		int i = 0;
 		for (SalaryPayrollDTO payroll : payrolls) {
-			Date currentDate = getCurrentDate();
+			Date currentDate = DateUtil.getCurrentDate(formatterDate);
 			int additional = Integer.parseInt(additionalPay[i]);
 			i++;
 			int salary = payroll.getSalary();

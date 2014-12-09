@@ -4,7 +4,7 @@
 <%@ page session="true"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
-<div class="profile_buttons" onclick="aaaa()">
+<div class="profile_buttons">
 	<table>
 	<tr><td><p id="profile_information">Information</p></td></tr>
 	<tr><td><p id="profile_options">Options</p></td></tr>

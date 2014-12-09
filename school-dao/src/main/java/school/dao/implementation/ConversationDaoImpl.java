@@ -56,35 +56,27 @@ public class ConversationDaoImpl extends BaseDaoImpl<Conversation, Long>
 		}
 	}
 
-	@SuppressWarnings("finally")
 	@Transactional
 	public Date findDateForReceiversConversation(Conversation conversation) {
-		Date date = null;
 		try {
-			date = (Date) entityManager
+			return (Date) entityManager
 					.createNamedQuery("Conversation.FIND_DATE_RECEIVER")
 					.setParameter("conversation", conversation)
 					.getSingleResult();
 		} catch (NoResultException e) {
-			e.printStackTrace();
-		} finally {
-			return date;
+			return null;
 		}
 	}
 
-	@SuppressWarnings("finally")
 	@Transactional
 	public Date findDateForSendersConversation(Conversation conversation) {
-		Date date = null;
 		try {
-			date = (Date) entityManager
+			return (Date) entityManager
 					.createNamedQuery("Conversation.FIND_DATE_SENDER")
 					.setParameter("conversation", conversation)
 					.getSingleResult();
 		} catch (NoResultException e) {
-			e.printStackTrace();
-		} finally {
-			return date;
+			return null;
 		}
 	}
 }

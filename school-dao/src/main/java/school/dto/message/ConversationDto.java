@@ -2,24 +2,51 @@ package school.dto.message;
 
 public class ConversationDto {
 
-	private String firstName;
-	private String lastName;
+	private String name;
 	private String subject;
 	private String date;
 	private String id;
 	private boolean hasNewMessages;
+	private String inboxCount;
+	private String sentCount;
 	
-	public String getFirstName() {
-		return firstName;
+	public ConversationDto(String inboxCount, String sentCount) {
+		this.inboxCount = inboxCount;
+		this.sentCount = sentCount;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	
+	public ConversationDto(String id) {
+		this.id = id;
 	}
-	public String getLastName() {
-		return lastName;
+	
+	public ConversationDto(String name, String subject, String date, String id,
+			boolean hasNewMessages, String inboxCount, String sentCount) {
+		this.name = name;
+		this.subject = subject;
+		this.date = date;
+		this.id = id;
+		this.hasNewMessages = hasNewMessages;
+		this.inboxCount = inboxCount;
+		this.sentCount = sentCount;
 	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+		
+	public String getInboxCount() {
+		return inboxCount;
+	}
+	public void setInboxCount(String inboxCount) {
+		this.inboxCount = inboxCount;
+	}
+	public String getSentCount() {
+		return sentCount;
+	}
+	public void setSentCount(String sentCount) {
+		this.sentCount = sentCount;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getSubject() {
 		return subject;
@@ -45,5 +72,4 @@ public class ConversationDto {
 	public void setHasNewMessages(boolean hasNewMessages) {
 		this.hasNewMessages = hasNewMessages;
 	}
-	
 }

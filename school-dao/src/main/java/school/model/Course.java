@@ -28,7 +28,9 @@ import javax.persistence.Table;
         @NamedQuery(name = Course.FIND_BY_STATUS, query = Course.FIND_BY_STATUS_QUERY),
         @NamedQuery(name = Course.FIND_BY_GROUP_ID_AND_DATA_RANGE, query = Course.FIND_BY_GROUP_ID_AND_DATA_RANGE_QUERY),
         @NamedQuery(name = Course.FIND_BY_STATUS_AND_YEAR, query = Course.FIND_BY_STATUS_AND_YEAR_QUERY),
-        @NamedQuery(name = Course.FIND_BY_TEACHER_ID_AND_DATA_RANGE, query = Course.FIND_BY_TEACHER_ID_AND_DATA_RANGE_QUERY)})
+        @NamedQuery(name = Course.FIND_BY_TEACHER_ID_AND_DATA_RANGE, query = Course.FIND_BY_TEACHER_ID_AND_DATA_RANGE_QUERY),
+        @NamedQuery(name = Course.FIND_ADDITION_COURSE_BY_YEAR_AND_ARCHIVE_FLAG, query = Course.FIND_ADDITION_COURSE_BY_YEAR_AND_ARCHIVE_FLAG_QUERY),
+        @NamedQuery(name = Course.FIND_COURSE_BY_ARCHIVE_FLAG, query = Course.FIND_COURSE_BY_ARCHIVE_FLAG_QUERY) })
 public class Course implements Comparable<Course> {
     public static final String FIND_BY_STATUS = "Course.findAllByStatus";
     public static final String FIND_BY_STATUS_AND_YEAR = "Course.findAllByStatusAndYear";
@@ -39,7 +41,9 @@ public class Course implements Comparable<Course> {
     public static final String FIND_BY_PRICE_RANGE = "Course.findAllByPriceRange";
     public static final String FIND_BY_GROUP_ID_AND_DATA_RANGE = "Course.findByGroupIdAndDataRange";
     public static final String FIND_BY_TEACHER_ID_AND_DATA_RANGE = "Course.findByTeacherIdAndDataRange";
-    
+    public static final String FIND_ADDITION_COURSE_BY_YEAR_AND_ARCHIVE_FLAG = "Course.findAdditionCourseByYearAndArchiveFlag";
+    public static final String FIND_COURSE_BY_ARCHIVE_FLAG = "Course.findAllByArchiveFlag";
+
     public static final String FIND_BY_STATUS_QUERY = "SELECT DISTINCT c FROM Course c WHERE c.additional = :active";
     public static final String FIND_BY_STATUS_AND_YEAR_QUERY = "SELECT DISTINCT c FROM Course c WHERE c.additional = :active AND c.groupNumber = :year";
     public static final String FIND_BY_GROUP_NUMBER_QUERY = "SELECT c FROM Course c WHERE c.groupNumber = :groupNumber";
@@ -49,7 +53,8 @@ public class Course implements Comparable<Course> {
     public static final String FIND_BY_PRICE_RANGE_QUERY = "SELECT c FROM Course c WHERE c.price BETWEEN :from AND :to";
     public static final String FIND_BY_GROUP_ID_AND_DATA_RANGE_QUERY = "SELECT DISTINCT c FROM Course c INNER JOIN c.schedule s WHERE s.group.id = :groupId AND (s.date BETWEEN :from AND :till)";
     public static final String FIND_BY_TEACHER_ID_AND_DATA_RANGE_QUERY = "SELECT DISTINCT c FROM Course c INNER JOIN c.schedule s WHERE s.teacher.id = :teacherId AND (s.date BETWEEN :from AND :till)";
-
+    public static final String FIND_ADDITION_COURSE_BY_YEAR_AND_ARCHIVE_FLAG_QUERY = "SELECT DISTINCT c FROM Course c WHERE c.groupNumber=:year AND c.additional=true AND archive=:flag";
+    public static final String FIND_COURSE_BY_ARCHIVE_FLAG_QUERY = "SELECT DISTINCT c FROM Course c WHERE archive=:flag";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -65,6 +70,8 @@ public class Course implements Comparable<Course> {
     private int price;
 
     private boolean additional;
+    @Column(nullable = true)
+    private Boolean archive;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "course")
     private List<CourseRequest> courseRequest;
@@ -148,21 +155,27 @@ public class Course implements Comparable<Course> {
         this.teacher = teacher;
     }
 
+    public boolean isArchive() {
+        return archive;
+    }
+
+    public void setArchive(boolean archive) {
+        this.archive = archive;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + (additional ? 1231 : 1237);
+        result = prime * result + (archive ? 1231 : 1237);
         result = prime * result + coeficient;
-        result = prime * result
-                + ((courseName == null) ? 0 : courseName.hashCode());
-        result = prime * result
-                + ((courseRequest == null) ? 0 : courseRequest.hashCode());
+        result = prime * result + ((courseName == null) ? 0 : courseName.hashCode());
+        result = prime * result + ((courseRequest == null) ? 0 : courseRequest.hashCode());
         result = prime * result + groupNumber;
         result = prime * result + (int) (id ^ (id >>> 32));
         result = prime * result + price;
-        result = prime * result
-                + ((schedule == null) ? 0 : schedule.hashCode());
+        result = prime * result + ((schedule == null) ? 0 : schedule.hashCode());
         result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
         return result;
     }
@@ -177,6 +190,8 @@ public class Course implements Comparable<Course> {
             return false;
         Course other = (Course) obj;
         if (additional != other.additional)
+            return false;
+        if (archive != other.archive)
             return false;
         if (coeficient != other.coeficient)
             return false;
