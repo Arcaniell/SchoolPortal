@@ -89,6 +89,7 @@
 
 .hidden_error{
 	display: none;
+	color: red;
 }
 
 .visible_error{
@@ -121,12 +122,22 @@ label.error {
   margin-top: 1px;
   display: inline;
 }
+.table_birthday{
+	font-size: 12px;
+}
+.table_birthday input{
+	width: 50px;
+}
+.table_birthday td{
+	max-width: 110px;
+}
+.sex_div{
+	padding-left: 150px;
+}
 .question_drop_long{
-	width:350px; height: 30px;
+	height: 35px;
 }
-.question_drop_short{
-	width:200px; height: 30px;
-}
-#for_caret{
-margin-left: -12px;
+#fakeGroupNumber{
+	width: 0px;
+	border: 0px;
 }

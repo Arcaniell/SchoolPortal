@@ -19,3 +19,21 @@
 	color: black;
 	background-color: #E8E8E8;
 }
+.admin_table th{
+	width: 15%;
+	font-size: 13px;
+	border: 1px solid black;
+	text-align: center;
+}
+.admin_table td{
+	color: black;
+	border: 1px solid gray;
+	text-align: center;
+}
+.admin_table tbody tr:hover>td {
+	cursor: pointer;
+	background-color: #E8E8E8;
+}
+#admin_role_confirmation input{
+	width: 100px;
+}
