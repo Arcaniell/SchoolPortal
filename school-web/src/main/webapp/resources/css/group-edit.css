@@ -45,10 +45,7 @@
 	float: right;
 }
 
-ul.pagination {
-	display: table;
-	margin: 0 auto;
-}
+
 
 .edit-footer .form-control {
 	width: 65px;
@@ -82,6 +79,11 @@ h3 {
 }
 
 /*Our pagination buttons style. Changed from bootstrap.*/
+ul.pagination {
+	display: table;
+	margin: 0 auto;
+}
+
 .pagination>.active>a {
 	z-index: 2;
 	color: #fff;

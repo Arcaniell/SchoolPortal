@@ -6,7 +6,16 @@ public class GroupDTO {
     private int year;
     private String additional;
     private int members;
+    private long teacherUserId;
     private String teacher;
+
+    public long getTeacherUserId() {
+        return teacherUserId;
+    }
+
+    public void setTeacherUserId(long teacherUserId) {
+        this.teacherUserId = teacherUserId;
+    }
 
     public long getId() {
         return id;

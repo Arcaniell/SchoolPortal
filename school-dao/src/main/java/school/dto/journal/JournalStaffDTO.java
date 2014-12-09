@@ -4,38 +4,57 @@ import java.util.Set;
 
 import school.model.Group;
 
-public class JournalStaffDTO extends JournalDTO {
+public class JournalStaffDTO {
 
-	private long teacherId;
-	private String teacherName;
+	private long id;
+	private String name;
 	private Set<Group> groups;
+	private Set<Byte> groupNumbers;
+	private Set<Character> groupLetters;
 	private Set<String> courseNames;
 
 	public JournalStaffDTO() {
 	}
 
-	public JournalStaffDTO(long teacherId, String teacherName,
-			Set<Group> groups, Set<String> courseNames) {
-		this.teacherId = teacherId;
-		this.teacherName = teacherName;
-		this.groups = groups;
+	public JournalStaffDTO(long id, String name, Set<Byte> groupNumbers,
+			Set<Character> groupLetters, Set<String> courseNames) {
+		this.id = id;
+		this.name = name;
+		this.groupNumbers = groupNumbers;
+		this.groupLetters = groupLetters;
 		this.courseNames = courseNames;
 	}
 
-	public long getTeacherId() {
-		return teacherId;
+	public Set<Byte> getGroupNumbers() {
+		return groupNumbers;
 	}
 
-	public void setTeacherId(long teacherId) {
-		this.teacherId = teacherId;
+	public void setGroupNumbers(Set<Byte> groupNumbers) {
+		this.groupNumbers = groupNumbers;
 	}
 
-	public String getTeacherName() {
-		return teacherName;
+	public Set<Character> getGroupLetters() {
+		return groupLetters;
 	}
 
-	public void setTeacherName(String teacherName) {
-		this.teacherName = teacherName;
+	public void setGroupLetters(Set<Character> groupLetters) {
+		this.groupLetters = groupLetters;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Set<Group> getGroups() {
@@ -60,10 +79,13 @@ public class JournalStaffDTO extends JournalDTO {
 		int result = 1;
 		result = prime * result
 				+ ((courseNames == null) ? 0 : courseNames.hashCode());
-		result = prime * result + ((groups == null) ? 0 : groups.hashCode());
-		result = prime * result + (int) (teacherId ^ (teacherId >>> 32));
 		result = prime * result
-				+ ((teacherName == null) ? 0 : teacherName.hashCode());
+				+ ((groupLetters == null) ? 0 : groupLetters.hashCode());
+		result = prime * result
+				+ ((groupNumbers == null) ? 0 : groupNumbers.hashCode());
+		result = prime * result + ((groups == null) ? 0 : groups.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -81,17 +103,27 @@ public class JournalStaffDTO extends JournalDTO {
 				return false;
 		} else if (!courseNames.equals(other.courseNames))
 			return false;
+		if (groupLetters == null) {
+			if (other.groupLetters != null)
+				return false;
+		} else if (!groupLetters.equals(other.groupLetters))
+			return false;
+		if (groupNumbers == null) {
+			if (other.groupNumbers != null)
+				return false;
+		} else if (!groupNumbers.equals(other.groupNumbers))
+			return false;
 		if (groups == null) {
 			if (other.groups != null)
 				return false;
 		} else if (!groups.equals(other.groups))
 			return false;
-		if (teacherId != other.teacherId)
+		if (id != other.id)
 			return false;
-		if (teacherName == null) {
-			if (other.teacherName != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!teacherName.equals(other.teacherName))
+		} else if (!name.equals(other.name))
 			return false;
 		return true;
 	}

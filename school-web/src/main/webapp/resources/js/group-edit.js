@@ -17,9 +17,10 @@ var fillTable = function(listOfRows, checkboxName) {
 	var content = "";
 	for (i in listOfRows) {
 		content += "<tr><td><input name=\"" + checkboxName
-				+ "\" type=\"checkbox\" value = " + listOfRows[i].id
-				+ "></td><td>" + listOfRows[i].name + "</td><td>"
-				+ listOfRows[i].year + "</td></tr>\n";
+				+ "\" type=\"checkbox\" value = " + listOfRows[i].foreignId
+				+ "></td><td><a class=\"anchor\" data-value=\""
+				+ listOfRows[i].id + "\">" + listOfRows[i].name
+				+ "</a></td><td>" + listOfRows[i].yearStr + "</td></tr>\n";
 	}
 	return content;
 };
@@ -30,7 +31,30 @@ var refresh = function() {
 	$(".other_stuff").html(fillTable(students_free, "add_checkbox"));
 	$('table.paginated_right').each(makePagesRight);
 	$('table.paginated_left').each(makePagesLeft);
-
+	profileSet();
+	
+};
+function profileSet(){
+	$(".anchor").click(function() {
+		var id = $(this).data("value");
+		$.ajax({
+			type : "GET",
+			url : "profile/information",
+			data : "id=" + id,
+			headers : {
+				Accept : "text/plain; charset=utf-8",
+				"Content-Type" : "text/plain; charset=utf-8"
+			},
+			async : false,
+			success : function(response) {
+				$("#profile_modal_content").html(response);
+				$("#profileModalButton").click();
+			},
+			error : function() {
+				alert('Internal Server Error');
+			}
+		});
+	});
 };
 // init functions
 $(function() {
@@ -91,7 +115,7 @@ var transferElement = function(fromId, arreyFrom, arreyTo) {
 
 var findIndex = function(array, lookedId) {
 	for (i in array) {
-		if (array[i].id == lookedId) {
+		if (array[i].foreignId == lookedId) {
 			return i;
 		}
 	}

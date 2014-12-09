@@ -6,8 +6,41 @@
 	border-bottom: 1px solid #CCCCCC;
 }
 
+.selectCompose {
+	width: 150px;
+	left: 415.5px;
+	position: inherit;
+	top: 31px;
+	z-index: 1;
+	padding: 0px;
+	height: 30px !important;
+	border: 0px !important;
+}
+
+.pagination>li {
+	display: inline;
+	cursor: pointer;
+}
+
+.pagination>.active>a,.pagination>.active>span,.pagination>.active>a:hover,.pagination>.active>span:hover,.pagination>.active>a:focus,.pagination>.active>span:focus
+	{
+	z-index: 2;
+	color: #fff;
+	cursor: default;
+	background-color: #428bca;
+	border-color: #428bca;
+	cursor: pointer;
+	cursor: pointer;
+}
+
 .tablem tr:hover {
 	background: #f5f5f5;
+}
+
+.table {
+	width: 100%;
+	max-width: 100%;
+	margin-bottom: 0px;
 }
 
 .autocomplete-suggestions {
@@ -89,6 +122,34 @@ h1,.h1,h2,.h2,h3,.h3 {
 	border-color: #3e8f3e;
 }
 
+.btn1 {
+	display: inline-block;
+	padding: 2px 12px;
+	margin-bottom: 0;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+}
+
+.btn-sample1 {
+	color: #428BCA;
+	background-color: #FFFFFF;
+	border: 1px solid #E4E7F5 !important;
+}
+
 .panel {
 	margin-bottom: 10px;
 	margin-top: 0px;
@@ -143,7 +204,21 @@ h1,.h1,h2,.h2,h3,.h3 {
 	margin-left: 2px;
 }
 
-#empty {
+.inboxEmpty {
+	margin: 5px;
+	color: #B7B7B7;
+	font-style: italic;
+}
+
+#inboxButton {
+	cursor: pointer;
+}
+
+#sentButton {
+	cursor: pointer;
+}
+
+.sentEmpty {
 	margin: 5px;
 	color: #B7B7B7;
 	font-style: italic;
@@ -281,4 +356,34 @@ h1,.h1,h2,.h2,h3,.h3 {
 	padding: 0 !important;
 	margin: 0 !important;
 	font-weight: bold;
+}
+
+.context-footer {
+	display: block;
+	width: 100%;
+	float: right;
+}
+
+.row_count {
+	width: 65px;
+	margin: 10px;
+	float: right;
+}
+
+.pages {
+	height: 32px;
+}
+/*Our pagination buttons style. Changed from bootstrap.*/
+ul.pagination {
+	display: table;
+	margin: 10px auto;
+}
+
+.pagination>.active>a {
+	z-index: 2;
+	color: #fff;
+	cursor: default;
+	background-color: #428bca;
+	border-color: #ddd;
+	color: #FFF;
 }

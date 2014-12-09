@@ -1,0 +1,30 @@
+.context-footer {
+	display: block;
+	width: 100%;
+	float: right;
+}
+
+.row_count {
+	width: 65px;
+	margin: 10px;
+	float: right;
+}
+
+.pages {
+	height:32px;
+}
+/*Our pagination buttons style. Changed from bootstrap.*/
+ul.pagination {
+	display: table;
+	margin: 10px auto;
+}
+
+.pagination>.active>a {
+	z-index: 2;
+	color: #fff;
+	cursor: default;
+	background-color: #d9edf7;
+	border-color: #ddd;
+	color: #428bca;
+}
+/*---------------------------*/

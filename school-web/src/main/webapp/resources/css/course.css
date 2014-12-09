@@ -1,14 +1,9 @@
-.content .text .btn {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	text-decoration: none;
-	font-size: 14px;
-	color: #428bca;
-}
 /*course request*/
 .modal-title {
 	text-align: center;
 }
-.modal-body {
+
+.courses-modal-body {
 	width: 100%;
 	text-align: center;
 }
@@ -16,13 +11,77 @@
 .modal-footer .btn {
 	display: block;
 	margin: 0 auto;
-
 }
-.modal-content .btn{
+
+.modal-content .btn {
 	padding-left: 30px;
 	padding-right: 30px;
-	weight:100%;
 }
-h3{
+
+h3 {
 	text-align: left;
+}
+
+.form-control, button[name="courserequest"] {
+	width: 220px;
+	margin: 0 auto;
+	margin-top: 10px
+}
+
+.remove_button {
+	display: none;
+}
+
+.modal-body button[name='no'] {
+	width: 100px;
+	float: right;
+}
+
+.button_body {
+	width: 90%;
+	margin: 0 auto;
+	height: 70px;
+}
+
+.modal-body p {
+	margin-top: 10px;
+	font-weight: bold;
+}
+
+.modal-body button[name='submit_button'] {
+	margin-top: 20px;
+	width: 220px;
+}
+
+.modal-body button[name='yes'], .submit_button {
+	margin-top: 0 !important;
+	width: 100px !important;
+	float: left;
+}
+
+.modal_table select {
+	width: 100%;
+}
+
+.modal_table {
+	margin: 0 auto;
+	width: 220px;
+	margin-top: 5px;
+}
+
+.modal_table th {
+	text-align: center;
+}
+
+.create_course_view {
+	padding-top: 0;
+}
+
+.hidden_for_default_group, .btn-delete {
+	display: none;
+}
+
+.name_error, .price_error {
+	color: red;
+	display: none;
 }

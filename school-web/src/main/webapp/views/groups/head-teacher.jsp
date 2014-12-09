@@ -3,6 +3,11 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <link href="<c:url value="/resources/css/group.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/sortable-theme-minimal.css" />"
+	rel="stylesheet">
+<link href="<c:url value="/resources/css/base-pagination.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/profile.css" />"
+	rel="stylesheet">
 <!-- ADD GROUP MODAL -->
 <div class="modal fade add_group_modal" tabindex="-1" role="dialog"
 	aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -21,10 +26,9 @@
 							<th colspan="2">Available additional groups</th>
 						</tr>
 						<tr class="addition_name_input">
-							<td colspan="2">
-								<select name="course_id" class="form-control">
-								</select>
-							</td>
+							<td colspan="2"><select name="course_id"
+								class="form-control">
+							</select></td>
 						</tr>
 						<tr>
 							<th class="th_name">Year</th>
@@ -59,7 +63,7 @@
 								Additional course </input></td>
 						</tr>
 					</table>
-					<button type="submit" class="btn btn-sample">Create</button>
+					<button type="submit" class="btn btn-info">Create</button>
 				</div>
 			</form>
 		</div>
@@ -81,7 +85,7 @@
 					</h3>
 				</div>
 				<div class="modal-body button_body">
-					<button name="yes" type="submit" class="btn btn-danger">
+					<button name="yes" type="submit" class="btn btn-info">
 						<spring:message code="course.request.btn.yes" />
 					</button>
 					<button name="no" type="button" data-dismiss="modal"
@@ -97,12 +101,15 @@
 	<button type="button" class="btn btn-sample" data-toggle="modal"
 		data-target=".add_group_modal">Add group</button>
 	<c:if test="${fn:length(groupList) > 0}">
-		<button type="button" class="btn btn-sample real_dell_btn" data-toggle="modal"
-			data-target=".group_delete_modal">Remove group</button>
+		<button type="button" class="btn btn-sample real_dell_btn"
+			data-toggle="modal" data-target=".group_delete_modal">Remove
+			group</button>
 		<button type="button" class="btn btn-sample remove_button">Edit
 			group</button>
 	</c:if>
-	<table class="table table-hover default_table">
+	<table
+		class="table table-hover default_table sortable-theme-bootstrap paginated"
+		data-sortable>
 		<thead>
 			<tr>
 				<th><input name="checkboxName"
@@ -124,14 +131,30 @@
 					<td>${element.year}</td>
 					<td>${element.additional}</td>
 					<td>${element.members}</td>
-					<td>${element.teacher}</td>
+					<td><a class="anchor" data-value ="${element.teacherUserId}">${element.teacher}</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 </form>
+<!-- Pagination footer -->
+<div class="context-footer">
+	<select class="form-control row_count">
+		<option value="10">10</option>
+		<option value="20">20</option>
+		<option value="30">30</option>
+		<option value="50">50</option>
+	</select>
+	<div class="pages"></div>
+</div>
+<!-- Pagination footer -->
+<jsp:include page="/views/profile/profile_information_runner.jsp" />
 <script src="<c:url value="https://code.jquery.com/jquery-1.10.2.js" />">
 	
 </script>
 <script src="<c:url value="/resources/js/group.js" />"
+	type="text/javascript"></script>
+<script src="<c:url value="/resources/js/utils/sortable.js" />"
+	type="text/javascript"></script>
+<script src="<c:url value="/resources/js/utils/pagination.js" />"
 	type="text/javascript"></script>

@@ -7,16 +7,41 @@ public class ConversationDto {
 	private String date;
 	private String id;
 	private boolean hasNewMessages;
+	private String inboxCount;
+	private String sentCount;
+	
+	public ConversationDto(String inboxCount, String sentCount) {
+		this.inboxCount = inboxCount;
+		this.sentCount = sentCount;
+	}
+	
+	public ConversationDto(String id) {
+		this.id = id;
+	}
 	
 	public ConversationDto(String name, String subject, String date, String id,
-			boolean hasNewMessages) {
+			boolean hasNewMessages, String inboxCount, String sentCount) {
 		this.name = name;
 		this.subject = subject;
 		this.date = date;
 		this.id = id;
 		this.hasNewMessages = hasNewMessages;
+		this.inboxCount = inboxCount;
+		this.sentCount = sentCount;
 	}
-	
+		
+	public String getInboxCount() {
+		return inboxCount;
+	}
+	public void setInboxCount(String inboxCount) {
+		this.inboxCount = inboxCount;
+	}
+	public String getSentCount() {
+		return sentCount;
+	}
+	public void setSentCount(String sentCount) {
+		this.sentCount = sentCount;
+	}
 	public String getName() {
 		return name;
 	}

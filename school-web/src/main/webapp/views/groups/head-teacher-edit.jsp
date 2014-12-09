@@ -4,13 +4,16 @@
 	rel="stylesheet">
 <link href="<c:url value="/resources/css/sortable-theme-minimal.css" />"
 	rel="stylesheet">
+<link href="<c:url value="/resources/css/profile.css" />"
+	rel="stylesheet">
 <input class="hiddenGroup" type="hidden" value="${groupId}">
 <div id="loading_modal" class="modal fade" role="dialog"
 	aria-labelledby="mySmallModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-sm">
 		<div id="modal_id_spinner" class="modal-content">
 			<h3>Loading please wait</h3>
-			<img class="spinner_gif" alt="Load gif" src="<c:url value="/resources/gif/spinner.gif" />">
+			<img class="spinner_gif" alt="Load gif"
+				src="<c:url value="/resources/gif/spinner.gif" />">
 		</div>
 	</div>
 </div>
@@ -29,7 +32,7 @@
 		<td><input name="dateTill" type="text" class="datepicker"></td>
 		<td></td>
 		<td>
-			<button type="button" class="btn btn-sample main_submit">Submit</button>
+			<button type="button" class="btn btn-info main_submit">Submit</button>
 		</td>
 	</tr>
 </table>
@@ -42,9 +45,12 @@
 		data-sortable>
 		<thead>
 			<tr>
-				<th><input type="checkbox" id="select_for_remove"></th>
-				<th>Name</th>
-				<th>Approx year</th>
+				<th data-sortable="false"><input type="checkbox"
+					id="select_for_remove"></th>
+				<th>Name</th><jsp:include
+					page="/views/profile/profile_information_runner.jsp" />
+
+				<th>Birthday</th>
 			</tr>
 		</thead>
 		<tbody class="group_stuff">
@@ -59,9 +65,10 @@
 		data-sortable>
 		<thead>
 			<tr>
-				<th><input type="checkbox" id="select_for_add"></th>
+				<th data-sortable="false"><input type="checkbox"
+					id="select_for_add"></th>
 				<th>Name</th>
-				<th>Approx year</th>
+				<th>Birthday</th>
 			</tr>
 		</thead>
 		<tbody class="other_stuff">
@@ -79,14 +86,15 @@
 	<div class="right_pagination"></div>
 
 </div>
-
+<jsp:include page="/views/profile/profile_information_runner.jsp" />
 <script
 	src="<c:url value="https://code.jquery.com/ui/1.11.2/jquery-ui.js" />"></script>
 <script src="<c:url value="/resources/js/group-edit.js" />"
 	type="text/javascript"></script>
-	
+
 <script src="<c:url value="/resources/js/utils/sortable.js" />"
 	type="text/javascript"></script>
 
-<script src="<c:url value="/resources/js/utils/pagination.js" />"
+<script
+	src="<c:url value="/resources/js/utils/pagination-multiply.js" />"
 	type="text/javascript"></script>

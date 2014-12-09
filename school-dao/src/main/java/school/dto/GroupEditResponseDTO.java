@@ -7,7 +7,7 @@ public class GroupEditResponseDTO {
     private long teacherId;
     private String dateFrom;
     private String dateTill;
-    private StudentDTO[] students;
+    private UserDTO[] students;
 
     public long getGroupId() {
         return groupId;
@@ -41,11 +41,11 @@ public class GroupEditResponseDTO {
         this.dateTill = dateTill;
     }
 
-    public StudentDTO[] getStudents() {
+    public UserDTO[] getStudents() {
         return students;
     }
 
-    public void setStudents(StudentDTO[] students) {
+    public void setStudents(UserDTO[] students) {
         this.students = students;
     }
 

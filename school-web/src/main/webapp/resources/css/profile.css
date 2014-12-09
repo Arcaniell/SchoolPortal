@@ -1,37 +1,49 @@
-.profile_buttons{
-	position: fixed; 
-	right:0px; 
+.profile_buttons {
+	position: fixed;
+	right: 0px;
 	top: 120px;
 	font-size: 14px;
 	color: #428bca;
 }
-.profile_buttons p{
+
+.profile_buttons p {
 	width: 200px;
 	margin-left: 0px;
 	text-align: center;
 }
+
 .profile_buttons tbody tr:hover>td {
 	cursor: pointer;
 	color: black;
 	background-color: #E8E8E8;
 }
+
 .profile_table{
-	width: 600px;
+	width: 520px;
 }
-.small_logo{
+
+.small_logo {
 	width: 90px;
 	height: 90px;
 	margin: 0px;
 }
+
 .chield_and_parent_container{
-	max-width: 600px;
+	max-width: 520px;
 	overflow: auto;
 }
-.uploadButton{
+
+.uploadButton {
 	font-size: 20px;
 	color: #428bca;
 	width: 100px;
 }
-.profile_information hr{
+
+.profile_information hr {
 	width: 300px;
+}
+
+.all_in_one_line,h5,h6 {
+	margin-top: 0px !important;
+	margin-bottom: 3px !important;
 }

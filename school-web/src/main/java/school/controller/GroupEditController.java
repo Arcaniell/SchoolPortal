@@ -1,5 +1,7 @@
 package school.controller;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import school.dto.GroupEditHeaderDTO;
 import school.dto.GroupEditResponseDTO;
@@ -46,11 +49,12 @@ public class GroupEditController {
     public @ResponseBody GroupEditHeaderDTO groupEditHeaderView(HttpServletRequest request,
             @RequestParam(value = JSP_INPUT_GROUP_ID, required = false) String groupId) {
         if (groupId != null && groupId != "" && request.isUserInRole(Role.Secured.HEAD_TEACHER)) {
+            Locale loc = RequestContextUtils.getLocale(request);
             long id = Long.parseLong(groupId);
             if (id == 0) {
                 return null;
             }
-            GroupEditHeaderDTO temp = groupService.getGroupEditHeaderInfo(id);
+            GroupEditHeaderDTO temp = groupService.getGroupEditHeaderInfo(id, loc);
             return temp;
         }
         return null;

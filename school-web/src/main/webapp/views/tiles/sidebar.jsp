@@ -25,48 +25,48 @@
 <div class="internal-buttons">
 	<ul class="nav nav-sidebar">
 		<sec:authorize access="isAuthenticated()">
-			<li><a href="profile"><spring:message code="sidebar.profile" /></a></li>
+			<li><a href="${root_action}profile"><spring:message code="sidebar.profile" /></a></li>
 		</sec:authorize>
 		<li><a href="#"><spring:message code="sidebar.schedule" /></a></li>
 		<sec:authorize access="hasAnyRole('ROLE_STUDENT', 'ROLE_PARENT')">
-			<li><a href="diary"><spring:message code="sidebar.diary" /></a></li>
+			<li><a href="${root_action}diary"><spring:message code="sidebar.diary" /></a></li>
 		</sec:authorize>
 		<sec:authorize
 			access="hasAnyRole('ROLE_HEAD_TEACHER', 'ROLE_TEACHER')">
-			<li><a href="journal"><spring:message code="sidebar.journal" /></a></li>
+			<li><a href="${root_action}journal"><spring:message code="sidebar.journal" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_PARENT')">
-			<li><a class="sidebarMessage" href='<c:url value="/inbox"/>'><spring:message
+			<li><a class="sidebarMessage" href='<c:url value="${root_action}messages"/>'><spring:message
 						code="sidebar.message" /> </a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_STUDENT')">
-			<li><a href=student-courses><spring:message code="sidebar.course" /></a></li>
+			<li><a href="${root_action}student-courses"><spring:message code="sidebar.course.student" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER')">
-			<li><a href=teacher-courses><spring:message code="sidebar.course" /></a></li>
+			<li><a href="${root_action}teacher-courses"><spring:message code="sidebar.course.teacher" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_HEAD_TEACHER')">
-			<li><a href=headteacher-courses><spring:message code="sidebar.course" /></a></li>
+			<li><a href="${root_action}headteacher-courses"><spring:message code="sidebar.course.h.teacher" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_STUDENT')">
-			<li><a href=student-groups><spring:message code="sidebar.groups" /></a></li>
+			<li><a href="${root_action}student-groups"><spring:message code="sidebar.group.student" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_TEACHER')">
-			<li><a href=teacher-groups><spring:message code="sidebar.groups" /></a></li>
+			<li><a href="${root_action}teacher-groups"><spring:message code="sidebar.group.teacher" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ROLE_HEAD_TEACHER')">
-			<li><a href=headteacher-groups><spring:message code="sidebar.groups" /></a></li>
+			<li><a href="${root_action}headteacher-groups"><spring:message code="sidebar.group.h.teacher" /></a></li>
 		</sec:authorize>
 		<sec:authorize
 			access="hasAnyRole('ROLE_HEAD_TEACHER', 'ROLE_STUDENT')">
-			<li><a href=course-request><spring:message
+			<li><a href="${root_action}course-request"><spring:message
 						code="sidebar.request" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_TEACHER')">
-			<li><a href=salary><spring:message code="sidebar.salary" /></a></li>
+			<li><a href="${root_action}salary"><spring:message code="sidebar.salary" /></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
-			<li><a href=admin>Admin Panel</a></li>
+			<li><a href="${root_action}admin">Admin Panel</a></li>
 		</sec:authorize>
 		<li><a href="#"><spring:message code="sidebar.contacts" /></a></li>
 		<li><a href="#"><spring:message code="sidebar.about" /></a></li>

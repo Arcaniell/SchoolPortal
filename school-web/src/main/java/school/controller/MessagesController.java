@@ -1,7 +1,6 @@
 package school.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -22,7 +21,6 @@ import school.dto.message.MessageDto;
 import school.dto.message.NewMessagesObjectDTO;
 import school.model.Conversation;
 import school.model.Message;
-import school.model.User;
 import school.service.ConversationService;
 import school.service.MessagesService;
 
@@ -38,14 +36,19 @@ public class MessagesController {
 	@RequestMapping(value = "/inbox/{id}")
 	public String inboxConversationMessages(Model model, @PathVariable long id,
 			Principal principal, HttpServletRequest request) {
+		
+		if(principal == null) {
+			return "redirect:/signinfailure";
+		}
+		
 		long userId = Long.valueOf(principal.getName());
 		Conversation conversation = conversationService.findById(id);
 		List<Conversation> conversationsI = conversationService
 				.findConversations(userId, "inbox");
 		List<Conversation> conversationsS = conversationService
 				.findConversations(userId, "sent");
-		List<Message> messages = messagesService.findMessagesOfConversation(conversation,
-				userId);
+		List<Message> messages = messagesService.findMessagesOfConversation(
+				conversation, userId);
 		messagesService.markMessagesAsRead(messages, userId);
 		Locale loc = RequestContextUtils.getLocale(request);
 		List<MessageDto> messagesDto = messagesService.constructMessagesDto(
@@ -55,6 +58,7 @@ public class MessagesController {
 		model.addAttribute("inboxSize", conversationsI.size());
 		model.addAttribute("sentSize", conversationsS.size());
 		model.addAttribute("subject", conversation.getSubject());
+		model.addAttribute("root_action", "../");
 		int newMessages = messagesService.countOfNewMessages(userId);
 		request.getSession(false).setAttribute("newMessages", newMessages);
 		request.getSession(false).setAttribute("currentPage", "inbox/" + id);
@@ -65,14 +69,19 @@ public class MessagesController {
 	@RequestMapping(value = "/sent/{id}")
 	public String sentConversationMessages(Model model, @PathVariable long id,
 			Principal principal, HttpServletRequest request) {
+		
+		if(principal == null) {
+			return "redirect:/signinfailure";
+		}
+		
 		long userId = Long.valueOf(principal.getName());
 		Conversation conversation = conversationService.findById(id);
 		List<Conversation> conversationsI = conversationService
 				.findConversations(userId, "inbox");
 		List<Conversation> conversationsS = conversationService
 				.findConversations(userId, "sent");
-		List<Message> messages = messagesService.findMessagesOfConversation(conversation,
-				userId);
+		List<Message> messages = messagesService.findMessagesOfConversation(
+				conversation, userId);
 		messagesService.markMessagesAsRead(messages, userId);
 		Locale loc = RequestContextUtils.getLocale(request);
 		List<MessageDto> messagesDto = messagesService.constructMessagesDto(
@@ -82,6 +91,7 @@ public class MessagesController {
 		model.addAttribute("inboxSize", conversationsI.size());
 		model.addAttribute("sentSize", conversationsS.size());
 		model.addAttribute("subject", conversation.getSubject());
+		model.addAttribute("root_action", "../");
 		request.getSession().setAttribute("currentPage", "sent/" + id);
 		return "sentMessages";
 
@@ -117,15 +127,16 @@ public class MessagesController {
 		return "redirect:/" + currentPage;
 	}
 
-	@RequestMapping(value = "/emailInput", method = RequestMethod.GET)
+	@RequestMapping(value = "/emailInput", method = RequestMethod.POST)
 	public @ResponseBody
 	List<EmailObjectDTO> getEmails(@RequestParam String tagName,
-			HttpServletRequest request) {
+			HttpServletRequest request, @RequestParam String emailOrGroup) {
 		boolean isParent = request.isUserInRole("ROLE_PARENT");
-		List<User> users = messagesService.simulateSearchResult(tagName,
-				isParent);
-													
-		return messagesService.contructEmailObjectDTO(users);
+		List<Object> usersOrGroups = messagesService.simulateSearchResult(tagName,
+				isParent, emailOrGroup);
+		
+		
+		return messagesService.contructEmailObjectDTO(usersOrGroups);
 	}
 
 	@RequestMapping(value = "/newMessages", method = RequestMethod.GET)

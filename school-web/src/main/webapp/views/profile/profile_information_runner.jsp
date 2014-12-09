@@ -7,7 +7,7 @@
 
 <script type="text/javascript"
 	src="<c:url value="/resources/js/profile_information_runner.js" />"></script>
-
+	
 <input type="button" class="hidden_error" id="profileModalButton"
 	data-toggle="modal" data-target="#profile_modal" />
 

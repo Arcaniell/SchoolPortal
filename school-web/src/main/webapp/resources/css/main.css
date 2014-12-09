@@ -231,9 +231,14 @@ body {
 .newMessageCounter {
 	float: right;
 }
+
+h3 {
+	margin-top: 0px !important;
+}
 /*Our default style for table*/
 .default_table {
 	margin-top: 10px;
+	margin-bottom: 0 !important;
 }
 
 .default_table thead {
@@ -251,8 +256,9 @@ select, .datepicker {
 	border: 1px solid #E4E7F5 !important;
 	border-radius: 4px !important;
 }
-.datepicker{
-	height:34px;
+
+.datepicker {
+	height: 34px;
 	width: 95px;
 }
 /*---------------------------*/
