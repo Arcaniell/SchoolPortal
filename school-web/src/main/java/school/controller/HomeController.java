@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import school.dto.RegistrationDTO;
 import school.model.RegistrationData;
 import school.model.User;
 import school.service.HomeService;
@@ -87,15 +88,20 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public @ResponseBody boolean registration(@RequestBody RegistrationData registrationData,
+	public @ResponseBody boolean registration(@RequestBody RegistrationDTO registrationDTO,
 			HttpServletRequest request) {	
-		return homeService.registrateUser(registrationData, request.getContextPath());
+		return homeService.registrateUser(registrationDTO, request.getContextPath());
 	}
 
 	@RequestMapping(value = "/email/check", method = RequestMethod.GET)
 	public @ResponseBody boolean check(@RequestParam(value = "email") String email) {
 		return userService.isEmailAviable(email);
 	}
-		
+	
+	@RequestMapping(value = "registration/groups")
+	public String profile(Model model) {
+				model.addAttribute("groups", homeService.findAllNotAdditionalGroups());
+		return "registration_groups";
+	}
 	
 }

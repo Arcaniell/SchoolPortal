@@ -49,7 +49,7 @@ public class JournalController {
 					new Date());
 			model.addAttribute(JournalUtil.MOD_ATT_SEARCH_DATA, searchData);
 			role = Role.Secured.TEACHER;
-			
+
 		} else if (request.isUserInRole(Role.Secured.HEAD_TEACHER)
 				|| request.isUserInRole(Role.Secured.DIRECTOR)) {
 			role = Role.Secured.HEAD_TEACHER;
@@ -71,8 +71,7 @@ public class JournalController {
 	}
 
 	@RequestMapping(value = URLContainer.URL_JOURNAL_EDIT_MARK, method = RequestMethod.POST)
-	public @ResponseBody byte editMark(@RequestBody EditMarkDTO editMarkDTO)
-			throws ParseException {
+	public @ResponseBody byte editMark(@RequestBody EditMarkDTO editMarkDTO) {
 
 		journalService.editMark(editMarkDTO);
 
@@ -82,11 +81,29 @@ public class JournalController {
 
 	@RequestMapping(value = URLContainer.URL_JOURNAL_EDIT_DATE, method = RequestMethod.POST)
 	public @ResponseBody EditDateDTO addEvent(
-			@RequestBody EditDateDTO editedDateDTO) throws ParseException {
+			@RequestBody EditDateDTO editedDateDTO) {
 
 		journalService.editDate(editedDateDTO);
 
 		return editedDateDTO;
+	}
+
+	@RequestMapping(value = "journal-delete-event", method = RequestMethod.POST)
+	public @ResponseBody boolean deleteEvent(
+			@RequestBody EditDateDTO editedDateDTO) {
+
+		journalService.deleteEvent(editedDateDTO);
+
+		return true;
+	}
+
+	@RequestMapping(value = "journal-delete-hometask", method = RequestMethod.POST)
+	public @ResponseBody boolean deleteHomeTask(
+			@RequestBody EditDateDTO editedDateDTO) {
+
+		journalService.deleteHomeTask(editedDateDTO);
+
+		return true;
 	}
 
 	@RequestMapping(value = URLContainer.URL_JOURNAL_SUBJECT)

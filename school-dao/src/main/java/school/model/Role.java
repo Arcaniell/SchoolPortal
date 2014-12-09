@@ -64,6 +64,7 @@ public class Role {
 		public static final String STUDENT = "ROLE_STUDENT";
 		public static final String PARENT = "ROLE_PARENT";
 		public static final String ADMIN = "ROLE_ADMIN";
+		public static final String IS_AUTHENTICATED_FULLY = "IS_AUTHENTICATED_FULLY";
 	}
 	
 	

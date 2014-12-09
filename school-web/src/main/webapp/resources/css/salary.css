@@ -5,8 +5,28 @@
 	color: #428bca;
 	
 }
+#current {
+	width: 600px
+}
+
+#currenthead {
+	width: 300px
+}
+.scrolling {
+	overflow:scroll; 
+	height: 450px; 
+	width: 900px;
+}
+.message{
+	width: 500px;
+}
+thead {
+	background-color: #d9edf7;
+}
+
 th{
 	text-align: center;
+	background-color: #d9edf7;
 }
 td{
 	text-align: center;

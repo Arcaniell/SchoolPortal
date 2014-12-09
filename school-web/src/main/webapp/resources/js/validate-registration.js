@@ -1,16 +1,50 @@
 $(document).ready(function() {
 
 	var root_action = $("#root_action").val();
-	
+
 	$.validator.addMethod("regexName", function(value, element) {
 		return /^[a-zA-Z]+$/.test(value);
 	}, "Only letters are allowed!");
+
+	$.validator.addMethod("birhDay", function(value, element) {
+		var month_days = {
+			1 : 31,
+			2 : 28,
+			3 : 31,
+			4 : 30,
+			5 : 31,
+			6 : 30,
+			7 : 31,
+			8 : 31,
+			9 : 30,
+			10 : 31,
+			11 : 30,
+			12 : 31
+		};
+		var month_day = $("input[name = month]").val();
+		if (month_day == '' || month_days[month_day] < value)
+			return false;
+		else
+			return true;
+	}, "Incorrect!");
+	$.validator.addMethod("birhMonth", function(value, element) {
+		if (value < 1 || value > 12)
+			return false;
+		else
+			return true;
+	}, "Incorrect!");
+	$.validator.addMethod("birhYear", function(value, element) {
+		if (value < 1930 || value > 2010)
+			return false;
+		else
+			return true;
+	}, "Incorrect!");
 
 	$.validator.addMethod("uniqueEmail", function(value, element) {
 		var result = false;
 		$.ajax({
 			type : "GET",
-			url : root_action+"email/check",
+			url : root_action + "email/check",
 			data : "email=" + value,
 			dataType : 'json',
 			contentType : 'application/json',
@@ -60,6 +94,18 @@ $(document).ready(function() {
 				minlength : 8,
 				maxlength : 15
 			},
+			day : {
+				required : true,
+				birhDay : true
+			},
+			month : {
+				required : true,
+				birhMonth : true
+			},
+			year : {
+				required : true,
+				birhYear : true
+			},
 			questionAnsver : {
 				required : true,
 				minlength : 4,
@@ -100,6 +146,11 @@ $(document).ready(function() {
 	});
 
 	$("#signup_button").click(function() {
+		var groupNumber = $("#groupNumber").val();
+		var role = $("input:radio[name=role]:checked").val();
+		if(groupNumber == '' || role != 3)$("#forGroupNumber").show();
+		else{
+			$("#forGroupNumber").hide();
 		if ($("#signup_from").valid()) {
 			var firstname = $("#firstname").val();
 			var lastname = $("#lastname").val();
@@ -110,7 +161,13 @@ $(document).ready(function() {
 			var questionNumber = $("#questionNumber").val();
 			var questionAnsver = $("#questionAnsver").val();
 
+			var day = $("input[name=day]").val();
+			var month = $("input[name=month]").val();
+			var year = $("input[name=year]").val();
+			var birthday = year + "-" + month + "-" + day;
+			
 			var json = {
+				"registrationData" : {
 					"id" : 0,
 					"registrationCode" : 0,
 					"question" : questionNumber,
@@ -124,15 +181,19 @@ $(document).ready(function() {
 						"registration" : 0,
 						"sex" : sex,
 						"confirmed" : false,
+						"birthday" : birthday,
 						"roles" : [ {
 							"id" : role,
 							"name" : ""
 						} ]
 					}
-				}
-			
+				},
+				"groupId" : groupNumber
+
+			}
+
 			$.ajax({
-				url : root_action+'registration',
+				url : root_action + 'registration',
 				type : "POST",
 				data : JSON.stringify(json),
 				beforeSend : function(xhr) {
@@ -152,6 +213,7 @@ $(document).ready(function() {
 			});
 
 		}
+	}
 	});
 
 });
