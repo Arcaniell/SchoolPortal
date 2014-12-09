@@ -68,7 +68,7 @@
 		</div>
 	</div>
 	<!-- COURSE DELETE MODAL -->
-	<h3>All student course requests</h3>
+	<h3><spring:message code="course.request.student.header" /></h3>
 	<p>
 		<c:if test="${fn:length(haveCourses) > 0}">
 			<button type="button" class="btn btn-sample" data-toggle="modal"

@@ -59,22 +59,7 @@ public class GroupServiceImpl implements GroupService {
     @Autowired
     CourseDao courseDao;
 
-    @Override
-    public void createAdditionGroup(List<Student> students, Course course, Date from, Date till) {
-        Group group = new Group();
-        group.setAdditional(ADDITIONAL_FLAG_TRUE);
-        group.setAdditionCourse(course);
-        group.setNumber((byte) course.getGroupNumber());
-        group.setStartDate(from);
-        group.setEndDate(till);
-        group = groupDao.update(group);
-        for (Student student : students) {
-            List<Group> container = student.getAdditionGroups();
-            container.add(group);
-            student.setAdditionGroups(container);
-            studentDao.update(student);
-        }
-    }
+ 
 
     @Override
     public List<GroupDTO> getStudentGroups(Principal principal) {

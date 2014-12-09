@@ -24,8 +24,6 @@ public interface GroupService {
 
     // @Secured(Role.Secured.STUDENT)
 
-    void createAdditionGroup(List<Student> students, Course course, Date from, Date till);
-
     List<GroupDTO> getStudentGroups(Principal user);
 
     List<GroupDTO> getTeacherGroups(Principal user, Date from, Date till);

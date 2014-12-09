@@ -17,16 +17,17 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">×</button>
-					<h3 class="modal-title">Course create</h3>
+					<h3 class="modal-title"><spring:message code="course.modal.header"/></h3>
 				</div>
 				<div class="modal-body create_course_view courses-modal-body">
-					<p>Enter course name</p>
-					<input name="name_value" type="text" class="form-control" placeholder = "Course name">
+					<p><spring:message code="course.modal.name"/></p>
+					<input name="name_value" type="text" class="form-control" placeholder = "<spring:message code="course.modal.name"/>">
+					<p class="name_error"><spring:message code="course.err.in.name"/></p>
 					<table class="modal_table">
 						<thead>
 							<tr>
-								<th>Study year</th>
-								<th>Additional?</th>
+								<th><spring:message code="course.modal.year"/></th>
+								<th><spring:message code="course.modal.add"/></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -43,7 +44,7 @@
 							</tr>
 						</tbody>
 					</table>
-					<p>Chose coefficient</p>
+					<p><spring:message code="course.modal.coeficient"/></p>
 					<select name="coef_value" class="form-control">
 						<option>1</option>
 						<option>2</option>
@@ -52,11 +53,12 @@
 						<option>5</option>
 					</select>
 					<div class="hidden_for_default_group">
-						<p>Enter price</p>
-						<input name="price_value" type="text" class="form-control" placeholder="Course price in $">
+						<p><spring:message code="course.modal.price"/></p>
+						<input name="price_value" type="text" class="form-control" placeholder="<spring:message code="course.modal.price"/>">
+						<p class="price_error"><spring:message code="course.err.in.price"/></p>					
 					</div>
 					<button name="submit_button" type="button" value="create"
-						class="btn btn-info submit">Create</button>
+						class="btn btn-info submit"><spring:message code="course.modal.create"/></button>
 				</div>
 			</div>
 		</div>
@@ -70,8 +72,7 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">×</button>
-					<h3 class="modal-title">Are you sure want to delete this
-						course/courses?</h3>
+					<h3 class="modal-title"><spring:message code="course.modal.remove.header"/></h3>
 				</div>
 				<div class="modal-body button_body">
 					<button name="submit_button" type="submit" value="delete"
@@ -88,11 +89,11 @@
 	</div>
 	<!-- REMOVE COURSE MODAL -->
 	<!-- TABLE -->
-	<h3>All school courses</h3>
+	<h3><spring:message code="course.create.header"/></h3>
 	<button type="button" class="btn btn-sample" data-toggle="modal"
-		data-target=".add_course_modal">Create</button>
+		data-target=".add_course_modal"><spring:message code="course.modal.create"/></button>
 	<button type="button" class="btn btn-sample remove_button" data-toggle="modal"
-		data-target=".delete_course_modal">Delete</button>
+		data-target=".delete_course_modal"><spring:message code="course.create.delete"/></button>
 	<table
 		class="table table-hover default_table sortable-theme-bootstrap paginated"
 		data-sortable>
