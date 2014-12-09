@@ -56,8 +56,11 @@
 			<li><a href=course-request><spring:message
 						code="sidebar.request" /></a></li>
 		</sec:authorize>
-		<sec:authorize access="hasRole('ROLE_TEACHER')">
+		<sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_HEAD_TEACHER')">
 			<li><a href=salary><spring:message code="sidebar.salary" /></a></li>
+		</sec:authorize>
+		<sec:authorize access="hasAnyRole('ROLE_DIRECTOR')">
+			<li><a href=payroll><spring:message code="sidebar.payroll" /></a></li>
 		</sec:authorize>
 		<li><a href="#"><spring:message code="sidebar.contacts" /></a></li>
 		<li><a href="#"><spring:message code="sidebar.about" /></a></li>

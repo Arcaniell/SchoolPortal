@@ -56,7 +56,7 @@ public class SalaryDaoImpl extends BaseDaoImpl<Salary, Long> implements
 	@Override
 	public Long findHoursByPeriod(long teacherId, Date from, Date until) {
 		try {
-			return (Long) entityManager
+			return 	 (Long) entityManager
 					.createNamedQuery(Salary.FIND_COUNT_OF_HOURS_BY_PERIOD)
 					.setParameter("id", teacherId).setParameter("from", from)
 					.setParameter("until", until).getSingleResult();
