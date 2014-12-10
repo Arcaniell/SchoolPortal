@@ -2,9 +2,9 @@ package school.controller;
 
 import java.security.Principal;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,9 +27,9 @@ public class ProfileController {
 	private static final String URL_PROFILE_INFORMATION = "profile/information";
 	private static final String URL_PHOTO_ID = "/photo/{id}";
 	private static final String URL_PROFILE_UPLOAD_AVATAR = "profile/upload_avatar";
-	@Inject
+	@Autowired
 	ProfileService profileService;
-	@Inject
+	@Autowired
 	UserService userService;
 
 	@RequestMapping(value = URL_PHOTO_ID, method = RequestMethod.GET)

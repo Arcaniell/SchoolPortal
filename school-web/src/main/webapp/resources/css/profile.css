@@ -18,7 +18,7 @@
 	background-color: #E8E8E8;
 }
 
-.profile_table{
+.profile_table {
 	width: 520px;
 }
 
@@ -28,7 +28,7 @@
 	margin: 0px;
 }
 
-.chield_and_parent_container{
+.chield_and_parent_container {
 	max-width: 520px;
 	overflow: auto;
 }
@@ -43,7 +43,12 @@
 	width: 300px;
 }
 
-.all_in_one_line,h5,h6 {
+.all_in_one_line, h5, h6 {
 	margin-top: 0px !important;
 	margin-bottom: 3px !important;
+}
+
+.edit_profile_table {
+	border-spacing: 20px;
+	border-collapse: separate;
 }

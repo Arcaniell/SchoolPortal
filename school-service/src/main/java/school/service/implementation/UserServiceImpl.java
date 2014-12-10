@@ -198,4 +198,22 @@ public class UserServiceImpl implements UserService {
 		return false;
 	}
 
+	@Override
+	public void changeUserName(User user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void changeSex(User user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void changePassword(User user) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
