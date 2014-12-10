@@ -44,7 +44,7 @@ public class User {
     @Column(nullable = false)
     private Date registration;
     @Column(nullable = true)
-    private boolean confirmed;
+    private Boolean confirmed;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "USER_ROLE_REF", joinColumns = { @JoinColumn(name = "userId", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "roleId", nullable = false) })
     private List<Role> roles;

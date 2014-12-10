@@ -70,10 +70,10 @@ public class DiaryServiceImpl implements DiaryService {
 						if (journal.getSchedule().getId() == schedule.getId()) {
 
 							markDTOs.add(new MarkDTO(schedule.getLesson()
-									.getLesId(), schedule, journal));
+									.getId(), schedule, journal));
 						}
 					}
-					markDTOs.add(new MarkDTO(schedule.getLesson().getLesId(),
+					markDTOs.add(new MarkDTO(schedule.getLesson().getId(),
 							schedule, new Journal()));
 				}
 			}

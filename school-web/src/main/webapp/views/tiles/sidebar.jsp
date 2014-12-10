@@ -27,7 +27,8 @@
 		<sec:authorize access="isAuthenticated()">
 			<li><a href="profile"><spring:message code="sidebar.profile" /></a></li>
 		</sec:authorize>
-		<li><a href="#"><spring:message code="sidebar.schedule" /></a></li>
+		
+		<li><a href="schedule"><spring:message code="sidebar.schedule" /></a></li>
 		<sec:authorize access="hasAnyRole('ROLE_STUDENT', 'ROLE_PARENT')">
 			<li><a href="diary"><spring:message code="sidebar.diary" /></a></li>
 		</sec:authorize>

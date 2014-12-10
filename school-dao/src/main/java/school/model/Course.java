@@ -68,7 +68,7 @@ public class Course implements Comparable<Course> {
 
     private boolean additional;
     @Column(nullable = true)
-    private boolean archive;
+    private Boolean archive;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "course")
     private List<CourseRequest> courseRequest;

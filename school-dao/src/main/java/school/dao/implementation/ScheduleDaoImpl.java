@@ -36,11 +36,11 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule, Long> implements
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public List<Schedule> findByRoom(Room room) {
+	public List<Schedule> findByTeacher(Teacher teacher) {
 		try {
 			return (List<Schedule>) entityManager
-					.createNamedQuery(Schedule.FIND_BY_ROOM)
-					.setParameter("room", room).getResultList();
+					.createNamedQuery(Schedule.FIND_BY_TEACHER)
+					.setParameter("teacher", teacher).getResultList();
 		} catch (NoResultException e) {
 			return null;
 		}
@@ -48,11 +48,11 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule, Long> implements
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public List<Schedule> findByTeacher(Teacher teacher) {
+	public List<Schedule> findByRoom(int roomId) {
 		try {
 			return (List<Schedule>) entityManager
-					.createNamedQuery(Schedule.FIND_BY_TEACHER)
-					.setParameter("teacher", teacher).getResultList();
+					.createNamedQuery(Schedule.FIND_BY_ROOM)
+					.setParameter("roomId", roomId).getResultList();
 		} catch (NoResultException e) {
 			return null;
 		}
