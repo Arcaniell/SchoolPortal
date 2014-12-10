@@ -18,8 +18,8 @@
 	background-color: #E8E8E8;
 }
 
-.profile_table {
-	width: 600px;
+.profile_table{
+	width: 520px;
 }
 
 .small_logo {
@@ -28,8 +28,8 @@
 	margin: 0px;
 }
 
-.chield_and_parent_container {
-	max-width: 600px;
+.chield_and_parent_container{
+	max-width: 520px;
 	overflow: auto;
 }
 

@@ -6,8 +6,8 @@
 
 <div class="admin_buttons">
 	<table>
-	<tr><td><p id="admin_role_requests">Role requests</p></td></tr>
-	<tr><td><p id="admin_profile_edits">Profile edits</p></td></tr>
+	<!-- <tr><td><p id="admin_role_requests">Role requests</p></td></tr> -->
+	<!-- <tr><td><p id="admin_profile_edits">Profile edits</p></td></tr> -->
 	</table>
 
 

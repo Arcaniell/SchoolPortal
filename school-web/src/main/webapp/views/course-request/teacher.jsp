@@ -9,9 +9,9 @@
 	rel="stylesheet">
 <link href="<c:url value="/resources/css/base-pagination.css" />"
 	rel="stylesheet">
-<h3>All school requests for a group</h3>
+<h3><spring:message code="course.request.new.modal.header" /></h3>
 <c:if test="${fn:length(requests) == 0}">
-	<h5 id="empty">There is no course requests for now!</h5>
+	<h5 id="empty"><spring:message code="course.request.new.modal.no.requests" /></h5>
 </c:if>
 <c:if test="${fn:length(requests) > 0}">
 	<form action="course-request-manage-group" method="post">
@@ -23,8 +23,7 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">×</button>
-						<h3 class="modal-title">Are you sure want to delete this
-							request/requests?</h3>
+						<h3 class="modal-title"><spring:message code="course.request.new.modal.delete" /></h3>
 					</div>
 					<div class="modal-body button_body">
 						<button name="yes" type="submit" value="deny" class="btn btn-info">
@@ -47,8 +46,7 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">×</button>
-						<h3 class="modal-title">Are you sure want to approve this
-							request/requests?</h3>
+						<h3 class="modal-title"><spring:message code="course.request.new.modal.create" /></h3>
 					</div>
 					<div class="modal-body button_body">
 						<button name="yes" type="submit" value="approve"
@@ -68,9 +66,9 @@
 
 
 		<button type="button" class="btn btn-sample" data-toggle="modal"
-			data-target=".approve_request_modal">Approve</button>
+			data-target=".approve_request_modal"><spring:message code="course.request.new.modal.approve" /></button>
 		<button type="button" class="btn btn-sample" data-toggle="modal"
-			data-target=".deny_request_modal">Deny</button>
+			data-target=".deny_request_modal"><spring:message code="course.request.new.modal.deny" /></button>
 		<table
 			class="table table-hover default_table sortable-theme-bootstrap paginated"
 			data-sortable>

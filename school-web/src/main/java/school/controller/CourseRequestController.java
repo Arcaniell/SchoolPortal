@@ -18,7 +18,6 @@ import school.dto.CourseRequestTeacherDTO;
 import school.model.Course;
 import school.model.Role;
 import school.service.CourseRequestService;
-import school.service.CourseService;
 import school.service.utils.DateUtil;
 
 /**
@@ -46,16 +45,15 @@ public class CourseRequestController {
 
     @Autowired
     CourseRequestService courseRequestService;
-    @Autowired
-    CourseService courseService;
 
     // view of course requests for student and teacher
     @RequestMapping(value = URL_COURSE_REQUEST)
-    public String courseRequestsViews(HttpServletRequest request, Model model, Principal user) {
-        if (user == null) {
+    public String courseRequestsViews(HttpServletRequest request, Model model, Principal principal) {
+        if (principal == null) {
             return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
         }
         if (request.isUserInRole(Role.Secured.HEAD_TEACHER)) {
+            // look for all not archived requests
             List<CourseRequestTeacherDTO> courseRequests = courseRequestService.showAllRequests();
             if (courseRequests.size() == 0 || courseRequests == null) {
                 courseRequests = new ArrayList<CourseRequestTeacherDTO>();
@@ -65,16 +63,46 @@ public class CourseRequestController {
             return TILES_VIEW_COURSE_REQUEST_TEACHER;
         }
         if (request.isUserInRole(Role.Secured.STUDENT)) {
-
+            // look for current user requests
             List<CourseRequestStudentDTO> listOfCourseRequestsDTO = courseRequestService
-                    .findUserCourseRequests(user);
-            List<Course> canRequestCourses = courseService.findCanRequestCourses(user);
+                    .findUserCourseRequests(principal);
+            // look for courses that student can request
+            List<Course> canRequestCourses = courseRequestService.findCanRequestCourses(principal);
             model.addAttribute(JSP_OUTPUT_STUDENT_REQUESTS, listOfCourseRequestsDTO);
             model.addAttribute(JSP_OUTPUT_STUDENT_CAN_REQUEST_COURSES, canRequestCourses);
             model.addAttribute(JSP_OUTPUT_CURRENT_PAGE, JSP_CURRENT_PAGE_VALUE);
             return TILES_VIEW_COURSE_REQUEST_STUDENT;
         }
         return URLContainer.URL_REDIRECT + URLContainer.URL_HOME;
+    }
+
+    // teacher request manage, creating new group or remove requests
+    @RequestMapping(value = URL_COURSE_REQUEST_TEACHER_MANAGE)
+    public String groupCreate(HttpServletRequest request,
+            @RequestParam(value = JSP_INPUT_TEACHER_BRANCH) String branch, Model model) {
+        String[] checkboxNamesList = request.getParameterValues(JSP_INPUT_CHECKBOXS_NAME);
+        if (checkboxNamesList != null && branch != null) {
+            for (String courseIdStr : checkboxNamesList) {
+                long courseId = 0;
+                try {
+                    courseId = Long.parseLong(courseIdStr);
+                } catch (NumberFormatException e) {
+                    // nothing special, go on
+                }
+                if (courseId != 0 && branch.equals(JSP_INPUT_TEACHER_APPROVE)) {
+                    Date currentDate = new Date();
+                    Date futureDate = DateUtil.addOrDelDays(currentDate, ONE_MONTH_IN_DAYS);
+                    courseRequestService.formGroupAndCloseRequests(courseId, currentDate,
+                            futureDate);
+                    courseRequestService.deleteAllRequestsWithCourseId(courseId);
+                }
+                if (courseId != 0 && branch.equals(JSP_INPUT_TEACHER_DENY)) {
+                    courseRequestService.deleteAllRequestsWithCourseId(courseId);
+                }
+            }
+
+        }
+        return URLContainer.URL_REDIRECT + URL_COURSE_REQUEST;
     }
 
     // student course request add new
@@ -101,35 +129,6 @@ public class CourseRequestController {
                 long requestId = Long.parseLong(checkboxNamesList[i]);
                 courseRequestService.removeRequest(requestId);
             }
-        }
-        return URLContainer.URL_REDIRECT + URL_COURSE_REQUEST;
-    }
-
-    // teacher request manage, creating new group
-    @RequestMapping(value = URL_COURSE_REQUEST_TEACHER_MANAGE)
-    public String groupCreate(HttpServletRequest request,
-            @RequestParam(value = JSP_INPUT_TEACHER_BRANCH) String branch, Model model) {
-        String[] checkboxNamesList = request.getParameterValues(JSP_INPUT_CHECKBOXS_NAME);
-        if (checkboxNamesList != null && branch != null) {
-            for (String courseIdStr : checkboxNamesList) {
-                long courseId = 0;
-                try {
-                    courseId = Long.parseLong(courseIdStr);
-                } catch (NumberFormatException e) {
-                    // nothing special, go on
-                }
-                if (courseId != 0 && branch.equals(JSP_INPUT_TEACHER_APPROVE)) {
-                    Date currentDate = new Date();
-                    Date futureDate = DateUtil.addOrDelDays(currentDate, ONE_MONTH_IN_DAYS);
-                    courseRequestService.formGroupAndCloseRequests(courseId, currentDate,
-                            futureDate);
-                    courseRequestService.deleteAllRequestsWithCourseId(courseId);
-                }
-                if (courseId != 0 && branch.equals(JSP_INPUT_TEACHER_DENY)) {
-                    courseRequestService.deleteAllRequestsWithCourseId(courseId);
-                }
-            }
-
         }
         return URLContainer.URL_REDIRECT + URL_COURSE_REQUEST;
     }

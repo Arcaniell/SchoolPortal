@@ -3,7 +3,7 @@
 	text-align: center;
 }
 
-.modal-body {
+.courses-modal-body {
 	width: 100%;
 	text-align: center;
 }
@@ -16,7 +16,6 @@
 .modal-content .btn {
 	padding-left: 30px;
 	padding-right: 30px;
-	weight: 100%;
 }
 
 h3 {
@@ -78,6 +77,11 @@ h3 {
 	padding-top: 0;
 }
 
-.hidden_for_default_group,.btn-delete {
+.hidden_for_default_group, .btn-delete {
+	display: none;
+}
+
+.name_error, .price_error {
+	color: red;
 	display: none;
 }

@@ -61,7 +61,7 @@ public class ProfileServiceImpl implements ProfileService {
 		int profileRolePriority = 0;
 		ProfileDTO profileDTO = generalProfileInformation(user);
 		for (Role role : user.getRoles()) {
-			
+
 			switch (role.getName()) {
 			case "ROLE_STUDENT": {
 				Student student = studentDao.findByUserId(user.getId());
@@ -73,9 +73,9 @@ public class ProfileServiceImpl implements ProfileService {
 					parents.add(parentDTO);
 				}
 				profileDTO.setFamily(parents);
-				if(profileDTO.getFamily().size() == 1)
+				if (profileDTO.getFamily().size() == 1)
 					profileDTO.setProfileFamilyDescription("Parent");
-				else if(profileDTO.getFamily().size() >1)
+				else if (profileDTO.getFamily().size() > 1)
 					profileDTO.setProfileFamilyDescription("Parents");
 				profileDTO.setProfileRole(generateStudentProfileRole(student));
 
@@ -87,13 +87,14 @@ public class ProfileServiceImpl implements ProfileService {
 				for (Student student : parent.getStudents()) {
 					ProfileDTO chieldrenDTO = generalProfileInformation(student
 							.getUser());
-					chieldrenDTO.setProfileRole(generateStudentProfileRole(student));
+					chieldrenDTO
+							.setProfileRole(generateStudentProfileRole(student));
 					chieldren.add(chieldrenDTO);
 				}
 				profileDTO.setFamily(chieldren);
-				if(profileDTO.getFamily().size() == 1)
+				if (profileDTO.getFamily().size() == 1)
 					profileDTO.setProfileFamilyDescription("Chield");
-				else if(profileDTO.getFamily().size() >1)
+				else if (profileDTO.getFamily().size() > 1)
 					profileDTO.setProfileFamilyDescription("Children");
 				profileDTO.setProfileRole(generateParentProfileRole(parent));
 
@@ -103,13 +104,11 @@ public class ProfileServiceImpl implements ProfileService {
 			default:
 				break;
 			}
-			
-			if (profileRolePriority < rolePriority
-					.get(role.getName()))
-				profileRolePriority = rolePriority
-						.get(role.getName());
+
+			if (profileRolePriority < rolePriority.get(role.getName()))
+				profileRolePriority = rolePriority.get(role.getName());
 		}
-		
+
 		switch (profileRolePriority) {
 		case 0:
 			profileDTO.setProfileRole("");
@@ -127,15 +126,16 @@ public class ProfileServiceImpl implements ProfileService {
 		default:
 			break;
 		}
-		
+
 		return profileDTO;
 	}
-	private String generateStudentProfileRole(Student student){
-		return "Student of "
-				+ student.getGroup().getNumber() + " "
+
+	private String generateStudentProfileRole(Student student) {
+		return "Student of " + student.getGroup().getNumber() + " "
 				+ student.getGroup().getLetter();
 	}
-	private String generateParentProfileRole(Parent parent){
+
+	private String generateParentProfileRole(Parent parent) {
 		return "Parent";
 	}
 

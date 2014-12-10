@@ -10,7 +10,7 @@
 	rel="stylesheet">
 
 <div align="center" class="text">
-	<h3>All the courses which students studying for some period.</h3>
+	<h3><spring:message code="course.header" /></h3>
 	<form method="POST" action="student-courses">
 		<p>
 			<spring:message code="course.data" />

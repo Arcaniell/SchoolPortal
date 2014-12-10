@@ -1,14 +1,29 @@
 $(function() {
-		$("#submitSearch").click();
+	$("#submitSearch").click();
+
 });
+
+$(document).on("fadeIn", "#studentsTH");
 
 $("#groupNumberSelect").change(
 		function() {
+			var subject = $("#subjectSelect").val();
+			var groupNumber = $("#groupNumberSelect").val();
+			var groupLetter = $("#groupLetterSelect").val();
+			var quarter = $("#quarterSelect").val();
+			var json = {
+				"subject" : subject,
+				"groupNumber" : groupNumber,
+				"groupLetter" : groupLetter,
+				"quarter" : quarter
+			}
 			$.ajax({
 				url : 'journal-letter',
-				type : 'post',
-				data : $("#groupNumberSelect").val(),
-
+				type : 'POST',
+				data : JSON.stringify(json),
+				dataType : 'json',
+				contentType : 'application/json',
+				mimeType : 'application/json',
 				success : function(groupLetters) {
 					var content = " ";
 					for (letter in groupLetters) {
@@ -20,38 +35,87 @@ $("#groupNumberSelect").change(
 			});
 		});
 
-$("#subjectSelect").change(
-		function() {
-			$.ajax({
-				url : 'journal-subject',
-				type : 'post',
-				data : $("#subjectSelect").val(),
-
-				success : function(groupNumbers) {
-					var content = " ";
-					for (number in groupNumbers) {
-						content += "<option value=\"" + groupNumbers[number]
-								+ "\">" + groupNumbers[number] + "</option>\n";
+$("#subjectSelect")
+		.change(
+				function() {
+					var subject = $("#subjectSelect").val();
+					var groupNumber = $("#groupNumberSelect").val();
+					var groupLetter = $("#groupLetterSelect").val();
+					var quarter = $("#quarterSelect").val();
+					var json = {
+						"subject" : subject,
+						"groupNumber" : groupNumber,
+						"groupLetter" : groupLetter,
+						"quarter" : quarter
 					}
-					$("#groupNumberSelect").html(content);
-					$.ajax({
-						url : 'journal-letter',
-						type : 'post',
-						data : $("#groupNumberSelect").val(),
+					$
+							.ajax({
+								url : 'journal-subject',
+								type : 'POST',
+								data : JSON.stringify(json),
+								dataType : 'json',
+								contentType : 'application/json',
+								mimeType : 'application/json',
+								success : function(groupNumbers) {
+									var content = " ";
+									for (number in groupNumbers) {
+										content += "<option value=\""
+												+ groupNumbers[number] + "\">"
+												+ groupNumbers[number]
+												+ "</option>\n";
+									}
+									$("#groupNumberSelect").html(content);
+									$("#groupNumberSelect")
+											.ready(
+													function() {
+														var subject = $(
+																"#subjectSelect")
+																.val();
+														var groupNumber = $(
+																"#groupNumberSelect")
+																.val();
+														var groupLetter = $(
+																"#groupLetterSelect")
+																.val();
+														var quarter = $(
+																"#quarterSelect")
+																.val();
+														var json = {
+															"subject" : subject,
+															"groupNumber" : groupNumber,
+															"groupLetter" : groupLetter,
+															"quarter" : quarter
+														}
 
-						success : function(groupLetters) {
-							var content = " ";
-							for (letter in groupLetters) {
-								content += "<option value=\""
-										+ groupLetters[letter] + "\">"
-										+ groupLetters[letter] + "</option>\n";
-							}
-							$("#groupLetterSelect").html(content);
-						}
-					});
-				}
-			});
-		});
+														$
+																.ajax({
+																	url : 'journal-letter',
+																	type : 'POST',
+																	data : JSON
+																			.stringify(json),
+																	dataType : 'json',
+																	contentType : 'application/json',
+																	mimeType : 'application/json',
+																	success : function(
+																			groupLetters) {
+																		var content = " ";
+																		for (letter in groupLetters) {
+																			content += "<option value=\""
+																					+ groupLetters[letter]
+																					+ "\">"
+																					+ groupLetters[letter]
+																					+ "</option>\n";
+																		}
+																		$(
+																				"#groupLetterSelect")
+																				.html(
+																						content);
+																	}
+																});
+													});
+								}
+							});
+				});
 
 $("#submitSearch")
 		.click(
@@ -93,11 +157,24 @@ $("#submitSearch")
 									contentMarks += "<tr class=\"info "
 											+ "trHeaderRow\">";
 									for ( var date in dates) {
+										var scheduleId = dates[date].scheduleId;
 										var dateOfMark = new Date(
 												dates[date].date);
-										contentMarks += "<th " + "class=\""
-												+ dates[date].scheduleId;
+										contentMarks += "<th name=\"date"
+												+ scheduleId + "\" class=\""
+												+ scheduleId;
 										if (dateOfMark > curDate) {
+											if (dates[date].markCoefficient == 3
+													|| dates[date].markCoefficient == 5) {
+												contentMarks += " hasEvent";
+											} else if (dates[date].markCoefficient == 0) {
+												contentMarks += " hasNoEvent";
+											}
+											if (dates[date].homeTask != null) {
+												contentMarks += " hasHomeTask";
+											} else if (dates[date].homeTask == null) {
+												contentMarks += " hasNoHomeTask";
+											}
 											contentMarks += " futureDate\""
 													+ "data-toggle=\"modal\""
 													+ "data-target=\""
@@ -108,8 +185,7 @@ $("#submitSearch")
 											contentMarks += " currentDate";
 										}
 										contentMarks += "\" data-value=\""
-												+ dates[date].scheduleId
-												+ "\">"
+												+ scheduleId + "\">"
 										dateOfMark = (dateOfMark.getDate()
 												+ "."
 												+ (dateOfMark.getMonth() + 1)
@@ -295,6 +371,97 @@ $(document).on("click", ".futureDate", function() {
 	$("#editedDate").val($(this).data('value'));
 });
 
+$(document).on("click", ".hasNoEvent", function() {
+	$("#eventCB-Div").fadeIn();
+	$("#deleteEventCB-Div").hide();
+})
+
+$(document).on("click", ".hasEvent", function() {
+	$("#eventCB-Div").hide();
+	$("#deleteEventCB-Div").fadeIn();
+
+});
+
+$(document).on("click", "#deleteEventButton", function() {
+
+	var scheduleId = $("#editedDate").val();
+	var eventType = $("#eventTypeSelect").val();
+	var eventDescription = $("#eventDescriptionSelect").val();
+	var homeTask = $("#homeTasksSelect").val();
+
+	var event = {
+		"scheduleId" : scheduleId,
+		"eventType" : eventType,
+		"eventDescription" : eventDescription,
+		"homeTask" : homeTask,
+	}
+	$.ajax({
+		url : 'journal-delete-event',
+		type : 'POST',
+		data : JSON.stringify(event),
+		dataType : 'json',
+		contentType : 'application/json',
+		mimeType : 'application/json',
+		success : function(success) {
+			$("#eventCB-Div").fadeIn();
+			$("#deleteEventCB-Div").hide();
+			var markName = "mark" + scheduleId;
+			var dateName = "date" + scheduleId;
+			var markElements = document.getElementsByName(markName);
+			var dateElements = document.getElementsByName(dateName);
+
+			$(dateElements[0]).removeClass("hasEvent");
+			$(dateElements[0]).addClass("hasNoEvent");
+
+			for ( var index in markElements) {
+				$(markElements[index]).removeClass("eventTest");
+				$(markElements[index]).removeClass("eventExam");
+			}
+		}
+	});
+});
+
+$(document).on("click", ".hasNoHomeTask", function() {
+	$("#homeworkCB-Div").fadeIn();
+	$("#deleteHomeworkCB-Div").hide();
+});
+$(document).on("click", ".hasHomeTask", function() {
+	$("#homeworkCB-Div").hide();
+	$("#deleteHomeworkCB-Div").fadeIn();
+});
+
+$(document).on("click", "#deleteHomeworkButton", function() {
+
+	var scheduleId = $("#editedDate").val();
+	var eventType = $("#eventTypeSelect").val();
+	var eventDescription = $("#eventDescriptionSelect").val();
+	var homeTask = $("#homeTasksSelect").val();
+
+	var event = {
+		"scheduleId" : scheduleId,
+		"eventType" : eventType,
+		"eventDescription" : eventDescription,
+		"homeTask" : homeTask,
+	}
+	$.ajax({
+		url : 'journal-delete-hometask',
+		type : 'POST',
+		data : JSON.stringify(event),
+		dataType : 'json',
+		contentType : 'application/json',
+		mimeType : 'application/json',
+		success : function(success) {
+			$("#homeworkCB-Div").fadeIn();
+			$("#deleteHomeworkCB-Div").hide();
+			var dateName = "date" + scheduleId;
+			var dateElements = document.getElementsByName(dateName);
+
+			$(dateElements[0]).removeClass("hasHomeTask");
+			$(dateElements[0]).addClass("hasNoHomeTask");
+		}
+	});
+});
+
 $(document)
 		.on(
 				"click",
@@ -395,77 +562,54 @@ $(document).on(
 			});
 		});
 
-$(document).on(
-		"click",
-		"#submitEditDate",
-		function() {
+$(document).on("click", "#submitEditDate", function() {
 
-			var scheduleId = $("#editedDate").val();
-			var eventType = $("#eventTypeSelect").val();
-			var eventDescription = $("#eventDescriptionSelect").val();
-			var homeTask = $("#homeTasksSelect").val();
+	var scheduleId = $("#editedDate").val();
+	var eventType = $("#eventTypeSelect").val();
+	var eventDescription = $("#eventDescriptionSelect").val();
+	var homeTask = $("#homeTasksSelect").val();
 
-			var event = {
-				"scheduleId" : scheduleId,
-				"eventType" : eventType,
-				"eventDescription" : eventDescription,
-				"homeTask" : homeTask,
+	var event = {
+		"scheduleId" : scheduleId,
+		"eventType" : eventType,
+		"eventDescription" : eventDescription,
+		"homeTask" : homeTask,
+	}
+	$.ajax({
+		url : 'journal-edit-date',
+		type : 'POST',
+		data : JSON.stringify(event),
+		dataType : 'json',
+		contentType : 'application/json',
+		mimeType : 'application/json',
+		success : function(editedDate) {
+			$("#eventCB").click();
+			$("#homeworkCB").click();
+
+			var markName = "mark" + editedDate.scheduleId;
+			var dateName = "date" + editedDate.scheduleId;
+			var markElements = document.getElementsByName(markName);
+			var dateElements = document.getElementsByName(dateName);
+
+			if (editedDate.eventType == 3 || editedDate.eventType == 5) {
+				$(dateElements[0]).addClass("hasEvent");
+				$(dateElements[0]).removeClass("hasNoEvent");
 			}
-			$.ajax({
-				url : 'journal-edit-date',
-				type : 'POST',
-				data : JSON.stringify(event),
-				dataType : 'json',
-				contentType : 'application/json',
-				mimeType : 'application/json',
-				success : function(editedDate) {
+			if (editedDate.homeTask != "") {
+				$(dateElements[0]).addClass("hasHomeTask");
+				$(dateElements[0]).removeClass("hasNoHomeTask");
+			}
 
-					var name = "mark" + editedDate.scheduleId;
-					var elements = document.getElementsByName(name);
-
-					for ( var index in elements) {
-						if (editedDate.eventType == 3) {
-							addClass(elements[index], "eventTest");
-						} else if (editedDate.eventType == 5) {
-							addClass(elements[index], "eventExam");
-						}
-					}
-
-					function addClass(element, classToAdd) {
-						var currentClassValue = element.className;
-
-						if (currentClassValue.indexOf(classToAdd) == -1) {
-							if ((currentClassValue == null)
-									|| (currentClassValue == "")) {
-								element.className = classToAdd;
-							} else {
-								element.className += " " + classToAdd;
-							}
-						}
-					}
-
-					function removeClass(element, classToRemove) {
-						var currentClassValue = element.className;
-
-						if (currentClassValue == classToRemove) {
-							element.className = "";
-							return;
-						}
-
-						var classValues = currentClassValue.split(" ");
-						var filteredList = [];
-
-						for (var i = 0; i < classValues.length; i++) {
-							if (classToRemove != classValues[i]) {
-								filteredList.push(classValues[i]);
-							}
-						}
-
-						element.className = filteredList.join(" ");
-					}
+			for ( var index in markElements) {
+				if (editedDate.eventType == 3) {
+					$(markElements[index]).addClass("eventTest");
+				} else if (editedDate.eventType == 5) {
+					$(markElements[index]).addClass("eventExam");
 				}
-			});
-		});
+			}
+		}
+	});
+});
 
 $("#eventCB").click(function() {
 	if (this.checked) {

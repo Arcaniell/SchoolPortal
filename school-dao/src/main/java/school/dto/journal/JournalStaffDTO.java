@@ -4,7 +4,7 @@ import java.util.Set;
 
 import school.model.Group;
 
-public class JournalStaffDTO extends JournalDTO {
+public class JournalStaffDTO {
 
 	private long id;
 	private String name;
@@ -14,14 +14,6 @@ public class JournalStaffDTO extends JournalDTO {
 	private Set<String> courseNames;
 
 	public JournalStaffDTO() {
-	}
-
-	public JournalStaffDTO(long id, String teacherName, Set<Group> groups,
-			Set<String> courseNames) {
-		this.id = id;
-		this.name = teacherName;
-		this.groups = groups;
-		this.courseNames = courseNames;
 	}
 
 	public JournalStaffDTO(long id, String name, Set<Byte> groupNumbers,

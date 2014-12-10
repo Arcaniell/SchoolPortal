@@ -21,11 +21,11 @@
 						page="/views/profile/profile_information.jsp" />
 				<jsp:include
 						page="/views/profile/profile_information_runner.jsp" />		
-				<div class="hidden_error profile_options">
+				<div class="hidden_page profile_options">
 					<jsp:include page="/views/profile/profile_options.jsp" /></div>
-				<div class="hidden_error profile_avatar"><jsp:include
+				<div class="hidden_page profile_avatar"><jsp:include
 						page="/views/profile/profile_avatar.jsp" /></div>
-				<div class="hidden_error profile_requests">
+				<div class="hidden_page profile_requests">
 					<jsp:include page="/views/profile/profile_requests.jsp" /></div></td>
 					
 					<td></td>

@@ -11,6 +11,20 @@ h1, .h1, h2, .h2, h3, .h3 {
 	margin-bottom: 0;
 }
 
+.hasEvent {
+	
+}
+
+.hasHomeTask {
+	
+}
+
+.journalTitle {
+	margin-left: 5px;
+	margin-left: 9px;
+	margin-bottom: 5px
+}
+
 .currentDate {
 	color: rgb(250, 0, 0);
 	text-align: center;
@@ -23,7 +37,7 @@ h1, .h1, h2, .h2, h3, .h3 {
 	cursor: default;
 }
 
-.editDateCheckBox{
+.editDateCheckBox {
 	margin-left: 10px;
 }
 
@@ -95,7 +109,6 @@ h1, .h1, h2, .h2, h3, .h3 {
 }
 
 .addMark:hover {
-	
 	border: 2px solid #ddd;
 }
 
@@ -107,8 +120,16 @@ h1, .h1, h2, .h2, h3, .h3 {
 	background-color: rgb(255, 242, 244);
 }
 
-#cancelMark {
+#cancelEditDate {
 	float: right;
+}
+
+#deleteEventCB-Div {
+	border: 1px solid #e5e5e5;
+}
+
+#deleteHomeworkCB-Div {
+	border: 1px solid #e5e5e5;
 }
 
 .tableMarkPosition {
@@ -169,14 +190,20 @@ h1, .h1, h2, .h2, h3, .h3 {
 }
 
 .tableSider {
-	border: 0;
-	max-width: 220px;
+	border: 1px solid #e5e5e5;
+	max-width: 225px;
 	float: right;
 	position: relative;
+	border-radius: 4px;
 }
 
 .trSide {
-	background-color: #f9f9f9;
+	background-color: #FFFFFF;
+}
+
+.trSideHeader {
+	height: 37px;
+	border-bottom: 1px solid #e5e5e5;
 }
 
 .modal-footer {
@@ -272,13 +299,7 @@ h4, .h4, h5, .h5, h6, .h6 {
 }
 
 .btn {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	text-decoration: none;
-	font-size: 14px;
-	color: #428bca;
-	position: relative;
-	float: left;
-	width: 100px;
+	width: 90px;
 }
 
 .dropdown-menu {

@@ -36,6 +36,20 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule, Long> implements
 
 	@SuppressWarnings("unchecked")
 	@Transactional
+	public List<Schedule> findByTeacherAndCourse(long teacherId,
+			String courseName) {
+		try {
+			return (List<Schedule>) entityManager
+					.createNamedQuery(Schedule.FIND_BY_TEACHER_COURSE)
+					.setParameter("teacherId", teacherId)
+					.setParameter("courseName", courseName).getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Transactional
 	public List<Schedule> findByRoom(Room room) {
 		try {
 			return (List<Schedule>) entityManager
@@ -138,6 +152,18 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule, Long> implements
 					.setParameter("teacherId", teacherId)
 					.setParameter("date", date)
 					.setParameter("lessonId", lessonId).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<Schedule> findByCourse(String courseName) {
+		try {
+			return (List<Schedule>) entityManager
+					.createNamedQuery(Schedule.FIND_BY_COURSE)
+					.setParameter("courseName", courseName).getResultList();
 		} catch (NoResultException e) {
 			return null;
 		}

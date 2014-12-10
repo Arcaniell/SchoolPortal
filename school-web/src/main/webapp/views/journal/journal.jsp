@@ -7,9 +7,9 @@
 <link href="<c:url value="/resources/css/journal.css" />"
 	rel="stylesheet">
 
-
-<h3>Journal</h3>
-
+<div class="journalTitle">
+	<h3>Journal</h3>
+</div>
 <div>
 	<table class="table tableOnBackMark">
 		<tbody class="bodyJournal">
@@ -17,8 +17,8 @@
 				<td id="RightSideBarJournal" class="sizeForNames">
 					<table id="studentsNamesOfGroup"
 						class="table table-striped table-bordered sizeForNames">
-						<tr class="info trHeaderRow">
-							<th>Students</th>
+						<tr class="info trHeaderRow" >
+							<th id="studentsTH" hidden="hidden">Students</th>
 						</tr>
 						<c:forEach items="${groupMarks}" var="studentWithMarks">
 							<tr>
@@ -105,6 +105,12 @@
 				</td>
 				<td id="RightSideBarJournal">
 					<table class="table tableSider">
+						<tr class="info trHeaderRow trSideHeader">
+							<th id="RightSideBarJournal" class="thButton">
+								<h4 style="text-align: center;">Journal search</h4>
+							</th>
+						</tr>
+
 						<tr class="trSize trSide">
 							<th id="RightSideBarJournal" class="thButton">
 								<h4>
@@ -199,7 +205,7 @@
 							</select></th>
 						<tr class="trSize trSide">
 							<th id="RightSideBarJournal" class="thButton"><button
-									id="submitSearch" class="btn btn2" type="button">
+									id="submitSearch" class="btn btn-sample" type="button">
 									<spring:message code="journal.submit" />
 								</button></th>
 						</tr>
@@ -224,57 +230,89 @@
 				<h4 class="modal-title">Edit Date</h4>
 			</div>
 			<input id="editedDate" value=" " type="hidden">
-			<div class="modal-body">
-				<div class="checkbox editDateCheckBox">
-					<label> <input id="eventCB" type="checkbox"> Add
-						event
-					</label>
-				</div>
-				<table id="eventSelect" class="table" hidden="hidden">
-					<tr class="trSize">
-						<th id="RightSideBarJournal" class="thButton tdCenter ">Select
-							type</th>
-					</tr>
-					<tr>
-						<td id="RightSideBarJournal" class="thButton tdCenter"><select
-							id="eventTypeSelect" name="coefficient"
-							class="form-control-small">
-								<option value="0" disabled selected style="display: none;">Select</option>
-								<option value="3"><spring:message code="journal.test" /></option>
-								<option value="5"><spring:message code="journal.exam" /></option>
-						</select></td>
+			<div id="editDateBody" class="modal-body">
+				<div id="eventCB-Div">
+					<div class="checkbox editDateCheckBox">
+						<label> <input id="eventCB" type="checkbox"> Add
+							event
+						</label>
+					</div>
+					<table id="eventSelect" class="table" hidden="hidden">
+						<tr class="trSize">
+							<th id="RightSideBarJournal" class="thButton tdCenter ">Select
+								type</th>
+						</tr>
+						<tr>
+							<td id="RightSideBarJournal" class="thButton tdCenter"><select
+								id="eventTypeSelect" name="coefficient"
+								class="form-control-small">
+									<option value="0" disabled selected style="display: none;">Select</option>
+									<option value="3"><spring:message code="journal.test" /></option>
+									<option value="5"><spring:message code="journal.exam" /></option>
+							</select></td>
 
-					</tr>
-					<tr class="trSize">
-						<th id="RightSideBarJournal" class="thButton tdCenter">Write
-							description</th>
-					</tr>
-					<tr>
-						<td id="RightSideBarJournal" class="thButton tdCenter"><input
-							id="eventDescriptionSelect" type="text" class="form-control"
-							placeholder="Event description"></td>
-					</tr>
-				</table>
-				<div class="checkbox editDateCheckBox">
-					<label> <input id="homeworkCB" type="checkbox"> Add
-						home work
-					</label>
+						</tr>
+						<tr class="trSize">
+							<th id="RightSideBarJournal" class="thButton tdCenter">Write
+								description</th>
+						</tr>
+						<tr>
+							<td id="RightSideBarJournal" class="thButton tdCenter"><input
+								id="eventDescriptionSelect" type="text" class="form-control"
+								placeholder="Event description"></td>
+						</tr>
+					</table>
 				</div>
-				<table id="homeworkSelect" class="table" hidden="hidden">
-					<tr class="trSize">
-						<th id="RightSideBarJournal" class="thButton tdCenter ">Input
-							tasks</th>
-					</tr>
-					<tr>
-						<td id="RightSideBarJournal" class="thButton tdCenter"><input
-							id="homeTasksSelect" type="text" class="form-control"
-							placeholder="Home tasks"></td>
-					</tr>
-				</table>
+				<div id="deleteEventCB-Div" hidden="hidden">
+					<table class="table">
+						<tr class="trSize">
+							<th id="RightSideBarJournal" class="thButton tdCenter">You
+								already have event at this date</th>
+						</tr>
+						<tr class="trSize">
+							<td id="RightSideBarJournal" class="tdCenter">
+								<button id="deleteEventButton" type="button"
+									class="btn btn-danger">Delete</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div id="homeworkCB-Div">
+					<div class="checkbox editDateCheckBox">
+						<label> <input id="homeworkCB" type="checkbox">
+							Add home work
+						</label>
+					</div>
+					<table id="homeworkSelect" class="table" hidden="hidden">
+						<tr class="trSize">
+							<th id="RightSideBarJournal" class="thButton tdCenter ">Input
+								tasks</th>
+						</tr>
+						<tr>
+							<td id="RightSideBarJournal" class="thButton tdCenter"><input
+								id="homeTasksSelect" type="text" class="form-control"
+								placeholder="Home tasks"></td>
+						</tr>
+					</table>
+				</div>
+				<div id="deleteHomeworkCB-Div" hidden="hidden">
+					<table class="table">
+						<tr class="trSize">
+							<th id="RightSideBarJournal" class="thButton tdCenter">You
+								already added home tasks at this date</th>
+						</tr>
+						<tr class="trSize">
+							<td id="RightSideBarJournal" class="tdCenter">
+								<button id="deleteHomeworkButton" type="button"
+									class="btn btn-danger">Delete</button>
+							</td>
+						</tr>
+					</table>
+				</div>
 				<table class="table">
 					<tr>
 						<td id="RightSideBarJournal" class="submitEditDateButton">
-							<button id="submitEditDate" type="button" class="btn btn-default"
+							<button id="submitEditDate" type="button" class="btn btn-primary"
 								data-dismiss="modal">OK</button>
 						</td>
 						<td id="RightSideBarJournal">

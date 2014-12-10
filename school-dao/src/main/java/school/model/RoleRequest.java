@@ -9,11 +9,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "ROLE_REQUEST")
+@NamedQuery(name = RoleRequest.FIND_BY_CONFIRMED, query = RoleRequest.FIND_BY_CONFIRMED_QUERY)
 public class RoleRequest {
+	public static final String FIND_BY_CONFIRMED = "RoleRequest.findAllRoleRequests";
+	public static final String FIND_BY_CONFIRMED_QUERY = "select r from RoleRequest r where r.confirmed = :confirmed";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +31,10 @@ public class RoleRequest {
 	private Role role;
 	@Column(nullable = false)
 	private Date requestDate;
+	boolean confirmed;
+	@OneToOne
+	@JoinColumn(name = "groupId")
+	private Group group;
 	public RoleRequest() {
 		super();
 	}
@@ -52,6 +61,18 @@ public class RoleRequest {
 	}
 	public void setRequestDate(Date requestDate) {
 		this.requestDate = requestDate;
+	}
+	public boolean isConfirmed() {
+		return confirmed;
+	}
+	public void setConfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
+	}
+	public Group getGroup() {
+		return group;
+	}
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 	@Override
 	public int hashCode() {

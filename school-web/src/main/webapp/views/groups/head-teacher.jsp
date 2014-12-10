@@ -6,6 +6,8 @@
 <link href="<c:url value="/resources/css/sortable-theme-minimal.css" />"
 	rel="stylesheet">
 <link href="<c:url value="/resources/css/base-pagination.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/profile.css" />"
+	rel="stylesheet">
 <!-- ADD GROUP MODAL -->
 <div class="modal fade add_group_modal" tabindex="-1" role="dialog"
 	aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -14,14 +16,14 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">×</button>
-				<h3 class="modal-title">Group create</h3>
+				<h3 class="modal-title"><spring:message code="group.new.modal.header" /></h3>
 				<!-- <h4>Please choose characteristics of new group</h4> -->
 			</div>
 			<form action="group-create" method="post">
 				<div class="modal-body">
 					<table class="group_modal_window">
 						<tr class="addition_name_input">
-							<th colspan="2">Available additional groups</th>
+							<th colspan="2"><spring:message code="group.new.modal.avail" /></th>
 						</tr>
 						<tr class="addition_name_input">
 							<td colspan="2"><select name="course_id"
@@ -29,8 +31,8 @@
 							</select></td>
 						</tr>
 						<tr>
-							<th class="th_name">Year</th>
-							<th class="th_symbol">Symbol</th>
+							<th class="th_name"><spring:message code="group.new.modal.year" /></th>
+							<th class="th_symbol"><spring:message code="group.new.modal.symbol" /></th>
 						</tr>
 						<tr>
 							<td><select name="year_value" class="form-control">
@@ -45,7 +47,7 @@
 							</select></td>
 						</tr>
 						<tr>
-							<th colspan="2">Curator of the group</th>
+							<th colspan="2"><spring:message code="group.new.modal.curator" /></th>
 						</tr>
 						<tr>
 							<td colspan="2"><select name="curator_id"
@@ -58,10 +60,10 @@
 						<tr>
 							<td colspan="2"><input name="checkboxAdditionGroup"
 								class="addition_course_checkbox" type="checkbox">
-								Additional course </input></td>
+								<spring:message code="group.new.modal.addCourse" /></input></td>
 						</tr>
 					</table>
-					<button type="submit" class="btn btn-info">Create</button>
+					<button type="submit" class="btn btn-info"><spring:message code="course.modal.create" /></button>
 				</div>
 			</form>
 		</div>
@@ -79,7 +81,7 @@
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">×</button>
 					<h3 class="modal-title">
-						Are you sure want to delete this <br>group/courses?
+						<spring:message code="group.new.modal.sure" />
 					</h3>
 				</div>
 				<div class="modal-body button_body">
@@ -95,15 +97,13 @@
 		</div>
 	</div>
 	<!-- REMOVE GROUP MODAL -->
-	<h3>All school groups</h3>
+	<h3><spring:message code="group.new.headteacher.header" /></h3>
 	<button type="button" class="btn btn-sample" data-toggle="modal"
-		data-target=".add_group_modal">Add group</button>
+		data-target=".add_group_modal"><spring:message code="group.new.btn.add" /></button>
 	<c:if test="${fn:length(groupList) > 0}">
 		<button type="button" class="btn btn-sample real_dell_btn"
-			data-toggle="modal" data-target=".group_delete_modal">Remove
-			group</button>
-		<button type="button" class="btn btn-sample remove_button">Edit
-			group</button>
+			data-toggle="modal" data-target=".group_delete_modal"><spring:message code="group.new.btn.rm" /></button>
+		<button type="button" class="btn btn-sample remove_button"><spring:message code="group.new.btn.mod" /></button>
 	</c:if>
 	<table
 		class="table table-hover default_table sortable-theme-bootstrap paginated"
@@ -129,7 +129,7 @@
 					<td>${element.year}</td>
 					<td>${element.additional}</td>
 					<td>${element.members}</td>
-					<td>${element.teacher}</td>
+					<td><a class="anchor" data-value ="${element.teacherUserId}">${element.teacher}</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -146,6 +146,7 @@
 	<div class="pages"></div>
 </div>
 <!-- Pagination footer -->
+<jsp:include page="/views/profile/profile_information_runner.jsp" />
 <script src="<c:url value="https://code.jquery.com/jquery-1.10.2.js" />">
 	
 </script>

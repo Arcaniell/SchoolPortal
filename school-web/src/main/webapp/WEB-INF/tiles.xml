@@ -27,6 +27,12 @@
 	<definition name="profile_information" template="/views/profile/profile_information.jsp">
 	</definition>
 	
+	<definition name="registration_groups" template="/views/home/registration_groups.jsp">
+	</definition>
+	
+	<definition name="role_confirmation" template="/views/admin/role_confirmation.jsp">
+	</definition>
+	
 	<definition name="admin" extends="base.definition">
 		<put-attribute name="title" value="Admin Panel" />
 		<put-attribute name="main_content" value="/views/admin/admin.jsp" />

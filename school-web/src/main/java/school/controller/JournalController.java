@@ -3,9 +3,7 @@ package school.controller;
 import java.security.Principal;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import school.dto.journal.EditMarkDTO;
 import school.dto.journal.EditDateDTO;
-import school.dto.journal.JournalDTO;
 import school.dto.journal.JournalSearch;
 import school.dto.journal.JournalStaffDTO;
 import school.dto.journal.StudentWithMarksDTO;
@@ -34,29 +31,36 @@ public class JournalController {
 	@Inject
 	private JournalService journalService;
 
-	@RequestMapping(value = "journal")
+	@RequestMapping(value = URLContainer.URL_JOURNAL)
 	public String index(Principal principal, Model model,
 			HttpServletRequest request) throws ParseException {
 
 		if (principal == null) {
-			return "redirect:/login";
+			return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
 		}
-		JournalStaffDTO staff = null;
+
+		long userId = Long.parseLong(principal.getName());
+
+		String role = null;
 
 		if (request.isUserInRole(Role.Secured.TEACHER)) {
-			staff = journalService.getTeacherInfo(principal.getName());
 
-			JournalSearch search = journalService.getDeafaultData(
-					principal.getName(), new Date());
-			model.addAttribute("searchData", search);
-		} else if (request.isUserInRole(Role.Secured.HEAD_TEACHER)) {
+			JournalSearch searchData = journalService.getDeafaultData(userId,
+					new Date());
+			model.addAttribute(JournalUtil.MOD_ATT_SEARCH_DATA, searchData);
+			role = Role.Secured.TEACHER;
+
+		} else if (request.isUserInRole(Role.Secured.HEAD_TEACHER)
+				|| request.isUserInRole(Role.Secured.DIRECTOR)) {
+			role = Role.Secured.HEAD_TEACHER;
 		}
+		JournalStaffDTO staff = journalService.getStaffInfo(userId, role);
 
-		model.addAttribute("teacher", staff);
-		return "journal";
+		model.addAttribute(JournalUtil.MOD_ATT_STAFF, staff);
+		return URLContainer.URL_JOURNAL;
 	}
 
-	@RequestMapping(value = "journal-group-marks", method = RequestMethod.POST)
+	@RequestMapping(value = URLContainer.URL_JOURNAL_MARKS, method = RequestMethod.POST)
 	public @ResponseBody List<StudentWithMarksDTO> getByGroup(
 			@RequestBody JournalSearch journalSearch) throws ParseException {
 
@@ -66,9 +70,8 @@ public class JournalController {
 		return groupMarks;
 	}
 
-	@RequestMapping(value = "journal-edit-mark", method = RequestMethod.POST)
-	public @ResponseBody byte editMark(@RequestBody EditMarkDTO editMarkDTO)
-			throws ParseException {
+	@RequestMapping(value = URLContainer.URL_JOURNAL_EDIT_MARK, method = RequestMethod.POST)
+	public @ResponseBody byte editMark(@RequestBody EditMarkDTO editMarkDTO) {
 
 		journalService.editMark(editMarkDTO);
 
@@ -76,45 +79,61 @@ public class JournalController {
 
 	}
 
-	@RequestMapping(value = "journal-edit-date", method = RequestMethod.POST)
+	@RequestMapping(value = URLContainer.URL_JOURNAL_EDIT_DATE, method = RequestMethod.POST)
 	public @ResponseBody EditDateDTO addEvent(
-			@RequestBody EditDateDTO editedDateDTO) throws ParseException {
+			@RequestBody EditDateDTO editedDateDTO) {
 
 		journalService.editDate(editedDateDTO);
 
 		return editedDateDTO;
 	}
 
-	@RequestMapping(value = "journal-subject")
-	public @ResponseBody Set<String> getNumbers(@RequestBody String subject,
-			Principal user) {
+	@RequestMapping(value = "journal-delete-event", method = RequestMethod.POST)
+	public @ResponseBody boolean deleteEvent(
+			@RequestBody EditDateDTO editedDateDTO) {
 
-		return journalService.getGroupNumbers(user.getName(), subject);
+		journalService.deleteEvent(editedDateDTO);
 
+		return true;
 	}
 
-	@RequestMapping(value = "journal-letter")
-	public @ResponseBody Set<String> getLetters(@RequestBody String number,
-			Principal user) {
+	@RequestMapping(value = "journal-delete-hometask", method = RequestMethod.POST)
+	public @ResponseBody boolean deleteHomeTask(
+			@RequestBody EditDateDTO editedDateDTO) {
 
-		return journalService.getGroupLetters(user.getName(), number);
+		journalService.deleteHomeTask(editedDateDTO);
 
+		return true;
 	}
 
-	private Map<String, JournalDTO> getDTOsByRole(Principal user,
+	@RequestMapping(value = URLContainer.URL_JOURNAL_SUBJECT)
+	public @ResponseBody Set<Byte> getNumbers(
+			@RequestBody JournalSearch journalSearch, Principal principal,
 			HttpServletRequest request) {
 
-		Map<String, JournalDTO> DTOs = new HashMap<String, JournalDTO>();
+		long userId = Long.parseLong(principal.getName());
 
 		if (request.isUserInRole(Role.Secured.TEACHER)) {
-			JournalStaffDTO teacherDTO = journalService.getTeacherInfo(user
-					.getName());
-			DTOs.put(JournalUtil.TEACHER, teacherDTO);
-		} else if (request.isUserInRole(Role.Secured.HEAD_TEACHER)) {
-			JournalStaffDTO seniorStaffDTO = journalService
-					.seniorStaffInfo(user.getName());
-			DTOs.put(JournalUtil.TEACHER, seniorStaffDTO);
+			return journalService.getGroupNumbers(userId, Role.Secured.TEACHER,
+					journalSearch.getSubject());
 		}
-		return DTOs;
+		return journalService.getGroupNumbers(userId,
+				Role.Secured.HEAD_TEACHER, journalSearch.getSubject());
 	}
+
+	@RequestMapping(value = URLContainer.URL_JOURNAL_LETTER)
+	public @ResponseBody Set<Character> getLetters(
+			@RequestBody JournalSearch journalSearch, Principal principal,
+			HttpServletRequest request) {
+		long userId = Long.parseLong(principal.getName());
+
+		if (request.isUserInRole(Role.Secured.TEACHER)) {
+			return journalService.getGroupLetters(userId, Role.Secured.TEACHER,
+					journalSearch.getSubject(), journalSearch.getGroupNumber());
+		}
+		return journalService.getGroupLetters(userId,
+				Role.Secured.HEAD_TEACHER, journalSearch.getSubject(),
+				journalSearch.getGroupNumber());
+	}
+
 }
