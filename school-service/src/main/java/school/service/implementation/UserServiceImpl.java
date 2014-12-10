@@ -172,21 +172,11 @@ public class UserServiceImpl implements UserService {
 	public boolean setAvatar(long id, MultipartFile multipartFile) {
 		String fileName = multipartFile.getOriginalFilename();
 
-		String fileee = "";
-		if(i == 0) fileee = "male";
-		if(i == 1) fileee = "female";
-		if(i == 2) fileee = "other";
-		
-		
-		
 		if (validateFile(fileName)) {
-		
 			try {
 				InputStream inputStream = multipartFile.getInputStream();
 				File image = new File(System.getenv("OPENSHIFT_DATA_DIR")
-						+ "photo/" + fileee
-//						id
-						+ ".png"); i++;
+						+ "photo/" + id + ".png");
 				if (!image.exists()) {
 					image.createNewFile();
 				}
