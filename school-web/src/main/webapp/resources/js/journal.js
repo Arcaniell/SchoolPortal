@@ -174,7 +174,8 @@ $("#submitSearch").click(function() {
 						contentMarks += " hasHomeTask";
 					} else if (dates[date].homeTask == null) {
 						contentMarks += " hasNoHomeTask";
-					}
+					} 
+					if (dateOfMark > curDate){
 						contentMarks += " futureDate\""
 								+ "data-toggle=\"modal\""
 								+ "data-target=\""
