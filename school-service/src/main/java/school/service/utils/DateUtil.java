@@ -22,11 +22,13 @@ public class DateUtil {
 	public static int FULL = DateFormat.FULL;
 
 	public static String MESSAGE_DATE_FORMAT = "d MMM, ''yy, hh:mm";
-
+	public static String SCHEDULE_DATE_FORMAT = "dd-MM-yyyy";
+	public static String SCHEDULE_DATEPICKER_FORMAT = "MM/dd/yyyy";
+	
+	
 	/* Method to convert Date to String */
 	public static String getFormattedDate(Date date, int size, Locale loc) {
 		DateFormat dateFormat = DateFormat.getDateInstance(size, loc);
-		
 		return dateFormat.format(date);
 	}
 

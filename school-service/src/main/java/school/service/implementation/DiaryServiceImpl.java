@@ -1,3 +1,4 @@
+
 package school.service.implementation;
 
 import java.util.ArrayList;
@@ -81,14 +82,14 @@ public class DiaryServiceImpl implements DiaryService {
 						if (journal.getSchedule().getId() == schedule.getId()) {
 
 							markDTOs.add(new MarkDTO(schedule.getLesson()
-									.getLesId(), schedule.getId(), schedule
+									.getId(), schedule.getId(), schedule
 									.getCourse().getCourseName(), homeTask
 									.getTask(), date, journal.getMark(),
 									journal.getCoefficient()));
 						}
 					}
 
-					markDTOs.add(new MarkDTO(schedule.getLesson().getLesId(),
+					markDTOs.add(new MarkDTO(schedule.getLesson().getId(),
 							schedule.getId(), schedule.getCourse()
 									.getCourseName(), homeTask.getTask(), date,
 							event.getType()));

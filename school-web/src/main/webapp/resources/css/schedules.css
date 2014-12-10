@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+
+#navigation_bar{
+	width: 100%;
+	align-content:right; 
+}
+
+.table-responsive {
+	overflow-x: auto;
+}
+
+
+
+
+.weekend_logo {
+	display: none;
+}
+.search_logo {
+	display: none;
+	
+}

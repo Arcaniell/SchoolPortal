@@ -38,10 +38,10 @@
 	</form>
 </div>
 
-<script src="<c:url value="https://code.jquery.com/jquery-1.10.2.js" />">
+<%-- <script src="<c:url value="https://code.jquery.com/jquery-1.10.2.js" />"> --%>
 	
-</script>
+<!-- </script> -->
 <script src="<c:url value="/resources/js/salary.js" />"
 	type="text/javascript"></script>
-<script
-	src="<c:url value="https://code.jquery.com/ui/1.11.2/jquery-ui.js" />"></script>
+<%-- <script
+	src="<c:url value="https://code.jquery.com/ui/1.11.2/jquery-ui.js" />"></script> --%>

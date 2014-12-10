@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import school.dao.ScheduleDao;
 import school.model.Group;
-import school.model.Room;
 import school.model.Schedule;
 import school.model.Teacher;
 
@@ -36,6 +35,18 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule, Long> implements
 
 	@SuppressWarnings("unchecked")
 	@Transactional
+	public List<Schedule> findByTeacher(Teacher teacher) {
+		try {
+			return (List<Schedule>) entityManager
+					.createNamedQuery(Schedule.FIND_BY_TEACHER)
+					.setParameter("teacher", teacher).getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Transactional
 	public List<Schedule> findByTeacherAndCourse(long teacherId,
 			String courseName) {
 		try {
@@ -50,23 +61,11 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule, Long> implements
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public List<Schedule> findByRoom(Room room) {
+	public List<Schedule> findByRoom(int roomId) {
 		try {
 			return (List<Schedule>) entityManager
 					.createNamedQuery(Schedule.FIND_BY_ROOM)
-					.setParameter("room", room).getResultList();
-		} catch (NoResultException e) {
-			return null;
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public List<Schedule> findByTeacher(Teacher teacher) {
-		try {
-			return (List<Schedule>) entityManager
-					.createNamedQuery(Schedule.FIND_BY_TEACHER)
-					.setParameter("teacher", teacher).getResultList();
+					.setParameter("roomId", roomId).getResultList();
 		} catch (NoResultException e) {
 			return null;
 		}
