@@ -9,6 +9,11 @@
 <link href="<c:url value="/resources/css/journal.css" />"
 	rel="stylesheet">
 
+<link href="<c:url value="/resources/css/token-input.css" />"
+	rel="stylesheet">
+<link href="<c:url value="/resources/css/token-input-facebook.css" />"
+	rel="stylesheet">
+
 <div class="journalTitle">
 	<h3>Journal</h3>
 </div>
@@ -274,3 +279,6 @@
 	type="text/javascript"></script>
 <jsp:include page="/views/profile/profile_information_runner.jsp" />
 <jsp:include page="/views/messages/compose.jsp" />
+<script src="<c:url value="/resources/js/compose.js" />"></script>
+<script src="<c:url value="/resources/js/jquery.autosize.js" />"></script>
+<script src="<c:url value="/resources/js/jquery.tokeninput.js" />"></script>
