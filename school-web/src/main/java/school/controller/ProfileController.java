@@ -36,7 +36,7 @@ public class ProfileController {
 	public @ResponseBody byte[] getPhoto(@PathVariable String id,
 			HttpServletRequest request) {
 		/* Local service method */
-/*		return userService.getAvatar(id, request.getServletContext()
+		/*return userService.getAvatar(id, request.getServletContext()
 				.getRealPath(""));*/
 		/* OpenShift service method */
 		 return userService.getAvatar(id);
@@ -67,7 +67,7 @@ public class ProfileController {
 			return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
 		}
 		/* Local service method */
-/*		userService.setAvatar(Long.parseLong(principal.getName()), uploadedFile
+		/*userService.setAvatar(Long.parseLong(principal.getName()), uploadedFile
 				.getFile(), request.getServletContext().getRealPath(""));*/
 		/* OpenShift service method */
 		 userService.setAvatar(Long.parseLong(principal.getName()),
