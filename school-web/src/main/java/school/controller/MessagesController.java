@@ -1,6 +1,7 @@
 package school.controller;
 
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,6 +24,7 @@ import school.model.Conversation;
 import school.model.Message;
 import school.service.ConversationService;
 import school.service.MessagesService;
+import school.service.utils.DateUtil;
 
 @Controller
 public class MessagesController {
@@ -36,11 +38,11 @@ public class MessagesController {
 	@RequestMapping(value = "/inbox/{id}")
 	public String inboxConversationMessages(Model model, @PathVariable long id,
 			Principal principal, HttpServletRequest request) {
-		
-		if(principal == null) {
+
+		if (principal == null) {
 			return "redirect:/signinfailure";
 		}
-		
+
 		long userId = Long.valueOf(principal.getName());
 		Conversation conversation = conversationService.findById(id);
 		List<Conversation> conversationsI = conversationService
@@ -51,9 +53,19 @@ public class MessagesController {
 				conversation, userId);
 		messagesService.markMessagesAsRead(messages, userId);
 		Locale loc = RequestContextUtils.getLocale(request);
-		List<MessageDto> messagesDto = messagesService.constructMessagesDto(
-				messages, conversation.getReceiverId().getId(), conversation
-						.getSenderId().getId(), loc);
+		List<MessageDto> messagesDto = null;
+		if (userId == conversation.getSenderId().getId()
+				&& conversation.getCountOfReceivers() > 1) {
+			conversation.setNewForSender(false);
+			messagesDto = messagesService.constructGroupMessagesDto(messages,
+					conversation.getSenderId().getId(), loc);
+		} else {
+			if(userId == conversation.getSenderId().getId()) conversation.setNewForSender(false);
+			else conversation.setNewForReceiver(false);
+			messagesDto = messagesService.constructMessagesDto(messages,
+					conversation.getReceiverId().getId(), conversation
+							.getSenderId().getId(), loc);
+		}
 		model.addAttribute("messagesDto", messagesDto);
 		model.addAttribute("inboxSize", conversationsI.size());
 		model.addAttribute("sentSize", conversationsS.size());
@@ -69,11 +81,11 @@ public class MessagesController {
 	@RequestMapping(value = "/sent/{id}")
 	public String sentConversationMessages(Model model, @PathVariable long id,
 			Principal principal, HttpServletRequest request) {
-		
-		if(principal == null) {
+
+		if (principal == null) {
 			return "redirect:/signinfailure";
 		}
-		
+
 		long userId = Long.valueOf(principal.getName());
 		Conversation conversation = conversationService.findById(id);
 		List<Conversation> conversationsI = conversationService
@@ -84,9 +96,20 @@ public class MessagesController {
 				conversation, userId);
 		messagesService.markMessagesAsRead(messages, userId);
 		Locale loc = RequestContextUtils.getLocale(request);
-		List<MessageDto> messagesDto = messagesService.constructMessagesDto(
-				messages, conversation.getReceiverId().getId(), conversation
-						.getSenderId().getId(), loc);
+		List<MessageDto> messagesDto = null;
+		if (userId == conversation.getSenderId().getId()
+				&& conversation.getCountOfReceivers() > 1) {
+			conversation.setNewForSender(false);
+			messagesDto = messagesService.constructGroupMessagesDto(messages,
+					conversation.getSenderId().getId(), loc);
+		} else {
+			if(userId == conversation.getSenderId().getId()) conversation.setNewForSender(false);
+			else conversation.setNewForReceiver(false);
+			messagesDto = messagesService.constructMessagesDto(messages,
+					conversation.getReceiverId().getId(), conversation
+							.getSenderId().getId(), loc);
+			
+		}
 		model.addAttribute("messagesDto", messagesDto);
 		model.addAttribute("inboxSize", conversationsI.size());
 		model.addAttribute("sentSize", conversationsS.size());
@@ -114,13 +137,22 @@ public class MessagesController {
 			@RequestParam(value = "replyText", required = false) String replyText,
 			HttpServletRequest request, Principal principal) {
 
-		long repliedMessageId = Long.valueOf(messageId);
-		Message repliedMessage = messagesService.findById(repliedMessageId);
+		Message repliedMessage = messagesService.findById(Long.valueOf(messageId));
 		Conversation conversation = conversationService.findById(repliedMessage
 				.getConversationId().getId());
 		long principalId = Long.valueOf(principal.getName());
-
-		messagesService.replyMessage(conversation, replyText, principalId);
+		long convId = conversation.getId();
+		int countReceivers = conversation.getCountOfReceivers();
+		if (countReceivers > 1) {
+			for (int i = 0; i < countReceivers; i++) {
+				messagesService.replyMessage(
+						conversationService.findById(convId), replyText,
+						principalId);
+				convId++;
+			}
+		} else {			
+			messagesService.replyMessage(conversation, replyText, principalId);
+		}
 
 		String currentPage = (String) request.getSession().getAttribute(
 				"currentPage");
@@ -132,10 +164,9 @@ public class MessagesController {
 	List<EmailObjectDTO> getEmails(@RequestParam String tagName,
 			HttpServletRequest request, @RequestParam String emailOrGroup) {
 		boolean isParent = request.isUserInRole("ROLE_PARENT");
-		List<Object> usersOrGroups = messagesService.simulateSearchResult(tagName,
-				isParent, emailOrGroup);
-		
-		
+		List<Object> usersOrGroups = messagesService.simulateSearchResult(
+				tagName, isParent, emailOrGroup);
+
 		return messagesService.contructEmailObjectDTO(usersOrGroups);
 	}
 

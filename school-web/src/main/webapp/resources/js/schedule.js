@@ -1,5 +1,5 @@
 					$(function() {
-						$("#my").datepicker({
+						$("#my_d").datepicker({
 							changeMonth : true,
 							changeYear : true,
 							firstDay : 1,
@@ -36,11 +36,7 @@
 
 														content += groups[index].number;
 														content += "-";
-														if (groups[index].letter == 'Z') {
-															content +="optional";
-														}else{
 														content += groups[index].letter;
-														}
 													}
 													content += "</option>\n";
 												}

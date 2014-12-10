@@ -1,21 +1,22 @@
 @CHARSET "UTF-8";
 
-#navigation_bar{
+#navigation_bar {
 	width: 100%;
-	align-content:right; 
+	align-content: right;
 }
 
 .table-responsive {
 	overflow-x: auto;
 }
 
-
-
+.datepicker {
+	margin-top: 2px;
+}
 
 .weekend_logo {
 	display: none;
 }
+
 .search_logo {
 	display: none;
-	
 }
