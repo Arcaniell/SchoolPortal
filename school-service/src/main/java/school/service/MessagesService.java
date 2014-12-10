@@ -34,4 +34,6 @@ public interface MessagesService {
 	List<EmailObjectDTO> contructEmailObjectDTO(List<Object> users);
 
 	NewMessagesObjectDTO constructNewMessagesObjectDTO(Long userId);
+
+	List<MessageDto> constructGroupMessagesDto(List<Message> messages, long senderId, Locale loc);
 }

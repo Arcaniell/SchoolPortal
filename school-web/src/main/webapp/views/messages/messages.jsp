@@ -23,7 +23,7 @@
 				code="conversation.sent" /><span id="sentCount" class="badge">${conversationsDto[0].sentCount}</span>
 	</a></li>
 	<li id="compose">
-		<button type="button" class="btn btn-success" data-toggle="modal"
+		<button type="button" class="btn btn-primary" data-toggle="modal"
 			data-target="#composeModal">
 			<spring:message code="conversation.compose" />
 		</button>

@@ -2,6 +2,7 @@ package school.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,6 +25,7 @@ import school.model.User;
 import school.service.ConversationService;
 import school.service.MessagesService;
 import school.service.UserService;
+import school.service.utils.DateUtil;
 
 @Controller
 public class ConversationController {
@@ -63,7 +65,7 @@ public class ConversationController {
 
 		List<ConversationDto> dtos = conversationService
 				.constructConversationDto(conversations, principalId, loc);
-
+		
 		return dtos;
 	}
 
@@ -114,21 +116,21 @@ public class ConversationController {
 			HttpServletRequest request, Principal principal) {
 
 		Long principalId = Long.valueOf(principal.getName());
-		if (!conversationService.isGroup(to)) {
+		String[] tokens = to.split(",");
 
-			String[] namesAndEmails = to.split(",");
+		for (String s : tokens) {
 
-			for (String s : namesAndEmails) {
+			if (!conversationService.isGroup(s)) {
+
 				String email = s.split("-")[1].trim();
 				User receiver = userService.findByEmail(email);
 				Long receiverId = receiver.getId();
 
 				conversationService.createConversation(subject, principalId,
 						receiverId, text);
+			} else {
+				conversationService.sendToGroup(subject, principalId, to, text);
 			}
-		} else {
-			conversationService.sendToGroup(subject, principalId,
-					to, text);
 		}
 
 		String currentPage = (String) request.getSession().getAttribute(
