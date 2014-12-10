@@ -5,13 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.inject.Inject;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,21 +44,21 @@ import school.service.utils.JournalUtil;
 @Service
 public class JournalServiceImpl implements JournalService {
 
-	@Inject
+	@Autowired
 	private JournalDao journalDao;
-	@Inject
+	@Autowired
 	private ScheduleDao scheduleDao;
-	@Inject
+	@Autowired
 	private UserDao userDao;
-	@Inject
+	@Autowired
 	private TeacherDao teacherDao;
-	@Inject
+	@Autowired
 	private GroupDao groupDao;
-	@Inject
+	@Autowired
 	private StudentDao studentDao;
-	@Inject
+	@Autowired
 	private EventDao eventDao;
-	@Inject
+	@Autowired
 	private HomeTaskDao homeTaskDao;
 
 	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
@@ -81,9 +79,9 @@ public class JournalServiceImpl implements JournalService {
 			schedules = scheduleDao.findAll();
 		}
 
-		Set<String> courses = new TreeSet<String>();
-		Set<Byte> groupNumbers = new TreeSet<Byte>();
-		Set<Character> groupLetters = new TreeSet<Character>();
+		Set<String> courses = new TreeSet<>();
+		Set<Byte> groupNumbers = new TreeSet<>();
+		Set<Character> groupLetters = new TreeSet<>();
 
 		for (Schedule schedule : schedules) {
 			groupNumbers.add(schedule.getGroup().getNumber());
@@ -109,11 +107,12 @@ public class JournalServiceImpl implements JournalService {
 		List<Schedule> schedules = scheduleDao.findByGroupCourseInterval(
 				group.getId(), search.getSubject(), from, to);
 		Collections.sort(schedules);
-		List<StudentWithMarksDTO> studentsWithMarks = new ArrayList<StudentWithMarksDTO>();
-		Set<MarkDTO> marks = new HashSet<MarkDTO>();
+
+		List<StudentWithMarksDTO> studentsWithMarks = new ArrayList<>();
+		Set<MarkDTO> marks;
 
 		for (Student student : group.getStudent()) {
-			marks = new TreeSet<MarkDTO>();
+			marks = new TreeSet<>();
 			for (Schedule schedule : schedules) {
 
 				Journal journal = journalDao.findByStudentAndSchedule(
@@ -121,6 +120,7 @@ public class JournalServiceImpl implements JournalService {
 
 				HomeTask homeTask = homeTaskDao
 						.findBySchedule(schedule.getId());
+
 				Event event = eventDao.findEventBySchedule(schedule.getId());
 
 				if (journal != null) {
@@ -134,9 +134,9 @@ public class JournalServiceImpl implements JournalService {
 									.getDate(), event.getType()));
 				}
 			}
-			studentsWithMarks.add(new StudentWithMarksDTO(student.getId(),
-					getWholeUserName(student.getUser().getId()), new Date(),
-					marks));
+			studentsWithMarks.add(new StudentWithMarksDTO(student.getUser()
+					.getId(), student.getId(), getWholeUserName(student
+					.getUser().getId()), new Date(), marks));
 		}
 		Collections.sort(studentsWithMarks);
 		return studentsWithMarks;
@@ -148,21 +148,21 @@ public class JournalServiceImpl implements JournalService {
 	public void editMark(EditMarkDTO editMarkDTO) {
 
 		String[] studentAndSchedule = editMarkDTO.getStudentAndSchedule()
-				.split("j");
+				.split(JournalUtil.SPLITTER);
 
 		Student student = studentDao.findById(Long
 				.parseLong(studentAndSchedule[0]));
 		Schedule schedule = scheduleDao.findById(Long
 				.parseLong(studentAndSchedule[1]));
 
-		if (editMarkDTO.getMark() == 0) {
+		if (editMarkDTO.getMark() == JournalUtil.NOTHING) {
 			journalDao.remove(journalDao.findByStudentAndSchedule(
 					student.getId(), schedule.getId()));
 		} else {
 			Event event = eventDao.findEventBySchedule(schedule.getId());
-			byte coefficient = 0;
+			byte coefficient = JournalUtil.NOTHING;
 			if (event == null) {
-				coefficient = 1;
+				coefficient = JournalUtil.REGULAR_MARK;
 			} else {
 				coefficient = event.getType();
 			}
@@ -179,12 +179,12 @@ public class JournalServiceImpl implements JournalService {
 
 		Schedule schedule = scheduleDao.findById(editedDateDTO.getScheduleId());
 
-		if (editedDateDTO.getEventType() != 0) {
+		if (editedDateDTO.getEventType() != JournalUtil.NOTHING) {
 			eventDao.save(new Event(schedule, editedDateDTO.getEventType(),
 					editedDateDTO.getEventDescription()));
 		}
 
-		if (editedDateDTO.getHomeTask() != "") {
+		if (editedDateDTO.getHomeTask() != JournalUtil.EMPTY) {
 			homeTaskDao.save(new HomeTask(schedule.getGroup(), editedDateDTO
 					.getHomeTask(), schedule));
 		}
@@ -246,7 +246,8 @@ public class JournalServiceImpl implements JournalService {
 	public JournalSearch getDeafaultData(long userId, Date currentDate)
 			throws ParseException {
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd:MM:yyyy");
+		SimpleDateFormat dateFormat = new SimpleDateFormat(
+				JournalUtil.DATE_FORMAT);
 		Teacher teacher = teacherDao.findByUserId(userId);
 		String quarter = getQuarterByDate(currentDate);
 		Date from = getDatesByQuarter(quarter)[JournalUtil.FIRST_DATE_OF_QUARTER];
@@ -258,15 +259,13 @@ public class JournalServiceImpl implements JournalService {
 			datesValues.add(schedule.getDate().getTime());
 		}
 
-		Date closestDate = new Date(JournalUtil.getClosestValue(
-				currentDate.getTime(), datesValues));
+		Date closestDate = new Date(JournalUtil.getClosestValue(dateFormat
+				.parse(dateFormat.format(currentDate)).getTime(), datesValues));
 
 		List<Lesson> lessons = new ArrayList<>();
 
 		for (Schedule schedule : scheduleDao.findByTeacherInterval(
-				teacher.getId(),
-				dateFormat.parse(dateFormat.format(closestDate)),
-				dateFormat.parse(dateFormat.format(closestDate)))) {
+				teacher.getId(), closestDate, closestDate)) {
 			lessons.add(schedule.getLesson());
 		}
 
@@ -282,7 +281,8 @@ public class JournalServiceImpl implements JournalService {
 	private long getClosestLesson(Date date, List<Lesson> lessons)
 			throws ParseException {
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat dateFormat = new SimpleDateFormat(
+				JournalUtil.HOURS_OF_DATE);
 
 		List<Long> lessonsValues = new ArrayList<>();
 		for (Lesson lesson : lessons) {
@@ -302,7 +302,8 @@ public class JournalServiceImpl implements JournalService {
 			return scheduleDao.findByTeacherAndCourse(
 					teacherDao.findByUserId(userId).getId(), subject);
 
-		} else if (role.equals(Role.Secured.HEAD_TEACHER)
+		}
+		if (role.equals(Role.Secured.HEAD_TEACHER)
 				|| role.equals(Role.Secured.DIRECTOR)) {
 
 			return scheduleDao.findByCourse(subject);
@@ -338,7 +339,7 @@ public class JournalServiceImpl implements JournalService {
 				.parse(JournalUtil.LAST_DAY_THIRD_QUARTER))) {
 			return JournalUtil.FOURTH_QUARTER;
 		}
-		return "0";
+		return null;
 	}
 
 	private Date[] getDatesByQuarter(String quarter) throws ParseException {
@@ -346,27 +347,62 @@ public class JournalServiceImpl implements JournalService {
 				JournalUtil.UI_DATE_FORMAT);
 		Date[] dates = new Date[JournalUtil.FIRST_AND_LAST_DATE_OF_QUARTER];
 
-		if (quarter.equals(JournalUtil.FIRST_QUARTER)) {
+		switch (quarter) {
+
+		case JournalUtil.FIRST_QUARTER:
+
 			dates[JournalUtil.FIRST_DATE_OF_QUARTER] = dateFormat
 					.parse(JournalUtil.FIRST_DAY_FIRST_QUARTER);
 			dates[JournalUtil.LAST_DATE_OF_QUARTER] = dateFormat
 					.parse(JournalUtil.LAST_DAY_FIRST_QUARTER);
-		} else if (quarter.equals(JournalUtil.SECOND_QUARTER)) {
+			break;
+
+		case JournalUtil.SECOND_QUARTER:
+
 			dates[JournalUtil.FIRST_DATE_OF_QUARTER] = dateFormat
 					.parse(JournalUtil.FIRST_DAY_SECOND_QUARTER);
 			dates[JournalUtil.LAST_DATE_OF_QUARTER] = dateFormat
 					.parse(JournalUtil.LAST_DAY_SECOND_QUARTER);
-		} else if (quarter.equals(JournalUtil.THIRD_QUARTER)) {
+			break;
+
+		case JournalUtil.THIRD_QUARTER:
+
 			dates[JournalUtil.FIRST_DATE_OF_QUARTER] = dateFormat
 					.parse(JournalUtil.FIRST_DAY_THIRD_QUARTER);
 			dates[JournalUtil.LAST_DATE_OF_QUARTER] = dateFormat
 					.parse(JournalUtil.LAST_DAY_THIRD_QUARTER);
-		} else if (quarter.equals(JournalUtil.FOURTH_QUARTER)) {
+			break;
+
+		case JournalUtil.FOURTH_QUARTER:
+
 			dates[JournalUtil.FIRST_DATE_OF_QUARTER] = dateFormat
 					.parse(JournalUtil.FIRST_DAY_FOURTH_QUARTER);
 			dates[JournalUtil.LAST_DATE_OF_QUARTER] = dateFormat
 					.parse(JournalUtil.LAST_DAY_FOURTH_QUARTER);
+			break;
 		}
+		//
+		// if (quarter.equals(JournalUtil.FIRST_QUARTER)) {
+		// dates[JournalUtil.FIRST_DATE_OF_QUARTER] = dateFormat
+		// .parse(JournalUtil.FIRST_DAY_FIRST_QUARTER);
+		// dates[JournalUtil.LAST_DATE_OF_QUARTER] = dateFormat
+		// .parse(JournalUtil.LAST_DAY_FIRST_QUARTER);
+		// } else if (quarter.equals(JournalUtil.SECOND_QUARTER)) {
+		// dates[JournalUtil.FIRST_DATE_OF_QUARTER] = dateFormat
+		// .parse(JournalUtil.FIRST_DAY_SECOND_QUARTER);
+		// dates[JournalUtil.LAST_DATE_OF_QUARTER] = dateFormat
+		// .parse(JournalUtil.LAST_DAY_SECOND_QUARTER);
+		// } else if (quarter.equals(JournalUtil.THIRD_QUARTER)) {
+		// dates[JournalUtil.FIRST_DATE_OF_QUARTER] = dateFormat
+		// .parse(JournalUtil.FIRST_DAY_THIRD_QUARTER);
+		// dates[JournalUtil.LAST_DATE_OF_QUARTER] = dateFormat
+		// .parse(JournalUtil.LAST_DAY_THIRD_QUARTER);
+		// } else if (quarter.equals(JournalUtil.FOURTH_QUARTER)) {
+		// dates[JournalUtil.FIRST_DATE_OF_QUARTER] = dateFormat
+		// .parse(JournalUtil.FIRST_DAY_FOURTH_QUARTER);
+		// dates[JournalUtil.LAST_DATE_OF_QUARTER] = dateFormat
+		// .parse(JournalUtil.LAST_DAY_FOURTH_QUARTER);
+		// }
 		return dates;
 	}
 

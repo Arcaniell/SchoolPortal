@@ -6,9 +6,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +25,7 @@ import school.service.utils.JournalUtil;
 @Controller
 public class DiaryController {
 
-	@Inject
+	@Autowired
 	private DiaryService diaryService;
 
 	@RequestMapping(value = URLContainer.URL_DIARY)
@@ -40,8 +40,10 @@ public class DiaryController {
 			model.addAttribute(DiaryUtil.MOD_ATT_KIDS,
 					diaryService.getKids(user.getName()));
 		}
+		
+		model.addAttribute(URLContainer.JSP_OUTPUT_CURRENT_PAGE, URLContainer.URL_DIARY);
 
-		return "diary";
+		return URLContainer.URL_DIARY;
 	}
 
 	@RequestMapping(value = URLContainer.URL_DIARY_MARK)

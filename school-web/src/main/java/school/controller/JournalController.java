@@ -6,14 +6,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import school.dto.journal.EditMarkDTO;
@@ -28,7 +27,7 @@ import school.service.utils.JournalUtil;
 @Controller
 public class JournalController {
 
-	@Inject
+	@Autowired
 	private JournalService journalService;
 
 	@RequestMapping(value = URLContainer.URL_JOURNAL)
@@ -41,26 +40,20 @@ public class JournalController {
 
 		long userId = Long.parseLong(principal.getName());
 
-		String role = null;
-
 		if (request.isUserInRole(Role.Secured.TEACHER)) {
-
 			JournalSearch searchData = journalService.getDeafaultData(userId,
 					new Date());
 			model.addAttribute(JournalUtil.MOD_ATT_SEARCH_DATA, searchData);
-			role = Role.Secured.TEACHER;
-
-		} else if (request.isUserInRole(Role.Secured.HEAD_TEACHER)
-				|| request.isUserInRole(Role.Secured.DIRECTOR)) {
-			role = Role.Secured.HEAD_TEACHER;
 		}
-		JournalStaffDTO staff = journalService.getStaffInfo(userId, role);
+		
+		JournalStaffDTO staff = journalService.getStaffInfo(userId, getHighestRole(request));
 
 		model.addAttribute(JournalUtil.MOD_ATT_STAFF, staff);
+		model.addAttribute(URLContainer.JSP_OUTPUT_CURRENT_PAGE, URLContainer.URL_JOURNAL);
 		return URLContainer.URL_JOURNAL;
 	}
 
-	@RequestMapping(value = URLContainer.URL_JOURNAL_MARKS, method = RequestMethod.POST)
+	@RequestMapping(value = URLContainer.URL_JOURNAL_MARKS)
 	public @ResponseBody List<StudentWithMarksDTO> getByGroup(
 			@RequestBody JournalSearch journalSearch) throws ParseException {
 
@@ -70,7 +63,7 @@ public class JournalController {
 		return groupMarks;
 	}
 
-	@RequestMapping(value = URLContainer.URL_JOURNAL_EDIT_MARK, method = RequestMethod.POST)
+	@RequestMapping(value = URLContainer.URL_JOURNAL_EDIT_MARK)
 	public @ResponseBody byte editMark(@RequestBody EditMarkDTO editMarkDTO) {
 
 		journalService.editMark(editMarkDTO);
@@ -79,7 +72,7 @@ public class JournalController {
 
 	}
 
-	@RequestMapping(value = URLContainer.URL_JOURNAL_EDIT_DATE, method = RequestMethod.POST)
+	@RequestMapping(value = URLContainer.URL_JOURNAL_EDIT_DATE)
 	public @ResponseBody EditDateDTO addEvent(
 			@RequestBody EditDateDTO editedDateDTO) {
 
@@ -88,7 +81,7 @@ public class JournalController {
 		return editedDateDTO;
 	}
 
-	@RequestMapping(value = "journal-delete-event", method = RequestMethod.POST)
+	@RequestMapping(value = URLContainer.URL_JOURNAL_DELETE_EVENT)
 	public @ResponseBody boolean deleteEvent(
 			@RequestBody EditDateDTO editedDateDTO) {
 
@@ -97,7 +90,7 @@ public class JournalController {
 		return true;
 	}
 
-	@RequestMapping(value = "journal-delete-hometask", method = RequestMethod.POST)
+	@RequestMapping(value = URLContainer.URL_JOURNAL_DELETE_HOMETASK)
 	public @ResponseBody boolean deleteHomeTask(
 			@RequestBody EditDateDTO editedDateDTO) {
 
@@ -113,27 +106,33 @@ public class JournalController {
 
 		long userId = Long.parseLong(principal.getName());
 
-		if (request.isUserInRole(Role.Secured.TEACHER)) {
-			return journalService.getGroupNumbers(userId, Role.Secured.TEACHER,
-					journalSearch.getSubject());
-		}
-		return journalService.getGroupNumbers(userId,
-				Role.Secured.HEAD_TEACHER, journalSearch.getSubject());
+		return journalService.getGroupNumbers(userId, getHighestRole(request),
+				journalSearch.getSubject());
 	}
 
 	@RequestMapping(value = URLContainer.URL_JOURNAL_LETTER)
 	public @ResponseBody Set<Character> getLetters(
 			@RequestBody JournalSearch journalSearch, Principal principal,
 			HttpServletRequest request) {
+		
 		long userId = Long.parseLong(principal.getName());
 
+		return journalService.getGroupLetters(userId, getHighestRole(request),
+				journalSearch.getSubject(), journalSearch.getGroupNumber());
+	}
+
+	private String getHighestRole(HttpServletRequest request) {
+		
+		String role = null;
+		
 		if (request.isUserInRole(Role.Secured.TEACHER)) {
-			return journalService.getGroupLetters(userId, Role.Secured.TEACHER,
-					journalSearch.getSubject(), journalSearch.getGroupNumber());
+			role = Role.Secured.TEACHER;
 		}
-		return journalService.getGroupLetters(userId,
-				Role.Secured.HEAD_TEACHER, journalSearch.getSubject(),
-				journalSearch.getGroupNumber());
+		if (request.isUserInRole(Role.Secured.HEAD_TEACHER)
+				|| request.isUserInRole(Role.Secured.DIRECTOR)) {
+			role = Role.Secured.HEAD_TEACHER;
+		}
+		return role;
 	}
 
 }

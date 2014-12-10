@@ -56,7 +56,14 @@
 					<li class="active"><a href="messages" style="z-index: 8;"><spring:message
 								code="sidebar.messages" /></a></li>
 				</c:if>
-
+				<c:if test="${current == 'journal'}">
+					<li class="active"><a href="journal" style="z-index: 8;"><spring:message
+								code="sidebar.journal" /></a></li>
+				</c:if>
+				<c:if test="${current == 'diary'}">
+					<li class="active"><a href="journal" style="z-index: 8;"><spring:message
+								code="sidebar.diary" /></a></li>
+				</c:if>
 			</c:if>
 		</ul>
 
