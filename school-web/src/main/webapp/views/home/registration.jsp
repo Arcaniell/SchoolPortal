@@ -172,7 +172,7 @@
 										<td><div id="for_registration_group_select">
 												<jsp:include page="/views/home/registration_groups.jsp"></jsp:include>
 											</div><tr>
-										<td><input type="hidden" id="groupNumber" name="groupNumber" value=""></td>
+										<td><input type="hidden" id="groupNumber" name="groupNumber" value="0"></td>
 									</tr></table></div></td>
 									</tr>
 
