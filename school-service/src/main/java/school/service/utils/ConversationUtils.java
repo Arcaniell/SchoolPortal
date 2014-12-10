@@ -4,16 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import school.dto.message.ConversationDate;
 import school.model.Conversation;
+import school.model.Group;
 import school.model.Message;
 import school.model.User;
 
 public class ConversationUtils {
 
-	/*Method to sort Conversations*/
+	/* Method to sort Conversations */
 	public static void sortConversations(List<Conversation> conversations,
 			List<Date> dates) {
 
@@ -34,16 +36,28 @@ public class ConversationUtils {
 				}
 			}
 		});
-		
+
 		conversations.clear();
 		dates.clear();
-		for(ConversationDate c:base) {
+		for (ConversationDate c : base) {
 			conversations.add(c.getConversation());
 			dates.add(c.getDate());
 		}
 	}
-	
-	/*Method to check if user contains tag*/
+
+	public static List<Conversation> removeDoubledConversations(
+			List<Conversation> conversations) {
+		Iterator<Conversation> i = conversations.iterator();
+		while (i.hasNext()) {
+			Conversation c = i.next();
+			if (c.getCountOfReceivers() == -1) {
+				i.remove();
+			}
+		}
+		return conversations;
+	}
+
+	/* Method to check if user contains tag */
 	public static boolean userContainsLetter(User u, String tagName) {
 		if (u.getFirstName().toLowerCase().contains(tagName)
 				|| u.getLastName().toLowerCase().contains(tagName)
@@ -53,7 +67,7 @@ public class ConversationUtils {
 			return false;
 	}
 
-	/*Method to count new messages for user*/
+	/* Method to count new messages for user */
 	public static int countOfNewMessagesForUser(List<Message> messageList,
 			long userId) {
 		int count = 0;
@@ -70,7 +84,7 @@ public class ConversationUtils {
 		return count;
 	}
 
-	/*Method to delete message*/
+	/* Method to delete message */
 	public static void deleteMessage(Conversation conversation,
 			Message message, long id, int receiversSize, int sendersSize) {
 
@@ -87,7 +101,7 @@ public class ConversationUtils {
 		}
 	}
 
-	/*Method to delete conversation*/
+	/* Method to delete conversation */
 	public static void deleteConversation(Conversation conversation, long id) {
 
 		if (conversation.getReceiverId().getId() == id) {
@@ -103,7 +117,7 @@ public class ConversationUtils {
 		}
 	}
 
-	/*Method to mark conversations as deleted*/
+	/* Method to mark conversations as deleted */
 	public static void markConversationAsDeleted(Conversation conversation,
 			long id) {
 
@@ -114,5 +128,13 @@ public class ConversationUtils {
 			conversation.setDeletedSender(true);
 			conversation.setAnsweredSender(false);
 		}
+	}
+
+	public static boolean groupContainsLetter(Group g, String tagName) {
+		if (tagName.contains(Character.toString(g.getLetter()).toLowerCase())
+				|| tagName.contains(String.valueOf(g.getNumber()))) {
+			return true;
+		} else
+			return false;
 	}
 }

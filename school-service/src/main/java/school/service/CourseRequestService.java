@@ -6,6 +6,8 @@ import java.util.List;
 
 import school.dto.CourseRequestStudentDTO;
 import school.dto.CourseRequestTeacherDTO;
+import school.model.Course;
+import school.model.Student;
 
 /**
  * @author Blowder
@@ -23,6 +25,9 @@ public interface CourseRequestService {
     void deleteAllRequestsWithCourseId(long id);
 
     void formGroupAndCloseRequests(long courseId, Date from, Date till);
+
+    List<Course> findCanRequestCourses(Principal principal);
+
 
     
 

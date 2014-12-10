@@ -7,6 +7,18 @@ public class JournalSearch {
 	private char groupLetter;
 	private String quarter;
 
+	public JournalSearch() {
+
+	}
+
+	public JournalSearch(String subject, byte groupNumber, char groupLetter,
+			String quarter) {
+		this.subject = subject;
+		this.groupNumber = groupNumber;
+		this.groupLetter = groupLetter;
+		this.quarter = quarter;
+	}
+
 	public String getSubject() {
 		return subject;
 	}

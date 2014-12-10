@@ -32,10 +32,17 @@ import school.service.utils.ScheduleUtil;
 @Controller
 public class ScheduleController {
 
+	private static final String SCHEDULE_TEACHER = "schedule-teacher";
+	private static final String SCHEDULE_NEXT = "schedule-next";
+	private static final String SCHEDULE_BACK = "schedule-back";
+	private static final String SCHEDULE_ROOM = "schedule-room";
+	private static final String SCHEDULE_SELECT = "schedule-select";
+	private static final String SCHEDULE_GROUP = "schedule-group";
+	private static final String SCHEDULE = "schedule";
 	@Autowired
 	private ScheduleService scheduleService;
 
-	@RequestMapping(value = "schedule")
+	@RequestMapping(value = SCHEDULE)
 	public String index(
 			@RequestParam(value = "dateFrom", required = false) String dateFrom,
 
@@ -51,23 +58,23 @@ public class ScheduleController {
 		model.addAttribute("groups", groups);
 		model.addAttribute("dateFrom", dateFrom);
 
-		return "schedule";
+		return SCHEDULE;
 	}
 
-	@RequestMapping(value = "schedule-group")
+	@RequestMapping(value = SCHEDULE_GROUP)
 	public @ResponseBody List<GroupScheduleDTO> getGroup(
 			@RequestBody String name) {
 
 		return scheduleService.getGroupName(scheduleService.allGroup(), name);
 	}
 
-	@RequestMapping(value = "schedule-room")
+	@RequestMapping(value = SCHEDULE_ROOM)
 	public @ResponseBody List<RoomDTO> getRoom(@RequestBody String name) {
 
 		return scheduleService.getRoomName(scheduleService.allRoom(), name);
 	}
 
-	@RequestMapping(value = "schedule-select")
+	@RequestMapping(value = SCHEDULE_SELECT)
 	public @ResponseBody List<SchedulePerGroupDTO> getTable(
 			@RequestBody ScheduleSearch json, HttpServletRequest request) {
 
@@ -94,7 +101,7 @@ public class ScheduleController {
 
 	}
 
-	@RequestMapping(value = "schedule-back")
+	@RequestMapping(value = SCHEDULE_BACK)
 	public @ResponseBody String[] getPreviousTable(
 			@RequestBody String[] before, HttpServletRequest request) {
 		String way = "back";
@@ -103,7 +110,7 @@ public class ScheduleController {
 
 	}
 
-	@RequestMapping(value = "schedule-next")
+	@RequestMapping(value = SCHEDULE_NEXT)
 	public @ResponseBody String[] getNextTable(@RequestBody String[] before,
 			HttpServletRequest request) {
 		String way = "next";
@@ -112,7 +119,7 @@ public class ScheduleController {
 
 	}
 
-	@RequestMapping(value = "schedule-teacher")
+	@RequestMapping(value = SCHEDULE_TEACHER)
 	public @ResponseBody List<UserDTO> getTeacherLfName(@RequestBody String name) {
 
 		return scheduleService.getTeacherName(scheduleService.allTeacher(),

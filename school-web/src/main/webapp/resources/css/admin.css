@@ -1,0 +1,39 @@
+.admin_buttons {
+	position: fixed;
+	right: 0px;
+	top: 120px;
+	font-size: 14px;
+	color: #428bca;
+	right: 0px;
+	top: 120px;
+}
+
+.admin_buttons p {
+	width: 200px;
+	margin-left: 0px;
+	text-align: center;
+}
+
+.admin_buttons tbody tr:hover>td {
+	cursor: pointer;
+	color: black;
+	background-color: #E8E8E8;
+}
+.admin_table th{
+	width: 15%;
+	font-size: 13px;
+	border: 1px solid black;
+	text-align: center;
+}
+.admin_table td{
+	color: black;
+	border: 1px solid gray;
+	text-align: center;
+}
+.admin_table tbody tr:hover>td {
+	cursor: pointer;
+	background-color: #E8E8E8;
+}
+#admin_role_confirmation input{
+	width: 100px;
+}

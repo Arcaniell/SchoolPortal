@@ -15,24 +15,40 @@ import org.springframework.stereotype.Service;
 
 import school.dao.SalaryDao;
 import school.dao.TeacherDao;
+import school.dto.SalaryCourseDTO;
 import school.dto.SalaryDTO;
+import school.dto.SalaryHistoryDTO;
+import school.dto.SalaryPayrollDTO;
+import school.model.Course;
 import school.model.Salary;
 import school.model.Teacher;
 import school.service.SalaryService;
+import school.service.utils.DateUtil;
 import school.service.utils.SalaryUtil;
 
 @Service
 public class SalaryServiceImpl implements SalaryService {
-	SimpleDateFormat formatterDate = new SimpleDateFormat("MM/dd/yyyy");
+	private final SimpleDateFormat formatterDate = new SimpleDateFormat("MM/dd/yyyy");
+	private final String ISSUE_DAY = "/10/";
+	private final int INITIAL_RATE = 15;
 	@Autowired
 	private SalaryDao salaryDao;
 	@Autowired
 	private TeacherDao teacherDao;
 
+	public int getHours(Date lastSalaryDate, Teacher teacher)
+			throws ParseException {
+		Date currentDate = DateUtil.getCurrentDate(formatterDate);
+		long hours = salaryDao.findHoursByPeriod(teacher.getId(),
+				lastSalaryDate, currentDate);
+		return (int) hours;
+	}
+
 	@Transactional
 	@Override
-	public SalaryDTO getCurrentMonthInfo(Principal user) throws ParseException {
-		long userId = Long.parseLong(user.getName());
+	public SalaryDTO getCurrentMonthInfo(Principal principal)
+			throws ParseException {
+		long userId = Long.parseLong(principal.getName());
 		Teacher teacher = teacherDao.findByUserId(userId);
 		if (teacher == null)
 			return null;
@@ -41,12 +57,8 @@ public class SalaryServiceImpl implements SalaryService {
 				.findByLastIssueDate(teacher.getId()).getIssueDate();
 
 		Calendar currentDate = Calendar.getInstance();
-		String modifiedDate = formatterDate.format(currentDate.getTime());
-		Date formattedCurrentDate = formatterDate.parse(modifiedDate);
-
-		long hours = salaryDao.findHoursByPeriod(teacher.getId(),
-				lastSalaryDateDate, formattedCurrentDate);
-		long balance = hours * 50;
+		int hours = (int) getHours(lastSalaryDateDate, teacher);
+		int balance = hours * INITIAL_RATE * teacher.getRate();
 
 		int currentMonth = currentDate.get(Calendar.MONTH);
 		Calendar lastSalaryDate = Calendar.getInstance();
@@ -56,15 +68,15 @@ public class SalaryServiceImpl implements SalaryService {
 		if (lastSalaryMonth != 11) {
 			if (lastSalaryMonth == currentMonth) {
 				nextCalculationDate = formatterDate.parse(""
-						+ (currentMonth + 2) + "/10/"
+						+ (currentMonth + 2) + ISSUE_DAY
 						+ currentDate.get(Calendar.YEAR));
 			} else if (lastSalaryMonth < currentMonth)
 				nextCalculationDate = formatterDate.parse(""
-						+ (currentMonth + 1) + "/10/"
+						+ (currentMonth + 1) + ISSUE_DAY
 						+ currentDate.get(Calendar.YEAR));
 		} else
 			nextCalculationDate = formatterDate.parse(""
-					+ (Calendar.JANUARY + 1) + "/10/"
+					+ (Calendar.JANUARY + 1) + ISSUE_DAY
 					+ (currentDate.get(Calendar.YEAR) + 1));
 		String nextCalculation = formatterDate.format(nextCalculationDate);
 
@@ -73,12 +85,13 @@ public class SalaryServiceImpl implements SalaryService {
 
 	@Transactional
 	@Override
-	public List<SalaryDTO> getHistoryInfo(Principal user, Date from, Date until) {
-		long userId = Long.parseLong(user.getName());
+	public List<SalaryHistoryDTO> getHistoryInfo(Principal principal,
+			Date from, Date until) {
+		long userId = Long.parseLong(principal.getName());
 		Teacher teacher = teacherDao.findByUserId(userId);
 		if (teacher == null)
 			return null;
-		List<SalaryDTO> salariesDTO = new ArrayList<SalaryDTO>();
+		List<SalaryHistoryDTO> salariesHistoryDTO = new ArrayList<SalaryHistoryDTO>();
 		List<Salary> salaries = salaryDao.findByTeacherIdAndPeriod(
 				teacher.getId(), from, until);
 		for (Salary salary : salaries) {
@@ -89,10 +102,75 @@ public class SalaryServiceImpl implements SalaryService {
 			int year = issueDateCalendar.get(Calendar.YEAR);
 
 			String issueDate = SalaryUtil.getMonth(salaryMonth) + " " + year;
-			salariesDTO.add(new SalaryDTO(salary.getHours(), salary.getSum(),
-					issueDate));
+			salariesHistoryDTO.add(new SalaryHistoryDTO(salary.getHours(),
+					salary.getSalary(), issueDate, salary.getAdditional(),
+					salary.getSum()));
 		}
-		return salariesDTO;
+		return salariesHistoryDTO;
 	}
 
+	@Transactional
+	@Override
+	public List<SalaryCourseDTO> getCourseOfTeacherInfo(Principal principal) {
+		long userId = Long.parseLong(principal.getName());
+		Teacher teacher = teacherDao.findByUserId(userId);
+		if (teacher == null)
+			return null;
+		List<SalaryCourseDTO> coursesDTO = new ArrayList<SalaryCourseDTO>();
+		List<Course> courses = teacher.getCourse();
+		for (Course course : courses) {
+			String courseName = course.getCourseName() + " ("
+					+ course.getGroupNumber() + ")";
+			int sumPerHour = INITIAL_RATE * course.getCoeficient();
+			coursesDTO.add(new SalaryCourseDTO(courseName, course
+					.getCoeficient(), sumPerHour));
+		}
+		return coursesDTO;
+	}
+
+	@Transactional
+	@Override
+	public List<SalaryPayrollDTO> getPayrollInfo() throws ParseException {
+		List<SalaryPayrollDTO> payrolls = new ArrayList<SalaryPayrollDTO>();
+		List<Teacher> teachers = teacherDao.findAll();
+		for (Teacher teacher : teachers) {
+			long teacherId = teacher.getId();
+			String teacherName = teacher.getUser().getFirstName() + " "
+					+ teacher.getUser().getLastName();
+			int teacherRate = teacher.getRate();
+
+			Date lastSalaryDate = salaryDao
+					.findByLastIssueDate(teacher.getId()).getIssueDate();
+			int hours = (int) getHours(lastSalaryDate, teacher);
+
+			int salary = hours * INITIAL_RATE;
+
+			payrolls.add(new SalaryPayrollDTO(teacherId, teacherName,
+					teacherRate, salary, hours));
+		}
+		return payrolls;
+	}
+	
+	@Transactional
+	@Override
+	public void addSalary(String[] additionalPay) throws ParseException {
+		List<SalaryPayrollDTO> payrolls = getPayrollInfo();
+		int i = 0;
+		for (SalaryPayrollDTO payroll : payrolls) {
+			Date currentDate = DateUtil.getCurrentDate(formatterDate);
+			int additional = Integer.parseInt(additionalPay[i]);
+			i++;
+			int salary = payroll.getSalary();
+			int hours = payroll.getHours();
+			int sum = salary + additional;
+			Salary monthSalary = new Salary();
+			monthSalary.setAdditional(additional);
+			monthSalary.setHours(hours);
+			monthSalary.setIssueDate(currentDate);
+			monthSalary.setSalary(salary);
+			monthSalary.setSum(sum);
+			monthSalary.setTeacher(teacherDao.findById(payroll.getTeacherId()));
+			salaryDao.save(monthSalary);
+		}
+	}
 }

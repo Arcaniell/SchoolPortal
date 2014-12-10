@@ -10,13 +10,17 @@ import school.dto.CourseDTO;
 import school.model.Course;
 
 public interface CourseService {
-    // @Secured("ROLE_TEACHER")
-    List<CourseDTO> allCoursesInDateRangeForStudent(Principal principal, Date from, Date till);
 
-    List<Course> findCanRequestCourses(Principal principal);
+    List<CourseDTO> allCoursesInDateRange4Student(Principal principal, Date from, Date till);
 
-    List<CourseDTO> allCoursesInDateRangeForTeacher(Principal principal, Date from, Date till);
+    List<CourseDTO> allCoursesInDateRange4Teacher(Principal principal, Date from, Date till);
 
     List<CourseDTO> getCoursesForYear(int year);
+
+    List<CourseDTO> getAllCourses();
+
+    void deleteAllCoursesWithIds(Long[] IdArray);
+
+    void saveNewCourse(Course createdCourse);
 
 }

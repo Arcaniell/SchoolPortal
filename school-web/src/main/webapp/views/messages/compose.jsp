@@ -72,7 +72,13 @@
 					<spring:message code="conversation.composeMessage" />
 				</h4>
 			</div>
+
 			<div class="modal-body">
+				<!-- <p style="float: left;">Select by:</p> -->
+				<select id="mySelectBox" class="selectCompose form-control">
+					<option>Name or email</option>
+					<option>Group</option>
+				</select>
 
 				<form action="${pageContext.request.contextPath}/compose"
 					name="composeTable" class="form-horizontal" method="post"
@@ -90,7 +96,7 @@
 						<label for="inputSubject"
 							class="col-sm-2 control-label composeText"><spring:message
 								code="conversation.subject" /></label>
-						<div class="col-sm-10">
+						<div class="col-sm-10" id="subj">
 							<input name="subject" type="text" class="form-control"
 								id="subjectArea"
 								placeholder="<spring:message code="conversation.writeASubject" />">
@@ -127,3 +133,15 @@
 		</div>
 	</div>
 </div>
+<script>
+	$(document).ready(function() {
+		var count = 0;
+		$(".col-sm-10 ul").each(function() {
+			if (count == 0) {
+				count++;
+			} else {
+				$(this).remove();
+			}
+		});
+	});
+</script>

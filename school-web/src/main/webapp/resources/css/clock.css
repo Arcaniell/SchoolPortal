@@ -1,0 +1,24 @@
+@CHARSET "UTF-8";
+
+.container {
+	width: 860px;
+	height: 130px;
+}
+
+.clock {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #428bca;
+	text-shadow: 0 0 1px #428bca;
+	margin: 0 auto;
+	padding: 30px;
+	width: 800px;
+}
+
+#Date {
+	font-size: 30px;
+}
+
+.hhmmss {
+	font-size: 35px;
+	display: inline;
+}

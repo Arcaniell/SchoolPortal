@@ -1,7 +1,5 @@
 package school.dao.implementation;
 
-import java.util.List;
-
 import javax.persistence.NoResultException;
 
 import org.springframework.stereotype.Repository;
@@ -25,18 +23,7 @@ public class HomeTaskDaoImpl extends BaseDaoImpl<HomeTask, Long> implements
 					.createNamedQuery(HomeTask.FIND_BY_SCHEDULE)
 					.setParameter("scheduleId", scheduleId).getSingleResult();
 		} catch (NoResultException e) {
-			return null;
-		}
-	}
-
-	@Transactional
-	@SuppressWarnings("unchecked")
-	public List<HomeTask> findByGroup(long groupId) {
-		try {
-			return entityManager.createNamedQuery(HomeTask.FIND_BY_GROUP)
-					.setParameter("groupId", groupId).getResultList();
-		} catch (NoResultException e) {
-			return null;
+			return new HomeTask();
 		}
 	}
 
@@ -48,7 +35,7 @@ public class HomeTaskDaoImpl extends BaseDaoImpl<HomeTask, Long> implements
 					.setParameter("groupId", groupId)
 					.setParameter("scheduleId", scheduleId).getSingleResult();
 		} catch (NoResultException e) {
-			return null;
+			return new HomeTask();
 		}
 	}
 }

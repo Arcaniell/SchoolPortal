@@ -12,12 +12,28 @@
 	text-align: center;
 }
 
-.btn {
-	width: 100%;
-	margin: 5px;
-}
-
 #exportedVal {
 	display: none;
 }
 
+.modal-body button[name='yes'] {
+	width: 100px;
+	float: left;
+}
+
+.modal-body button[name='no'] {
+	width: 100px;
+	float: right;
+}
+
+.button_body {
+	width: 90%;
+	margin: 0 auto;
+	height: 70px;
+}
+
+#empty {
+	margin: 5px;
+	color: #B7B7B7;
+	font-style: italic;
+}

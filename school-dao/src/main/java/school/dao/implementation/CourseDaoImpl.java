@@ -173,4 +173,20 @@ public class CourseDaoImpl extends BaseDaoImpl<Course, Long> implements CourseDa
         return null;
     }
 
+    @SuppressWarnings("unchecked")
+    @Transactional
+    @Override
+    public List<Course> findAllByArchiveFlag(boolean flag) {
+        try {
+            if (entityManager != null) {
+                return (List<Course>) entityManager
+                        .createNamedQuery(Course.FIND_COURSE_BY_ARCHIVE_FLAG)
+                        .setParameter("flag", flag).getResultList();
+            }
+        } catch (Exception e) {
+            // nothing to do here, return null
+        }
+        return null;
+    }
+
 }

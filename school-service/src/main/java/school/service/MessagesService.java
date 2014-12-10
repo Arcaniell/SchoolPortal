@@ -29,9 +29,9 @@ public interface MessagesService {
 
 	int countOfNewMessages(long userId);
 
-	List<User> simulateSearchResult(String tagName, boolean isParent);
+	List<Object> simulateSearchResult(String tagName, boolean isParent, String emailOrGroup);
 
-	List<EmailObjectDTO> contructEmailObjectDTO(List<User> users);
+	List<EmailObjectDTO> contructEmailObjectDTO(List<Object> users);
 
 	NewMessagesObjectDTO constructNewMessagesObjectDTO(Long userId);
 }

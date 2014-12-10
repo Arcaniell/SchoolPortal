@@ -1,11 +1,62 @@
-@CHARSET "UTF-8";
-
 .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td,
 	.table>tbody>tr>td, .table>tfoot>tr>td {
 	line-height: 1.42857143;
 	vertical-align: top;
 	position: inherit;
 	margin: 0;
+}
+
+h1, .h1, h2, .h2, h3, .h3 {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.hasEvent {
+	
+}
+
+.hasHomeTask {
+	
+}
+
+.journalTitle {
+	margin-left: 5px;
+	margin-left: 9px;
+	margin-bottom: 5px
+}
+
+.currentDate {
+	color: rgb(250, 0, 0);
+	text-align: center;
+	cursor: default;
+}
+
+.previousDate {
+	color: #6E6E6E;
+	text-align: center;
+	cursor: default;
+}
+
+.editDateCheckBox {
+	margin-left: 10px;
+}
+
+.futureDate {
+	cursor: pointer;
+	text-align: center;
+}
+
+.futureDate:hover {
+	background-color: #AFDFF7 !important;
+}
+
+.rightSideBarPosition {
+	width: 220px;
+	max-width: 220px;
+}
+
+#submitSearch {
+	margin-top: 18px;
 }
 
 .addMark {
@@ -18,6 +69,11 @@
 	max-width: 72px !important;
 	min-height: 30px !important;
 	margin: 0 !important;
+	padding: 0 !important;
+	padding-top: 7px !important;
+	font-size: 11px !important;
+	text-align: -webkit-center;
+	color: #333 !important;
 }
 
 .selectOfMarkCnfg {
@@ -53,19 +109,33 @@
 }
 
 .addMark:hover {
-	background-color: #FAFAFA;
 	border: 2px solid #ddd;
 }
 
 .eventTest {
 	background-color: rgb(236, 255, 240);
 }
+
 .eventExam {
 	background-color: rgb(255, 242, 244);
 }
 
-#cancelMark {
+#cancelEditDate {
 	float: right;
+}
+
+#deleteEventCB-Div {
+	border: 1px solid #e5e5e5;
+}
+
+#deleteHomeworkCB-Div {
+	border: 1px solid #e5e5e5;
+}
+
+.tableMarkPosition {
+	float: left;
+	margin-left: 196px !important;
+	position: absolute !important;
 }
 
 #RightSideBarJournal {
@@ -92,28 +162,48 @@
 .tableOnBackMark {
 	margin: 0px;
 	padding: 0;
+	max-width: 100%;
+	float: left;
 }
 
 .trHeaderRow {
 	font-size: 14px;
 }
 
+#studentsNamesOfGroup {
+	min-width: 195px !important;
+	max-width: 195px !important;
+}
+
+.sizeForNames {
+	min-width: 195px !important;
+	max-width: 195px !important;
+	float: left;
+}
+
 .tableMark {
 	display: inline-block;
-	border: 0;
-	max-width: 750px;
+	max-width: 800px;
 	border: 0;
 	margin: 0;
 	min-width: 300px;
 }
 
 .tableSider {
-	border: 0;
-	max-width: 750px;
+	border: 1px solid #e5e5e5;
+	max-width: 225px;
+	float: right;
+	position: relative;
+	border-radius: 4px;
 }
 
 .trSide {
-	background-color: #f9f9f9;
+	background-color: #FFFFFF;
+}
+
+.trSideHeader {
+	height: 37px;
+	border-bottom: 1px solid #e5e5e5;
 }
 
 .modal-footer {
@@ -209,13 +299,7 @@ h4, .h4, h5, .h5, h6, .h6 {
 }
 
 .btn {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	text-decoration: none;
-	font-size: 14px;
-	color: #428bca;
-	position: relative;
-	float: left;
-	width: 100px;
+	width: 90px;
 }
 
 .dropdown-menu {

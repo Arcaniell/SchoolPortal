@@ -120,7 +120,7 @@
 <div class="table-responsive ">
 
 
-	<table id="comp" class="table default_table table-hover">
+	<table id="comp" class="table  table-bordered table-striped default_table table-hover">
 
 	</table>
 	</div>
@@ -145,14 +145,7 @@
 <jsp:include page="/views/schedule/editing.jsp" />
 <link href="<c:url value="/resources/css/schedules.css" />"
 	rel="stylesheet">
-<!-- 
-<script src="<c:url value="https://code.jquery.com/jquery-1.10.2.js" />">
- 
-	
-</script>
--->
-<script
-	src="<c:url value="https://code.jquery.com/ui/1.11.2/jquery-ui.js" />"></script>
+
 	
 	  
 <script src="<c:url value="/resources/js/course.js" />"

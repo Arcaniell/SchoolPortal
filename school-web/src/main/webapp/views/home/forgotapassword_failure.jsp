@@ -26,7 +26,7 @@
 						<td><div align="center">
 								<table>
 									<tr>
-										<td><input type="button" class="btn btn-default"
+										<td><input type="button" class="btn btn-sample"
 											class="close" data-dismiss="modal" value="Ok"></td>
 									</tr>
 								</table>
