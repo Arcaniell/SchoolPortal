@@ -11,13 +11,11 @@
 					preventDuplicates : true
 				});
 	});
-</script>
-<script>
+
 	$(function() {
 		$('.animated').autosize();
 	});
-</script>
-<script>
+
 	function validateText(id) {
 		if ($("#" + id).val() == null || $("#" + id).val() == "") {
 			var div = $("#" + id).closest("div");
@@ -57,6 +55,17 @@
 			}
 
 	);
+	
+	$(document).ready(function() {
+		var count = 0;
+		$(".col-sm-10 ul").each(function() {
+			if (count == 0) {
+				count++;
+			} else {
+				$(this).remove();
+			}
+		});
+	});
 </script>
 
 <!-- Modal -->
@@ -133,15 +142,3 @@
 		</div>
 	</div>
 </div>
-<script>
-	$(document).ready(function() {
-		var count = 0;
-		$(".col-sm-10 ul").each(function() {
-			if (count == 0) {
-				count++;
-			} else {
-				$(this).remove();
-			}
-		});
-	});
-</script>

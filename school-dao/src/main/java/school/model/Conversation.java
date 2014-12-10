@@ -68,11 +68,24 @@ public class Conversation {
 	private boolean isDeletedSender;
 	private int countOfReceivers;
 	
+	@Column(nullable = false)
+	private boolean isNewForReceiver;
+	
+	@Column(nullable = false)
+	private boolean isNewForSender;
+	
+	@Column(nullable = false)
+	private String outcomeName;
+	
+	@Column(nullable = false)
+	private String incomeName;
+	
 	public Conversation() {}
 
 	public Conversation(User senderId, User receiverId, String subject, boolean isAnsweredReceiver,
 			boolean isAnsweredSender, boolean isDeletedReceiver,
-			boolean isDeletedSender) {
+			boolean isDeletedSender,
+			boolean isNewForReceiver, boolean isNewForSender, String incomeName, String outcomeName) {
 		this.senderId = senderId;
 		this.receiverId = receiverId;
 		this.subject = subject;
@@ -80,12 +93,16 @@ public class Conversation {
 		this.isAnsweredSender = isAnsweredSender;
 		this.isDeletedReceiver = isDeletedReceiver;
 		this.isDeletedSender = isDeletedSender;
+		this.isNewForReceiver = isNewForReceiver;
+		this.isNewForSender = isNewForSender;
+		this.incomeName = incomeName;
+		this.outcomeName = outcomeName;
 	}
 
 	public Conversation(User senderId, User receiverId, String subject, boolean isAnsweredReceiver,
 			boolean isAnsweredSender, boolean isDeletedReceiver,
-			boolean isDeletedSender, int countOfReceivers) {
-		super();
+			boolean isDeletedSender, int countOfReceivers,
+			boolean isNewForReceiver, boolean isNewForSender, String incomeName, String outcomeName) {
 		this.senderId = senderId;
 		this.receiverId = receiverId;
 		this.subject = subject;
@@ -94,6 +111,10 @@ public class Conversation {
 		this.isDeletedReceiver = isDeletedReceiver;
 		this.isDeletedSender = isDeletedSender;
 		this.countOfReceivers = countOfReceivers;
+		this.isNewForReceiver = isNewForReceiver;
+		this.isNewForSender = isNewForSender;
+		this.incomeName = incomeName;
+		this.outcomeName = outcomeName;
 	}
 
 	public long getId() {
@@ -176,6 +197,38 @@ public class Conversation {
 		this.countOfReceivers = countOfReceivers;
 	}
 
+	public boolean isNewForReceiver() {
+		return isNewForReceiver;
+	}
+
+	public void setNewForReceiver(boolean isNewForReceiver) {
+		this.isNewForReceiver = isNewForReceiver;
+	}
+
+	public boolean isNewForSender() {
+		return isNewForSender;
+	}
+
+	public void setNewForSender(boolean isNewForSender) {
+		this.isNewForSender = isNewForSender;
+	}
+
+	public String getOutcomeName() {
+		return outcomeName;
+	}
+
+	public void setOutcomeName(String outcomeName) {
+		this.outcomeName = outcomeName;
+	}
+
+	public String getIncomeName() {
+		return incomeName;
+	}
+
+	public void setIncomeName(String incomeName) {
+		this.incomeName = incomeName;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -186,6 +239,8 @@ public class Conversation {
 		result = prime * result + (isAnsweredSender ? 1231 : 1237);
 		result = prime * result + (isDeletedReceiver ? 1231 : 1237);
 		result = prime * result + (isDeletedSender ? 1231 : 1237);
+		result = prime * result + (isNewForReceiver ? 1231 : 1237);
+		result = prime * result + (isNewForSender ? 1231 : 1237);
 		result = prime * result
 				+ ((messages == null) ? 0 : messages.hashCode());
 		result = prime * result
@@ -216,6 +271,10 @@ public class Conversation {
 		if (isDeletedReceiver != other.isDeletedReceiver)
 			return false;
 		if (isDeletedSender != other.isDeletedSender)
+			return false;
+		if (isNewForReceiver != other.isNewForReceiver)
+			return false;
+		if (isNewForSender != other.isNewForSender)
 			return false;
 		if (messages == null) {
 			if (other.messages != null)

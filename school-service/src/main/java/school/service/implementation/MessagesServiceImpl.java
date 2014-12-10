@@ -76,16 +76,31 @@ public class MessagesServiceImpl implements MessagesService {
 			long principalId) {
 		Message message;
 		if (conversation.getReceiverId().getId() == principalId) {
-			message = new Message(conversation, text, new Date(), false, false);
-			message.setFromSender(false);
-			conversation.setAnsweredReceiver(true);
-			conversation.setDeletedSender(false);
+			message = new Message(conversation, false, text, new Date(), false, false);
+			ConversationUtils.markReceiversConversationAsNew(conversation);
 			message.setReadSender(false);
+			
+			if (conversation.getCountOfReceivers() == -1) {
+				List<Conversation> sentConversationsOfSender = conversationDao
+						.findSentConversations(conversation.getSenderId());
+				long idOfHeadConversion = 0;
+				for (Conversation c : sentConversationsOfSender) {
+					if (c.getCountOfReceivers() > 1) idOfHeadConversion = c.getId();
+					if (c.getId() == conversation.getId()) {
+						Conversation conversationChild = conversationDao
+								.findById(idOfHeadConversion);
+						Message messageClone = ConversationUtils
+								.createMessageClone(conversation,
+										sentConversationsOfSender, text,
+										conversationChild);
+						messageDao.save(messageClone);
+						message.setReadSender(true);
+					}
+				}
+			}
 		} else {
-			message = new Message(conversation, text, new Date(), false, false);
-			message.setFromSender(true);
-			conversation.setAnsweredSender(true);
-			conversation.setDeletedReceiver(false);
+			message = new Message(conversation, true, text, new Date(), false, false);
+			ConversationUtils.markSendersConversationAsNew(conversation);
 			message.setReadReceiver(false);
 		}
 		messageDao.save(message);
@@ -101,6 +116,7 @@ public class MessagesServiceImpl implements MessagesService {
 					.getId()), names.get(i), DateUtil.getFormattedDate(messages
 					.get(i).getDateTime(), DateUtil.MESSAGE_DATE_FORMAT, loc),
 					messages.get(i).getText());
+			
 			if (messages.get(i).isFromSender()) {
 				dto.setUserId(senderId);
 			} else
@@ -207,7 +223,7 @@ public class MessagesServiceImpl implements MessagesService {
 				}
 			} else {
 				List<Group> groups = groupDao.findAll();
-				
+
 				for (Group g : groups) {
 					if (ConversationUtils.groupContainsLetter(g, tagName)) {
 						usersOrGroups.add(g);
@@ -219,25 +235,27 @@ public class MessagesServiceImpl implements MessagesService {
 	}
 
 	@Override
-	public List<EmailObjectDTO> contructEmailObjectDTO(List<Object> usersOrGroups) {
+	public List<EmailObjectDTO> contructEmailObjectDTO(
+			List<Object> usersOrGroups) {
 		List<EmailObjectDTO> emailObjectDTOs = new ArrayList<EmailObjectDTO>();
-		int id = 1;
-		if(usersOrGroups.size() > 0) {
-			if(usersOrGroups.get(0) instanceof User) {
+		if (usersOrGroups.size() > 0) {
+			if (usersOrGroups.get(0) instanceof User) {
 				for (Object u : usersOrGroups) {
-					emailObjectDTOs.add(new EmailObjectDTO(((User) u).getFirstName() + " "
-							+ ((User) u).getLastName() + " - " + ((User) u).getEmail(), id));
-					id++;
+					emailObjectDTOs.add(new EmailObjectDTO(((User) u)
+							.getFirstName()
+							+ " "
+							+ ((User) u).getLastName()
+							+ " - " + ((User) u).getEmail(), ((User) u).getId()));
 				}
-			} else if(usersOrGroups.get(0) instanceof Group) {
+			} else if (usersOrGroups.get(0) instanceof Group) {
 				for (Object g : usersOrGroups) {
-					emailObjectDTOs.add(new EmailObjectDTO(((Group) g).getNumber() + " - "
-							+ ((Group) g).getLetter(), id));
-					id++;
+					emailObjectDTOs
+							.add(new EmailObjectDTO(((Group) g).getNumber()
+									+ " - " + ((Group) g).getLetter(), ((Group) g).getId()));
 				}
 			}
 		}
-		
+
 		return emailObjectDTOs;
 	}
 
@@ -245,5 +263,44 @@ public class MessagesServiceImpl implements MessagesService {
 	public NewMessagesObjectDTO constructNewMessagesObjectDTO(Long userId) {
 		return new NewMessagesObjectDTO(
 				String.valueOf(countOfNewMessages(userId)));
+	}
+
+	@Override
+	public List<MessageDto> constructGroupMessagesDto(List<Message> messages,
+			long senderId, Locale loc) {
+		List<MessageDto> dtos = new ArrayList<MessageDto>();
+
+		List<String> names = getGroupConversationNames(messages, senderId);
+
+		for (int i = 0; i < messages.size(); i++) {
+			MessageDto dto = new MessageDto(String.valueOf(messages.get(i)
+					.getId()), names.get(i), DateUtil.getFormattedDate(messages
+					.get(i).getDateTime(), DateUtil.MESSAGE_DATE_FORMAT, loc),
+					messages.get(i).getText());
+			if (messages.get(i).isFromSender()) {
+				dto.setUserId(senderId);
+			} else
+				dto.setUserId(messageDao.findById(messages.get(i).getId() + 1)
+						.getConversationId().getReceiverId().getId());
+			dtos.add(dto);
+		}
+		return dtos;
+	}
+
+	private List<String> getGroupConversationNames(List<Message> messages,
+			long senderId) {
+		List<String> names = new ArrayList<String>();
+		for (Message m : messages) {
+			if (m.isFromSender() == true) {
+				User sender = userDao.findById(senderId);
+				names.add(sender.getFirstName() + " " + sender.getLastName());
+			} else {
+				User receiver = messageDao.findById(m.getId() + 1)
+						.getConversationId().getReceiverId();
+				names.add(receiver.getFirstName() + " "
+						+ receiver.getLastName());
+			}
+		}
+		return names;
 	}
 }

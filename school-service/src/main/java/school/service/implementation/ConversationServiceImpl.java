@@ -2,7 +2,6 @@ package school.service.implementation;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -14,7 +13,7 @@ import school.dao.ConversationDao;
 import school.dao.UserDao;
 import school.dto.message.ConversationDto;
 import school.model.Conversation;
-import school.model.Message;
+import school.model.Group;
 import school.model.Parent;
 import school.model.User;
 import school.service.ConversationService;
@@ -34,7 +33,6 @@ public class ConversationServiceImpl implements ConversationService {
 
 	@Autowired
 	private UserDao userDao;
-	private User user;
 
 	@Autowired
 	private ParentService parentService;
@@ -44,11 +42,11 @@ public class ConversationServiceImpl implements ConversationService {
 	public List<Conversation> findConversations(long userId, String inboxOrSent) {
 		User user = userDao.findById(userId);
 		if (inboxOrSent.equals("inbox")) {
-			return ConversationUtils.removeDoubledConversations(conversationDao
-					.findInboxConversations(user));
+			return ConversationUtils.removeDoubledConversations(
+					conversationDao.findInboxConversations(user), userId);
 		} else {
-			return ConversationUtils.removeDoubledConversations(conversationDao
-					.findSentConversations(user));
+			return ConversationUtils.removeDoubledConversations(
+					conversationDao.findSentConversations(user), userId);
 		}
 	}
 
@@ -88,42 +86,35 @@ public class ConversationServiceImpl implements ConversationService {
 		List<Date> dates = getDates(conversations, id);
 		/* Sort conversations by date */
 		ConversationUtils.sortConversations(conversations, dates);
-		/* Get names of conversations */
-		List<String> names = getNames(conversations);
 		/* Construct dtos */
 		List<ConversationDto> dtos = new ArrayList<ConversationDto>();
 		String inboxCount = String.valueOf(findConversations(id, "inbox")
 				.size());
 		String sentCount = String.valueOf(findConversations(id, "sent").size());
+		
 		for (int i = 0; i < conversations.size(); i++) {
 			int countOfReceivers = conversations.get(i).getCountOfReceivers();
-			ConversationDto dto = new ConversationDto(
-					countOfReceivers > 1 ? names.get(i) + " ("
-							+ countOfReceivers + ")" : names.get(i),
-					conversations.get(i).getSubject(),
-					DateUtil.getFormattedDate(dates.get(i), DateUtil.MEDIUM,
-							loc), String.valueOf(conversations.get(i).getId()),
-					hasNewMessages(conversations.get(i), id), inboxCount,
-					sentCount);
+
+			ConversationDto dto = new ConversationDto(conversations.get(i)
+					.getSubject(), DateUtil.getFormattedDate(dates.get(i),
+					DateUtil.MEDIUM, loc), String.valueOf(conversations.get(i)
+					.getId()), inboxCount, sentCount);
+
+			if (conversations.get(i).getReceiverId().getId() == id) {
+				dto.setName(conversations.get(i).getIncomeName());
+				dto.setHasNewMessages(conversations.get(i).isNewForReceiver());
+			} else {
+				dto.setName(conversations.get(i).getOutcomeName()
+						+ ((countOfReceivers > 1) ? ("(" + countOfReceivers + ")")
+								: ""));
+				dto.setHasNewMessages(conversations.get(i).isNewForSender());
+			}
 
 			dtos.add(dto);
 		}
 		if (conversations.size() == 0)
 			dtos.add(new ConversationDto(inboxCount, sentCount));
 		return dtos;
-	}
-
-	@Transactional
-	@Override
-	public List<String> getNames(List<Conversation> conversations) {
-		List<String> names = new ArrayList<String>();
-		for (Conversation c : conversations) {
-			Long id = c.getSenderId().getId();
-			user = userDao.findById(id);
-			String name = user.getFirstName() + " " + user.getLastName();
-			names.add(name);
-		}
-		return names;
 	}
 
 	@Transactional
@@ -136,34 +127,14 @@ public class ConversationServiceImpl implements ConversationService {
 	@Override
 	public void createConversation(String subject, long sender, long receiver,
 			String text) {
-		Conversation conversation = new Conversation(userDao.findById(sender),
-				userDao.findById(receiver), subject, false, true, false, false,
-				1);
+		User senderUser = userDao.findById(sender);
+		User receiverUser = userDao.findById(receiver);
+		Conversation conversation = new Conversation(senderUser, receiverUser,
+				subject, false, true, false, false, 1, true, false, "From: "
+						+ constructName(senderUser), "To: "
+						+ constructName(receiverUser));
 		conversationDao.save(conversation);
 		messagesService.createNewMessage(conversation, text);
-	}
-
-	@Transactional
-	@Override
-	public boolean hasNewMessages(Conversation conversation, long userId) {
-		List<Message> messages = messagesService.findMessagesOfConversation(
-				conversation, userId);
-
-		for (Message m : messages) {
-			if (conversation.getReceiverId().getId() == userId) {
-				if (!m.isReadReceiver() && m.isFromSender()) {
-					return true;
-				}
-			} else {
-				if (!m.isReadSender() && !m.isFromSender()) {
-					if ((!m.isReadReceiver() && m.isFromSender())
-							|| (!m.isReadSender() && !m.isFromSender())) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
 	}
 
 	@Override
@@ -176,20 +147,54 @@ public class ConversationServiceImpl implements ConversationService {
 		}
 	}
 
+	/* Thread class */
+	private class GroupThread implements Runnable {
+		private String subject;
+		private Long principalId;
+		private String group;
+		private String text;
+
+		public GroupThread(String subject, Long principalId, String group,
+				String text) {
+			this.subject = subject;
+			this.principalId = principalId;
+			this.group = group;
+			this.text = text;
+		}
+
+		@Override
+		public void run() {
+
+			User sender = userDao.findById(principalId);
+			List<Parent> parents = parentService.getAllParentsOfGroup(group);
+			Conversation conversation;
+			int conversationCounter = 0;
+			Group groupName = parents.get(0).getStudents().get(0).getGroup();
+			for (Parent p : parents) {
+				conversation = new Conversation(sender, p.getUserId(), subject,
+						false, true, false, false,
+						conversationCounter == 0 ? parents.size() : -1, true,
+						false, "From: " + constructName(sender), "To: "
+								+ groupName.getNumber() + " — "
+								+ groupName.getLetter());
+				conversationCounter++;
+				conversationDao.save(conversation);
+				messagesService.createNewMessage(conversation, text);
+			}
+		}
+	}
+
+	public String constructName(User user) {
+		return user.getFirstName() + " " + user.getLastName();
+	}
+
 	@Override
 	public void sendToGroup(String subject, Long principalId, String group,
 			String text) {
-		User sender = userDao.findById(principalId);
-		List<Parent> parents = parentService.getAllParentsOfGroup(group);
-		Conversation conversation;
-		int counter = 0;
-		for (Parent p : parents) {
-			conversation = new Conversation(sender, p.getUserId(), subject,
-					false, true, false, false, counter == 0 ? parents.size()
-							: -1);
-			counter++;
-			conversationDao.save(conversation);
-			messagesService.createNewMessage(conversation, text);
-		}
+
+		GroupThread groupThread = new GroupThread(subject, principalId, group,
+				text);
+		new Thread(groupThread).start();
+
 	}
 }

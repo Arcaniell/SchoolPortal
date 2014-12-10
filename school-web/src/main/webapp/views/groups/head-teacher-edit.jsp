@@ -11,35 +11,35 @@
 	aria-labelledby="mySmallModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-sm">
 		<div id="modal_id_spinner" class="modal-content">
-			<h3>Loading please wait</h3>
+			<h3><spring:message code="group.edit.text.loading" /></h3>
 			<img class="spinner_gif" alt="Load gif"
 				src="<c:url value="/resources/gif/spinner.gif" />">
 		</div>
 	</div>
 </div>
 <h3>
-	Now you are editing <span class="className"> </span>
+	<spring:message code="group.edit.text.edit" /><span class="className"> </span>
 </h3>
 <table class="custom_table">
 	<tr>
-		<td>Start date:</td>
+		<td><spring:message code="group.edit.text.start" /></td>
 		<td><input name="dateFrom" type="text" class="datepicker"></td>
-		<td>Teacher name:</td>
+		<td><spring:message code="group.edit.text.teacher" /></td>
 		<td><select class="form-control teachers"></select></td>
 	</tr>
 	<tr>
-		<td>End date:</td>
+		<td><spring:message code="group.edit.text.end" /></td>
 		<td><input name="dateTill" type="text" class="datepicker"></td>
 		<td></td>
 		<td>
-			<button type="button" class="btn btn-info main_submit">Submit</button>
+			<button type="button" class="btn btn-info main_submit"><spring:message code="group.edit.text.submit" /></button>
 		</td>
 	</tr>
 </table>
 
 <div class="left">
 	<button style="width: 100%;" type="button"
-		class="btn btn-sample student_remove">Remove student -&gt;</button>
+		class="btn btn-sample student_remove"><spring:message code="group.edit.text.student" /></button>
 	<table
 		class="default_table table table-hover paginated_left sortable-theme-bootstrap"
 		data-sortable>
@@ -47,10 +47,10 @@
 			<tr>
 				<th data-sortable="false"><input type="checkbox"
 					id="select_for_remove"></th>
-				<th>Name</th><jsp:include
+				<th><spring:message code="group.edit.text.name" /></th><jsp:include
 					page="/views/profile/profile_information_runner.jsp" />
 
-				<th>Birthday</th>
+				<th><spring:message code="group.edit.text.birthday" /></th>
 			</tr>
 		</thead>
 		<tbody class="group_stuff">
@@ -59,7 +59,7 @@
 </div>
 <div class="right">
 	<button style="width: 100%;" type="button"
-		class="btn btn-sample student_add">&lt;- Add student</button>
+		class="btn btn-sample student_add"><spring:message code="group.edit.text.add.student" /></button>
 	<table
 		class="default_table table table-hover paginated_right sortable-theme-bootstrap"
 		data-sortable>
@@ -67,8 +67,8 @@
 			<tr>
 				<th data-sortable="false"><input type="checkbox"
 					id="select_for_add"></th>
-				<th>Name</th>
-				<th>Birthday</th>
+				<th><spring:message code="group.edit.text.name" /></th>
+				<th><spring:message code="group.edit.text.birthday" /></th>
 			</tr>
 		</thead>
 		<tbody class="other_stuff">
@@ -91,10 +91,8 @@
 	src="<c:url value="https://code.jquery.com/ui/1.11.2/jquery-ui.js" />"></script>
 <script src="<c:url value="/resources/js/group-edit.js" />"
 	type="text/javascript"></script>
-
 <script src="<c:url value="/resources/js/utils/sortable.js" />"
 	type="text/javascript"></script>
-
 <script
 	src="<c:url value="/resources/js/utils/pagination-multiply.js" />"
 	type="text/javascript"></script>
