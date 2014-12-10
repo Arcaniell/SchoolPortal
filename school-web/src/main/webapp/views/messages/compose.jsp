@@ -56,7 +56,7 @@ $(document).ready(function() {
 		}
 	});
 });
-</scritp>
+</script>
 <!-- Modal -->
 <div class="modal fade" id="composeModal" tabindex="-1" role="dialog"
 	aria-labelledby="composeModalLabel" aria-hidden="true">
@@ -131,6 +131,7 @@ $(document).ready(function() {
 		</div>
 	</div>
 </div>
+
 <script>
 $(function() {
 	$('#tokenfieldtypeahead').tokenInput(
@@ -140,4 +141,5 @@ $(function() {
 				preventDuplicates : true
 			});
 });
+
 </script>
