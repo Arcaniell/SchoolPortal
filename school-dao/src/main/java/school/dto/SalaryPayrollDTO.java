@@ -1,15 +1,16 @@
 package school.dto;
 
 public class SalaryPayrollDTO {
+	private long userId;
 	private long teacherId;
 	private String teacherName;
 	private int teacherRate;
 	private int salary;
 	private int hours;
 
-	public SalaryPayrollDTO(long teacherId, String teacherName,
+	public SalaryPayrollDTO(long userId, long teacherId, String teacherName,
 			int teacherRate, int salary, int hours) {
-		super();
+		this.userId = userId;
 		this.teacherId = teacherId;
 		this.teacherName = teacherName;
 		this.teacherRate = teacherRate;
@@ -57,4 +58,11 @@ public class SalaryPayrollDTO {
 		this.hours = hours;
 	}
 
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
 }

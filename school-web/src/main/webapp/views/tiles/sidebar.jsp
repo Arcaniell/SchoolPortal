@@ -29,7 +29,8 @@ src="<c:url value="/resources/img/logos/school-logo.jpg" />" />
 			<li><a href="${root_action}profile"><spring:message
 						code="sidebar.profile" /></a></li>
 		</sec:authorize>
-		<li><a href="#"><spring:message code="sidebar.schedule" /></a></li>
+		
+		<li><a href="schedule"><spring:message code="sidebar.schedule" /></a></li>
 		<sec:authorize access="hasAnyRole('ROLE_STUDENT', 'ROLE_PARENT')">
 			<li><a href="${root_action}diary"><spring:message
 						code="sidebar.diary" /></a></li>
@@ -74,7 +75,7 @@ src="<c:url value="/resources/img/logos/school-logo.jpg" />" />
 						code="sidebar.request" /></a></li>
 		</sec:authorize>
 		<sec:authorize
-			access="hasAnyRole('ROLE_HEAD_TEACHER', 'ROLE_TEACHER')">
+			access="hasRole('ROLE_TEACHER')">
 			<li><a href="${root_action}salary"><spring:message
 						code="sidebar.salary" /></a></li>
 		</sec:authorize>
@@ -106,6 +107,6 @@ src="<c:url value="/resources/img/logos/school-logo.jpg" />" />
 		};
 		setInterval(function() {
 			poll();
-		}, 200000);
+		}, 2000);
 	})();
 </script>

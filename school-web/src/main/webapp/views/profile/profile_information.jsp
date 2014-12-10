@@ -72,7 +72,7 @@
 															value="${fn:substring(profileR, 0, 7)}" />
 														<c:if test="${profileRole == 'Student'}">
 															<input class="btn1 btn-sample1 " type="button"
-																data-toggle="modal" data-id="ISBN564541" data-dismiss="modal" data-target="#composeModal"
+																data-toggle="modal" data-id="${namePlusEmail}" data-dismiss="modal" data-target="#composeModal"
 																value="Write message" id="profile_message_button">
 														</c:if>
 													</sec:authorize>

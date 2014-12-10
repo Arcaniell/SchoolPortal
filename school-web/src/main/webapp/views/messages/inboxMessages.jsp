@@ -9,7 +9,7 @@
 
 <link href="<c:url value="/resources/css/profile.css" />"
 	rel="stylesheet">
-	
+
 <link href="<c:url value="/resources/css/token-input.css" />"
 	rel="stylesheet">
 <link href="<c:url value="/resources/css/token-input-facebook.css" />"
@@ -17,87 +17,7 @@
 
 <script src="<c:url value="/resources/js/jquery.autosize.js" />"></script>
 <script src="<c:url value="/resources/js/jquery.tokeninput.js" />"></script>
-<script>
-	$(function() {
-		$('.animated').autosize();
-	});
-</script>
-<script type="text/javascript">
-	if (window.location.href.indexOf('#') === -1) {
-		(function() {
-			var scrollTop;
 
-			if ('pageXOffset' in window) {
-				scrollTop = window.pageYOffset;
-			} else {
-				scrollTop = document.documentElement.scrollTop;
-			}
-
-			try {
-				if ((scrollTop > 0) === false) {
-					window.scrollTo(0, 550);
-					setTimeout(arguments.callee, 1);
-				}
-			} catch (e) {
-				setTimeout(arguments.callee, 1);
-			}
-		})();
-	}
-</script>
-<script>
-	function validateText(id) {
-		if ($("#" + id).val() == null || $("#" + id).val() == "") {
-			var div = $("#" + id).closest("div");
-
-			div.addClass("has-error");
-			return false;
-		} else {
-			var div = $("#" + id).closest("div");
-			div.removeClass("has-error");
-			return true;
-		}
-	}
-
-	$(document).ready(function() {
-		$("#replyMessageButton").click(function() {
-			if (validateText("replyTextArea")) {
-				$("form#replyForm").submit();
-			} else {
-				$('#textUnder').removeAttr("style");
-			}
-		});
-	});
-</script>
-<script>
-	$(document).ready(function() {
-
-		$(".panel-title").click(function() {
-			var id = $(this).attr("id");
-			$.ajax({
-				type : "GET",
-				url : "../profile/information",
-				data : "id=" + id,
-				headers : {
-					Accept : "text/plain; charset=utf-8",
-					"Content-Type" : "text/plain; charset=utf-8"
-				},
-				async : false,
-				success : function(response) {
-					$("#profile_modal_content").html(response);
-					$("#profileModalButton").click();
-				},
-				error : function(e) {
-					alert('Internal Server Error');
-				}
-			});
-		});
-
-		$(".panel-title").css("cursor", "pointer");
-		$(".panel-title").css("text-decoration", "underline");
-		$(".panel-title").css("text-decoration-color", "blue");
-
-	});
-</script>
 <ul class="nav nav-tabs">
 	<li class="active"><a href='<c:url value="../messages"/>'><spring:message
 				code="conversation.inbox" /><span class="badge">${inboxSize}</span>
@@ -105,7 +25,7 @@
 	<li><a href='<c:url value="../message"/>'><spring:message
 				code="conversation.sent" /><span class="badge">${sentSize}</span> </a></li>
 	<li id="compose">
-		<button type="button" class="btn btn-success" data-toggle="modal"
+		<button type="button" class="btn btn-primary" data-toggle="modal"
 			data-target="#composeModal">
 			<spring:message code="conversation.compose" />
 		</button>
@@ -121,7 +41,7 @@
 				<div>
 					<div style="float: left; padding-right: 7px;">
 						<img class="messageLogo"
-							src="<c:url value="/resources/img/photo/${messageDto.userId}.png" />" />
+							src="<c:url value="/photo/${messageDto.userId}.png" />" />
 					</div>
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -161,17 +81,6 @@
 		</p>
 	</c:otherwise>
 </c:choose>
-<script>
-$(document).ready(
-		function() {
-			$(".btn-success").click(
-					function() {
-						$(".token-input-token-facebook").remove();
-					});
-		}
-
-);
-</script>
 
 <script src="<c:url value="/resources/js/messages.js" />"></script>
 <jsp:include page="/views/profile/profile_information_runner.jsp" />

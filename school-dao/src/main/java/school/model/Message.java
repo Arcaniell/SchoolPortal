@@ -58,6 +58,17 @@ public class Message {
 	
 	public Message() {
 	}
+	
+	public Message(Conversation conversationId, boolean isFromSender,
+			String text, Date dateTime, boolean isDeletedReceiver,
+			boolean isDeletedSender) {
+		this.conversationId = conversationId;
+		this.isFromSender = isFromSender;
+		this.text = text;
+		this.dateTime = dateTime;
+		this.isDeletedReceiver = isDeletedReceiver;
+		this.isDeletedSender = isDeletedSender;
+	}
 
 	public Message(Conversation conversationId, boolean isFromSender,
 			String text, Date dateTime, boolean isReadReceiver,
@@ -69,16 +80,6 @@ public class Message {
 		this.dateTime = dateTime;
 		this.isReadReceiver = isReadReceiver;
 		this.isReadSender = isReadSender;
-		this.isDeletedReceiver = isDeletedReceiver;
-		this.isDeletedSender = isDeletedSender;
-	}
-	
-	public Message(Conversation conversationId,
-			String text, Date dateTime, boolean isDeletedReceiver,
-			boolean isDeletedSender) {
-		this.conversationId = conversationId;
-		this.text = text;
-		this.dateTime = dateTime;
 		this.isDeletedReceiver = isDeletedReceiver;
 		this.isDeletedSender = isDeletedSender;
 	}

@@ -23,7 +23,7 @@
 	<h3>
 		<spring:message code="salary.month" />
 	</h3>
-	<table id="current" class="table table-hover">
+	<table id="current" class="table table-hover default_table">
 		<tbody>
 			<tr>
 				<th id="currenthead"><spring:message code="salary.nextdate" /></th>
@@ -39,7 +39,7 @@
 			</tr>
 		</tbody>
 	</table>
-
+	<br>
 	<button class="btn btn-default" data-toggle="modal"
 		data-target="#coursesrate">
 		<spring:message code="salary.showcourses" />
@@ -49,9 +49,6 @@
 </div>
 
 <jsp:include page="/views/salary/courses.jsp" />
-<script
-	src="<c:url value="http://code.jquery.com/jquery-1.6.4.min.js" />">
-	
-</script>
+
 <script src="<c:url value="/resources/js/clock.js" />"
 	type="text/javascript"></script>

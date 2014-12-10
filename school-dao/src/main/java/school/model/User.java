@@ -28,6 +28,7 @@ public class User {
 	public static final String FIND_BY_EMAIL_AND_PASSWORD = "User.findByEmailAndPassword";
 	public static final String FIND_BY_EMAIL_AND_PASSWORD_QUERY = "SELECT u FROM User u WHERE u.email = :email and u.password = :password";
 
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -48,6 +49,7 @@ public class User {
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "USER_ROLE_REF", joinColumns = { @JoinColumn(name = "userId", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "roleId", nullable = false) })
 	private List<Role> roles;
+
 
 	private Date birthday;
 

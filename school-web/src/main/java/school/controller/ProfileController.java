@@ -36,10 +36,10 @@ public class ProfileController {
 	public @ResponseBody byte[] getPhoto(@PathVariable String id,
 			HttpServletRequest request) {
 		/* Local service method */
-		return userService.getAvatar(id, request.getServletContext()
-				.getRealPath(""));
+/*		return userService.getAvatar(id, request.getServletContext()
+				.getRealPath(""));*/
 		/* OpenShift service method */
-		// return userService.getAvatar(id);
+		 return userService.getAvatar(id);
 	}
 
 	@RequestMapping(value = URL_PROFILE_INFORMATION)
@@ -67,11 +67,11 @@ public class ProfileController {
 			return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
 		}
 		/* Local service method */
-		userService.setAvatar(Long.parseLong(principal.getName()), uploadedFile
-				.getFile(), request.getServletContext().getRealPath(""));
+/*		userService.setAvatar(Long.parseLong(principal.getName()), uploadedFile
+				.getFile(), request.getServletContext().getRealPath(""));*/
 		/* OpenShift service method */
-		// userService.setAvatar(Long.parseLong(principal.getName()),
-		// uploadedFile.getFile());
+		 userService.setAvatar(Long.parseLong(principal.getName()),
+		 uploadedFile.getFile());
 
 		return URLContainer.URL_REDIRECT + URL_PROFILE;
 	}

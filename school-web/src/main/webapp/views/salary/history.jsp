@@ -22,7 +22,7 @@
 		</button>
 	</form>
 	<br>
-	<table class="table table-hover">
+	<table class="table table-hover default_table">
 		<thead>
 			<tr>
 				<th><spring:message code="salary.date" /></th>
@@ -45,10 +45,6 @@
 		</tbody>
 	</table>
 </div>
-
-<script src="<c:url value="https://code.jquery.com/jquery-1.10.2.js" />">
-	
-</script>
 
 <script
 	src="<c:url value="https://code.jquery.com/ui/1.11.2/jquery-ui.js" />"></script>

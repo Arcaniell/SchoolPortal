@@ -82,13 +82,13 @@ public class ScheduleDaoImplTest extends DBUnitConfig{
 		group.setEndDate(dateED);
 		group.setTeacher(teacher);
 		Lesson lesson = new Lesson();
-		lesson.setLesId(1L);
+		lesson.setId(1L);
 		String oldstringStart = "2014-10-23 09:15:00.0";
 		Date dateStart = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(oldstringStart);
-		lesson.setLesStartTime(dateStart);
+		lesson.setStartTime(dateStart);
 		String oldstringFinish = "2014-10-23 09:15:00.0";
 		Date dateFinish = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(oldstringFinish);
-		lesson.setLesFinishTime(dateFinish);
+		lesson.setFinishTime(dateFinish);
 		Course course = new Course();
 		course.setId(1L);
 		course.setAdditional(false);
@@ -142,7 +142,7 @@ public class ScheduleDaoImplTest extends DBUnitConfig{
 		Group newGroup = new Group();
 		newGroup.setId(1L);
 		Lesson newLesson = new Lesson();
-		newLesson.setLesId(1L);
+		newLesson.setId(1L);
 		Room newRoom = new Room();
 		newRoom.setId(1);
 		Course newCourse = new Course();
@@ -197,14 +197,14 @@ public class ScheduleDaoImplTest extends DBUnitConfig{
 		Assert.assertTrue(actual.size()==6);
 	}
 	
-	
+/*	
 	@Test
 	public void testFindByRoom(){
 		schedule= scheduleDao.findById(1L);
 		List<Schedule> actual = scheduleDao.findByRoom(schedule.getRoom());
 		Assert.assertTrue(actual.size()==3);
 	}
-	
+*/	
 	@Test
 	public void testFindByTacher(){
 		while(scheduleDao.findById(1L)==null){};
@@ -213,6 +213,33 @@ public class ScheduleDaoImplTest extends DBUnitConfig{
 		Assert.assertTrue(actual.size()==3);
 	 }
 	 
+/////////////	
+	/*
+	@Test
+	public void testFindByGroupId() {
+
+		List<Schedule> actual = scheduleDao.findByGroupId(1);
+		Assert.assertTrue(actual.size() == 6);
+	}
+	*/
+
+///////////////
+	@Test
+	public void testFindByRoom() {
+		List<Schedule> actual = scheduleDao.findByRoom(1);
+		Assert.assertTrue(actual.size() == 3);
+	}
+
+//////////////
+	/*
+	@Test
+	public void testFindByTacherId() {
+		schedule = scheduleDao.findById(1L);
+		List<Schedule> actual = scheduleDao.findByTeacherId(1);
+		Assert.assertTrue(actual.size() == 3);
+	}
+	*/
+/////////////
 
 	/* @Test
 	 public void testFindByTeacherInterval(){

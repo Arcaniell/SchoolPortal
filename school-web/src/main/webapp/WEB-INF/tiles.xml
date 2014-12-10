@@ -109,6 +109,12 @@
 	<definition name="sentMessages" extends="base.definition">
 		<put-attribute name="title" value="Messages" />
 		<put-attribute name="main_content" value="/views/messages/sentMessages.jsp" />
-	</definition>
 
-</tiles-definitions>
+	</definition>
+	
+		<definition name="schedule" extends="base.definition">
+		<put-attribute name="title" value="Schedule" />
+		<put-attribute name="main_content" value="/views/schedule/schedule.jsp" />
+		<put-attribute name="current" value="schedule" />
+	</definition>
+	</tiles-definitions>
