@@ -3,9 +3,9 @@ package school.dto.message;
 public class EmailObjectDTO {
 
 	private String name;
-	private int id;
+	private long id;
 	
-	public EmailObjectDTO(String name, int id) {
+	public EmailObjectDTO(String name, long id) {
 		this.name = name;
 		this.id = id;
 	}
@@ -18,11 +18,11 @@ public class EmailObjectDTO {
 		this.name = name;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	

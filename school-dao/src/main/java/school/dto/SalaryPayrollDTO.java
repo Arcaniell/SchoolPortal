@@ -65,5 +65,4 @@ public class SalaryPayrollDTO {
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
-
 }

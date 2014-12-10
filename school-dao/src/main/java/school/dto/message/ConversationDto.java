@@ -19,13 +19,10 @@ public class ConversationDto {
 		this.id = id;
 	}
 	
-	public ConversationDto(String name, String subject, String date, String id,
-			boolean hasNewMessages, String inboxCount, String sentCount) {
-		this.name = name;
+	public ConversationDto(String subject, String date, String id, String inboxCount, String sentCount) {
 		this.subject = subject;
 		this.date = date;
 		this.id = id;
-		this.hasNewMessages = hasNewMessages;
 		this.inboxCount = inboxCount;
 		this.sentCount = sentCount;
 	}
