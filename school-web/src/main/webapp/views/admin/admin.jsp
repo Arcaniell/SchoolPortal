@@ -18,7 +18,7 @@
 			<td><input type="hidden" id="admin_page_container"
 				value="profile_information">
 				<jsp:include
-						page="/views/profile/profile_information.jsp" />
+						page="/views/admin/role_requests.jsp" />
 				<div class="hidden_error profile_avatar"><jsp:include
 						page="/views/profile/profile_avatar.jsp" /></div>
 					
@@ -28,6 +28,6 @@
 	</table>
 
 </div>
-<div ><jsp:include page="/views/admin/admin_buttons.jsp" /></div>
+<div ><jsp:include page="/views/admin/buttons.jsp" /></div>
 
 	

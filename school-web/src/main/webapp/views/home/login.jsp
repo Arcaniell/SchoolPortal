@@ -91,7 +91,7 @@
 								</h6>
 							</td>
 							<td>
-								<button class="btn btn-sample" data-toggle="modal" class="close"
+								<button class="btn btn-sample for_registration_group_select" data-toggle="modal" class="close"
 									data-dismiss="modal" data-target="#signUp">
 									<spring:message code="label.signup" />
 								</button>

@@ -19,15 +19,15 @@ public class JournalUtil extends SchoolUtil {
 	public static final String SECOND_QUARTER = "2";
 	public static final String THIRD_QUARTER = "3";
 	public static final String FOURTH_QUARTER = "4";
-	
+
 	public static final String HOURS_OF_DATE = "HH:mm";
 	public static final String DATE_FORMAT = "dd:MM:yyyy";
-	
+
 	public static final String EMPTY = "";
 	public static final int NOTHING = 0;
-	
+
 	public static final int REGULAR_MARK = 1;
-	
+
 	public static final String SPLITTER = "j";
 
 	public static final int FIRST_AND_LAST_DATE_OF_QUARTER = 2;
@@ -42,8 +42,6 @@ public class JournalUtil extends SchoolUtil {
 	public static final String LAST_DAY_THIRD_QUARTER = "03/31/2015";
 	public static final String FIRST_DAY_FOURTH_QUARTER = "04/01/2015";
 	public static final String LAST_DAY_FOURTH_QUARTER = "05/31/2015";
-
-	
 
 	public static List<Date> getWeek(Calendar date) throws ParseException {
 
@@ -76,5 +74,4 @@ public class JournalUtil extends SchoolUtil {
 		}
 		return numbers.get(idx);
 	}
-
 }

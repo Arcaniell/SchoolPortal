@@ -14,13 +14,14 @@
 	<div class="header">
 
 		<ul class="crumbs">
-			<li class="first"><a href="${root_action}home" style="z-index: 9;"><span></span>
-					<spring:message code="header.home" /></a></li>
+			<li class="first"><a href="${root_action}home"
+				style="z-index: 9;"><span></span> <spring:message
+						code="header.home" /></a></li>
 			<c:if test="${not empty subject}">
 				<li class="active"><a href="../messages" style="z-index: 8;"><spring:message
 							code="sidebar.messages" /></a></li>
 				<c:if test="${subject.length() > 10}">
-					<c:set var="tenMore" value="${fn:substring(subject, 0, 10)}..." />
+					<c:set var="tenMore" value="${fn:substring(subject, 0, 10)}" />
 					<li class="active"><a href="" style="z-index: 7;">${tenMore}</a></li>
 				</c:if>
 				<c:if test="${subject.length() < 10}">
@@ -39,6 +40,16 @@
 				<c:if test="${current == 'group_edit'}">
 					<li class="active"><a href="" style="z-index: 7;">Group
 							edit</a></li>
+				</c:if>
+				<c:if test="${current == 'history'}">
+					<li class="active"><a href="salary" style="z-index: 8;"><spring:message
+								code="sidebar.salary" /></a></li>
+					<li class="active"><a href="history" style="z-index: 7;"><spring:message
+								code="salary.history" /></a></li>
+				</c:if>
+				<c:if test="${current == 'payroll'}">
+					<li class="active"><a href="payroll" style="z-index: 8;"><spring:message
+								code="sidebar.payroll" /></a></li>
 				</c:if>
 				<c:if test="${current == 'request'}">
 					<li class="active"><a href="course-request"

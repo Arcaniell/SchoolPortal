@@ -21,9 +21,16 @@ import javax.persistence.Table;
 @NamedQueries({
 		@NamedQuery(name = Schedule.FIND_BY_DATES, query = Schedule.FIND_BY_DATES_QUERY),
 		@NamedQuery(name = Schedule.FIND_BY_GROUP, query = Schedule.FIND_BY_GROUP_QUERY),
-		@NamedQuery(name = Schedule.FIND_BY_ROOM, query = Schedule.FIND_BY_ROOM_QUERY),
+//		@NamedQuery(name = Schedule.FIND_BY_ROOM, query = Schedule.FIND_BY_ROOM_QUERY),
 		@NamedQuery(name = Schedule.FIND_BY_TEACHER, query = Schedule.FIND_BY_TEACHER_QUERY),
-		@NamedQuery(name = Schedule.FIND_BY_TEACHER_INTERVAL, query = Schedule.FIND_BY_TEACHER_INTERVAL_QUERY),
+		
+  //  	@NamedQuery(name = Schedule.FIND_BY_GROUP_ID, query = Schedule.FIND_BY_GROUP_ID_QUERY),
+	
+    	@NamedQuery(name = Schedule.FIND_BY_ROOM, query = Schedule.FIND_BY_ROOM_QUERY),
+		
+  //  	@NamedQuery(name = Schedule.FIND_BY_TEACHER_ID, query = Schedule.FIND_BY_TEACHER_ID_QUERY),
+		
+    	@NamedQuery(name = Schedule.FIND_BY_TEACHER_INTERVAL, query = Schedule.FIND_BY_TEACHER_INTERVAL_QUERY),
 		@NamedQuery(name = Schedule.FIND_BY_ROOM_INTERVAL, query = Schedule.FIND_BY_ROOM_INTERVAL_QUERY),
 		@NamedQuery(name = Schedule.FIND_BY_GROUP_INTERVAL, query = Schedule.FIND_BY_GROUP_INTERVAL_QUERY),
 		@NamedQuery(name = Schedule.FIND_BY_GROUP_COURSE_INTERVAL, query = Schedule.FIND_BY_GROUP_COURSE_INTERVAL_QUERY),
@@ -50,12 +57,23 @@ public class Schedule implements Comparable<Schedule> {
 	public static final String FIND_BY_GROUP = "Schedule.findByGroup";
 	public static final String FIND_BY_GROUP_QUERY = "SELECT sch FROM Schedule sch WHERE sch.group = :group";
 
-	public static final String FIND_BY_ROOM = "Schedule.findByRoom";
-	public static final String FIND_BY_ROOM_QUERY = "SELECT sch FROM Schedule sch WHERE sch.room = :room";
+//	public static final String FIND_BY_ROOM = "Schedule.findByRoom";
+//	public static final String FIND_BY_ROOM_QUERY = "SELECT sch FROM Schedule sch WHERE sch.room = :room";
 
 	public static final String FIND_BY_TEACHER = "Schedule.findByTeacher";
 	public static final String FIND_BY_TEACHER_QUERY = "SELECT sch FROM Schedule sch WHERE sch.teacher = :teacher";
 
+//	public static final String FIND_BY_GROUP_ID = "Schedule.findByGroup";
+//	public static final String FIND_BY_GROUP_ID_QUERY = "SELECT sch FROM Schedule sch WHERE sch.group.id = :groupId";
+	
+	public static final String FIND_BY_ROOM = "Schedule.findByRoom";
+	public static final String FIND_BY_ROOM_QUERY = "SELECT sch FROM Schedule sch WHERE sch.room.id = :roomId";
+	
+//	public static final String FIND_BY_TEACHER_ID = "Schedule.findByTeacher";
+//	public static final String FIND_BY_TEACHER_ID_QUERY = "SELECT sch FROM Schedule sch WHERE sch.teacher.id = :teacherId";
+	
+	
+	
 	public static final String FIND_BY_TEACHER_INTERVAL = "Schedule.findByTeacherInterval";
 	public static final String FIND_BY_TEACHER_INTERVAL_QUERY = "SELECT sch FROM Schedule sch WHERE sch.teacher.id = :teacherId AND sch.date  BETWEEN :from AND :till";
 
@@ -184,8 +202,8 @@ public class Schedule implements Comparable<Schedule> {
 		} else if (this.date.getTime() > schedule.getDate().getTime()) {
 			return 1;
 		}
-		return this.lesson.getLesId()
-				.compareTo(schedule.getLesson().getLesId());
+		return this.lesson.getId()
+				.compareTo(schedule.getLesson().getId());
 	}
 
 	@Override

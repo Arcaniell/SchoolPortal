@@ -1,4 +1,4 @@
-.for_input{
+.for_input {
 	max-width: 200px;
 }
 
@@ -64,69 +64,94 @@
 	color: black;
 }
 
-.padding_right{
+.padding_right {
 	padding-right: 20px;
 }
-.margin_left{
+
+.margin_left {
 	margin-left: 30px;
 }
 
-.all_in_one_line{
+.all_in_one_line {
 	white-space: nowrap;
 }
 
-.registration_names{
+.registration_names {
 	width: 87px;
 }
 
-.registration_data{
+.registration_data {
 	width: 178px;
 }
 
-#signup_button{
+#signup_button {
 	width: 140px;
 }
 
-.hidden_error{
+.hidden_error {
+	display: none;
+	color: red;
+}
+
+.hidden_page {
 	display: none;
 }
 
-.visible_error{
+.visible_error {
 	display: inherit;
 	color: red;
 }
-.red_message{
+
+.red_message {
 	color: red;
 }
-.visible_forbiden .visible_error{
+
+.visible_forbiden .visible_error {
 	display: none;
 }
-#signup_from label{
+
+#signup_from label {
 	color: red;
 	font-size: small;
 }
+
 label.valid {
-  width: 30px;
-  height: 30px;
-  background: url('../img/valid.png') center center no-repeat;
-  display: inline-block;
-  text-indent: -9999px;
-   
+	width: 30px;
+	height: 30px;
+	background: url('../img/valid.png') center center no-repeat;
+	display: inline-block;
+	text-indent: -9999px;
 }
 
 label.error {
-  font-weight: bold;
-  color: red;
-  padding: 2px 8px;
-  margin-top: 1px;
-  display: inline;
+	font-weight: bold;
+	color: red;
+	padding: 2px 8px;
+	margin-top: 1px;
+	display: inline;
 }
-.question_drop_long{
-	width:350px; height: 30px;
+
+.table_birthday {
+	font-size: 12px;
 }
-.question_drop_short{
-	width:200px; height: 30px;
+
+.table_birthday input {
+	width: 50px;
 }
-#for_caret{
-margin-left: -12px;
+
+.table_birthday td {
+	max-width: 110px;
+}
+
+.sex_div {
+	padding-left: 150px;
+}
+
+.question_drop_long {
+	height: 35px;
+}
+
+#fakeGroupNumber {
+	width: 0px;
+	border: 0px;
 }

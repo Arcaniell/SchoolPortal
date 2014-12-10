@@ -1,14 +1,14 @@
 package school.dto;
 
 public class SalaryDTO {
-	private long hours;
-	private long balance;
+	private int hours;
+	private int salary;
 	private String issueDate;
 
-	public SalaryDTO(long hours, long balance,
+	public SalaryDTO(int hours, int salary,
 			String issueDate) {
 		this.hours = hours;
-		this.balance = balance;
+		this.salary = salary;
 		this.issueDate = issueDate;
 	}
 
@@ -16,16 +16,16 @@ public class SalaryDTO {
 		return hours;
 	}
 
-	public void setHours(long hours) {
+	public void setHours(int hours) {
 		this.hours = hours;
 	}
 
-	public long getBalance() {
-		return balance;
+	public long getsalary() {
+		return salary;
 	}
 
-	public void setBalance(long balance) {
-		this.balance = balance;
+	public void setsalary(int salary) {
+		this.salary = salary;
 	}
 
 	public String getIssueDate() {

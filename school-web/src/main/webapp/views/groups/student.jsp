@@ -7,7 +7,7 @@
 	rel="stylesheet">
 <link href="<c:url value="/resources/css/profile.css" />"
 	rel="stylesheet">
-<h3>All student groups</h3>
+<h3><spring:message code="group.new.header.student" /></h3>
 <table class="table table-hover default_table sortable-theme-bootstrap"
 	data-sortable>
 	<thead>

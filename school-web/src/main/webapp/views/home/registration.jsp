@@ -17,7 +17,7 @@
 					<spring:message code="label.registration" />
 				</h3>
 				<form action="" method="post" id="signup_from">
-					<table class="table ">
+					<table class="table">
 						<tr>
 							<td colspan="2"><table>
 									<tr>
@@ -62,15 +62,31 @@
 											class="registration_data"></td>
 									</tr>
 									<tr>
-										<td colspan="2">
-											<div align="center">
+										<td></td>
+										<td>
+											<div>
 												<input type="radio" name="sex" value="1" checked="checked">
 												<spring:message code="label.male" />
 												<input type="radio" name="sex" value="2">
 												<spring:message code="label.female" />
 												<input type="radio" name="sex" value="3">
-												<spring:message code="lable.other" />
+												<spring:message code="label.other" />
 											</div>
+										</td>
+									</tr>
+									<tr>
+										<td><spring:message code="label.birthday" /></td>
+										<td>
+											<table class="table_birthday">
+												<tr>
+													<td><spring:message code="label.month" /><input
+														name="month" type="text" placeholder="MM"></td>
+													<td><spring:message code="label.day" /><input
+														name="day" type="text" placeholder="DD"></td>
+													<td><spring:message code="label.year" /><input
+														name="year" type="text" placeholder="YYYY"></td>
+												</tr>
+											</table>
 										</td>
 									</tr>
 
@@ -95,41 +111,19 @@
 										<td>
 											<table>
 												<tr>
-													<td>
-														<div class="btn-group btn-group-vertical">
-															<input type="button" id="question"
-																class="dropdown-toggle question_drop_long" id="question"
-																data-toggle="dropdown"
-																value="<spring:message code="label.question1" /> ">
-															<span class="caret" id="for_caret"></span>
-															<ul class="dropdown-menu" role="menu">
-																<li class="rquestion" id="question1"><spring:message
-																		code="label.question1" /></li>
-																<li class="rquestion" id="question2"><spring:message
-																		code="label.question2" /></li>
-																<li class="rquestion" id="question3"><spring:message
-																		code="label.question3" /></li>
-																<li class="rquestion" id="question4"><spring:message
-																		code="label.question4" /></li>
-																<li class="rquestion" id="question5"><spring:message
-																		code="label.question5" /></li>
-
-															</ul>
-															<input class="question1" type="hidden"
-																value="<spring:message code="label.question1" />">
-															<input class="question2" type="hidden"
-																value="<spring:message code="label.question2" />">
-															<input class="question3" type="hidden"
-																value="<spring:message code="label.question3" />">
-															<input class="question4" type="hidden"
-																value="<spring:message code="label.question4" />">
-															<input class="question5" type="hidden"
-																value="<spring:message code="label.question5" />">
-															<input type="hidden" id="questionNumber"
-																name="questionNumber" value="question1">
-														</div>
-
-													</td>
+													<td><select class="btn-sample question_drop_long">
+															<option class="rquestion" id="question1"><spring:message
+																	code="label.question1" /></option>
+															<option class="rquestion" id="question2"><spring:message
+																	code="label.question2" /></option>
+															<option class="rquestion" id="question3"><spring:message
+																	code="label.question3" /></option>
+															<option class="rquestion" id="question4"><spring:message
+																	code="label.question4" /></option>
+															<option class="rquestion" id="question5"><spring:message
+																	code="label.question5" /></option>
+													</select> <input type="hidden" id="questionNumber"
+														name="questionNumber" value="question1"></td>
 												</tr>
 											</table>
 										</td>
@@ -157,13 +151,34 @@
 											</h4></td>
 									</tr>
 									<tr>
-										<td><input value="4" type="radio" checked="checked"
+										<td><input id="hide_groups_action_false1" value="4" type="radio" checked="checked"
 											name="role"> <spring:message code="label.student" /></td>
 									</tr>
 									<tr>
-										<td><input value="3" type="radio" name="role"> <spring:message
+										<td><input id="hide_groups_action_false2" value="5" type="radio" name="role"> <spring:message
 												code="label.parent" /></td>
 
+									</tr>
+									<tr>
+										<td><input id="hide_groups_action_true" value="3" type="radio" name="role"> <spring:message
+												code="label.teacher" /></td>
+
+									</tr>
+									<tr>
+									<td><div id = "hide_groups_action"><table><tr>
+										<td>Choose a group</td>
+									</tr>
+									<tr>
+										<td><div id="for_registration_group_select">
+												<jsp:include page="/views/home/registration_groups.jsp"></jsp:include>
+											</div><tr>
+										<td><input type="hidden" id="groupNumber" name="groupNumber" value="0"></td>
+									</tr></table></div></td>
+									</tr>
+
+
+									<tr>
+										<td><p id="forGroupNumber" class="hidden_error">Choose group</p></td>
 									</tr>
 
 								</table>

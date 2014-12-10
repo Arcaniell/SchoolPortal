@@ -46,7 +46,22 @@
 								<table>
 									<tr>
 										<td><br>
-											<div class="btn-group btn-group-vertical">
+										
+										<select class="btn-sample question_drop_long">
+															<option class="fquestion" id="question1"><spring:message
+																	code="label.question1" /></option>
+															<option class="fquestion" id="question2"><spring:message
+																	code="label.question2" /></option>
+															<option class="fquestion" id="question3"><spring:message
+																	code="label.question3" /></option>
+															<option class="fquestion" id="question4"><spring:message
+																	code="label.question4" /></option>
+															<option class="fquestion" id="question5"><spring:message
+																	code="label.question5" /></option>
+													</select> <input type="hidden" id="forgotQuestionNumber"
+														name="forgotQuestionNumber" value="question1">
+										
+											<%-- <div class="btn-group btn-group-vertical">
 												<input type="button" id="fquestion"
 													class="dropdown-toggle question_drop_long"
 													data-toggle="dropdown"
@@ -77,7 +92,7 @@
 													value="<spring:message code="label.question5" />">
 												<input type="hidden" id="forgotQuestionNumber"
 													name="questionNumber" value="question1">
-											</div></td>
+											</div> --%></td>
 									</tr>
 								</table>
 							</td>

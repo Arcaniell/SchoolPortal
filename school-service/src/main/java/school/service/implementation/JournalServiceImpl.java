@@ -124,12 +124,12 @@ public class JournalServiceImpl implements JournalService {
 				Event event = eventDao.findEventBySchedule(schedule.getId());
 
 				if (journal != null) {
-					marks.add(new MarkDTO(schedule.getLesson().getLesId(),
+					marks.add(new MarkDTO(schedule.getLesson().getId(),
 							schedule.getId(), homeTask.getTask(), schedule
 									.getDate(), journal.getMark(), journal
 									.getCoefficient()));
 				} else if (journal == null) {
-					marks.add(new MarkDTO(schedule.getLesson().getLesId(),
+					marks.add(new MarkDTO(schedule.getLesson().getId(),
 							schedule.getId(), homeTask.getTask(), schedule
 									.getDate(), event.getType()));
 				}
@@ -286,7 +286,7 @@ public class JournalServiceImpl implements JournalService {
 
 		List<Long> lessonsValues = new ArrayList<>();
 		for (Lesson lesson : lessons) {
-			lessonsValues.add(lesson.getLesId());
+			lessonsValues.add(lesson.getId());
 		}
 
 		return JournalUtil.getClosestValue(

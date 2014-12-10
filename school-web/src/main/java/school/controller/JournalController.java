@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import school.controller.URLContainer;
 import school.dto.journal.EditMarkDTO;
 import school.dto.journal.EditDateDTO;
 import school.dto.journal.JournalSearch;
@@ -45,11 +46,13 @@ public class JournalController {
 					new Date());
 			model.addAttribute(JournalUtil.MOD_ATT_SEARCH_DATA, searchData);
 		}
-		
-		JournalStaffDTO staff = journalService.getStaffInfo(userId, getHighestRole(request));
+
+		JournalStaffDTO staff = journalService.getStaffInfo(userId,
+				getHighestRole(request));
 
 		model.addAttribute(JournalUtil.MOD_ATT_STAFF, staff);
-		model.addAttribute(URLContainer.JSP_OUTPUT_CURRENT_PAGE, URLContainer.URL_JOURNAL);
+		model.addAttribute(URLContainer.JSP_OUTPUT_CURRENT_PAGE,
+				URLContainer.URL_JOURNAL);
 		return URLContainer.URL_JOURNAL;
 	}
 
@@ -114,7 +117,7 @@ public class JournalController {
 	public @ResponseBody Set<Character> getLetters(
 			@RequestBody JournalSearch journalSearch, Principal principal,
 			HttpServletRequest request) {
-		
+
 		long userId = Long.parseLong(principal.getName());
 
 		return journalService.getGroupLetters(userId, getHighestRole(request),
@@ -122,9 +125,9 @@ public class JournalController {
 	}
 
 	private String getHighestRole(HttpServletRequest request) {
-		
+
 		String role = null;
-		
+
 		if (request.isUserInRole(Role.Secured.TEACHER)) {
 			role = Role.Secured.TEACHER;
 		}
@@ -134,5 +137,4 @@ public class JournalController {
 		}
 		return role;
 	}
-
 }
