@@ -209,7 +209,9 @@
 																	if (schedule[index].setLess[indexA].lessonNumb == schedule[index].listSchedule[indexC].lesson.lessonNumb) {
 
 																		if (schedule[index].tableDate[indexB] == schedule[index].listSchedule[indexC].date) {
-																			container += "<td><p>";
+																			container += "<td";
+																			
+																			container	+="><p>";
 																			if (schedule[index].listSchedule[indexC].course != null) {
 																				container += schedule[index].listSchedule[indexC].course.courseName;
 																			} else {

@@ -63,6 +63,10 @@
 					<li class="active"><a href="messages" style="z-index: 8;"><spring:message
 								code="sidebar.messages" /></a></li>
 				</c:if>
+								<c:if test="${current == 'schedule'}">
+					<li class="active"><a href="schedule" style="z-index: 8;"><spring:message
+								code="sidebar.schedule" /></a></li>
+				</c:if>
 			</c:if>
 		</ul>
 
