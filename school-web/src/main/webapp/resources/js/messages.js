@@ -319,8 +319,10 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-	$(".btn-success").click(function() {
+	$(".btn-primary").click(function() {
 		$(".token-input-token-facebook").remove();
+		$("#mySelectBox").removeClass("form-control2");
+		$("#mySelectBox").addClass("form-control");
 	});
 }
 

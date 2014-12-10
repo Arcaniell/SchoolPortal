@@ -78,3 +78,50 @@
 	background-color: #FFFFFF;
 	border: 1px solid #E4E7F5 !important;
 }
+.selectCompose {
+	width: 150px;
+	left: 415.5px;
+	position: inherit;
+	top: 31px;
+	z-index: 1;
+	padding: 0px;
+	height: 30px !important;
+	border: 0px !important;
+}
+
+.form-control1 {
+	display: block;
+	width: 100%;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow
+		ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out
+		.15s;
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.form-control2 {
+	display: inline;
+	width: 150px;
+	height: 34px;
+	padding: 5px 10px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}

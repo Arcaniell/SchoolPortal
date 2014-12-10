@@ -922,11 +922,11 @@ INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`t
 INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (153,'2014-09-11',17,9,1,11,4), (154,'2014-09-11',59,9,2,12,11), (155,'2014-09-11',24,9,3,40,5), (156,'2014-09-11',38,9,4,4,7);
 INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (157,'2014-09-12',2,9,1,5,1), (158,'2014-09-12',17,9,2,11,4), (159,'2014-09-12',45,9,3,19,8), (160,'2014-09-12',10,9,4,13,3);
 
-INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (161,'2014-09-01',59,2,1,12,11), (162,'2014-09-08',17,2,2,11,4), (163,'2014-09-08',2,2,3,5,1), (164,'2014-09-08',2,2,4,5,1);
-INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (165,'2014-09-02',31,2,1,34,6), (166,'2014-09-09',10,2,2,13,3), (167,'2014-09-09',17,2,3,11,4), (168,'2014-09-09',45,2,4,19,8);
-INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (169,'2014-09-03',10,2,1,13,3), (170,'2014-09-10',38,2,2,4,7), (171,'2014-09-10',24,2,3,40,5), (172,'2014-09-10',45,2,4,19,8);
-INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (173,'2014-09-04',2,2,1,5,1), (174,'2014-09-11',66,2,2,2,10), (175,'2014-09-11',52,2,3,32,9), (176,'2014-09-11',17,2,4,11,4);
-INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (177,'2014-09-05',17,2,1,11,4), (178,'2014-09-12',52,2,2,32,9), (179,'2014-09-12',2,2,3,5,1), (180,'2014-09-12',38,2,4,4,7);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (161,'2014-09-08',59,2,1,12,11), (162,'2014-09-08',17,2,2,11,4), (163,'2014-09-08',2,2,3,5,1), (164,'2014-09-08',2,2,4,5,1);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (165,'2014-09-09',31,2,1,34,6), (166,'2014-09-09',10,2,2,13,3), (167,'2014-09-09',17,2,3,11,4), (168,'2014-09-09',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (169,'2014-09-10',10,2,1,13,3), (170,'2014-09-10',38,2,2,4,7), (171,'2014-09-10',24,2,3,40,5), (172,'2014-09-10',45,2,4,19,8);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (173,'2014-09-11',2,2,1,5,1), (174,'2014-09-11',66,2,2,2,10), (175,'2014-09-11',52,2,3,32,9), (176,'2014-09-11',17,2,4,11,4);
+INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (177,'2014-09-12',17,2,1,11,4), (178,'2014-09-12',52,2,2,32,9), (179,'2014-09-12',2,2,3,5,1), (180,'2014-09-12',38,2,4,4,7);
 
 INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (181,'2014-09-08',18,10,1,11,4), (182,'2014-09-08',60,10,2,12,11), (183,'2014-09-08',32,10,3,34,6), (184,'2014-09-08',39,10,4,4,7);
 INSERT INTO `SCHEDULE` (`id`,`date`,`courseId`,`groupId`, `lessonId`,`roomId`,`teacherId` ) VALUES (185,'2014-09-09',11,10,1,13,3), (186,'2014-09-09',46,10,2,19,8), (187,'2014-09-09',3,10,3,5,1), (188,'2014-09-09',18,10,4,11,4);

@@ -34,12 +34,12 @@
 								code="sidebar.course" /></a></li>
 				</c:if>
 				<c:if test="${current == 'group'||current == 'group_edit'}">
-					<li class="active"><a href="groups" style="z-index: 8;"><spring:message
+					<li class="active"><a href="headteacher-groups" style="z-index: 8;"><spring:message
 								code="sidebar.groups" /></a></li>
 				</c:if>
 				<c:if test="${current == 'group_edit'}">
-					<li class="active"><a href="" style="z-index: 7;">Group
-							edit</a></li>
+					<li class="active"><a href="" style="z-index: 7;"><spring:message
+								code="sidebar.group.h.teacher.edit" /></a></li>
 				</c:if>
 				<c:if test="${current == 'history'}">
 					<li class="active"><a href="salary" style="z-index: 8;"><spring:message
