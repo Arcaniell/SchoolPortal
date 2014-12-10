@@ -4,29 +4,27 @@
 
 
 <link href="<c:url value="/resources/css/diary.css" />" rel="stylesheet">
-
 <input id="weekDate" name="weekDate" value=" " type="hidden">
-<nav class="table tableOnBack">
-	
-	<button id="prevWeek" class="btn btn-sample changeWeek" name="changePage"
-		value="previous">
-		<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-		<spring:message code="diary.previous" />
-	</button>
-	<button id="nextWeek" class="btn btn-sample changeWeek"
-		name="changePage" value="next">
-		<spring:message code="diary.next" />
-		<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
-	</button>
-	<c:if test="${kids ne null}">
-		<select id="kidSelect" name="kidSelect" class="btn btn-sample btnSelector">
-			<c:forEach items="${kids}" var="kid">
-				<option value="${kid.user.id}"><c:out
-						value="${kid.user.firstName} ${kid.user.lastName}"></c:out></option>
-			</c:forEach>
-		</select>
-	</c:if>
-
+<nav class="table tableOnBack navBarDiary">
+		<button id="prevWeek" class="btn btn-sample changeWeek"
+			name="changePage" value="previous">
+			<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+			<spring:message code="diary.previous" />
+		</button>
+		<button id="nextWeek" class="btn btn-sample changeWeek"
+			name="changePage" value="next">
+			<spring:message code="diary.next" />
+			<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+		</button>
+		<c:if test="${kids ne null}">
+			<select id="kidSelect" name="kidSelect"
+				class="btn btn-sample btnSelector">
+				<c:forEach items="${kids}" var="kid">
+					<option value="${kid.user.id}"><c:out
+							value="${kid.user.firstName} ${kid.user.lastName}"></c:out></option>
+				</c:forEach>
+			</select>
+		</c:if>
 </nav>
 
 
