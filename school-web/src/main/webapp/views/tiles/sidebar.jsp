@@ -75,7 +75,7 @@ src="<c:url value="/resources/img/logos/school-logo.jpg" />" />
 						code="sidebar.request" /></a></li>
 		</sec:authorize>
 		<sec:authorize
-			access="hasAnyRole('ROLE_HEAD_TEACHER', 'ROLE_TEACHER')">
+			access="hasRole('ROLE_TEACHER')">
 			<li><a href="${root_action}salary"><spring:message
 						code="sidebar.salary" /></a></li>
 		</sec:authorize>

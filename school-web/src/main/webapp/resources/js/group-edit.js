@@ -70,7 +70,7 @@ var fillHeader = function() {
 	$.post("group-edit-header-fill", {
 		"groupId" : groupId
 	}, function(data) {
-		$(".className").html(data.name);
+		$(".className").html(" "+data.name);
 		$("input[name='dateFrom']").val(data.dateFrom);
 		$("input[name='dateTill']").val(data.dateTill);
 		$(".teachers").html(fillSelect(data.teachers));

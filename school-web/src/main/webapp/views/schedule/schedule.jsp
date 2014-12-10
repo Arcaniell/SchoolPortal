@@ -21,43 +21,42 @@
 					<td>
 						<!-- NAVIGATION-->
 						<div class="btn-group" style="height: 100%">
-							<input id="back" type="button" class="btn btn-default"
+							<input id="back" type="button" class="btn btn-sample"
 								name="previous" value="&lt;"> <input id="next"
-								type="button" class="btn btn-default" name="forward"
-								value="&gt;">
+								type="button" class="btn btn-sample" name="forward" value="&gt;">
 						</div> <!-- DAYPEACKER--> <input id="my_d" name="dateFrom"
 						value="${dateFrom}" type="text" class="datepicker"> <!-- DAY/WEEK/MONTH-->
 						<div class="btn-group" data-toggle="buttons" style="height: 100%">
 							<c:if test="${inputWalls eq 'day'}">
-								<label class="btn btn-default active"> <input
+								<label class="btn btn-sample active"> <input
 									type="radio" name="inputWalls" value="day"> day
 								</label>
-								<label class="btn btn-default"> <input type="radio"
+								<label class="btn btn-primary"> <input type="radio"
 									name="inputWalls" value="week"> week
 								</label>
-								<label class="btn btn-default"> <input type="radio"
+								<label class="btn btn-sample"> <input type="radio"
 									name="inputWalls" value="month"> month
 								</label>
 							</c:if>
 							<c:if test="${(inputWalls eq 'week') || (inputWalls == null)}">
-								<label class="btn btn-default "> <input type="radio"
+								<label class="btn btn-sample "> <input type="radio"
 									name="inputWalls" value="day"> day
 								</label>
-								<label class="btn btn-default active"> <input
+								<label class="btn btn-sample active"> <input
 									type="radio" name="inputWalls" value="week"> week
 								</label>
-								<label class="btn btn-default"> <input type="radio"
+								<label class="btn btn-sample"> <input type="radio"
 									name="inputWalls" value="month"> month
 								</label>
 							</c:if>
 							<c:if test="${inputWalls eq 'month'}">
-								<label class="btn btn-default "> <input type="radio"
+								<label class="btn btn-sample "> <input type="radio"
 									name="inputWalls" value="day"> day
 								</label>
-								<label class="btn btn-default"> <input type="radio"
+								<label class="btn btn-sample"> <input type="radio"
 									name="inputWalls" value="week"> week
 								</label>
-								<label class="btn btn-default active"> <input
+								<label class="btn btn-sample active"> <input
 									type="radio" name="inputWalls" value="month"> month
 								</label>
 							</c:if>
@@ -73,7 +72,8 @@
 
 					</div></td>
 				<div id="col3">
-					<td><select id="rm" name="roomy" style="height: 100%">
+					<td><select id="rm" name="roomy"
+						style="height: 34px; width: 90px;">
 
 
 							<option value="0">Room</option>
@@ -82,7 +82,7 @@
 									value="${room.id}">${room.roomNumber}</option>
 							</c:forEach>
 							<option value="0">ALL</option>
-					</select> <select id="gr" name="groupy" style="height: 100%">
+					</select> <select id="gr" name="groupy" style="height: 34px; width: 90px;">
 
 							<option value="0">Group</option>
 							<c:forEach items="${groups}" var="group">
@@ -90,7 +90,7 @@
 									value="${group.id}">${group.number}-${group.letter}</option>
 							</c:forEach>
 							<option value="0">ALL</option>
-					</select> <select id="tch" name="teacheryy" style="height: 100%">
+					</select> <select id="tch" name="teacheryy" style="height: 34px;">
 
 							<option value="0">Teacher</option>
 							<c:forEach items="${teachers}" var="teacher">
@@ -102,8 +102,8 @@
 					</select>
 
 
-						<button id="submit_ok" type="button" class="btn btn-default">OK</button>
-						<button id="refresh" type="button" class="btn btn-default">Refresh</button>
+						<button id="submit_ok" type="button" class="btn btn-sample">OK</button>
+						<button id="refresh" type="button" class="btn btn-sample">Refresh</button>
 
 
 					</td>
@@ -120,7 +120,7 @@
 
 
 	<table id="comp"
-		class="table  table-bordered table-striped default_table table-hover">
+		class="table  table-bordered default_table table-hover">
 
 	</table>
 </div>
@@ -156,8 +156,6 @@
 	src="<c:url value="https://code.jquery.com/ui/1.11.2/jquery-ui.js" />"></script>
 
 
-<script src="<c:url value="/resources/js/course.js" />"
-	type="text/javascript"></script>
 <script src="<c:url value="/resources/js/schedule.js" />"
 	type="text/javascript"></script>
 

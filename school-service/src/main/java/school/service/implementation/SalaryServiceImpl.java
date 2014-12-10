@@ -134,6 +134,7 @@ public class SalaryServiceImpl implements SalaryService {
 		List<SalaryPayrollDTO> payrolls = new ArrayList<SalaryPayrollDTO>();
 		List<Teacher> teachers = teacherDao.findAll();
 		for (Teacher teacher : teachers) {
+			long userId = teacher.getUser().getId();
 			long teacherId = teacher.getId();
 			String teacherName = teacher.getUser().getFirstName() + " "
 					+ teacher.getUser().getLastName();
@@ -143,9 +144,9 @@ public class SalaryServiceImpl implements SalaryService {
 					.findByLastIssueDate(teacher.getId()).getIssueDate();
 			int hours = (int) getHours(lastSalaryDate, teacher);
 
-			int salary = hours * INITIAL_RATE;
+			int salary = hours * INITIAL_RATE * teacherRate;
 
-			payrolls.add(new SalaryPayrollDTO(teacherId, teacherName,
+			payrolls.add(new SalaryPayrollDTO(userId, teacherId, teacherName,
 					teacherRate, salary, hours));
 		}
 		return payrolls;

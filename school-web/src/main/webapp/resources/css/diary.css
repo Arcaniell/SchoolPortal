@@ -8,6 +8,10 @@
 	min-width: 20px;
 }
 
+.navBarDiary {
+	margin-left: 4px;
+}
+
 .eventTest {
 	background-color: rgb(236, 255, 240);
 }
@@ -15,7 +19,6 @@
 .eventExam {
 	background-color: rgb(255, 242, 244);
 }
-
 
 .tableInside {
 	background-color: #fff;
@@ -50,7 +53,8 @@
 	border: 1px ridge #ddd;
 	color: #428bca;
 }
-.btnSelector{
+
+.btnSelector {
 	height: 34px;
 	width: 150px;
 }
@@ -73,7 +77,6 @@
 	vertical-align: middle;
 	margin-left: 5px;
 }
-
 
 .btn2:hover {
 	background-color: #eee;
