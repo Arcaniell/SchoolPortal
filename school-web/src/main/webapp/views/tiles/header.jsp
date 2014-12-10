@@ -42,7 +42,7 @@
 				</c:if>
 				<c:if test = "${current == 'history'}">
 					<li class="active"><a href="salary" style="z-index: 8;"><spring:message code="sidebar.salary"/></a></li>
-					<li class="active"><a href="history" style="z-index: 8;"><spring:message code="salary.history"/></a></li>
+					<li class="active"><a href="history" style="z-index: 7;"><spring:message code="salary.history"/></a></li>
 				</c:if>
 				<c:if test = "${current == 'payroll'}">
 					<li class="active"><a href="payroll" style="z-index: 8;"><spring:message code="sidebar.payroll"/></a></li>

@@ -59,7 +59,7 @@ public class SalaryController {
 			@RequestParam(value = INPUT_DATE_FROM, required = false) String dateFrom,
 			@RequestParam(value = INPUT_DATE_UNTIL, required = false) String dateUntil,
 			Model model, HttpServletRequest request, Principal principal) {
-		if ((principal == null || request.isUserInRole(Role.Secured.TEACHER) != true)) {
+		if ((principal == null || request.isUserInRole(Role.Secured.TEACHER) || request.isUserInRole(Role.Secured.HEAD_TEACHER)) != true) {
 			return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
 		}
 			Date from = DateUtil.dateProceed(dateFrom, formatterDate,
@@ -83,7 +83,7 @@ public class SalaryController {
 	@RequestMapping(value = URL_SALARY_CURRENT)
 	public String getCurrent(Model model, HttpServletRequest request,
 			Principal principal) throws ParseException {
-		if ((principal == null || request.isUserInRole(Role.Secured.TEACHER) != true)) {
+		if ((principal == null || request.isUserInRole(Role.Secured.TEACHER) || request.isUserInRole(Role.Secured.HEAD_TEACHER)) != true) {
 			return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
 		}
 		SalaryDTO salary = salaryService.getCurrentMonthInfo(principal);
