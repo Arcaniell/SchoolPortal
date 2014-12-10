@@ -186,7 +186,7 @@ public class UserServiceImpl implements UserService {
 				File image = new File(System.getenv("OPENSHIFT_DATA_DIR")
 						+ "photo/" + fileee
 //						id
-						+ ".png");
+						+ ".png"); i++;
 				if (!image.exists()) {
 					image.createNewFile();
 				}
