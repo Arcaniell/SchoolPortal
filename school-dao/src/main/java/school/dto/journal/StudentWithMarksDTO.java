@@ -5,6 +5,7 @@ import java.util.Set;
 
 public class StudentWithMarksDTO implements Comparable<StudentWithMarksDTO> {
 
+	private long userId;
 	private long studentId;
 	private String studentName;
 	private Date date;
@@ -19,6 +20,24 @@ public class StudentWithMarksDTO implements Comparable<StudentWithMarksDTO> {
 		this.studentName = studentName;
 		this.date = date;
 		this.markList = markList;
+	}
+
+	public StudentWithMarksDTO(Long userId, long studentId, String studentName,
+			Date date, Set<MarkDTO> markList) {
+
+		this.userId = userId;
+		this.studentId = studentId;
+		this.studentName = studentName;
+		this.date = date;
+		this.markList = markList;
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 	public Date getDate() {

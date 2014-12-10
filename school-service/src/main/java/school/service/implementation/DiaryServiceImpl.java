@@ -1,4 +1,3 @@
-
 package school.service.implementation;
 
 import java.util.ArrayList;
@@ -7,8 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.inject.Inject;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,19 +35,19 @@ import school.service.utils.DiaryUtil;
 @Service
 public class DiaryServiceImpl implements DiaryService {
 
-	@Inject
+	@Autowired
 	private JournalDao journalDao;
-	@Inject
+	@Autowired
 	private ScheduleDao scheduleDao;
-	@Inject
+	@Autowired
 	private UserDao userDao;
-	@Inject
+	@Autowired
 	private StudentDao studentDao;
-	@Inject
+	@Autowired
 	private ParentDao parentDao;
-	@Inject
+	@Autowired
 	private HomeTaskDao homeTaskDao;
-	@Inject
+	@Autowired
 	private EventDao eventDao;
 
 	@Secured({ Role.Secured.STUDENT, Role.Secured.PARENT })
@@ -88,7 +86,6 @@ public class DiaryServiceImpl implements DiaryService {
 									journal.getCoefficient()));
 						}
 					}
-
 					markDTOs.add(new MarkDTO(schedule.getLesson().getId(),
 							schedule.getId(), schedule.getCourse()
 									.getCourseName(), homeTask.getTask(), date,
