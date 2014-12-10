@@ -8,7 +8,7 @@
 	<h3><spring:message code="salary.payrolltitle" /></h3>
 	<form method="post" action="payrollConfirm">
 	<div id="target" class="scrolling">
-		<table class="table table-hover">
+		<table class="table table-hover default_table">
 			<thead>
 				<tr>
 					<th><spring:message code="salary.name" /></th>

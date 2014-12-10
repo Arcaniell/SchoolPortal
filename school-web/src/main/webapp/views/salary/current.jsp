@@ -23,7 +23,7 @@
 	<h3>
 		<spring:message code="salary.month" />
 	</h3>
-	<table id="current" class="table table-hover">
+	<table id="current" class="table table-hover default_table">
 		<tbody>
 			<tr>
 				<th id="currenthead"><spring:message code="salary.nextdate" /></th>

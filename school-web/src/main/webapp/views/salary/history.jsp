@@ -22,7 +22,7 @@
 		</button>
 	</form>
 	<br>
-	<table class="table table-hover">
+	<table class="table table-hover default_table">
 		<thead>
 			<tr>
 				<th><spring:message code="salary.date" /></th>
