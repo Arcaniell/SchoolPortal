@@ -11,7 +11,7 @@ public interface ConversationService {
 
 	List<Conversation> findConversations(long id, String inboxOrSent);
 
-	List<String> getNames(List<Conversation> conversations);
+	/*List<String> getNames(List<Conversation> conversations);*/
 
 	List<Date> getDates(List<Conversation> conversations, long id);
 
@@ -24,7 +24,7 @@ public interface ConversationService {
 	
 	void createConversation(String subject, long senderId, long receiverId, String text);
 	
-	boolean hasNewMessages(Conversation conversation, long userId);
+/*	boolean hasNewMessages(Conversation conversation, long userId);*/
 
 	boolean isGroup(String to);
 

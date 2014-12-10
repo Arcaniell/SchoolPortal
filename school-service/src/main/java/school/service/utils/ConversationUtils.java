@@ -45,12 +45,37 @@ public class ConversationUtils {
 		}
 	}
 
+	public static Message createMessageClone(Conversation conversation,
+			List<Conversation> sentConversationsOfSender, String text,
+			Conversation conversation2) {
+		conversation2.setAnsweredReceiver(true);
+		conversation2.setDeletedSender(false);
+		Message message2 = new Message(conversation2, false, text, new Date(),
+				false, false);
+		message2.setReadSender(false);
+		conversation2.setNewForSender(true);
+		return message2;
+	}
+
+	public static void markReceiversConversationAsNew(Conversation conversation) {
+		conversation.setAnsweredReceiver(true);
+		conversation.setDeletedSender(false);
+		conversation.setNewForSender(true);
+	}
+	
+	public static void markSendersConversationAsNew(Conversation conversation) {
+		conversation.setAnsweredReceiver(true);
+		conversation.setDeletedSender(false);
+		conversation.setNewForReceiver(true);
+	}
+
 	public static List<Conversation> removeDoubledConversations(
-			List<Conversation> conversations) {
+			List<Conversation> conversations, long receiverId) {
 		Iterator<Conversation> i = conversations.iterator();
 		while (i.hasNext()) {
 			Conversation c = i.next();
-			if (c.getCountOfReceivers() == -1) {
+			if (c.getCountOfReceivers() == -1
+					&& c.getReceiverId().getId() != receiverId) {
 				i.remove();
 			}
 		}

@@ -89,6 +89,6 @@
 		};
 		setInterval(function() {
 			poll();
-		}, 200000);
+		}, 2000);
 	})();
 </script>

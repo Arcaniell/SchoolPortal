@@ -47,3 +47,31 @@
 	margin-top: 0px !important;
 	margin-bottom: 3px !important;
 }
+
+.btn1 {
+	display: inline-block;
+	padding: 2px 12px;
+	margin-bottom: 0;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+}
+
+.btn-sample1 {
+	color: #428BCA;
+	background-color: #FFFFFF;
+	border: 1px solid #E4E7F5 !important;
+}
