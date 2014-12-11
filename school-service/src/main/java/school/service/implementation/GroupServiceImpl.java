@@ -397,6 +397,7 @@ public class GroupServiceImpl implements GroupService {
 
     // HELP METHOD HEADTEACHER GROUP EDIT SERVICE
     // free group from students
+    @Transactional
     private void freeAdditionGroupFromStudents(Group group) {
         List<Student> additionStudents = group.getAddStudent();
         if (additionStudents == null) {

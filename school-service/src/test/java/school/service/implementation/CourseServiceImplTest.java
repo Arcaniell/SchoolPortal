@@ -17,9 +17,9 @@ import school.dto.CourseRequestTeacherDTO;
 import school.service.CourseRequestService;
 import school.service.CourseService;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+/*@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/META-INF/service-context.xml" })
-@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class })
+@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class })*/
 public class CourseServiceImplTest {
     @Autowired
     CourseRequestService courseRequestService;
