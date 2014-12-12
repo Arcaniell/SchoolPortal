@@ -28,8 +28,8 @@ public class EmailServiceImpl implements EmailService {
 	private static final String EMAIL_PROPERTIES = "email.properties";
 	private static final String HOST = 
 //			"http://school-romamr.rhcloud.com";
-			"http://lv128-awesomeschool.rhcloud.com";
-//			"http://localhost:10080/school-web";
+//			"http://lv128-awesomeschool.rhcloud.com";
+			"http://localhost:10080/school-web";
 	 
 	private Properties emailPropoperties = new Properties();
 
