@@ -35,16 +35,17 @@ $("#groupNumberSelect").change(
 			});
 		});
 
-$("#subjectSelect").change(function() {
+$("#subjectSelect").change(
+		function() {
 			var subject = $("#subjectSelect").val();
 			var groupNumber = $("#groupNumberSelect").val();
 			var groupLetter = $("#groupLetterSelect").val();
 			var quarter = $("#quarterSelect").val();
 			var json = {
-					"subject" : subject,
-					"groupNumber" : groupNumber,
-					"groupLetter" : groupLetter,
-					"quarter" : quarter
+				"subject" : subject,
+				"groupNumber" : groupNumber,
+				"groupLetter" : groupLetter,
+				"quarter" : quarter
 			}
 			$.ajax({
 				url : 'journal-subject',
@@ -56,13 +57,11 @@ $("#subjectSelect").change(function() {
 				success : function(groupNumbers) {
 					var content = " ";
 					for (number in groupNumbers) {
-						content += "<option value=\""
-							+ groupNumbers[number] + "\">"
-							+ groupNumbers[number]
-							+ "</option>\n";
+						content += "<option value=\"" + groupNumbers[number]
+								+ "\">" + groupNumbers[number] + "</option>\n";
 					}
 					$("#groupNumberSelect").html(content);
-					
+
 					var subject = $("#subjectSelect").val();
 					var groupNumber = $("#groupNumberSelect").val();
 					var groupLetter = $("#groupLetterSelect").val();
@@ -84,17 +83,15 @@ $("#subjectSelect").change(function() {
 							var content = " ";
 							for (letter in groupLetters) {
 								content += "<option value=\""
-										+ groupLetters[letter]
-										+ "\">"
-										+ groupLetters[letter]
-										+ "</option>\n";
+										+ groupLetters[letter] + "\">"
+										+ groupLetters[letter] + "</option>\n";
 							}
 							$("#groupLetterSelect").html(content);
 						}
 					});
 				}
 			});
-});
+		});
 
 $(document).on("click", ".panel-title", function() {
 	var id = $(this).attr("id");
@@ -121,226 +118,242 @@ $(".panel-title").css("cursor", "pointer");
 $(".panel-title").css("text-decoration", "underline");
 $(".panel-title").css("text-decoration-color", "blue");
 
-$("#submitSearch").click(function() {
-	var subject = $("#subjectSelect").val();
-	var groupNumber = $("#groupNumberSelect").val();
-	var groupLetter = $("#groupLetterSelect").val();
-	var quarter = $("#quarterSelect").val();
-	var json = {
-		"subject" : subject,
-		"groupNumber" : groupNumber,
-		"groupLetter" : groupLetter,
-		"quarter" : quarter
-	}
-	$.ajax({
-		url : 'journal-group-marks',
-		type : 'POST',
-		data : JSON.stringify(json),
-		dataType : 'json',
-		contentType : 'application/json',
-		mimeType : 'application/json',
-		success : function(groupMarks) {
-			var contentStd = "";
-			contentStd += "<tr class=\"info "
-					+ "trHeaderRow\">"
-					+ "<th> Students </th></tr>";
-			for ( var student in groupMarks) {
-				contentStd += "<tr class=\"trSize\"><th><a id=\""
-						+ groupMarks[student].userId
-						+ "\" class=\"panel-title\">";
-				var studentWithMark = groupMarks[student];
-				contentStd += studentWithMark.studentName
-						+ "</a></th></tr>";
-			}
-			$("#studentsNamesOfGroup").html(contentStd);
-			var dates = groupMarks[0].markList;
-			var curDate = new Date(groupMarks[0].date);
-			curDate.setHours(0, 0, 0, 0);
-			var contentMarks = "<tr class=\"info "
-					+ "trHeaderRow\">";
-			for ( var date in dates) {
-				var scheduleId = dates[date].scheduleId;
-				var dateOfMark = new Date(dates[date].date);
-				contentMarks += "<th name=\"date"
-						+ scheduleId + "\" class=\""
-						+ scheduleId;
-				if (dateOfMark > curDate) {
-					if (dates[date].markCoefficient == 3 || dates[date].markCoefficient == 5) {
-						contentMarks += " hasEvent";
-					} else if (dates[date].markCoefficient == 0) {
-						contentMarks += " hasNoEvent";
+$("#submitSearch")
+		.click(
+				function() {
+					var subject = $("#subjectSelect").val();
+					var groupNumber = $("#groupNumberSelect").val();
+					var groupLetter = $("#groupLetterSelect").val();
+					var quarter = $("#quarterSelect").val();
+					var json = {
+						"subject" : subject,
+						"groupNumber" : groupNumber,
+						"groupLetter" : groupLetter,
+						"quarter" : quarter
 					}
-					if (dates[date].homeTask != null) {
-						contentMarks += " hasHomeTask";
-					} else if (dates[date].homeTask == null) {
-						contentMarks += " hasNoHomeTask";
-					}
-						contentMarks += " futureDate\""
-								+ "data-toggle=\"modal\""
-								+ "data-target=\""
-								+ ".journal-add-mark-modal";
-					} else if (dateOfMark < curDate) {
-						contentMarks += " previousDate";
-					} else {
-						contentMarks += " currentDate";
-					}
-						contentMarks += "\" data-value=\""
-								+ scheduleId + "\">"
-						dateOfMark = (dateOfMark.getDate()
-								+ "."
-								+ (dateOfMark.getMonth() + 1)
-								+ "." + (dateOfMark.getYear() - 100));
-						contentMarks += dateOfMark + "</th>";
-					}
-					contentMarks += "</tr>";
-						for ( var student in groupMarks) {
-							contentMarks += "<tr class=\"trSize\">";
-							var studentId = groupMarks[student].studentId;
-							var marks = groupMarks[student].markList;
-							var currentDate = new Date(groupMarks[0].date);
-							currentDate = (currentDate.getDate()
-									+ "."
-									+ (currentDate.getMonth() + 1)
-									+ "." + (currentDate.getYear() - 100));
-							for ( var index in marks) {
-								var dateOfMark = new Date(marks[index].date);
-								dateOfMark = (dateOfMark.getDate()
-										+ "."
-										+ (dateOfMark.getMonth() + 1)
-										+ "." + (dateOfMark.getYear() - 100));
-								var scheduleId = marks[index].scheduleId;
-								if (marks[index].mark == 0 && currentDate == dateOfMark) {
-									contentMarks += "<td name=\""
-										+ "mark"
-										+ scheduleId
-										+ "\" id=\""
-										+ studentId
-										+ "j"
-										+ scheduleId
-										+ "\" data-value=\""
-										+ studentId
-										+ "j"
-										+ scheduleId
-										+ "\"class=\"tdCenter addMark";
-									if (marks[index].markCoefficient == 3) {
-										contentMarks += " eventTest"
-									} else if (marks[index].markCoefficient == 5) {
-										contentMarks += " eventExam"
+					$
+							.ajax({
+								url : 'journal-group-marks',
+								type : 'POST',
+								data : JSON.stringify(json),
+								dataType : 'json',
+								contentType : 'application/json',
+								mimeType : 'application/json',
+								success : function(groupMarks) {
+									var contentStd = "";
+									contentStd += "<tr class=\"info "
+											+ "trHeaderRow\">"
+											+ "<th> Students </th></tr>";
+									for ( var student in groupMarks) {
+										contentStd += "<tr class=\"trSize\"><th><a id=\""
+												+ groupMarks[student].userId
+												+ "\" class=\"panel-title\">";
+										var studentWithMark = groupMarks[student];
+										contentStd += studentWithMark.studentName
+												+ "</a></th></tr>";
 									}
-								contentMarks += "\" >"
-										+ "<input id=\"dateAndStudent\""
-										+ " type=\"hidden\" value=\" \" />"
-										+ "<ul class=\"nav nav-pills"
-										+ " pillsSizeForMark\">"
-										+ "<li role=\"presentation\""
-										+ " class=\"dropdown\"><a "
-										+ "class=\"btn2 dropdown-toggle"
-										+ " markItemCnfg\""
-										+ " data-toggle=\"dropdown\""
-										+ "> </a>"
-										+ "<ul class=\"dropdown-menu\""
-										+ " role=\"menu\">"
-										for (var i = 1; i <= 12; i++) {
-											contentMarks += "<li class=\""
-												+ "selectOfMarkCnfg"
-												+ " selectedMark\""
-												+ " data-value=\""
-												+ i + "\">"
-												+ " <a class=\""
-												+ "selectOfMarkCnfg \">"
-												+ i + "</a> </li>"
+									$("#studentsNamesOfGroup").html(contentStd);
+									var dates = groupMarks[0].markList;
+									var curDate = new Date(groupMarks[0].date);
+									curDate.setHours(0, 0, 0, 0);
+									var contentMarks = "<tr class=\"info "
+											+ "trHeaderRow\">";
+									for ( var date in dates) {
+										var scheduleId = dates[date].scheduleId;
+										var dateOfMark = new Date(
+												dates[date].date);
+										contentMarks += "<th name=\"date"
+												+ scheduleId + "\" class=\""
+												+ scheduleId;
+										if (dateOfMark > curDate) {
+											if (dates[date].markCoefficient == 3
+													|| dates[date].markCoefficient == 5) {
+												contentMarks += " hasEvent";
+											} else if (dates[date].markCoefficient == 0) {
+												contentMarks += " hasNoEvent";
+											}
+											if (dates[date].homeTask != null) {
+												contentMarks += " hasHomeTask";
+											} else if (dates[date].homeTask == null) {
+												contentMarks += " hasNoHomeTask";
+											}
+
+											contentMarks += " futureDate\""
+													+ "data-toggle=\"modal\""
+													+ "data-target=\""
+													+ ".journal-add-mark-modal";
+										} else if (dateOfMark < curDate) {
+											contentMarks += " previousDate";
+										} else {
+											contentMarks += " currentDate";
 										}
-								contentMarks += "<li class=\"divider\">"
-										+ " </li>"
-										+ "<li class=\"selectOfMarkCnfg"
-										+ " selectedMark\" data-value=\"-1\">"
-										+ "<a class=\"selectOfMarkCnfg\""
-										+ ">Absent </a> </li>"
-										+ "</ul></li></ul></td>";
-							} else if (marks[index].mark == 0 && currentDate != dateOfMark) {
-								contentMarks += "<td name=\""
-										+ "mark"
-										+ scheduleId
-										+ "\" class=\"tdCenter "
-										+ scheduleId;
-								if (marks[index].markCoefficient == 3) {
-									contentMarks += " eventTest"
-								} else if (marks[index].markCoefficient == 5) {
-									contentMarks += " eventExam"
+										contentMarks += "\" data-value=\""
+												+ scheduleId + "\">"
+										dateOfMark = (dateOfMark.getDate()
+												+ "."
+												+ (dateOfMark.getMonth() + 1)
+												+ "." + (dateOfMark.getYear() - 100));
+										contentMarks += dateOfMark + "</th>";
+									}
+									contentMarks += "</tr>";
+									for ( var student in groupMarks) {
+										contentMarks += "<tr class=\"trSize\">";
+										var studentId = groupMarks[student].studentId;
+										var marks = groupMarks[student].markList;
+										var currentDate = new Date(
+												groupMarks[0].date);
+										currentDate = (currentDate.getDate()
+												+ "."
+												+ (currentDate.getMonth() + 1)
+												+ "." + (currentDate.getYear() - 100));
+										for ( var index in marks) {
+											var dateOfMark = new Date(
+													marks[index].date);
+											dateOfMark = (dateOfMark.getDate()
+													+ "."
+													+ (dateOfMark.getMonth() + 1)
+													+ "." + (dateOfMark
+													.getYear() - 100));
+											var scheduleId = marks[index].scheduleId;
+											if (marks[index].mark == 0
+													&& currentDate == dateOfMark) {
+												contentMarks += "<td name=\""
+														+ "mark"
+														+ scheduleId
+														+ "\" id=\""
+														+ studentId
+														+ "j"
+														+ scheduleId
+														+ "\" data-value=\""
+														+ studentId
+														+ "j"
+														+ scheduleId
+														+ "\"class=\"tdCenter addMark";
+												if (marks[index].markCoefficient == 3) {
+													contentMarks += " eventTest"
+												} else if (marks[index].markCoefficient == 5) {
+													contentMarks += " eventExam"
+												}
+												contentMarks += "\" >"
+														+ "<input id=\"dateAndStudent\""
+														+ " type=\"hidden\" value=\" \" />"
+														+ "<ul class=\"nav nav-pills"
+														+ " pillsSizeForMark\">"
+														+ "<li role=\"presentation\""
+														+ " class=\"dropdown\"><a "
+														+ "class=\"btn2 dropdown-toggle"
+														+ " markItemCnfg\""
+														+ " data-toggle=\"dropdown\""
+														+ "> </a>"
+														+ "<ul class=\"dropdown-menu\""
+														+ " role=\"menu\">"
+												for (var i = 1; i <= 12; i++) {
+													contentMarks += "<li class=\""
+															+ "selectOfMarkCnfg"
+															+ " selectedMark\""
+															+ " data-value=\""
+															+ i
+															+ "\">"
+															+ " <a class=\""
+															+ "selectOfMarkCnfg \">"
+															+ i + "</a> </li>"
+												}
+												contentMarks += "<li class=\"divider\">"
+														+ " </li>"
+														+ "<li class=\"selectOfMarkCnfg"
+														+ " selectedMark\" data-value=\"-1\">"
+														+ "<a class=\"selectOfMarkCnfg\""
+														+ ">Absent </a> </li>"
+														+ "</ul></li></ul></td>";
+											} else if (marks[index].mark == 0
+													&& currentDate != dateOfMark) {
+												contentMarks += "<td name=\""
+														+ "mark"
+														+ scheduleId
+														+ "\" class=\"tdCenter "
+														+ scheduleId;
+												if (marks[index].markCoefficient == 3) {
+													contentMarks += " eventTest"
+												} else if (marks[index].markCoefficient == 5) {
+													contentMarks += " eventExam"
+												}
+												contentMarks += "\"> </td>";
+											} else if (marks[index].mark != 0
+													&& currentDate != dateOfMark) {
+												contentMarks += "<td name=\""
+														+ "mark"
+														+ scheduleId
+														+ "\" class=\"tdCenter "
+														+ scheduleId;
+												if (marks[index].markCoefficient == 3) {
+													contentMarks += " eventTest"
+												} else if (marks[index].markCoefficient == 5) {
+													contentMarks += " eventExam"
+												}
+												contentMarks += "\">";
+												if (marks[index].mark == (-1)) {
+													contentMarks += "n/a";
+												} else {
+													contentMarks += marks[index].mark;
+												}
+												contentMarks += "</td>";
+											} else if (marks[index].mark != 0
+													&& currentDate == dateOfMark) {
+												contentMarks += "<td name=\""
+														+ "mark"
+														+ scheduleId
+														+ "\" id=\""
+														+ studentId
+														+ "j"
+														+ scheduleId
+														+ "\" data-value=\""
+														+ studentId
+														+ "j"
+														+ scheduleId
+														+ "\"class=\"tdCenter addMark";
+												if (marks[index].markCoefficient == 3) {
+													contentMarks += " eventTest"
+												} else if (marks[index].markCoefficient == 5) {
+													contentMarks += " eventExam"
+												}
+												contentMarks += "\" >"
+														+ "<input id=\"dateAndStudent\""
+														+ " type=\"hidden\" value=\" \" />"
+														+ "<ul class=\"nav nav-pills"
+														+ " pillsSizeForMark\">"
+														+ "<li role=\"presentation\""
+														+ " class=\"dropdown\"><a "
+														+ "class=\"btn2 dropdown-toggle"
+														+ " markItemCnfg\""
+														+ " data-toggle=\"dropdown\""
+														+ "> ";
+												if (marks[index].mark == (-1)) {
+													contentMarks += "n/a";
+												} else {
+													contentMarks += marks[index].mark;
+												}
+												contentMarks += "</a>"
+														+ "<ul class=\"dropdown-menu\""
+														+ " role=\"menu\">"
+														+ "<li class=\""
+														+ "selectOfMarkCnfg"
+														+ " deletedMark\""
+														+ "\">"
+														+ " <a class=\""
+														+ "selectOfMarkCnfg \">"
+														+ "Delete</a> </li>"
+														+ "</ul></li></ul>"
+														+ "</td>";
+											}
+										}
+										contentMarks += "</tr>";
+									}
+									$("#journalStudentMarksJS").html(
+											contentMarks);
 								}
-								contentMarks += "\"> </td>";
-							} else if (marks[index].mark != 0 && currentDate != dateOfMark) {
-								contentMarks += "<td name=\""
-										+ "mark"
-										+ scheduleId
-										+ "\" class=\"tdCenter "
-										+ scheduleId;
-								if (marks[index].markCoefficient == 3) {
-									contentMarks += " eventTest"
-								} else if (marks[index].markCoefficient == 5) {
-									contentMarks += " eventExam"
-								}
-								contentMarks += "\">";
-								if (marks[index].mark == (-1)) {
-									contentMarks += "n/a";
-								} else {
-									contentMarks += marks[index].mark;
-								}
-									contentMarks += "</td>";
-							} else if (marks[index].mark != 0 && currentDate == dateOfMark) {
-								contentMarks += "<td name=\""
-										+ "mark"
-										+ scheduleId
-										+ "\" id=\""
-										+ studentId
-										+ "j"
-										+ scheduleId
-										+ "\" data-value=\""
-										+ studentId
-										+ "j"
-										+ scheduleId
-										+ "\"class=\"tdCenter addMark";
-								if (marks[index].markCoefficient == 3) {
-									contentMarks += " eventTest"
-								} else if (marks[index].markCoefficient == 5) {
-									contentMarks += " eventExam"
-								}
-								contentMarks += "\" >"
-										+ "<input id=\"dateAndStudent\""
-										+ " type=\"hidden\" value=\" \" />"
-										+ "<ul class=\"nav nav-pills"
-										+ " pillsSizeForMark\">"
-										+ "<li role=\"presentation\""
-										+ " class=\"dropdown\"><a "
-										+ "class=\"btn2 dropdown-toggle"
-										+ " markItemCnfg\""
-										+ " data-toggle=\"dropdown\""
-										+ "> ";
-								if (marks[index].mark == (-1)) {
-									contentMarks += "n/a";
-								} else {
-									contentMarks += marks[index].mark;
-								}
-								contentMarks += "</a>"
-										+ "<ul class=\"dropdown-menu\""
-										+ " role=\"menu\">"
-										+ "<li class=\""
-										+ "selectOfMarkCnfg"
-										+ " deletedMark\""
-										+ "\">"
-										+ " <a class=\""
-										+ "selectOfMarkCnfg \">"
-										+ "Delete</a> </li>"
-										+ "</ul></li></ul>"
-										+ "</td>";
-								}
-							}
-							contentMarks += "</tr>";
-						}
-				$("#journalStudentMarksJS").html(contentMarks);
-			}
-		});
-});
+
+							});
+				});
 
 $(document).on("click", ".addMark", function() {
 	$("#dateAndStudent").val($(this).data('value'));
