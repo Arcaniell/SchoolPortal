@@ -21,7 +21,7 @@ import school.model.CourseRequest;
 import school.model.Group;
 import school.model.Student;
 import school.service.CourseRequestService;
-import school.service.utils.SchoolUtil;
+import school.service.utils.DateUtil;
 
 /**
  * @author Blowder
@@ -104,7 +104,7 @@ public class CourseRequestServiceImpl implements CourseRequestService {
                 courseRequestDTO.setMembers(courseRequestDao.findAllBySubjectId(
                         courseFromCurrentRequest.getId()).size());
             }
-            SimpleDateFormat formatterDate = new SimpleDateFormat(SchoolUtil.UI_DATE_FORMAT);
+            SimpleDateFormat formatterDate = new SimpleDateFormat(DateUtil.UI_DATE_FORMAT);
             courseRequestDTO.setDateOfRequest(formatterDate.format(courseRequest.getDate()));
             listCourseRequestsDTO.add(courseRequestDTO);
         }

@@ -10,7 +10,7 @@ import java.util.Set;
 
 import school.dto.journal.MarkDTO;
 
-public class JournalUtil extends SchoolUtil {
+public class JournalUtil {
 
 	public static final String MOD_ATT_DATES = "dates";
 	public static final String MOD_ATT_GROUP_MARKS = "groupMarks";
@@ -44,7 +44,7 @@ public class JournalUtil extends SchoolUtil {
 	public static final Date LAST_DAY_FOURTH_QUARTER = new Date(1433019600000L);
 
 	public static List<Date> getWeek(Calendar date) throws ParseException {
-		SimpleDateFormat format = new SimpleDateFormat(UI_DATE_FORMAT);
+		SimpleDateFormat format = new SimpleDateFormat(DateUtil.UI_DATE_FORMAT);
 		String formatedDate = (date.get(Calendar.MONTH) + 1) + "/"
 				+ date.get(Calendar.DATE) + "/" + date.get(Calendar.YEAR);
 		Date d = format.parse(formatedDate);

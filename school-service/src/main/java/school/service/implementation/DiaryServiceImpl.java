@@ -29,7 +29,6 @@ import school.model.Schedule;
 import school.model.Student;
 import school.model.User;
 import school.service.DiaryService;
-import school.service.utils.DateUtil;
 import school.service.utils.JournalUtil;
 
 @Service
