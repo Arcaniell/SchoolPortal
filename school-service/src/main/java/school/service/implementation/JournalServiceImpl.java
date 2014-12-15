@@ -1,7 +1,6 @@
 package school.service.implementation;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -18,6 +17,7 @@ import school.dao.EventDao;
 import school.dao.GroupDao;
 import school.dao.HomeTaskDao;
 import school.dao.JournalDao;
+import school.dao.LessonDao;
 import school.dao.ScheduleDao;
 import school.dao.StudentDao;
 import school.dao.TeacherDao;
@@ -32,13 +32,13 @@ import school.model.Event;
 import school.model.Group;
 import school.model.HomeTask;
 import school.model.Journal;
-import school.model.Lesson;
 import school.model.Role;
 import school.model.Schedule;
 import school.model.Student;
 import school.model.Teacher;
 import school.model.User;
 import school.service.JournalService;
+import school.service.utils.DateUtil;
 import school.service.utils.JournalUtil;
 
 @Service
@@ -60,6 +60,8 @@ public class JournalServiceImpl implements JournalService {
 	private EventDao eventDao;
 	@Autowired
 	private HomeTaskDao homeTaskDao;
+	@Autowired
+	private LessonDao lessonDao;
 
 	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
 			Role.Secured.DIRECTOR })
@@ -69,13 +71,10 @@ public class JournalServiceImpl implements JournalService {
 		List<Schedule> schedules = null;
 
 		if (role.equals(Role.Secured.TEACHER)) {
-
 			schedules = scheduleDao.findByTeacher(teacherDao
 					.findByUserId(userId));
-
 		} else if (role.equals(Role.Secured.HEAD_TEACHER)
 				|| role.equals(Role.Secured.DIRECTOR)) {
-
 			schedules = scheduleDao.findAll();
 		}
 
@@ -88,7 +87,6 @@ public class JournalServiceImpl implements JournalService {
 			groupLetters.add(schedule.getGroup().getLetter());
 			courses.add(schedule.getCourse().getCourseName());
 		}
-
 		return new JournalStaffDTO(userId, getWholeUserName(userId),
 				groupNumbers, groupLetters, courses);
 	}
@@ -96,47 +94,18 @@ public class JournalServiceImpl implements JournalService {
 	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
 			Role.Secured.DIRECTOR, Role.Secured.ADMIN })
 	@Transactional
-	public List<StudentWithMarksDTO> getMarksOfGroup(JournalSearch search)
-			throws ParseException {
-
+	public List<StudentWithMarksDTO> getMarksOfGroup(JournalSearch search) {
 		Group group = groupDao.findByNumberAndLetter(search.getGroupNumber(),
 				search.getGroupLetter());
-		Date from = getDatesByQuarter(search.getQuarter())[JournalUtil.FIRST_DATE_OF_QUARTER];
-		Date to = getDatesByQuarter(search.getQuarter())[JournalUtil.LAST_DATE_OF_QUARTER];
-
-		List<Schedule> schedules = scheduleDao.findByGroupCourseInterval(
-				group.getId(), search.getSubject(), from, to);
-		Collections.sort(schedules);
+		List<Schedule> schedules = getSchedulesForStudentMarks(search, group);
 
 		List<StudentWithMarksDTO> studentsWithMarks = new ArrayList<>();
-		Set<MarkDTO> marks;
-
 		for (Student student : group.getStudent()) {
-			marks = new TreeSet<>();
-			for (Schedule schedule : schedules) {
-
-				Journal journal = journalDao.findByStudentAndSchedule(
-						student.getId(), schedule.getId());
-
-				HomeTask homeTask = homeTaskDao
-						.findBySchedule(schedule.getId());
-
-				Event event = eventDao.findEventBySchedule(schedule.getId());
-
-				if (journal != null) {
-					marks.add(new MarkDTO(schedule.getLesson().getId(),
-							schedule.getId(), homeTask.getTask(), schedule
-									.getDate(), journal.getMark(), journal
-									.getCoefficient()));
-				} else if (journal == null) {
-					marks.add(new MarkDTO(schedule.getLesson().getId(),
-							schedule.getId(), homeTask.getTask(), schedule
-									.getDate(), event.getType()));
-				}
-			}
+			Set<MarkDTO> marks = getStudentsMarks(schedules, student);
 			studentsWithMarks.add(new StudentWithMarksDTO(student.getUser()
 					.getId(), student.getId(), getWholeUserName(student
-					.getUser().getId()), new Date(), marks));
+					.getUser().getId()), JournalUtil.getQuarterMark(marks),
+					new Date(), marks));
 		}
 		Collections.sort(studentsWithMarks);
 		return studentsWithMarks;
@@ -145,11 +114,10 @@ public class JournalServiceImpl implements JournalService {
 	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
 			Role.Secured.DIRECTOR })
 	@Transactional
-	public void editMark(EditMarkDTO editMarkDTO) {
+	public EditMarkDTO editMark(EditMarkDTO editMarkDTO) {
 
 		String[] studentAndSchedule = editMarkDTO.getStudentAndSchedule()
 				.split(JournalUtil.SPLITTER);
-
 		Student student = studentDao.findById(Long
 				.parseLong(studentAndSchedule[0]));
 		Schedule schedule = scheduleDao.findById(Long
@@ -160,50 +128,75 @@ public class JournalServiceImpl implements JournalService {
 					student.getId(), schedule.getId()));
 		} else {
 			Event event = eventDao.findEventBySchedule(schedule.getId());
-			byte coefficient = JournalUtil.NOTHING;
-			if (event == null) {
-				coefficient = JournalUtil.REGULAR_MARK;
-			} else {
-				coefficient = event.getType();
-			}
 			journalDao.save(new Journal(student, schedule, editMarkDTO
-					.getMark(), coefficient, schedule.getDate()));
+					.getMark(), event.getType(), schedule.getDate()));
 		}
+		return reCalculateQuarterMark(editMarkDTO, student);
+	}
 
+	private List<Schedule> getSchedulesForStudentMarks(JournalSearch search,
+			Group group) {
+		Date[] quarterDates = JournalUtil
+				.getDatesByQuarter(search.getQuarter());
+		return scheduleDao.findByGroupCourseInterval(group.getId(),
+				search.getSubject(),
+				quarterDates[JournalUtil.FIRST_DATE_OF_QUARTER],
+				quarterDates[JournalUtil.LAST_DATE_OF_QUARTER]);
+	}
+
+	public Set<MarkDTO> getStudentsMarks(List<Schedule> schedules,
+			Student student) {
+		Set<MarkDTO> marks = new TreeSet<>();
+		for (Schedule schedule : schedules) {
+			Journal journal = journalDao.findByStudentAndSchedule(
+					student.getId(), schedule.getId());
+			HomeTask homeTask = homeTaskDao.findBySchedule(schedule.getId());
+			Event event = eventDao.findEventBySchedule(schedule.getId());
+			marks.add(new MarkDTO(schedule.getLesson().getId(), schedule
+					.getId(), schedule.getCourse().getCourseName(), homeTask
+					.getTask(), schedule.getDate(), journal.getMark(), event
+					.getType()));
+		}
+		return marks;
+	}
+
+	private EditMarkDTO reCalculateQuarterMark(EditMarkDTO editMarkDTO,
+			Student student) {
+
+		List<Schedule> schedules = getSchedulesForStudentMarks(
+				editMarkDTO.getSearchData(), student.getGroup());
+		Set<MarkDTO> marks = getStudentsMarks(schedules, student);
+		editMarkDTO.setStudentId(student.getId());
+		editMarkDTO.setQuarterMark(JournalUtil.getQuarterMark(marks));
+		return editMarkDTO;
 	}
 
 	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
 			Role.Secured.DIRECTOR })
 	@Transactional
 	public void editDate(EditDateDTO editedDateDTO) {
-
 		Schedule schedule = scheduleDao.findById(editedDateDTO.getScheduleId());
 
 		if (editedDateDTO.getEventType() != JournalUtil.NOTHING) {
 			eventDao.save(new Event(schedule, editedDateDTO.getEventType(),
 					editedDateDTO.getEventDescription()));
 		}
-
 		if (editedDateDTO.getHomeTask() != JournalUtil.EMPTY) {
 			homeTaskDao.save(new HomeTask(schedule.getGroup(), editedDateDTO
 					.getHomeTask(), schedule));
 		}
-
 	}
 
 	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
 			Role.Secured.DIRECTOR })
 	public void deleteEvent(EditDateDTO editedDateDTO) {
-
 		eventDao.remove(eventDao.findEventBySchedule(scheduleDao.findById(
 				editedDateDTO.getScheduleId()).getId()));
-
 	}
 
 	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
 			Role.Secured.DIRECTOR })
 	public void deleteHomeTask(EditDateDTO editedDateDTO) {
-
 		homeTaskDao.remove(homeTaskDao.findBySchedule(scheduleDao.findById(
 				editedDateDTO.getScheduleId()).getId()));
 	}
@@ -245,165 +238,73 @@ public class JournalServiceImpl implements JournalService {
 	@Transactional
 	public JournalSearch getDeafaultData(long userId, Date currentDate)
 			throws ParseException {
-
-		SimpleDateFormat dateFormat = new SimpleDateFormat(
-				JournalUtil.DATE_FORMAT);
 		Teacher teacher = teacherDao.findByUserId(userId);
-		String quarter = getQuarterByDate(currentDate);
-		Date from = getDatesByQuarter(quarter)[JournalUtil.FIRST_DATE_OF_QUARTER];
-		Date to = getDatesByQuarter(quarter)[JournalUtil.LAST_DATE_OF_QUARTER];
-		List<Long> datesValues = new ArrayList<Long>();
+		Date closestDate = getClosestDate(
+				JournalUtil.getDateWithoutHours(currentDate), teacher.getId());
+		Schedule schedule = getClosestSchedule(currentDate, closestDate,
+				teacher.getId());
 
-		for (Schedule schedule : scheduleDao.findByTeacherInterval(
-				teacher.getId(), from, to)) {
-			datesValues.add(schedule.getDate().getTime());
-		}
-
-		Date closestDate = new Date(JournalUtil.getClosestValue(dateFormat
-				.parse(dateFormat.format(currentDate)).getTime(), datesValues));
-
-		List<Lesson> lessons = new ArrayList<>();
-
-		for (Schedule schedule : scheduleDao.findByTeacherInterval(
-				teacher.getId(), closestDate, closestDate)) {
-			lessons.add(schedule.getLesson());
-		}
-
-		Schedule schedule = scheduleDao.findByTeacherDateLesson(
-				teacher.getId(), closestDate,
-				getClosestLesson(currentDate, lessons));
 		return new JournalSearch(schedule.getCourse().getCourseName(), schedule
 				.getGroup().getNumber(), schedule.getGroup().getLetter(),
-				quarter);
-
+				JournalUtil.getQuarterByDate(currentDate));
 	}
 
-	private long getClosestLesson(Date date, List<Lesson> lessons)
-			throws ParseException {
-
-		SimpleDateFormat dateFormat = new SimpleDateFormat(
-				JournalUtil.HOURS_OF_DATE);
-
-		List<Long> lessonsValues = new ArrayList<>();
-		for (Lesson lesson : lessons) {
-			lessonsValues.add(lesson.getId());
+	private Schedule getClosestSchedule(Date currentDate, Date closestDate,
+			long teacherId) throws ParseException {
+		if (closestDate.before(JournalUtil.getDateWithoutHours(currentDate))) {
+			return scheduleDao.findByTeacherDateLesson(teacherId, closestDate,
+					getClosestLesson(8, closestDate, teacherId));
+		} else if (closestDate.after(JournalUtil
+				.getDateWithoutHours(currentDate))) {
+			return scheduleDao.findByTeacherDateLesson(teacherId, closestDate,
+					getClosestLesson(0, closestDate, teacherId));
+		} else {
+			return scheduleDao.findByTeacherDateLesson(
+					teacherId,
+					closestDate,
+					getClosestLesson(JournalUtil.getHoursOfDate(currentDate)
+							.getTime(), closestDate, teacherId));
 		}
+	}
 
-		return JournalUtil.getClosestValue(
-				dateFormat.parse(dateFormat.format(date)).getTime(),
-				lessonsValues);
+	private Date getClosestDate(Date currentDate, long teacherId) {
+
+		Date from = DateUtil.addOrDelDays(currentDate, -5);
+		Date to = DateUtil.addOrDelDays(currentDate, +5);
+		List<Long> datesValues = new ArrayList<Long>();
+		for (Schedule schedule : scheduleDao.findByTeacherInterval(teacherId,
+				from, to)) {
+			datesValues.add(schedule.getDate().getTime());
+		}
+		return new Date(JournalUtil.getClosestValue(currentDate.getTime(),
+				datesValues));
+	}
+
+	private long getClosestLesson(long currentDate, Date closestDate,
+			long teacherId) {
+		List<Long> lessonsValues = new ArrayList<>();
+		for (Schedule schedule : scheduleDao.findByTeacherInterval(teacherId,
+				closestDate, closestDate)) {
+			lessonsValues.add(schedule.getLesson().getId());
+		}
+		return JournalUtil.getClosestValue(currentDate, lessonsValues);
 	}
 
 	private List<Schedule> getSchedulesByRoleAndSubject(long userId,
 			String role, String subject) {
-
 		if (role.equals(Role.Secured.TEACHER)) {
-
 			return scheduleDao.findByTeacherAndCourse(
 					teacherDao.findByUserId(userId).getId(), subject);
-
 		}
 		if (role.equals(Role.Secured.HEAD_TEACHER)
 				|| role.equals(Role.Secured.DIRECTOR)) {
-
 			return scheduleDao.findByCourse(subject);
-
 		}
 		return null;
 	}
 
 	private String getWholeUserName(long userId) {
-
 		User user = userDao.findById(userId);
-
 		return user.getFirstName() + " " + user.getLastName();
 	}
-
-	private String getQuarterByDate(Date date) throws ParseException {
-		SimpleDateFormat dateFormat = new SimpleDateFormat(
-				JournalUtil.UI_DATE_FORMAT);
-
-		if (date.before(dateFormat.parse(JournalUtil.FIRST_DAY_SECOND_QUARTER))) {
-			return JournalUtil.FIRST_QUARTER;
-		} else if (date.after(dateFormat
-				.parse(JournalUtil.LAST_DAY_FIRST_QUARTER))
-				&& date.before(dateFormat
-						.parse(JournalUtil.FIRST_DAY_THIRD_QUARTER))) {
-			return JournalUtil.SECOND_QUARTER;
-		} else if (date.after(dateFormat
-				.parse(JournalUtil.LAST_DAY_SECOND_QUARTER))
-				&& date.before(dateFormat
-						.parse(JournalUtil.FIRST_DAY_FOURTH_QUARTER))) {
-			return JournalUtil.THIRD_QUARTER;
-		} else if (date.after(dateFormat
-				.parse(JournalUtil.LAST_DAY_THIRD_QUARTER))) {
-			return JournalUtil.FOURTH_QUARTER;
-		}
-		return null;
-	}
-
-	private Date[] getDatesByQuarter(String quarter) throws ParseException {
-		SimpleDateFormat dateFormat = new SimpleDateFormat(
-				JournalUtil.UI_DATE_FORMAT);
-		Date[] dates = new Date[JournalUtil.FIRST_AND_LAST_DATE_OF_QUARTER];
-
-		switch (quarter) {
-
-		case JournalUtil.FIRST_QUARTER:
-
-			dates[JournalUtil.FIRST_DATE_OF_QUARTER] = dateFormat
-					.parse(JournalUtil.FIRST_DAY_FIRST_QUARTER);
-			dates[JournalUtil.LAST_DATE_OF_QUARTER] = dateFormat
-					.parse(JournalUtil.LAST_DAY_FIRST_QUARTER);
-			break;
-
-		case JournalUtil.SECOND_QUARTER:
-
-			dates[JournalUtil.FIRST_DATE_OF_QUARTER] = dateFormat
-					.parse(JournalUtil.FIRST_DAY_SECOND_QUARTER);
-			dates[JournalUtil.LAST_DATE_OF_QUARTER] = dateFormat
-					.parse(JournalUtil.LAST_DAY_SECOND_QUARTER);
-			break;
-
-		case JournalUtil.THIRD_QUARTER:
-
-			dates[JournalUtil.FIRST_DATE_OF_QUARTER] = dateFormat
-					.parse(JournalUtil.FIRST_DAY_THIRD_QUARTER);
-			dates[JournalUtil.LAST_DATE_OF_QUARTER] = dateFormat
-					.parse(JournalUtil.LAST_DAY_THIRD_QUARTER);
-			break;
-
-		case JournalUtil.FOURTH_QUARTER:
-
-			dates[JournalUtil.FIRST_DATE_OF_QUARTER] = dateFormat
-					.parse(JournalUtil.FIRST_DAY_FOURTH_QUARTER);
-			dates[JournalUtil.LAST_DATE_OF_QUARTER] = dateFormat
-					.parse(JournalUtil.LAST_DAY_FOURTH_QUARTER);
-			break;
-		}
-		//
-		// if (quarter.equals(JournalUtil.FIRST_QUARTER)) {
-		// dates[JournalUtil.FIRST_DATE_OF_QUARTER] = dateFormat
-		// .parse(JournalUtil.FIRST_DAY_FIRST_QUARTER);
-		// dates[JournalUtil.LAST_DATE_OF_QUARTER] = dateFormat
-		// .parse(JournalUtil.LAST_DAY_FIRST_QUARTER);
-		// } else if (quarter.equals(JournalUtil.SECOND_QUARTER)) {
-		// dates[JournalUtil.FIRST_DATE_OF_QUARTER] = dateFormat
-		// .parse(JournalUtil.FIRST_DAY_SECOND_QUARTER);
-		// dates[JournalUtil.LAST_DATE_OF_QUARTER] = dateFormat
-		// .parse(JournalUtil.LAST_DAY_SECOND_QUARTER);
-		// } else if (quarter.equals(JournalUtil.THIRD_QUARTER)) {
-		// dates[JournalUtil.FIRST_DATE_OF_QUARTER] = dateFormat
-		// .parse(JournalUtil.FIRST_DAY_THIRD_QUARTER);
-		// dates[JournalUtil.LAST_DATE_OF_QUARTER] = dateFormat
-		// .parse(JournalUtil.LAST_DAY_THIRD_QUARTER);
-		// } else if (quarter.equals(JournalUtil.FOURTH_QUARTER)) {
-		// dates[JournalUtil.FIRST_DATE_OF_QUARTER] = dateFormat
-		// .parse(JournalUtil.FIRST_DAY_FOURTH_QUARTER);
-		// dates[JournalUtil.LAST_DATE_OF_QUARTER] = dateFormat
-		// .parse(JournalUtil.LAST_DAY_FOURTH_QUARTER);
-		// }
-		return dates;
-	}
-
 }

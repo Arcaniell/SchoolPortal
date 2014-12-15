@@ -24,22 +24,23 @@ public class DateUtil {
 	public static String MESSAGE_DATE_FORMAT = "d MMM ''yy, hh:mm";
 	public static String SCHEDULE_DATE_FORMAT = "dd-MM-yyyy";
 	public static String SCHEDULE_DATEPICKER_FORMAT = "MM/dd/yyyy";
-	
-	
-	/* Method to convert Date to String */
+	public static final String DEFAULT_DATE_FORMAT = "EEE MMM dd HH:mm:ss z yyyy";
+	public static final String UI_DATE_FORMAT = "MM/dd/yyyy";
+
+	/** Method to convert Date to String */
 	public static String getFormattedDate(Date date, int size, Locale loc) {
 		DateFormat dateFormat = DateFormat.getDateInstance(size, loc);
 		return dateFormat.format(date);
 	}
 
-	/* Method to convert Date to String */
+	/** Method to convert Date to String */
 	public static String getFormattedDate(Date date, String format, Locale loc) {
 		SimpleDateFormat sdf = new SimpleDateFormat(format, loc);
 
 		return sdf.format(date);
 	}
 
-	/* Method to convert String to Date */
+	/** Method to convert String to Date */
 	public static Date getFormattedDate(String date, int size)
 			throws ParseException {
 		DateFormat dateFormat = DateFormat.getDateInstance(size);
@@ -47,7 +48,7 @@ public class DateUtil {
 		return dateFormat.parse(date);
 	}
 
-	/* Method to convert String to Date */
+	/** Method to convert String to Date */
 	public static Date getFormattedDate(String date, String format)
 			throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
@@ -55,7 +56,7 @@ public class DateUtil {
 		return sdf.parse(date);
 	}
 
-	/*
+	/**
 	 * Method for add or remove days from some given date; Sample; Add : 10
 	 * March + 5 days = 15 March; Remove : 10 March - 5 days = 5 March;
 	 */
@@ -66,7 +67,7 @@ public class DateUtil {
 		return new Date(cal.getTimeInMillis());
 	}
 
-	/* Specific method for date picker date generation */
+	/** Specific method for date picker date generation */
 	public static Date dateProceed(String date, SimpleDateFormat format,
 			int days, boolean forwardFlag) {
 		Date generatedDate;
@@ -89,8 +90,9 @@ public class DateUtil {
 		}
 		return generatedDate;
 	}
-	
-	public static Date getCurrentDate(SimpleDateFormat format) throws ParseException {
+
+	public static Date getCurrentDate(SimpleDateFormat format)
+			throws ParseException {
 		Calendar currentDate = Calendar.getInstance();
 		String modifiedDate = format.format(currentDate.getTime());
 		Date formattedCurrentDate = format.parse(modifiedDate);

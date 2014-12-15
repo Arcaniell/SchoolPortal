@@ -67,11 +67,10 @@ public class JournalController {
 	}
 
 	@RequestMapping(value = URLContainer.URL_JOURNAL_EDIT_MARK)
-	public @ResponseBody byte editMark(@RequestBody EditMarkDTO editMarkDTO) {
+	public @ResponseBody EditMarkDTO editMark(
+			@RequestBody EditMarkDTO editMarkDTO) {
 
-		journalService.editMark(editMarkDTO);
-
-		return editMarkDTO.getMark();
+		return journalService.editMark(editMarkDTO);
 
 	}
 

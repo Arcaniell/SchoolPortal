@@ -11,6 +11,8 @@ import school.model.Event;
 @Repository
 public class EventDaoImpl extends BaseDaoImpl<Event, Long> implements EventDao {
 
+	private static final byte REGULAR_MARK = 1;
+
 	public EventDaoImpl() {
 		super(Event.class);
 	}
@@ -22,7 +24,7 @@ public class EventDaoImpl extends BaseDaoImpl<Event, Long> implements EventDao {
 					.createNamedQuery(Event.FIND_BY_SCHEDULE)
 					.setParameter("scheduleId", scheduleId).getSingleResult();
 		} catch (NoResultException e) {
-			return new Event();
+			return new Event(REGULAR_MARK);
 		}
 	}
 

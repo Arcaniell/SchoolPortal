@@ -15,10 +15,9 @@ public interface JournalService {
 
 	JournalStaffDTO getStaffInfo(long userId, String role);
 
-	List<StudentWithMarksDTO> getMarksOfGroup(JournalSearch search)
-			throws ParseException;
+	List<StudentWithMarksDTO> getMarksOfGroup(JournalSearch search);
 
-	void editMark(EditMarkDTO addMarkDTO);
+	EditMarkDTO editMark(EditMarkDTO addMarkDTO);
 
 	void editDate(EditDateDTO event);
 
@@ -31,6 +30,5 @@ public interface JournalService {
 
 	Set<Byte> getGroupNumbers(long userId, String role, String subject);
 
-	JournalSearch getDeafaultData(long userId, Date currentDate)
-			throws ParseException;
+	JournalSearch getDeafaultData(long userId, Date currentDate) throws ParseException;
 }

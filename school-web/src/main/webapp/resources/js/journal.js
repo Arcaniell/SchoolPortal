@@ -143,14 +143,22 @@ $("#submitSearch")
 									var contentStd = "";
 									contentStd += "<tr class=\"info "
 											+ "trHeaderRow\">"
-											+ "<th> Students </th></tr>";
+											+ "<th> Students </th><th class =\"qm\""
+											+ " title=\"Quarter mark\">"
+											+ "QM</th></tr>";
 									for ( var student in groupMarks) {
 										contentStd += "<tr class=\"trSize\"><th><a id=\""
 												+ groupMarks[student].userId
 												+ "\" class=\"panel-title\">";
 										var studentWithMark = groupMarks[student];
 										contentStd += studentWithMark.studentName
-												+ "</a></th></tr>";
+												+ "</a></th><th id=\"qm"
+												+ groupMarks[student].studentId
+												+ "\">"
+										if (groupMarks[student].quarterMark != 0) {
+											contentStd += groupMarks[student].quarterMark;
+										}
+										contentStd += "</th></tr>";
 									}
 									$("#studentsNamesOfGroup").html(contentStd);
 									var dates = groupMarks[0].markList;
@@ -462,10 +470,24 @@ $(document)
 
 					var studentAndSchedule = $("#dateAndStudent").val();
 					var mark = $(this).data('value');
+					var quarterMark = 0;
+					var studentId = 0;
+					var subject = $("#subjectSelect").val();
+					var groupNumber = $("#groupNumberSelect").val();
+					var groupLetter = $("#groupLetterSelect").val();
+					var quarter = $("#quarterSelect").val();
 
 					var json = {
 						"studentAndSchedule" : studentAndSchedule,
 						"mark" : mark,
+						"quarterMark" : quarterMark,
+						"studentId" : studentId,
+						"searchData" : {
+							"subject" : subject,
+							"groupNumber" : groupNumber,
+							"groupLetter" : groupLetter,
+							"quarter" : quarter
+						}
 					}
 
 					$
@@ -476,9 +498,12 @@ $(document)
 								dataType : 'json',
 								contentType : 'application/json',
 								mimeType : 'application/json',
-								success : function(mark) {
-									var id = "";
-									id += "#" + studentAndSchedule;
+								success : function(markDTO) {
+									var markId = "";
+									markId += "#" + studentAndSchedule;
+									var qmId = "";
+									qmId += "#qm" + markDTO.studentId;
+									console.log(qmId);
 									contentMarks = "";
 									contentMarks += "<input id=\"dateAndStudent\""
 											+ " type=\"hidden\" value=\" \" />"
@@ -489,17 +514,22 @@ $(document)
 											+ "class=\"btn2 dropdown-toggle"
 											+ " markItemCnfg\" data-toggle=\"dropdown\""
 											+ "> ";
-									if (mark == (-1)) {
+									if (markDTO.mark == (-1)) {
 										contentMarks += "n/a";
 									} else {
-										contentMarks += mark;
+										contentMarks += markDTO.mark;
 									}
 									contentMarks += "</a><ul class=\"dropdown-menu\""
 											+ " role=\"menu\"> <li class=\""
 											+ "selectOfMarkCnfg deletedMark\">"
 											+ " <a class=\"selectOfMarkCnfg \">"
 											+ "Delete</a> </li></ul></li></ul>"
-									$(id).html(contentMarks);
+									$(markId).html(contentMarks);
+									var qm = "";
+									qm += markDTO.quarterMark;
+									console.log(qm);
+									$(qmId).html(qm);
+
 								}
 							});
 				});
@@ -511,10 +541,24 @@ $(document).on(
 
 			var studentAndSchedule = $("#dateAndStudent").val();
 			var mark = 0;
+			var quarterMark = 0;
+			var studentId = 0;
+			var subject = $("#subjectSelect").val();
+			var groupNumber = $("#groupNumberSelect").val();
+			var groupLetter = $("#groupLetterSelect").val();
+			var quarter = $("#quarterSelect").val();
 
 			var json = {
 				"studentAndSchedule" : studentAndSchedule,
 				"mark" : mark,
+				"quarterMark" : quarterMark,
+				"studentId" : studentId,
+				"searchData" : {
+					"subject" : subject,
+					"groupNumber" : groupNumber,
+					"groupLetter" : groupLetter,
+					"quarter" : quarter
+				}
 			}
 
 			$.ajax({
@@ -524,9 +568,11 @@ $(document).on(
 				dataType : 'json',
 				contentType : 'application/json',
 				mimeType : 'application/json',
-				success : function(mark) {
+				success : function(markDTO) {
 					var id = "";
 					id += "#" + studentAndSchedule;
+					var qmId = "";
+					qmId += "#qm" + markDTO.studentId;
 					contentMarks = "";
 					contentMarks += "<input id=\"dateAndStudent\""
 							+ " type=\"hidden\" value=\" \" />"
@@ -550,6 +596,9 @@ $(document).on(
 							+ "<a class=\"selectOfMarkCnfg\""
 							+ ">Absent </a></li></ul></li></ul>";
 					$(id).html(contentMarks);
+					var qm = "";
+					qm += markDTO.quarterMark;
+					$(qmId).html(qm);
 				}
 			});
 		});
