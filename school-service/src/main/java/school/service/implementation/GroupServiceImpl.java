@@ -6,11 +6,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,8 +61,15 @@ public class GroupServiceImpl implements GroupService {
     // get student groups
     @Override
     public List<GroupDTO> getStudentGroups(Principal principal) {
-        long userId = Long.parseLong(principal.getName());
-        Student student = studentDao.findByUserId(userId);
+        try {
+            Long.parseLong(principal.getName());
+        } catch (Exception e) {
+            return null;
+        }
+        Student student = studentDao.findByUserId(Long.parseLong(principal.getName()));
+        if (student == null) {
+            return null;
+        }
         Group mainGroup = student.getGroup();
         List<Group> additionalGroups = student.getAdditionGroups();
         List<Group> allGroups = new ArrayList<Group>();
@@ -74,18 +79,33 @@ public class GroupServiceImpl implements GroupService {
         if (additionalGroups != null) {
             allGroups.addAll(additionalGroups);
         }
-        List<GroupDTO> jspGroupsDTO = fillDTOWithGroupList(allGroups);
+        List<GroupDTO> jspGroupsDTO = fillGroupDTOList(allGroups);
         return jspGroupsDTO;
     }
 
     // TEACHER CONTROLLER CALL
     // get teacher groups
     @Override
-    public List<GroupDTO> getTeacherGroups(Principal user, Date from, Date till) {
-        long userId = Long.parseLong(user.getName());
-        Teacher teacher = teacherDao.findByUserId(userId);
+    public List<GroupDTO> getTeacherGroups(Principal principal, Date from, Date till) {
+        try {
+            Long.parseLong(principal.getName());
+        } catch (Exception e) {
+            return null;
+        }
+        Teacher teacher = teacherDao.findByUserId(Long.parseLong(principal.getName()));
+        if (teacher == null || from == null || till == null) {
+            return null;
+        }
+        if (from.after(till)) {
+            Date swap = from;
+            from = till;
+            till = swap;
+        }
         List<Group> allGroups = groupDao.findAllByTeacherIdDataRange(teacher.getId(), from, till);
-        List<GroupDTO> jspGroupsDTO = fillDTOWithGroupList(allGroups);
+        if (allGroups == null) {
+            allGroups = new ArrayList<Group>();
+        }
+        List<GroupDTO> jspGroupsDTO = fillGroupDTOList(allGroups);
         return jspGroupsDTO;
     }
 
@@ -94,14 +114,20 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public List<GroupDTO> getHeadTeacherGroups() {
         List<Group> allGroups = groupDao.findAll();
-        List<GroupDTO> jspGroupsDTO = fillDTOWithGroupList(allGroups);
+        if (allGroups == null) {
+            allGroups = new ArrayList<Group>();
+        }
+        List<GroupDTO> jspGroupsDTO = fillGroupDTOList(allGroups);
         return jspGroupsDTO;
     }
 
     // HELP METHOD FOR STUDENT, TEACHER AND HEADTEACHER SERVICE
     // Setting DTO with groups
-    List<GroupDTO> fillDTOWithGroupList(List<Group> groups) {
-        List<GroupDTO> jspGroupsDTO = new ArrayList<GroupDTO>();
+    public List<GroupDTO> fillGroupDTOList(List<Group> groups) {
+        List<GroupDTO> result = new ArrayList<GroupDTO>();
+        if (groups == null) {
+            return result;
+        }
         for (Group group : groups) {
             if (group == null) {
                 continue;
@@ -110,16 +136,16 @@ public class GroupServiceImpl implements GroupService {
             currentGroupDTO.setId(group.getId());
 
             if (group.isAdditional()) {
+                currentGroupDTO.setAdditional("YES");
                 if (group.getAdditionCourse() != null) {
                     currentGroupDTO.setName(group.getAdditionCourse().getCourseName());
                 }
-                currentGroupDTO.setAdditional("YES");
                 if (group.getAddStudent() != null) {
                     currentGroupDTO.setMembers(group.getAddStudent().size());
                 }
             } else {
-                currentGroupDTO.setName(group.getNumber() + " - " + group.getLetter());
                 currentGroupDTO.setAdditional("NO");
+                currentGroupDTO.setName(group.getNumber() + " - " + group.getLetter());
                 if (group.getStudent() != null) {
                     currentGroupDTO.setMembers(group.getStudent().size());
                 }
@@ -130,9 +156,9 @@ public class GroupServiceImpl implements GroupService {
                 currentGroupDTO.setTeacher(group.getTeacher().getUser().getFirstName() + " "
                         + group.getTeacher().getUser().getLastName());
             }
-            jspGroupsDTO.add(currentGroupDTO);
+            result.add(currentGroupDTO);
         }
-        return jspGroupsDTO;
+        return result;
     }
 
     // HEAD TEACHER CONTROLLER CALL

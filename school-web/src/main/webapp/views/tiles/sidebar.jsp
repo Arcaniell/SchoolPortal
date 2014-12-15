@@ -17,7 +17,7 @@
 <sec:authorize access="isAuthenticated()">
 	<div class="profile-info"><%=user_name%></div>
 	<img class="logo"
-		src="<c:url value="/photo/${pageContext.request.userPrincipal.name}" />" />
+		src="<c:url value="/resources/img/photo/${pageContext.request.userPrincipal.name}.png" />" />
 </sec:authorize>
 <sec:authorize access="isAnonymous()">
 <img class="logo"
