@@ -25,7 +25,7 @@
 			src="<c:url value="/photo/${profile.profileId}" />" /></td>
 		<td>
 			<h4>Position: ${profile.profileRole}</h4>
-			<h4>Birthday: 11.11.1111</h4>
+			<h4>Birthday: ${profile.birthday }</h4>
 			<h4>Email: ${profile.profileEmail}</h4> <sec:authorize
 				access="hasRole('ROLE_PARENT')">
 				<c:set var="profileRole" value="${profile.profileRole}" />

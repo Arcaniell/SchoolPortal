@@ -3,10 +3,10 @@ package school.service.implementation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
-import javax.inject.Inject;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,15 +19,16 @@ import school.model.Student;
 import school.model.User;
 import school.service.ProfileService;
 import school.service.UserService;
+import school.service.utils.DateUtil;
 
 @Service
 public class ProfileServiceImpl implements ProfileService {
 
-	@Inject
+	@Autowired
 	UserService userService;
-	@Inject
+	@Autowired
 	ParentDao parentDao;
-	@Inject
+	@Autowired
 	StudentDao studentDao;
 
 	private Map<String, Integer> rolePriority;
@@ -51,6 +52,7 @@ public class ProfileServiceImpl implements ProfileService {
 				+ user.getLastName());
 		profileDTO.setProfileId(user.getId());
 		profileDTO.setProfileEmail(user.getEmail());
+		profileDTO.setBirthday(DateUtil.getFormattedDate(user.getBirthday(), DateUtil.SHORT, Locale.ENGLISH));
 		return profileDTO;
 	}
 

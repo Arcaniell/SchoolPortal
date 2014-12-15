@@ -166,13 +166,14 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	int i = 0;
+	
 	@Override
 	public boolean setAvatar(long id, MultipartFile multipartFile) {
 		String fileName = multipartFile.getOriginalFilename();
 
 		if (validateFile(fileName)) {
 			try {
-				fileName = id + ".png";
 				InputStream inputStream = multipartFile.getInputStream();
 				File image = new File(System.getenv("OPENSHIFT_DATA_DIR")
 						+ "photo/" + id + ".png");
@@ -196,6 +197,24 @@ public class UserServiceImpl implements UserService {
 		}
 
 		return false;
+	}
+
+	@Override
+	public void changeUserName(User user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void changeSex(User user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void changePassword(User user) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -1,7 +1,6 @@
 package school.model;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -19,29 +18,24 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "TEACHER")
-@NamedQueries({
-        @NamedQuery(name = Teacher.FIND_ALL_BY_STATUS, query = Teacher.FIND_ALL_BY_STATUS_QUERY),
-        @NamedQuery(name = Teacher.FIND_BY_USER_ID, query = Teacher.FIND_BY_USER_ID_QUERY),
-        @NamedQuery(name = Teacher.FIND_RATE_RANGE, query = Teacher.FIND_RATE_RANGE_QUERY) })
+@NamedQueries({ @NamedQuery(name = Teacher.FIND_BY_USER_ID, query = Teacher.FIND_BY_USER_ID_QUERY),
+        @NamedQuery(name = Teacher.FIND_ALL_USERS, query = Teacher.FIND_ALL_USERS_QUERY) })
 public class Teacher {
-    public static final String FIND_ALL_BY_STATUS = "Teacher.findAllByStatus";
     public static final String FIND_BY_USER_ID = "Teacher.findByUserId";
-    public static final String FIND_RATE_RANGE = "Teacher.findRateRange";
-    public static final String FIND_ALL_BY_STATUS_QUERY = "SELECT u FROM Teacher u WHERE u.isActive = :active";
     public static final String FIND_BY_USER_ID_QUERY = "SELECT u FROM Teacher u WHERE u.user.id = :id";
-    public static final String FIND_RATE_RANGE_QUERY = "SELECT u FROM Teacher u WHERE u.rate BETWEEN :from AND :till";
+    public static final String FIND_ALL_USERS = "Teacher.findAllUsers";
+    public static final String FIND_ALL_USERS_QUERY = "SELECT u.user FROM Teacher u";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private int rate;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher", cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE })
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher", cascade = { CascadeType.PERSIST,
+            CascadeType.MERGE })
     private List<Salary> salaries;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
-            CascadeType.MERGE })
+    @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinColumn(name = "userId", nullable = false, unique = true)
     private User user;
 
@@ -110,8 +104,7 @@ public class Teacher {
         result = prime * result + (int) (id ^ (id >>> 32));
         result = prime * result + (isActive ? 1231 : 1237);
         result = prime * result + rate;
-        result = prime * result
-                + ((salaries == null) ? 0 : salaries.hashCode());
+        result = prime * result + ((salaries == null) ? 0 : salaries.hashCode());
         result = prime * result + ((user == null) ? 0 : user.hashCode());
         return result;
     }

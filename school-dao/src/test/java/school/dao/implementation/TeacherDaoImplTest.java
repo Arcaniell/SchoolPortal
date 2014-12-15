@@ -1,7 +1,6 @@
 package school.dao.implementation;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
@@ -36,29 +35,27 @@ public class TeacherDaoImplTest extends DBUnitConfig {
 
     @Before
     public void setUp() throws Exception {
-        DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
-                .getConnection(), getBlank());
-        DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
-                .getConnection(), getTeacher());
+        DatabaseOperation.CLEAN_INSERT
+                .execute(this.getDatabaseTester().getConnection(), getBlank());
+        DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester().getConnection(),
+                getTeacher());
 
     }
 
     @After
     public void tearDown() throws Exception {
-        DatabaseOperation.DELETE_ALL.execute(this.getDatabaseTester()
-                .getConnection(), getTeacher());
-        DatabaseOperation.CLEAN_INSERT.execute(this.getDatabaseTester()
-                .getConnection(), getBlank());
+        DatabaseOperation.DELETE_ALL
+                .execute(this.getDatabaseTester().getConnection(), getTeacher());
+        DatabaseOperation.CLEAN_INSERT
+                .execute(this.getDatabaseTester().getConnection(), getBlank());
     }
 
     private IDataSet getBlank() throws DataSetException, IOException {
-        return new FlatXmlDataSet(this.getClass().getResourceAsStream(
-                "/xml-data-sets/blank.xml"));
+        return new FlatXmlDataSet(this.getClass().getResourceAsStream("/xml-data-sets/blank.xml"));
     }
 
     private IDataSet getTeacher() throws DataSetException, IOException {
-        return new FlatXmlDataSet(this.getClass().getResourceAsStream(
-                "/xml-data-sets/group.xml"));
+        return new FlatXmlDataSet(this.getClass().getResourceAsStream("/xml-data-sets/group.xml"));
     }
 
     @Override
@@ -66,41 +63,21 @@ public class TeacherDaoImplTest extends DBUnitConfig {
         return null;
     }
 
-   @Test
+    @Test
     public void testByUserId() throws Exception {
         // get students table
         IDataSet databaseDataSet = getConnection().createDataSet();
         ITable actualTable = databaseDataSet.getTable("TEACHER");
         // tacking teacher with user id = 3
-        long userId = (Long) actualTable.getValue(2, "userId");
         int rate = (Integer) actualTable.getValue(2, "rate");
         boolean isActive = (Boolean) actualTable.getValue(2, "isActive");
         // get teacher by tested method and check result
-        while(teacherDaoImpl.findByUserId(3)==null){}
+        while (teacherDaoImpl.findByUserId(3) == null) {
+        }
         Teacher teacher = teacherDaoImpl.findByUserId(3);
-        Assert.assertEquals(teacher.getUser().getId(), userId);
         Assert.assertEquals(teacher.getRate(), rate);
         Assert.assertEquals(teacher.isActive(), isActive);
-       /* Assert.assertEquals(true, true);*/
+        /* Assert.assertEquals(true, true); */
     }
-
-   @Test
-    public void testFindAllByStatus() throws Exception {
-        // tacking all active teachers, must be 1
-        List<Teacher> activeTeacher = (List<Teacher>) teacherDaoImpl
-                .findAllByStatus(true);
-        Assert.assertEquals(activeTeacher.size(), 1);
-        // tacking all archive teacher, must be 3
-        List<Teacher> archiveTeacher = (List<Teacher>) teacherDaoImpl
-                .findAllByStatus(false);
-        Assert.assertEquals(archiveTeacher.size(), 3);
-    }
-    @Test
-    public void testFindAllInRateRange() {
-        List<Teacher> rangeTeacher = (List<Teacher>) teacherDaoImpl
-                .findAllInRateRange(2, 5);
-        Assert.assertEquals(rangeTeacher.size(), 2);
-
-    }/* */
 
 }

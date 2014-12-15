@@ -2,8 +2,7 @@ package school.controller;
 
 import java.security.Principal;
 
-import javax.inject.Inject;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +20,7 @@ public class AdminController {
 	private static final String URL_CONFIRM_ROLE = "/confirm_role";
 	private static final String URL_ROLE_CONFIRMATION = "/role_confirmation";
 	private static final String URL_ADMIN = "admin";
-	@Inject
+	@Autowired
 	AdminService adminService;
 
 	@RequestMapping(value = URL_ADMIN)

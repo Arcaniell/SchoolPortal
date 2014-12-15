@@ -9,11 +9,20 @@ public class ProfileDTO {
 	private String profileRole;
 	private List<ProfileDTO> family;
 	private String profileFamilyDescription;
+	private String birthday;
 
 	public ProfileDTO() {
 		super();
 	}
 	
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+
 	public Long getProfileId() {
 		return profileId;
 	}

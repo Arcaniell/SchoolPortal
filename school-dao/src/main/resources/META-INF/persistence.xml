@@ -36,12 +36,15 @@
 			<!-- default property -->
 			<property name="hibernate.connection.username" value="root" />
 			<property name="hibernate.connection.password" value="root" />
-
 			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/SchoolDB" />
-			<!-- openshift property -->
+			<!-- openshift property romamr-->
 			<!-- <property name="hibernate.connection.username" value="adminR4RSMHK" />
 			<property name="hibernate.connection.password" value="RkdMhlEyB_Ja" />
 			<property name="hibernate.connection.url" value="jdbc:mysql://127.8.141.2:3306/SchoolDB" /> -->
+			<!-- openshift property lv-128 java-->
+			<!-- <property name="hibernate.connection.username" value="adminKBylreG" />
+			<property name="hibernate.connection.password" value="tsxWDGr362CV" />
+			<property name="hibernate.connection.url" value="jdbc:mysql://127.12.229.130:3306/SchoolDB" /> -->
 		</properties>
 
 	</persistence-unit>
