@@ -45,6 +45,10 @@ public class GroupServiceImpl implements GroupService {
     public static final String[] SYMBOLS_FOR_CLASS = { "A", "B", "C", "D", "E", "F", "G", "H", "I",
             "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
     private static final int FIRST_CLASS_YEARS = 6;
+    public static final int SELECTOR_FLAG_ALL_TEACHERS = 0;
+    public static final int SELECTOR_FLAG_CURATORS = 1;
+    public static final int SELECTOR_FLAG_NOT_CURATORS = 2;
+
     final boolean ADDITIONAL_FLAG_TRUE = true;
     @Autowired
     StudentDao studentDao;
@@ -79,8 +83,8 @@ public class GroupServiceImpl implements GroupService {
         if (additionalGroups != null) {
             allGroups.addAll(additionalGroups);
         }
-        List<GroupDTO> jspGroupsDTO = fillGroupDTOList(allGroups);
-        return jspGroupsDTO;
+        List<GroupDTO> result = fillGroupDTOList(allGroups);
+        return result;
     }
 
     // TEACHER CONTROLLER CALL
@@ -105,8 +109,8 @@ public class GroupServiceImpl implements GroupService {
         if (allGroups == null) {
             allGroups = new ArrayList<Group>();
         }
-        List<GroupDTO> jspGroupsDTO = fillGroupDTOList(allGroups);
-        return jspGroupsDTO;
+        List<GroupDTO> result = fillGroupDTOList(allGroups);
+        return result;
     }
 
     // HEAD TEACHER CONTROLLER CALL
@@ -117,8 +121,8 @@ public class GroupServiceImpl implements GroupService {
         if (allGroups == null) {
             allGroups = new ArrayList<Group>();
         }
-        List<GroupDTO> jspGroupsDTO = fillGroupDTOList(allGroups);
-        return jspGroupsDTO;
+        List<GroupDTO> result = fillGroupDTOList(allGroups);
+        return result;
     }
 
     // HELP METHOD FOR STUDENT, TEACHER AND HEADTEACHER SERVICE
@@ -165,79 +169,74 @@ public class GroupServiceImpl implements GroupService {
     // get info about symbols of class for modal fill
     @Override
     public List<GroupDataDTO> getSymbols() {
-        List<GroupDataDTO> container = new ArrayList<GroupDataDTO>();
+        List<GroupDataDTO> result = new ArrayList<GroupDataDTO>();
         for (String symbol : SYMBOLS_FOR_CLASS) {
             GroupDataDTO oneOfTheYear = new GroupDataDTO();
             oneOfTheYear.setSymbol(symbol);
-            container.add(oneOfTheYear);
+            result.add(oneOfTheYear);
         }
-        return container;
+        return result;
     }
 
     // HEAD TEACHER CONTROLLER CALL
     // get info about years of class for modal fill
     @Override
     public List<GroupDataDTO> getYears() {
-        List<GroupDataDTO> container = new ArrayList<GroupDataDTO>();
+        List<GroupDataDTO> result = new ArrayList<GroupDataDTO>();
         for (Integer year : YEARS_OF_STUDY) {
             GroupDataDTO oneOfTheYear = new GroupDataDTO();
             oneOfTheYear.setId(year);
-            container.add(oneOfTheYear);
+            result.add(oneOfTheYear);
         }
-        return container;
+        return result;
     }
 
     // HEAD TEACHER CONTROLLER CALL AND AJAX CALL
-    // get info about teachers that not curators at this moment
+    // get info about teachers
     @Transactional
     @Override
-    public List<TeacherDTO> getNotCurators() {
+    public List<TeacherDTO> getTeachers(int selector) {
+        List<Teacher> curators = new ArrayList<Teacher>();
         List<Teacher> allTeachers = teacherDao.findAll();
         List<Group> allGroups = groupDao.findAll();
-        if (allGroups == null || allTeachers == null) {
-            return new ArrayList<TeacherDTO>();
-        }
-        List<Teacher> curators = new ArrayList<Teacher>();
-        for (Group group : allGroups) {
-            Teacher groupTeacher = group.getTeacher();
-            if (groupTeacher != null) {
-                curators.add(groupTeacher);
+        if (allGroups != null) {
+            for (Group group : allGroups) {
+                if (group.getTeacher() != null) {
+                    curators.add(group.getTeacher());
+                }
             }
         }
-        allTeachers.removeAll(curators);
-        List<TeacherDTO> notCuratorsList = new ArrayList<TeacherDTO>();
-        for (Teacher notCurator : allTeachers) {
-            TeacherDTO teacherView = new TeacherDTO();
-            teacherView.setId(notCurator.getId());
-            if (notCurator.getUser() != null) {
-                teacherView.setFullName(notCurator.getUser().getFirstName() + " "
-                        + notCurator.getUser().getLastName());
-            }
-            notCuratorsList.add(teacherView);
+        if (selector == SELECTOR_FLAG_ALL_TEACHERS && allTeachers != null) {
+            return fillTeacherDTOList(allTeachers);
+        } else if (selector == SELECTOR_FLAG_CURATORS && allTeachers != null && allGroups != null) {
+            return fillTeacherDTOList(curators);
+        } else if (selector == SELECTOR_FLAG_NOT_CURATORS && allTeachers != null) {
+            allTeachers.removeAll(curators);
+            return fillTeacherDTOList(allTeachers);
         }
-        return notCuratorsList;
+        return fillTeacherDTOList(new ArrayList<Teacher>());
     }
 
-    // HEAD TEACHER AJAX CALL
-    // get info about all teachers
-    @Transactional
-    @Override
-    public List<TeacherDTO> getAllTeachers() {
-        List<Teacher> allTeachers = teacherDao.findAll();
-        if (allTeachers == null) {
+    // HELP METHOD FOR STUDENT, TEACHER AND HEADTEACHER SERVICE
+    // Setting DTO with groups
+    public List<TeacherDTO> fillTeacherDTOList(List<Teacher> teachers) {
+        if (teachers != null) {
+            List<TeacherDTO> result = new ArrayList<TeacherDTO>();
+            for (Teacher teacher : teachers) {
+                if (teacher != null) {
+                    TeacherDTO teacherDTO = new TeacherDTO();
+                    teacherDTO.setId(teacher.getId());
+                    if (teacher.getUser() != null) {
+                        teacherDTO.setFullName(teacher.getUser().getFirstName() + " "
+                                + teacher.getUser().getLastName());
+                    }
+                    result.add(teacherDTO);
+                }
+            }
+            return result;
+        } else {
             return new ArrayList<TeacherDTO>();
         }
-        List<TeacherDTO> allTeachersList = new ArrayList<TeacherDTO>();
-        for (Teacher teacher : allTeachers) {
-            TeacherDTO teacherView = new TeacherDTO();
-            teacherView.setId(teacher.getId());
-            if (teacher.getUser() != null) {
-                teacherView.setFullName(teacher.getUser().getFirstName() + " "
-                        + teacher.getUser().getLastName());
-            }
-            allTeachersList.add(teacherView);
-        }
-        return allTeachersList;
     }
 
     // HEAD TEACHER AJAX CALL
@@ -245,14 +244,17 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public List<String> getAvailableSymbols(byte year) {
         String[] allSymbols = GroupServiceImpl.SYMBOLS_FOR_CLASS;
-        List<String> current = new ArrayList<String>();
-        for (String symbol : allSymbols) {
-            Group group = groupDao.findByNumberAndLetter(year, symbol.charAt(symbol.length() - 1));
-            if (group == null) {
-                current.add(symbol);
+        List<String> result = new ArrayList<String>();
+        if (allSymbols != null) {
+            for (String symbol : allSymbols) {
+                Group group = groupDao.findByNumberAndLetter(year,
+                        symbol.charAt(symbol.length() - 1));
+                if (group == null) {
+                    result.add(symbol);
+                }
             }
         }
-        return current;
+        return result;
     }
 
     // HEAD TEACHER CONTROLLER CALL
@@ -289,8 +291,10 @@ public class GroupServiceImpl implements GroupService {
         freeMainGroupFromStudents(group);
         freeAdditionGroupFromStudents(group);
         List<Schedule> schedule = scheduleDao.findByGroup(group);
-        for (Schedule oneLesson : schedule) {
-            scheduleDao.remove(oneLesson);
+        if (schedule != null) {
+            for (Schedule oneLesson : schedule) {
+                scheduleDao.remove(oneLesson);
+            }
         }
         if (group != null) {
             groupDao.remove(groupDao.findById(requestId));
@@ -329,12 +333,11 @@ public class GroupServiceImpl implements GroupService {
             if (course != null) {
                 groupName = course.getCourseName() + " " + course.getGroupNumber() + " year";
             }
-            teachers.addAll(getAllTeachers());
+            teachers.addAll(getTeachers(SELECTOR_FLAG_ALL_TEACHERS));
             studentsOfGroup = group.getAddStudent();
-
         } else {
             groupName = group.getNumber() + " - " + group.getLetter();
-            teachers.addAll(getNotCurators());
+            teachers.addAll(getTeachers(SELECTOR_FLAG_NOT_CURATORS));
             studentsOfGroup = group.getStudent();
             Iterator<Student> studentIter = studentWithoutGroup.iterator();
             while (studentIter.hasNext()) {
@@ -414,10 +417,14 @@ public class GroupServiceImpl implements GroupService {
     // HELP METHOD HEADTEACHER GROUP EDIT SERVICE
     // free group from students
     private void freeMainGroupFromStudents(Group group) {
-        List<Student> students = group.getStudent();
-        for (Student student : students) {
-            student.setGroup(null);
-            studentDao.update(student);
+        if (group != null) {
+            List<Student> students = group.getStudent();
+            if (students != null) {
+                for (Student student : students) {
+                    student.setGroup(null);
+                    studentDao.update(student);
+                }
+            }
         }
     }
 
@@ -425,19 +432,20 @@ public class GroupServiceImpl implements GroupService {
     // free group from students
     @Transactional
     private void freeAdditionGroupFromStudents(Group group) {
-        List<Student> additionStudents = group.getAddStudent();
-        if (additionStudents == null) {
-            return;
-        }
-        Iterator<Student> studentsIter = additionStudents.iterator();
-        while (studentsIter.hasNext()) {
-            Student student = studentsIter.next();
-            List<Group> additionGroups = student.getAdditionGroups();
-            if (additionGroups != null) {
-                student.getAdditionGroups().remove(group);
-                studentDao.update(student);
-            } else {
-                continue;
+        if (group != null) {
+            List<Student> additionStudents = group.getAddStudent();
+            if (additionStudents != null) {
+                Iterator<Student> studentsIter = additionStudents.iterator();
+                while (studentsIter.hasNext()) {
+                    Student student = studentsIter.next();
+                    List<Group> additionGroups = student.getAdditionGroups();
+                    if (additionGroups != null) {
+                        student.getAdditionGroups().remove(group);
+                        studentDao.update(student);
+                    } else {
+                        continue;
+                    }
+                }
             }
         }
     }

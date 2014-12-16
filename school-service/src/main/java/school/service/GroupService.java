@@ -5,18 +5,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import org.springframework.security.access.annotation.Secured;
 
-import school.dto.CourseDTO;
 import school.dto.GroupDTO;
 import school.dto.GroupDataDTO;
 import school.dto.GroupEditHeaderDTO;
 import school.dto.GroupEditResponseDTO;
 import school.dto.TeacherDTO;
-import school.model.Course;
-import school.model.Group;
-import school.model.Role;
-import school.model.Student;
 
 /**
  * @author Blowder
@@ -35,12 +29,7 @@ public interface GroupService {
 
     List<GroupDataDTO> getSymbols();
 
-    List<TeacherDTO> getNotCurators();
-
-    List<TeacherDTO> getAllTeachers();
-
-    void createNewGroup(byte year, String symbol, Long teacherId, Long courseId,
-            String branch);
+    void createNewGroup(byte year, String symbol, Long teacherId, Long courseId, String branch);
 
     void removeGroup(long requestId);
 
@@ -50,6 +39,6 @@ public interface GroupService {
 
     List<String> getAvailableSymbols(byte year);
 
-
+    List<TeacherDTO> getTeachers(int selector);
 
 }

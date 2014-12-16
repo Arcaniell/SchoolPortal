@@ -5,6 +5,7 @@ import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -43,6 +44,10 @@ public class JournalDaoImplTest extends DBUnitConfig {
 	protected IDataSet getDataSet() throws Exception {
 		return new FlatXmlDataSet(this.getClass().getResourceAsStream(
 				"/xml-data-sets/journal.xml"));
+	}
+	@Test
+	public void testTest(){
+	    //TODO write some test
 	}
 
 }
