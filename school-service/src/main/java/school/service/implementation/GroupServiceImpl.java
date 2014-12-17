@@ -288,15 +288,15 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public void removeGroup(long requestId) {
         Group group = groupDao.findById(requestId);
-        freeMainGroupFromStudents(group);
-        freeAdditionGroupFromStudents(group);
-        List<Schedule> schedule = scheduleDao.findByGroup(group);
-        if (schedule != null) {
-            for (Schedule oneLesson : schedule) {
-                scheduleDao.remove(oneLesson);
-            }
-        }
         if (group != null) {
+            freeMainGroupFromStudents(group);
+            freeAdditionGroupFromStudents(group);
+            List<Schedule> schedule = scheduleDao.findByGroup(group);
+            if (schedule != null) {
+                for (Schedule oneLesson : schedule) {
+                    scheduleDao.remove(oneLesson);
+                }
+            }
             groupDao.remove(groupDao.findById(requestId));
         }
     }
@@ -317,15 +317,8 @@ public class GroupServiceImpl implements GroupService {
         List<Student> studentsOfGroup = new ArrayList<Student>();
         List<Student> studentWithoutGroup = new ArrayList<Student>();
         studentWithoutGroup = studentDao.findAll();
-        Teacher teacherGroupTeacher = group.getTeacher();
-
-        // if group have teacher add it to list
-        if (teacherGroupTeacher != null) {
-            TeacherDTO curentGroupTeacherDAO = new TeacherDTO();
-            curentGroupTeacherDAO.setId(teacherGroupTeacher.getId());
-            curentGroupTeacherDAO.setFullName(teacherGroupTeacher.getUser().getFirstName() + " "
-                    + teacherGroupTeacher.getUser().getLastName());
-            teachers.add(curentGroupTeacherDAO);
+        if (groupTeacherDaoFill(group) != null) {
+            teachers.add(groupTeacherDaoFill(group));
         }
         String groupName = "";
         if (group.isAdditional()) {
@@ -346,27 +339,59 @@ public class GroupServiceImpl implements GroupService {
                 }
             }
         }
+        List<Student> filteredStudents = filterStudentsByYear(studentWithoutGroup, aproxYear - 1,
+                aproxYear + 1);
+        List<UserDTO> studentWithoutGroupDTO = fillUserDTO(filteredStudents);
+        // List<UserDTO> studentWithoutGroupDTO =
+        // fillUserDTO(studentWithoutGroup);
+        /*
+         * Iterator<UserDTO> studentIter = studentWithoutGroupDTO.iterator();
+         * while (studentIter.hasNext()) { UserDTO student4Condition =
+         * studentIter.next(); if ((student4Condition.getYear() < (aproxYear -
+         * 1)) || (student4Condition.getYear() > (aproxYear + 1))) {
+         * studentIter.remove(); } }
+         */
+        List<UserDTO> studentsOfGroupDTO = fillUserDTO(studentsOfGroup);
+        studentWithoutGroupDTO.removeAll(studentsOfGroupDTO);
 
-        List<UserDTO> studentWithoutGroupDTO = fillStudentDTO(studentWithoutGroup);
+        GroupEditHeaderDTO result = new GroupEditHeaderDTO();
+        result.setName(groupName);
+        result.setDateFrom(date2String(group.getStartDate(), formatterDate));
+        result.setDateTill(date2String(group.getEndDate(), formatterDate));
+        result.setTeachers(teachers);
+        result.setGroupStudents(studentsOfGroupDTO);
+        result.setAllFreeStudents(studentWithoutGroupDTO);
+        return result;
+    }
 
-        Iterator<UserDTO> studentIter = studentWithoutGroupDTO.iterator();
-        while (studentIter.hasNext()) {
-            UserDTO student4Condition = studentIter.next();
-            if ((student4Condition.getYear() < (aproxYear - 1))
-                    || (student4Condition.getYear() > (aproxYear + 1))) {
-                studentIter.remove();
+    @Transactional
+    private List<Student> filterStudentsByYear(List<Student> students, int lowerBound,
+            int upperBound) {
+        List<Student> result = new ArrayList<Student>();
+        if (students != null) {
+            for (Student student : students) {
+                Calendar birthday = new GregorianCalendar();
+                birthday.setTime(student.getUser().getBirthday());
+                if ((birthday.get(Calendar.YEAR) >= lowerBound)
+                        && (birthday.get(Calendar.YEAR) <= upperBound)) {
+                    result.add(student);
+                }
             }
         }
-        List<UserDTO> studentsOfGroupDTO = fillStudentDTO(studentsOfGroup);
-        studentWithoutGroupDTO.removeAll(studentsOfGroupDTO);
-        GroupEditHeaderDTO container = new GroupEditHeaderDTO();
-        container.setName(groupName);
-        container.setDateFrom(date2String(group.getStartDate(), formatterDate));
-        container.setDateTill(date2String(group.getEndDate(), formatterDate));
-        container.setTeachers(teachers);
-        container.setGroupStudents(studentsOfGroupDTO);
-        container.setAllFreeStudents(studentWithoutGroupDTO);
-        return container;
+        return result;
+    }
+
+    @Transactional
+    private TeacherDTO groupTeacherDaoFill(Group group) {
+        Teacher groupTeacher = group.getTeacher();
+        if (groupTeacher != null) {
+            TeacherDTO result = new TeacherDTO();
+            result.setId(groupTeacher.getId());
+            result.setFullName(groupTeacher.getUser().getFirstName() + " "
+                    + groupTeacher.getUser().getLastName());
+            return result;
+        }
+        return null;
     }
 
     // HEAD TEACHER AJAX CALL
@@ -421,8 +446,10 @@ public class GroupServiceImpl implements GroupService {
             List<Student> students = group.getStudent();
             if (students != null) {
                 for (Student student : students) {
-                    student.setGroup(null);
-                    studentDao.update(student);
+                    if (student != null) {
+                        student.setGroup(null);
+                        studentDao.update(student);
+                    }
                 }
             }
         }
@@ -438,12 +465,14 @@ public class GroupServiceImpl implements GroupService {
                 Iterator<Student> studentsIter = additionStudents.iterator();
                 while (studentsIter.hasNext()) {
                     Student student = studentsIter.next();
-                    List<Group> additionGroups = student.getAdditionGroups();
-                    if (additionGroups != null) {
-                        student.getAdditionGroups().remove(group);
-                        studentDao.update(student);
-                    } else {
-                        continue;
+                    if (student != null) {
+                        List<Group> additionGroups = student.getAdditionGroups();
+                        if (additionGroups != null) {
+                            student.getAdditionGroups().remove(group);
+                            studentDao.update(student);
+                        } else {
+                            continue;
+                        }
                     }
                 }
             }
@@ -453,51 +482,59 @@ public class GroupServiceImpl implements GroupService {
     // HELP METHOD HEADTEACHER GROUP EDIT SERVICE
     // add to group students
     private void setMainGroup4Students(List<Student> students, Group group) {
-        for (Student student : students) {
-            student.setGroup(group);
-            studentDao.update(student);
+        if (students != null) {
+            for (Student student : students) {
+                if (student != null) {
+                    student.setGroup(group);
+                    studentDao.update(student);
+                }
+            }
         }
     }
 
     // HELP METHOD HEADTEACHER GROUP EDIT SERVICE
     // add to group students
     private void setAdditionGroup4Students(List<Student> students, Group group) {
-        for (Student student : students) {
-            List<Group> groups = new ArrayList<Group>();
-            if (student != null) {
-                if (student.getAdditionGroups() != null) {
-                    groups.addAll(student.getAdditionGroups());
-                    groups.add(group);
-                    student.setAdditionGroups(groups);
-                    studentDao.update(student);
+        if (students != null) {
+            for (Student student : students) {
+                List<Group> groups = new ArrayList<Group>();
+                if (student != null) {
+                    if (student.getAdditionGroups() != null) {
+                        groups.addAll(student.getAdditionGroups());
+                        groups.add(group);
+                        student.setAdditionGroups(groups);
+                        studentDao.update(student);
+                    }
                 }
-            }
 
+            }
         }
     }
 
     // HELP METHOD GROUP SERVICE
     // fill DTO with info
-    private List<UserDTO> fillStudentDTO(List<Student> students) {
-        List<UserDTO> containerOfStudentDTO = new ArrayList<UserDTO>();
-        for (Student student : students) {
-            UserDTO curentStudentDTO = new UserDTO();
-            curentStudentDTO.setId(student.getUser().getId());
-            curentStudentDTO.setForeignId(student.getId());
-            if (student.getUser() != null) {
-                curentStudentDTO.setName(student.getUser().getFirstName() + " "
-                        + student.getUser().getLastName());
+    public List<UserDTO> fillUserDTO(List<Student> students) {
+        List<UserDTO> result = new ArrayList<UserDTO>();
+        if (students != null) {
+            for (Student student : students) {
+                UserDTO curentStudentDTO = new UserDTO();
+                curentStudentDTO.setForeignId(student.getId());
+                if (student.getUser() != null) {
+                    curentStudentDTO.setId(student.getUser().getId());
+                    curentStudentDTO.setName(student.getUser().getFirstName() + " "
+                            + student.getUser().getLastName());
 
-                Calendar birthday = new GregorianCalendar();
-                birthday.setTime(student.getUser().getBirthday());
-                curentStudentDTO.setYear(birthday.get(Calendar.YEAR));
-                curentStudentDTO.setYearStr(DateUtil.getFormattedDate(student.getUser()
-                        .getBirthday(), DateUtil.MEDIUM, loc));
+                    Calendar birthday = new GregorianCalendar();
+                    birthday.setTime(student.getUser().getBirthday());
+                    curentStudentDTO.setYear(birthday.get(Calendar.YEAR));
+                    curentStudentDTO.setYearStr(DateUtil.getFormattedDate(student.getUser()
+                            .getBirthday(), DateUtil.MEDIUM, loc));
 
+                }
+                result.add(curentStudentDTO);
             }
-            containerOfStudentDTO.add(curentStudentDTO);
         }
-        return containerOfStudentDTO;
+        return result;
     }
 
     private String date2String(Date date, SimpleDateFormat formater) {
