@@ -46,28 +46,33 @@ public class CourseRequestServiceImpl implements CourseRequestService {
     // find all requests in school
     @Override
     public List<CourseRequestTeacherDTO> showAllRequests() {
-        // get all addition not archived groups
-        List<CourseRequestTeacherDTO> listOfCourseRequests = new ArrayList<CourseRequestTeacherDTO>();
         List<Course> additionCourses = courseDao.findAllByStatus(ADDITIONAL_GROUP_FLAG);
         List<Course> archivedCourses = courseDao.findAllByArchiveFlag(COURSE_ARCHIVE_FLAG);
         additionCourses.removeAll(archivedCourses);
-        for (Course course : additionCourses) {
-            long idOfCurrentCourse = course.getId();
-            // detect if there is request for current course
-            List<CourseRequest> requestsForCurrentCourse = courseRequestDao
-                    .findByCourseIdAndStatus(idOfCurrentCourse, COURSE_REQUEST_ACTIVE_FLAG);
-            if (requestsForCurrentCourse == null || requestsForCurrentCourse.size() == 0) {
-                continue;
-            }
-            CourseRequestTeacherDTO currentElementDTO = new CourseRequestTeacherDTO();
-            currentElementDTO.setId(idOfCurrentCourse);
-            currentElementDTO.setName(course.getCourseName());
-            currentElementDTO.setYear(course.getGroupNumber());
-            currentElementDTO.setSize(requestsForCurrentCourse.size());
-            listOfCourseRequests.add(currentElementDTO);
+        List<CourseRequestTeacherDTO> result = fillCourseRequestTeacherDTO(additionCourses);
+        return result;
+    }
 
+    private List<CourseRequestTeacherDTO> fillCourseRequestTeacherDTO(List<Course> additionCourses) {
+        List<CourseRequestTeacherDTO> result = new ArrayList<CourseRequestTeacherDTO>();
+        if (additionCourses != null) {
+            for (Course course : additionCourses) {
+                long idOfCurrentCourse = course.getId();
+                // detect if there is request for current course
+                List<CourseRequest> requestsForCurrentCourse = courseRequestDao
+                        .findByCourseIdAndStatus(idOfCurrentCourse, COURSE_REQUEST_ACTIVE_FLAG);
+                if (requestsForCurrentCourse == null || requestsForCurrentCourse.size() == 0) {
+                    continue;
+                }
+                CourseRequestTeacherDTO currentElementDTO = new CourseRequestTeacherDTO();
+                currentElementDTO.setId(idOfCurrentCourse);
+                currentElementDTO.setName(course.getCourseName());
+                currentElementDTO.setYear(course.getGroupNumber());
+                currentElementDTO.setSize(requestsForCurrentCourse.size());
+                result.add(currentElementDTO);
+            }
         }
-        return listOfCourseRequests;
+        return result;
     }
 
     // STUDENT CONTROLLER CALL
@@ -92,8 +97,13 @@ public class CourseRequestServiceImpl implements CourseRequestService {
                 }
             }
         }
-        // setting DTO object
-        ArrayList<CourseRequestStudentDTO> listCourseRequestsDTO = new ArrayList<CourseRequestStudentDTO>();
+        ArrayList<CourseRequestStudentDTO> result = fillCourseRequestStudentDTO(requests);
+        return result;
+    }
+
+    private ArrayList<CourseRequestStudentDTO> fillCourseRequestStudentDTO(
+            List<CourseRequest> requests) {
+        ArrayList<CourseRequestStudentDTO> result = new ArrayList<CourseRequestStudentDTO>();
         for (CourseRequest courseRequest : requests) {
             CourseRequestStudentDTO courseRequestDTO = new CourseRequestStudentDTO();
             courseRequestDTO.setId(courseRequest.getId());
@@ -106,9 +116,9 @@ public class CourseRequestServiceImpl implements CourseRequestService {
             }
             SimpleDateFormat formatterDate = new SimpleDateFormat(DateUtil.UI_DATE_FORMAT);
             courseRequestDTO.setDateOfRequest(formatterDate.format(courseRequest.getDate()));
-            listCourseRequestsDTO.add(courseRequestDTO);
+            result.add(courseRequestDTO);
         }
-        return listCourseRequestsDTO;
+        return result;
     }
 
     // STUDENT CONTROLLER CALL

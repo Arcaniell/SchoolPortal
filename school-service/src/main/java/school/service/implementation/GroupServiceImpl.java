@@ -342,15 +342,6 @@ public class GroupServiceImpl implements GroupService {
         List<Student> filteredStudents = filterStudentsByYear(studentWithoutGroup, aproxYear - 1,
                 aproxYear + 1);
         List<UserDTO> studentWithoutGroupDTO = fillUserDTO(filteredStudents);
-        // List<UserDTO> studentWithoutGroupDTO =
-        // fillUserDTO(studentWithoutGroup);
-        /*
-         * Iterator<UserDTO> studentIter = studentWithoutGroupDTO.iterator();
-         * while (studentIter.hasNext()) { UserDTO student4Condition =
-         * studentIter.next(); if ((student4Condition.getYear() < (aproxYear -
-         * 1)) || (student4Condition.getYear() > (aproxYear + 1))) {
-         * studentIter.remove(); } }
-         */
         List<UserDTO> studentsOfGroupDTO = fillUserDTO(studentsOfGroup);
         studentWithoutGroupDTO.removeAll(studentsOfGroupDTO);
 
