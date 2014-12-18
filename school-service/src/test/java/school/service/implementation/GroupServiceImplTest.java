@@ -1,5 +1,7 @@
 package school.service.implementation;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,12 +16,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import school.dao.CourseDao;
 import school.dao.GroupDao;
+import school.dao.ScheduleDao;
 import school.dao.StudentDao;
 import school.dao.TeacherDao;
 import school.dto.GroupDTO;
+import school.dto.TeacherDTO;
 import school.model.Course;
 import school.model.Group;
+import school.model.Schedule;
 import school.model.Student;
 import school.model.Teacher;
 import school.model.User;
@@ -34,6 +40,10 @@ public class GroupServiceImplTest {
     TeacherDao teacherDaoStub;
     @Mock
     GroupDao groupDaoStub;
+    @Mock
+    CourseDao courseDaoStub;
+    @Mock
+    ScheduleDao scheduleDaoStub;
     @Mock
     Principal mockedPrincipal;
 
@@ -280,4 +290,243 @@ public class GroupServiceImplTest {
         groupDto = groupService.fillGroupDTOList(groups);
         Assert.assertEquals("NO", groupDto.get(0).getAdditional());
     }
+
+    // ---------------------------------------------------------------------------//
+    // get symbols test
+    @Test
+    public void testGetSymbols() {
+        Assert.assertEquals(26, groupService.getSymbols().size());
+    }
+
+    // ---------------------------------------------------------------------------//
+    // get numbers test
+    @Test
+    public void testGetYears() {
+        Assert.assertEquals(7, groupService.getYears().size());
+    }
+
+    // ---------------------------------------------------------------------------//
+    // null array input
+    @Test
+    public void testFillTeacherDTOList1() {
+        Assert.assertEquals(0, groupService.fillTeacherDTOList(null).size());
+    }
+
+    // zero sized array input
+    @Test
+    public void testFillTeacherDTOList2() {
+        Assert.assertEquals(0, groupService.fillTeacherDTOList(new ArrayList<Teacher>()).size());
+    }
+
+    // array with data input
+    @Test
+    public void testFillTeacherDTOList3() {
+        List<Teacher> teachers = new ArrayList<Teacher>();
+        teachers.add(new Teacher());
+        teachers.add(new Teacher());
+        teachers.add(new Teacher());
+        Assert.assertEquals(3, groupService.fillTeacherDTOList(teachers).size());
+    }
+
+    // array with data with null elements input
+    @Test
+    public void testFillTeacherDTOList4() {
+        List<Teacher> teachers = new ArrayList<Teacher>();
+        teachers.add(new Teacher());
+        teachers.add(null);
+        teachers.add(new Teacher());
+        teachers.add(null);
+        teachers.add(new Teacher());
+        teachers.add(null);
+        Assert.assertEquals(3, groupService.fillTeacherDTOList(teachers).size());
+    }
+
+    @Test
+    public void testFillTeacherDTOList5() {
+        List<Teacher> teachers = new ArrayList<Teacher>();
+        Teacher teacher = new Teacher();
+        User user = new User();
+        user.setFirstName("First");
+        user.setLastName("Last");
+        teacher.setId(1);
+        teacher.setUser(user);
+        teachers.add(teacher);
+        List<TeacherDTO> teachersDTO = groupService.fillTeacherDTOList(teachers);
+        Assert.assertEquals(1, teachersDTO.get(0).getId());
+        Assert.assertEquals("First Last", teachersDTO.get(0).getFullName());
+    }
+
+    @Test
+    public void testGetTeachers1() {
+        when(teacherDaoStub.findAll()).thenReturn(null);
+        when(groupDaoStub.findAll()).thenReturn(null);
+        Assert.assertEquals(0, groupService
+                .getTeachers(GroupServiceImpl.SELECTOR_FLAG_NOT_CURATORS).size());
+        Assert.assertEquals(0, groupService.getTeachers(GroupServiceImpl.SELECTOR_FLAG_CURATORS)
+                .size());
+        Assert.assertEquals(0, groupService
+                .getTeachers(GroupServiceImpl.SELECTOR_FLAG_ALL_TEACHERS).size());
+    }
+
+    @Test
+    public void testGetTeachers2() {
+        List<Teacher> allTeachers = new ArrayList<Teacher>();
+        Teacher teacher1 = new Teacher();
+        teacher1.setId(1);
+        Teacher teacher2 = new Teacher();
+        teacher2.setId(2);
+        Teacher teacher3 = new Teacher();
+        teacher3.setId(3);
+        allTeachers.add(teacher1);
+        allTeachers.add(teacher2);
+        allTeachers.add(teacher3);
+        List<Group> allGroups = new ArrayList<Group>();
+        Group group = new Group();
+        group.setTeacher(teacher1);
+        allGroups.add(group);
+        when(teacherDaoStub.findAll()).thenReturn(allTeachers);
+        when(groupDaoStub.findAll()).thenReturn(allGroups);
+        Assert.assertEquals(3, groupService
+                .getTeachers(GroupServiceImpl.SELECTOR_FLAG_ALL_TEACHERS).size());
+        Assert.assertEquals(1, groupService.getTeachers(GroupServiceImpl.SELECTOR_FLAG_CURATORS)
+                .size());
+        Assert.assertEquals(2, groupService
+                .getTeachers(GroupServiceImpl.SELECTOR_FLAG_NOT_CURATORS).size());
+    }
+
+    @Test
+    public void testGetAvailableSymbols1() {
+        when(groupDaoStub.findByNumberAndLetter((byte) 0, 'A')).thenReturn(new Group());
+        Assert.assertEquals(25, groupService.getAvailableSymbols((byte) 0).size());
+        when(groupDaoStub.findByNumberAndLetter((byte) 0, 'B')).thenReturn(new Group());
+        Assert.assertEquals(24, groupService.getAvailableSymbols((byte) 0).size());
+    }
+
+    @Test
+    public void testRemoveGroup1() {
+        when(groupDaoStub.findById(1L)).thenReturn(null);
+        when(scheduleDaoStub.findByGroup(null)).thenReturn(null);
+        groupService.removeGroup(1);
+
+    }
+
+    @Test
+    public void testRemoveGroup2() {
+        when(groupDaoStub.findById(1L)).thenReturn(new Group());
+        when(scheduleDaoStub.findByGroup(null)).thenReturn(null);
+        groupService.removeGroup(1);
+
+    }
+
+    @Test
+    public void testRemoveGroup3() {
+        Group group = new Group();
+        group.setId(1L);
+        when(groupDaoStub.findById(1L)).thenReturn(group);
+        List<Schedule> schedule = new ArrayList<Schedule>();
+        schedule.add(new Schedule());
+        schedule.add(null);
+        schedule.add(new Schedule());
+        when(scheduleDaoStub.findByGroup(group)).thenReturn(schedule);
+        groupService.removeGroup(1);
+    }
+
+    // -----------------------------------------------------------------------------//
+    // Reflection
+    @Test
+    public void testFreeMainGroupFromStudents() throws NoSuchMethodException, SecurityException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        Method tested = groupService.getClass().getDeclaredMethod("freeMainGroupFromStudents",
+                Group.class);
+        tested.setAccessible(true);
+        tested.invoke(groupService, (Group) null);
+        tested.invoke(groupService, new Group());
+        Group group = new Group();
+        List<Student> student = new ArrayList<Student>();
+        student.add(null);
+        student.add(new Student());
+        student.add(new Student());
+        group.setStudent(student);
+        tested.invoke(groupService, group);
+    }
+
+    @Test
+    public void testFreeAdditionGroupFromStudents() throws NoSuchMethodException,
+            SecurityException, IllegalAccessException, IllegalArgumentException,
+            InvocationTargetException {
+        Method tested = groupService.getClass().getDeclaredMethod("freeAdditionGroupFromStudents",
+                Group.class);
+        tested.setAccessible(true);
+        tested.invoke(groupService, (Group) null);
+        tested.invoke(groupService, new Group());
+        Group group = new Group();
+        List<Student> student = new ArrayList<Student>();
+        student.add(null);
+        student.add(new Student());
+        student.add(new Student());
+        group.setAddStudent(student);
+        tested.invoke(groupService, group);
+    }
+
+    @Test
+    public void testSetMainGroup4Students() throws NoSuchMethodException, SecurityException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        Method tested = groupService.getClass().getDeclaredMethod("setMainGroup4Students",
+                List.class, Group.class);
+        tested.setAccessible(true);
+        tested.invoke(groupService, (List<Student>) null, (Group) null);
+        List<Student> students = new ArrayList<Student>();
+        tested.invoke(groupService, students, (Group) null);
+        tested.invoke(groupService, students, new Group());
+        students.add(new Student());
+        students.add(null);
+        students.add(new Student());
+        tested.invoke(groupService, students, (Group) null);
+        tested.invoke(groupService, students, new Group());
+
+    }
+
+    @Test
+    public void testSetAdditionGroup4Students() throws NoSuchMethodException, SecurityException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        Method tested = groupService.getClass().getDeclaredMethod("setAdditionGroup4Students",
+                List.class, Group.class);
+        tested.setAccessible(true);
+        tested.invoke(groupService, (List<Student>) null, (Group) null);
+        List<Student> students = new ArrayList<Student>();
+        tested.invoke(groupService, students, (Group) null);
+        tested.invoke(groupService, students, new Group());
+        students.add(new Student());
+        students.add(null);
+        students.add(new Student());
+        tested.invoke(groupService, students, (Group) null);
+        tested.invoke(groupService, students, new Group());
+    }
+
+    @Test
+    public void testFillUserDTO() {
+        Assert.assertEquals(0, groupService.fillUserDTO(null).size());
+        Assert.assertEquals(0, groupService.fillUserDTO(new ArrayList<Student>()).size());
+        List<Student> list = new ArrayList<Student>();
+        Student one = new Student();
+        Student two = new Student();
+        list.add(one);
+        list.add(two);
+        Assert.assertEquals(2, groupService.fillUserDTO(list).size());
+    }
+
+    @Test
+    public void date2String() throws NoSuchMethodException, SecurityException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+            ParseException {
+        Method tested = groupService.getClass().getDeclaredMethod("date2String", Date.class,
+                SimpleDateFormat.class);
+        tested.setAccessible(true);
+        Assert.assertEquals("-/-/-", tested.invoke(groupService, null, null));
+        String str1 = "2014-10-23 08:08:10.0";
+        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(str1);
+        Assert.assertEquals("2014-10-23 08:08:10.0",
+                tested.invoke(groupService, date, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S")));
+    }
+
 }

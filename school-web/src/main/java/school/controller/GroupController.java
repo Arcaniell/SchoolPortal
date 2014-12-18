@@ -118,7 +118,8 @@ public class GroupController {
                 model.addAttribute(JSP_OUTPUT_CURRENT_PAGE, JSP_OUTPUT_CURRENT_PAGE_VALUE);
                 model.addAttribute(JSP_OUTPUT_SYMBOL_LIST, groupService.getSymbols());
                 model.addAttribute(JSP_OUTPUT_YEAR_LIST, groupService.getYears());
-                model.addAttribute(JSP_OUTPUT_NOT_CURATORS, groupService.getNotCurators());
+                model.addAttribute(JSP_OUTPUT_NOT_CURATORS,
+                        groupService.getTeachers(GroupServiceImpl.SELECTOR_FLAG_NOT_CURATORS));
                 return TILES_VIEW_GROUP_HEAD_TEACHER;
             }
         }
@@ -180,9 +181,9 @@ public class GroupController {
             @RequestParam(value = JSP_INPUT_CHECKBOX, required = false) String branch) {
         int intBranch = Integer.parseInt(branch);
         if (intBranch == JSP_INPUT_CHECKBOX_CHECKED) {
-            return groupService.getAllTeachers();
+            return groupService.getTeachers(GroupServiceImpl.SELECTOR_FLAG_ALL_TEACHERS);
         } else {
-            return groupService.getNotCurators();
+            return groupService.getTeachers(GroupServiceImpl.SELECTOR_FLAG_NOT_CURATORS);
         }
     }
 
