@@ -20,8 +20,8 @@
 		src="<c:url value="/resources/img/photo/${pageContext.request.userPrincipal.name}.png" />" />
 </sec:authorize>
 <sec:authorize access="isAnonymous()">
-<img class="logo"
-src="<c:url value="/resources/img/logos/school-logo.jpg" />" />
+	<img class="logo"
+		src="<c:url value="/resources/img/logos/school-logo.jpg" />" />
 </sec:authorize>
 <div class="internal-buttons">
 	<ul class="nav nav-sidebar">
@@ -29,8 +29,9 @@ src="<c:url value="/resources/img/logos/school-logo.jpg" />" />
 			<li><a href="${root_action}profile"><spring:message
 						code="sidebar.profile" /></a></li>
 		</sec:authorize>
-		
-		<li><a href="schedule"><spring:message code="sidebar.schedule" /></a></li>
+
+		<li><a href="schedule"><spring:message
+					code="sidebar.schedule" /></a></li>
 		<sec:authorize access="hasAnyRole('ROLE_STUDENT', 'ROLE_PARENT')">
 			<li><a href="${root_action}diary"><spring:message
 						code="sidebar.diary" /></a></li>
@@ -74,8 +75,7 @@ src="<c:url value="/resources/img/logos/school-logo.jpg" />" />
 			<li><a href="${root_action}course-request"><spring:message
 						code="sidebar.request" /></a></li>
 		</sec:authorize>
-		<sec:authorize
-			access="hasRole('ROLE_TEACHER')">
+		<sec:authorize access="hasRole('ROLE_TEACHER')">
 			<li><a href="${root_action}salary"><spring:message
 						code="sidebar.salary" /></a></li>
 		</sec:authorize>
@@ -90,7 +90,53 @@ src="<c:url value="/resources/img/logos/school-logo.jpg" />" />
 		<li><a href="#"><spring:message code="sidebar.about" /></a></li>
 	</ul>
 </div>
+
+<div>
+	<input id="exception" value="${exception}" type="hidden">
+	<c:if test="${exception ne null}">
+		
+	</c:if>
+</div>
+
+<div id="error-modal" class="modal fade journal-error" tabindex="-1"
+	role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+
+				<h4 class="modal-title">Error</h4>
+			</div>
+			<div id="errorBody" class="modal-body">
+				<table class="table">
+					<tr style="border: 0;">
+						<th>
+							<h3 class="errorDisc">Sorry, but there is no data for your
+								request</h3>
+						</th>
+					</tr>
+					<tr>
+						<td id="RightSideBarJournal" class="submitEditDateButton">
+							<button id="errorOK" type="button" class="btn btn-primary"
+								data-dismiss="modal" style="margin-left: 190px;">OK</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script>
+	$(function() {
+		if ($('#exception').val() == "exception") {
+
+			$('#error-modal').modal('show');
+		}
+	});
+
 	(function(poll) {
 		var poll = function() {
 			$.ajax({

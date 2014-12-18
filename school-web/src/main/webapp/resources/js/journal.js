@@ -1,6 +1,17 @@
 $(function() {
 	$("#submitSearch").click();
+});
 
+$(function() {
+	if ($('#exception').val() == "exception") {
+		$('#journal-error').modal('show');
+	}
+});
+
+$(document).on(function() {
+	if ($('#exception').val() == "exception") {
+		$('#journal-error').modal('show');
+	}
 });
 
 $(document).on("fadeIn", "#studentsTH");

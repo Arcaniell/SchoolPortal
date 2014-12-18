@@ -27,15 +27,4 @@ public class HomeTaskDaoImpl extends BaseDaoImpl<HomeTask, Long> implements
 		}
 	}
 
-	@Transactional
-	public HomeTask findByGroupAndSchedule(long groupId, long scheduleId) {
-		try {
-			return (HomeTask) entityManager
-					.createNamedQuery(HomeTask.FIND_BY_GROUP_SCHEDULE)
-					.setParameter("groupId", groupId)
-					.setParameter("scheduleId", scheduleId).getSingleResult();
-		} catch (NoResultException e) {
-			return new HomeTask();
-		}
-	}
 }

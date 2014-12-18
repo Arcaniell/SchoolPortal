@@ -6,12 +6,17 @@
 	margin: 0;
 }
 
+.modal-dialog {
+	width: 500px;
+	margin: 30px auto;
+}
+
 h1, .h1, h2, .h2, h3, .h3 {
 	margin-top: 0;
 	margin-bottom: 0;
 }
 
-.panel-title{
+.panel-title {
 	font-size: 11px;
 	cursor: pointer;
 }
@@ -346,4 +351,8 @@ h4, .h4, h5, .h5, h6, .h6 {
 	float: left;
 	width: 100px;
 	position: relative;
+}
+
+.errorDicr {
+	color: red;
 }

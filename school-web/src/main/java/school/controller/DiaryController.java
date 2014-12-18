@@ -41,8 +41,9 @@ public class DiaryController {
 			model.addAttribute(DiaryUtil.MOD_ATT_KIDS,
 					diaryService.getKids(user.getName()));
 		}
-		
-		model.addAttribute(URLContainer.JSP_OUTPUT_CURRENT_PAGE, URLContainer.URL_DIARY);
+
+		model.addAttribute(URLContainer.JSP_OUTPUT_CURRENT_PAGE,
+				URLContainer.URL_DIARY);
 
 		return URLContainer.URL_DIARY;
 	}

@@ -42,7 +42,10 @@ public class JournalUtil {
 	public static final Date LAST_DAY_THIRD_QUARTER = new Date(1427749200000L);
 	public static final Date FIRST_DAY_FOURTH_QUARTER = new Date(1427835600000L);
 	public static final Date LAST_DAY_FOURTH_QUARTER = new Date(1433019600000L);
-
+	
+	public static final int DAYS_DEFORE = -5;
+	public static final int DAYS_AFTER = 5;
+	
 	public static List<Date> getWeek(Calendar date) throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat(DateUtil.UI_DATE_FORMAT);
 		String formatedDate = (date.get(Calendar.MONTH) + 1) + "/"

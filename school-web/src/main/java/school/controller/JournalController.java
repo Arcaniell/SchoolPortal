@@ -19,7 +19,6 @@ import school.controller.URLContainer;
 import school.dto.journal.EditMarkDTO;
 import school.dto.journal.EditDateDTO;
 import school.dto.journal.JournalSearch;
-import school.dto.journal.JournalStaffDTO;
 import school.dto.journal.StudentWithMarksDTO;
 import school.model.Role;
 import school.service.JournalService;
@@ -47,18 +46,26 @@ public class JournalController {
 			model.addAttribute(JournalUtil.MOD_ATT_SEARCH_DATA, searchData);
 		}
 
-		JournalStaffDTO staff = journalService.getStaffInfo(userId,
-				getHighestRole(request));
+		model.addAttribute(JournalUtil.MOD_ATT_STAFF,
+				journalService.getStaffInfo(userId, getHighestRole(request)));
 
-		model.addAttribute(JournalUtil.MOD_ATT_STAFF, staff);
 		model.addAttribute(URLContainer.JSP_OUTPUT_CURRENT_PAGE,
 				URLContainer.URL_JOURNAL);
 		return URLContainer.URL_JOURNAL;
 	}
 
+	// @ExceptionHandler(NullPointerException.class)
+	// public ModelAndView handleNullPointerException(HttpServletRequest
+	// request,
+	// Exception exception) {
+	// ModelAndView model = new ModelAndView(URLContainer.URL_JOURNAL);
+	// model.addObject("exception", "exception");
+	// return model;
+	// }
+
 	@RequestMapping(value = URLContainer.URL_JOURNAL_MARKS)
 	public @ResponseBody List<StudentWithMarksDTO> getByGroup(
-			@RequestBody JournalSearch journalSearch) throws ParseException {
+			@RequestBody JournalSearch journalSearch) {
 
 		List<StudentWithMarksDTO> groupMarks = journalService
 				.getMarksOfGroup(journalSearch);

@@ -6,5 +6,4 @@ public interface EventDao extends BaseDao<Event, Long> {
 	
 	Event findEventBySchedule (long scheduleId);
 	
-
 }

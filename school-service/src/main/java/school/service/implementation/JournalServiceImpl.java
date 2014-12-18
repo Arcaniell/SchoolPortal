@@ -38,9 +38,24 @@ import school.model.Student;
 import school.model.Teacher;
 import school.model.User;
 import school.service.JournalService;
+import school.service.ScheduleService;
 import school.service.utils.DateUtil;
 import school.service.utils.JournalUtil;
 
+/**
+ * This class realizes all journal possibilities:
+ * 
+ * - getting current teacher's lesson (or closest one);
+ * 
+ * - getting all info about teacher (subjects, groups that he deals with);
+ * 
+ * - editing student's marks (add/delete);
+ * 
+ * - editing date events and home tasks to some group(add/delete);
+ *
+ * @author Ihor Uksta
+ * 
+ */
 @Service
 public class JournalServiceImpl implements JournalService {
 
@@ -62,27 +77,20 @@ public class JournalServiceImpl implements JournalService {
 	private HomeTaskDao homeTaskDao;
 	@Autowired
 	private LessonDao lessonDao;
+	@Autowired
+	private ScheduleService scheduleService;
 
 	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
 			Role.Secured.DIRECTOR })
 	@Transactional
 	public JournalStaffDTO getStaffInfo(long userId, String role) {
 
-		List<Schedule> schedules = null;
-
-		if (role.equals(Role.Secured.TEACHER)) {
-			schedules = scheduleDao.findByTeacher(teacherDao
-					.findByUserId(userId));
-		} else if (role.equals(Role.Secured.HEAD_TEACHER)
-				|| role.equals(Role.Secured.DIRECTOR)) {
-			schedules = scheduleDao.findAll();
-		}
-
 		Set<String> courses = new TreeSet<>();
 		Set<Byte> groupNumbers = new TreeSet<>();
 		Set<Character> groupLetters = new TreeSet<>();
 
-		for (Schedule schedule : schedules) {
+		for (Schedule schedule : scheduleService.getSchedulesByRole(userId,
+				role)) {
 			groupNumbers.add(schedule.getGroup().getNumber());
 			groupLetters.add(schedule.getGroup().getLetter());
 			courses.add(schedule.getCourse().getCourseName());
@@ -97,11 +105,14 @@ public class JournalServiceImpl implements JournalService {
 	public List<StudentWithMarksDTO> getMarksOfGroup(JournalSearch search) {
 		Group group = groupDao.findByNumberAndLetter(search.getGroupNumber(),
 				search.getGroupLetter());
-		List<Schedule> schedules = getSchedulesForStudentMarks(search, group);
 
 		List<StudentWithMarksDTO> studentsWithMarks = new ArrayList<>();
 		for (Student student : group.getStudent()) {
-			Set<MarkDTO> marks = getStudentsMarks(schedules, student);
+
+			Set<MarkDTO> marks = getStudentsMarks(
+					scheduleService.getSchedulesForStudentMarks(search, group),
+					student);
+
 			studentsWithMarks.add(new StudentWithMarksDTO(student.getUser()
 					.getId(), student.getId(), getWholeUserName(student
 					.getUser().getId()), JournalUtil.getQuarterMark(marks),
@@ -109,6 +120,43 @@ public class JournalServiceImpl implements JournalService {
 		}
 		Collections.sort(studentsWithMarks);
 		return studentsWithMarks;
+	}
+
+	/**
+	 * @author Ihor Uksta
+	 * 
+	 *         This method gets all marks, home tasks and events of some chosen
+	 *         student by chosen schedules.
+	 * 
+	 * @param schedules
+	 * @param student
+	 * @return Set<MarkDTO>
+	 * @throws Exception
+	 */
+	private Set<MarkDTO> getStudentsMarks(List<Schedule> schedules,
+			Student student) {
+		Set<MarkDTO> marks = new TreeSet<>();
+		for (Schedule schedule : schedules) {
+			Journal journal = journalDao.findByStudentAndSchedule(
+					student.getId(), schedule.getId());
+			HomeTask homeTask = homeTaskDao.findBySchedule(schedule.getId());
+			Event event = eventDao.findEventBySchedule(schedule.getId());
+			marks.add(new MarkDTO(schedule.getLesson().getId(), schedule
+					.getId(), schedule.getCourse().getCourseName(), homeTask
+					.getTask(), schedule.getDate(), journal.getMark(), event
+					.getType()));
+		}
+		return marks;
+	}
+
+	private EditMarkDTO reCalculateQuarterMark(EditMarkDTO editMarkDTO,
+			Student student) {
+		List<Schedule> schedules = scheduleService.getSchedulesForStudentMarks(
+				editMarkDTO.getSearchData(), student.getGroup());
+		Set<MarkDTO> marks = getStudentsMarks(schedules, student);
+		editMarkDTO.setStudentId(student.getId());
+		editMarkDTO.setQuarterMark(JournalUtil.getQuarterMark(marks));
+		return editMarkDTO;
 	}
 
 	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
@@ -132,43 +180,6 @@ public class JournalServiceImpl implements JournalService {
 					.getMark(), event.getType(), schedule.getDate()));
 		}
 		return reCalculateQuarterMark(editMarkDTO, student);
-	}
-
-	private List<Schedule> getSchedulesForStudentMarks(JournalSearch search,
-			Group group) {
-		Date[] quarterDates = JournalUtil
-				.getDatesByQuarter(search.getQuarter());
-		return scheduleDao.findByGroupCourseInterval(group.getId(),
-				search.getSubject(),
-				quarterDates[JournalUtil.FIRST_DATE_OF_QUARTER],
-				quarterDates[JournalUtil.LAST_DATE_OF_QUARTER]);
-	}
-
-	public Set<MarkDTO> getStudentsMarks(List<Schedule> schedules,
-			Student student) {
-		Set<MarkDTO> marks = new TreeSet<>();
-		for (Schedule schedule : schedules) {
-			Journal journal = journalDao.findByStudentAndSchedule(
-					student.getId(), schedule.getId());
-			HomeTask homeTask = homeTaskDao.findBySchedule(schedule.getId());
-			Event event = eventDao.findEventBySchedule(schedule.getId());
-			marks.add(new MarkDTO(schedule.getLesson().getId(), schedule
-					.getId(), schedule.getCourse().getCourseName(), homeTask
-					.getTask(), schedule.getDate(), journal.getMark(), event
-					.getType()));
-		}
-		return marks;
-	}
-
-	private EditMarkDTO reCalculateQuarterMark(EditMarkDTO editMarkDTO,
-			Student student) {
-
-		List<Schedule> schedules = getSchedulesForStudentMarks(
-				editMarkDTO.getSearchData(), student.getGroup());
-		Set<MarkDTO> marks = getStudentsMarks(schedules, student);
-		editMarkDTO.setStudentId(student.getId());
-		editMarkDTO.setQuarterMark(JournalUtil.getQuarterMark(marks));
-		return editMarkDTO;
 	}
 
 	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
@@ -206,8 +217,8 @@ public class JournalServiceImpl implements JournalService {
 	@Transactional
 	public Set<Byte> getGroupNumbers(long userId, String role, String subject) {
 
-		List<Schedule> schedules = getSchedulesByRoleAndSubject(userId, role,
-				subject);
+		List<Schedule> schedules = scheduleService
+				.getSchedulesByRoleAndSubject(userId, role, subject);
 
 		Set<Byte> groupNumbers = new TreeSet<>();
 		for (Schedule schedule : schedules) {
@@ -222,8 +233,8 @@ public class JournalServiceImpl implements JournalService {
 	public Set<Character> getGroupLetters(long userId, String role,
 			String subject, byte number) {
 
-		List<Schedule> schedules = getSchedulesByRoleAndSubject(userId, role,
-				subject);
+		List<Schedule> schedules = scheduleService
+				.getSchedulesByRoleAndSubject(userId, role, subject);
 
 		Set<Character> groupLetters = new TreeSet<>();
 		for (Schedule schedule : schedules) {
@@ -269,8 +280,8 @@ public class JournalServiceImpl implements JournalService {
 
 	private Date getClosestDate(Date currentDate, long teacherId) {
 
-		Date from = DateUtil.addOrDelDays(currentDate, -5);
-		Date to = DateUtil.addOrDelDays(currentDate, +5);
+		Date from = DateUtil.addOrDelDays(currentDate, JournalUtil.DAYS_DEFORE);
+		Date to = DateUtil.addOrDelDays(currentDate, JournalUtil.DAYS_AFTER);
 		List<Long> datesValues = new ArrayList<Long>();
 		for (Schedule schedule : scheduleDao.findByTeacherInterval(teacherId,
 				from, to)) {
@@ -290,19 +301,12 @@ public class JournalServiceImpl implements JournalService {
 		return JournalUtil.getClosestValue(currentDate, lessonsValues);
 	}
 
-	private List<Schedule> getSchedulesByRoleAndSubject(long userId,
-			String role, String subject) {
-		if (role.equals(Role.Secured.TEACHER)) {
-			return scheduleDao.findByTeacherAndCourse(
-					teacherDao.findByUserId(userId).getId(), subject);
-		}
-		if (role.equals(Role.Secured.HEAD_TEACHER)
-				|| role.equals(Role.Secured.DIRECTOR)) {
-			return scheduleDao.findByCourse(subject);
-		}
-		return null;
-	}
-
+	/**
+	 * This method unites user's first and last names to one string.
+	 * 
+	 * @param userId
+	 * @return String - user name
+	 */
 	private String getWholeUserName(long userId) {
 		User user = userDao.findById(userId);
 		return user.getFirstName() + " " + user.getLastName();
