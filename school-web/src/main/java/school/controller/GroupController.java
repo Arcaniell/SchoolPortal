@@ -138,9 +138,24 @@ public class GroupController {
         if (principal == null || request.isUserInRole(Role.Secured.HEAD_TEACHER) != true) {
             return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
         }
-        if (courseIdStr != null) {
-            groupService.createNewGroup(Byte.parseByte(yearString), symbolString,
-                    Long.parseLong(curatorIdString), Long.parseLong(courseIdStr), branch);
+        Byte year = null;
+        Long curatorId = null;
+        try {
+            year = Byte.parseByte(yearString);
+            curatorId = Long.parseLong(curatorIdString);
+        } catch (NumberFormatException e) {
+            return URLContainer.URL_REDIRECT + URL_GROUP_HEADTEACHER;
+        }
+        Long courseId = null;
+        if (branch != null) {
+            try {
+                courseId = Long.parseLong(courseIdStr);
+            } catch (NumberFormatException e) {
+                return URLContainer.URL_REDIRECT + URL_GROUP_HEADTEACHER;
+            }
+            groupService.createNewGroup(principal, year, symbolString, curatorId, courseId, branch);
+        } else {
+            groupService.createNewGroup(principal, year, symbolString, curatorId, courseId, branch);
         }
         return URLContainer.URL_REDIRECT + URL_GROUP_HEADTEACHER;
 
@@ -159,7 +174,7 @@ public class GroupController {
                 try {
                     requestId = Long.parseLong(checkboxNamesList[i]);
                     if (requestId > 0) {
-                        groupService.removeGroup(requestId);
+                        groupService.removeGroup(principal, requestId);
                     }
                 } catch (NumberFormatException e) {
                     // nothing critical, continue

@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ import school.dao.GroupDao;
 import school.dao.ScheduleDao;
 import school.dao.StudentDao;
 import school.dao.TeacherDao;
+import school.dao.UserDao;
 import school.dto.GroupDTO;
 import school.dto.GroupDataDTO;
 import school.dto.GroupEditHeaderDTO;
@@ -29,6 +31,7 @@ import school.model.Group;
 import school.model.Schedule;
 import school.model.Student;
 import school.model.Teacher;
+import school.model.User;
 import school.service.GroupService;
 import school.service.utils.DateUtil;
 import school.model.Course;
@@ -39,6 +42,7 @@ import school.model.Course;
 
 @Service
 public class GroupServiceImpl implements GroupService {
+    final static Logger logger = Logger.getLogger(GroupServiceImpl.class);
     Locale loc = null;
     public static final Integer[] YEARS_OF_STUDY = { 5, 6, 7, 8, 9, 10, 11 };
     private final SimpleDateFormat formatterDate = new SimpleDateFormat("MM/dd/yyyy");
@@ -60,6 +64,8 @@ public class GroupServiceImpl implements GroupService {
     ScheduleDao scheduleDao;
     @Autowired
     CourseDao courseDao;
+    @Autowired
+    UserDao userDao;
 
     // STUDENT CONTROLLER CALL
     // get student groups
@@ -260,11 +266,13 @@ public class GroupServiceImpl implements GroupService {
     // HEAD TEACHER CONTROLLER CALL
     // create new group with parameters
     @Override
-    public void createNewGroup(byte year, String symbol, Long teacherId, Long courseId,
-            String branch) {
+    public void createNewGroup(Principal principal, Byte year, String symbol, Long teacherId,
+            Long courseId, String branch) {
         Teacher teacher = teacherDao.findById(teacherId);
-        Course course = courseDao.findById(courseId);
-        List<Group> existingGroups = groupDao.findByCourseId(courseId);
+        List<Group> existingGroups = new ArrayList<Group>();
+        if (courseId != null) {
+            existingGroups = groupDao.findByCourseId(courseId);
+        }
         Group group = new Group();
         group.setNumber(year);
         group.setTeacher(teacher);
@@ -272,6 +280,7 @@ public class GroupServiceImpl implements GroupService {
         if (branch == null) {
             group.setLetter(symbol.charAt(0));
         } else {
+            Course course = courseDao.findById(courseId);
             group.setAdditional(true);
             group.setAdditionCourse(course);
             if (existingGroups != null) {
@@ -281,13 +290,25 @@ public class GroupServiceImpl implements GroupService {
             }
         }
         groupDao.save(group);
+        Long userId = Long.parseLong(principal.getName());
+        User headteacher = userDao.findById(userId);
+        if (!group.isAdditional() && group.getAdditionCourse() == null) {
+            logger.info("User: " + headteacher.getFirstName() + " " + headteacher.getLastName()
+                    + " create: " + group.getNumber() + " - " + group.getLetter());
+        } else {
+            logger.info("User: " + headteacher.getFirstName() + " " + headteacher.getLastName()
+                    + " create: " + group.getNumber() + " - "
+                    + group.getAdditionCourse().getCourseName());
+        }
     }
 
     // HEAD TEACHER CONTROLLER CALL
     // remove group with id
     @Override
-    public void removeGroup(long requestId) {
+    public void removeGroup(Principal principal, long requestId) {
         Group group = groupDao.findById(requestId);
+        Long userId = Long.parseLong(principal.getName());
+        User headteacher = userDao.findById(userId);
         if (group != null) {
             freeMainGroupFromStudents(group);
             freeAdditionGroupFromStudents(group);
@@ -298,6 +319,14 @@ public class GroupServiceImpl implements GroupService {
                 }
             }
             groupDao.remove(groupDao.findById(requestId));
+            if (!group.isAdditional() && group.getAdditionCourse() == null) {
+                logger.info("User: " + headteacher.getFirstName() + " " + headteacher.getLastName()
+                        + " remove: " + group.getNumber() + " - " + group.getLetter());
+            } else {
+                logger.info("User: " + headteacher.getFirstName() + " " + headteacher.getLastName()
+                        + " remove: " + group.getNumber() + " - "
+                        + group.getAdditionCourse().getCourseName());
+            }
         }
     }
 

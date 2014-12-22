@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-
 import school.dto.GroupDTO;
 import school.dto.GroupDataDTO;
 import school.dto.GroupEditHeaderDTO;
@@ -29,9 +28,10 @@ public interface GroupService {
 
     List<GroupDataDTO> getSymbols();
 
-    void createNewGroup(byte year, String symbol, Long teacherId, Long courseId, String branch);
+    void createNewGroup(Principal principal, Byte year, String symbol, Long teacherId,
+            Long courseId, String branch);
 
-    void removeGroup(long requestId);
+    void removeGroup(Principal principal, long requestId);
 
     GroupEditHeaderDTO getGroupEditHeaderInfo(long id, Locale loc);
 
