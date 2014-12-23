@@ -54,15 +54,6 @@ public class JournalController {
 		return URLContainer.URL_JOURNAL;
 	}
 
-	// @ExceptionHandler(NullPointerException.class)
-	// public ModelAndView handleNullPointerException(HttpServletRequest
-	// request,
-	// Exception exception) {
-	// ModelAndView model = new ModelAndView(URLContainer.URL_JOURNAL);
-	// model.addObject("exception", "exception");
-	// return model;
-	// }
-
 	@RequestMapping(value = URLContainer.URL_JOURNAL_MARKS)
 	public @ResponseBody List<StudentWithMarksDTO> getByGroup(
 			@RequestBody JournalSearch journalSearch) {
@@ -76,7 +67,7 @@ public class JournalController {
 	@RequestMapping(value = URLContainer.URL_JOURNAL_EDIT_MARK)
 	public @ResponseBody EditMarkDTO editMark(
 			@RequestBody EditMarkDTO editMarkDTO) {
-
+		
 		return journalService.editMark(editMarkDTO);
 
 	}

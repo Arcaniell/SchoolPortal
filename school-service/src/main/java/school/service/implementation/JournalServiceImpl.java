@@ -90,7 +90,7 @@ public class JournalServiceImpl implements JournalService {
 		Set<Character> groupLetters = new TreeSet<>();
 
 		for (Schedule schedule : scheduleService.getSchedulesByRole(userId,
-				role)) {
+				"yo")) {
 			groupNumbers.add(schedule.getGroup().getNumber());
 			groupLetters.add(schedule.getGroup().getLetter());
 			courses.add(schedule.getCourse().getCourseName());
@@ -123,10 +123,8 @@ public class JournalServiceImpl implements JournalService {
 	}
 
 	/**
-	 * @author Ihor Uksta
-	 * 
-	 *         This method gets all marks, home tasks and events of some chosen
-	 *         student by chosen schedules.
+	 * This method gets all marks, home tasks and events of some chosen student
+	 * by chosen schedules.
 	 * 
 	 * @param schedules
 	 * @param student
@@ -149,6 +147,13 @@ public class JournalServiceImpl implements JournalService {
 		return marks;
 	}
 
+	/**
+	 * This method recalculate quarter mark(average mark of some quarter).
+	 * 
+	 * @param editMarkDTO
+	 * @param student
+	 * @return
+	 */
 	private EditMarkDTO reCalculateQuarterMark(EditMarkDTO editMarkDTO,
 			Student student) {
 		List<Schedule> schedules = scheduleService.getSchedulesForStudentMarks(
