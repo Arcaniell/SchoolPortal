@@ -1,3 +1,5 @@
+
+
 <persistence version="2.0"
 	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
@@ -37,14 +39,27 @@
 			<property name="hibernate.connection.username" value="root" />
 			<property name="hibernate.connection.password" value="root" />
 			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/SchoolDB" />
-			<!-- openshift property romamr-->
-			<!-- <property name="hibernate.connection.username" value="adminR4RSMHK" />
-			<property name="hibernate.connection.password" value="RkdMhlEyB_Ja" />
-			<property name="hibernate.connection.url" value="jdbc:mysql://127.8.141.2:3306/SchoolDB" /> -->
-			<!-- openshift property lv-128 java-->
-			<!-- <property name="hibernate.connection.username" value="adminKBylreG" />
-			<property name="hibernate.connection.password" value="tsxWDGr362CV" />
-			<property name="hibernate.connection.url" value="jdbc:mysql://127.12.229.130:3306/SchoolDB" /> -->
+
+			<property name="hibernate.c3p0.min_size" value="5" />
+			<property name="hibernate.c3p0.max_size" value="20" />
+			<property name="hibernate.c3p0.timeout" value="10" />
+			<property name="hibernate.c3p0.max_statements" value="50" />
+			<property name="hibernate.c3p0.preferredTestQuery" value="SELECT 1;" />
+			<property name="hibernate.c3p0.testConnectionOnCheckout"
+				value="true" />
+			<property name="hibernate.c3p0.acquire_increment" value="1" />
+			<property name="hibernate.c3p0.idle_test_period" value="300" />
+			
+			<!-- openshift property romamr -->
+			<!-- <property name="hibernate.connection.username" value="adminR4RSMHK" 
+				/> <property name="hibernate.connection.password" value="RkdMhlEyB_Ja" /> 
+				<property name="hibernate.connection.url" value="jdbc:mysql://127.8.141.2:3306/SchoolDB" 
+				/> -->
+			<!-- openshift property lv-128 java -->
+			<!-- <property name="hibernate.connection.username" value="adminKBylreG" 
+				/> <property name="hibernate.connection.password" value="tsxWDGr362CV" /> 
+				<property name="hibernate.connection.url" value="jdbc:mysql://127.12.229.130:3306/SchoolDB" 
+				/> -->
 		</properties>
 
 	</persistence-unit>

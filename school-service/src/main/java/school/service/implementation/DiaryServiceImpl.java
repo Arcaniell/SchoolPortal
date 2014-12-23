@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -20,15 +19,12 @@ import school.dao.StudentDao;
 import school.dao.UserDao;
 import school.dto.journal.MarkDTO;
 import school.dto.journal.StudentWithMarksDTO;
-import school.model.Event;
-import school.model.HomeTask;
-import school.model.Journal;
 import school.model.Parent;
 import school.model.Role;
-import school.model.Schedule;
 import school.model.Student;
 import school.model.User;
 import school.service.DiaryService;
+import school.service.JournalService;
 import school.service.utils.JournalUtil;
 
 @Service
@@ -48,6 +44,8 @@ public class DiaryServiceImpl implements DiaryService {
 	private HomeTaskDao homeTaskDao;
 	@Autowired
 	private EventDao eventDao;
+	@Autowired
+	private JournalService journalService;
 
 	@Secured({ Role.Secured.STUDENT, Role.Secured.PARENT })
 	@Transactional
@@ -56,19 +54,8 @@ public class DiaryServiceImpl implements DiaryService {
 		Student student = studentDao.findByUserId(userId);
 		List<StudentWithMarksDTO> diaryMarksDTO = new ArrayList<>();
 		for (Date date : currentWeek) {
-			Set<MarkDTO> marks = new TreeSet<>();
-			for (Schedule schedule : scheduleDao.findByGroupDate(student
-					.getGroup().getId(), date)) {
-				HomeTask homeTask = homeTaskDao
-						.findBySchedule(schedule.getId());
-				Event event = eventDao.findEventBySchedule(schedule.getId());
-				Journal journal = journalDao.findByStudentAndSchedule(
-						student.getId(), schedule.getId());
-				marks.add(new MarkDTO(schedule.getLesson().getId(), schedule
-						.getId(), schedule.getCourse().getCourseName(),
-						homeTask.getTask(), date, journal.getMark(), event
-								.getType()));
-			}
+			Set<MarkDTO> marks = journalService.getStudentsMarks(scheduleDao.findByGroupDate(student
+					.getGroup().getId(), date), student);
 			diaryMarksDTO.add(new StudentWithMarksDTO(student.getId(),
 					getWholeUserName(userId),
 					JournalUtil.getQuarterMark(marks), date, marks));

@@ -1,8 +1,6 @@
 package school.controller;
 
 import java.net.SocketException;
-import java.sql.SQLException;
-
 import javax.persistence.PersistenceException;
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,7 +12,6 @@ import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.mysql.jdbc.CommunicationsException;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException;
 
@@ -36,14 +33,6 @@ public class GlobalHandlerException {
 		return model;
 	}
 
-	@ExceptionHandler(SQLException.class)
-	public ModelAndView handleSQLException(HttpServletRequest request,
-			Exception exception) {
-		ModelAndView model = new ModelAndView(request.getRequestURI());
-		model.addObject("message", "exception");
-		return model;
-	}
-
 	@ExceptionHandler({ PersistenceException.class,
 			JDBCConnectionException.class, CommunicationsException.class,
 			SocketException.class, TransactionSystemException.class,
@@ -59,4 +48,5 @@ public class GlobalHandlerException {
 
 		return model;
 	}
+
 }

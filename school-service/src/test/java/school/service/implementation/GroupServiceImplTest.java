@@ -21,6 +21,7 @@ import school.dao.GroupDao;
 import school.dao.ScheduleDao;
 import school.dao.StudentDao;
 import school.dao.TeacherDao;
+import school.dao.UserDao;
 import school.dto.GroupDTO;
 import school.dto.TeacherDTO;
 import school.model.Course;
@@ -44,6 +45,8 @@ public class GroupServiceImplTest {
     CourseDao courseDaoStub;
     @Mock
     ScheduleDao scheduleDaoStub;
+    @Mock
+    UserDao userDaoStub;
     @Mock
     Principal mockedPrincipal;
 
@@ -404,22 +407,37 @@ public class GroupServiceImplTest {
 
     @Test
     public void testRemoveGroup1() {
+        when(mockedPrincipal.getName()).thenReturn("1");
+        User user = new User();
+        user.setFirstName("John");
+        user.setLastName("Doe");
+        when(userDaoStub.findById(1L)).thenReturn(user);
         when(groupDaoStub.findById(1L)).thenReturn(null);
         when(scheduleDaoStub.findByGroup(null)).thenReturn(null);
-        groupService.removeGroup(1);
+        groupService.removeGroup(mockedPrincipal, 1);
 
     }
 
     @Test
     public void testRemoveGroup2() {
+        when(mockedPrincipal.getName()).thenReturn("1");
+        User user = new User();
+        user.setFirstName("John");
+        user.setLastName("Doe");
+        when(userDaoStub.findById(1L)).thenReturn(user);
         when(groupDaoStub.findById(1L)).thenReturn(new Group());
         when(scheduleDaoStub.findByGroup(null)).thenReturn(null);
-        groupService.removeGroup(1);
+        groupService.removeGroup(mockedPrincipal, 1);
 
     }
 
     @Test
     public void testRemoveGroup3() {
+        when(mockedPrincipal.getName()).thenReturn("1");
+        User user = new User();
+        user.setFirstName("John");
+        user.setLastName("Doe");
+        when(userDaoStub.findById(1L)).thenReturn(user);
         Group group = new Group();
         group.setId(1L);
         when(groupDaoStub.findById(1L)).thenReturn(group);
@@ -428,7 +446,7 @@ public class GroupServiceImplTest {
         schedule.add(null);
         schedule.add(new Schedule());
         when(scheduleDaoStub.findByGroup(group)).thenReturn(schedule);
-        groupService.removeGroup(1);
+        groupService.removeGroup(mockedPrincipal, 1);
     }
 
     // -----------------------------------------------------------------------------//

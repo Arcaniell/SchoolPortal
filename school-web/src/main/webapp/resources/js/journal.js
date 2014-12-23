@@ -539,6 +539,7 @@ $(document)
 									var qm = "";
 									qm += markDTO.quarterMark;
 									console.log(qm);
+									
 									$(qmId).html(qm);
 
 								}
@@ -609,7 +610,12 @@ $(document).on(
 					$(id).html(contentMarks);
 					var qm = "";
 					qm += markDTO.quarterMark;
-					$(qmId).html(qm);
+					console.log(qm);
+					if (qm != "0"){
+						$(qmId).html(qm);
+					} else {
+						$(qmId).html(" ");
+					}
 				}
 			});
 		});

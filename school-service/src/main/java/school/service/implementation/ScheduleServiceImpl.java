@@ -632,61 +632,45 @@ public class ScheduleServiceImpl implements ScheduleService {
 			lesson = getListLess(scheduleG);
 
 			for (LessonDTO less : lesson) {
-
 				for (ScheduleDTO schG : scheduleG) {
 					if (less.equals(schG.getLesson())) {
 						schLess.add(schG);
-
 					}
 				}
-
 				listBegin = new ArrayList<ScheduleDTO>(schLess.subList(x,
 						schLess.size()));
-
 				for (String date : array) {
 
 					for (ScheduleDTO sor : listBegin) {
 						dateFromSch = sor.getDate().substring(0, 2);
-
 						if (date.equals(dateFromSch)) {
 							schLessNull.add(sor);
-
 							flag = 1;
-
 						} else {
-
 							tailDate = sor.getDate().substring(2);
 						}
 					}
-
 					if (flag != 1) {
-
 						schLessNull.add(new ScheduleDTO(schedule.getGroup(),
 								less, (date + tailDate)));
 					} else {
 						flag = 0;
 					}
-
 				}
 				x = schLess.size();
 				temp2 = new ArrayList<ScheduleDTO>(schLessNull.subList(y,
 						schLessNull.size()));
-
 				for (ScheduleDTO sortNull : temp2) {
 					zagListG.add(sortNull);
 				}
-
 				y = schLessNull.size();
-
 			}
-
 			temp3 = new ArrayList<ScheduleDTO>(zagListG.subList(z,
 					zagListG.size()));
 			result.add(new SchedulePerGroupDTO(schedule.getGroup(), temp3,
 					getListLess(temp3).size(), getListLess(temp3).size()
 							* rNuumb, lesson, dates));
 			z = zagListG.size();
-
 		}
 		return result;
 	}

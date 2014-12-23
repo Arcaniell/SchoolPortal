@@ -9,7 +9,10 @@ import school.dto.journal.EditMarkDTO;
 import school.dto.journal.EditDateDTO;
 import school.dto.journal.JournalSearch;
 import school.dto.journal.JournalStaffDTO;
+import school.dto.journal.MarkDTO;
 import school.dto.journal.StudentWithMarksDTO;
+import school.model.Schedule;
+import school.model.Student;
 
 public interface JournalService {
 
@@ -41,7 +44,19 @@ public interface JournalService {
 	 * @param editMarkDTO
 	 * @return EditMarkDTO
 	 */
+
 	EditMarkDTO editMark(EditMarkDTO editMarkDTO);
+
+	/**
+	 * This method gets all marks, home tasks and events of some chosen student
+	 * by chosen schedules.
+	 * 
+	 * @param schedules
+	 * @param student
+	 * @return Set<MarkDTO>
+	 * @throws Exception
+	 */
+	Set<MarkDTO> getStudentsMarks(List<Schedule> schedules, Student student);
 
 	/**
 	 * This method saves home task or events to DB. It can save all or any one

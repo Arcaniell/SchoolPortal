@@ -90,7 +90,7 @@ public class JournalServiceImpl implements JournalService {
 		Set<Character> groupLetters = new TreeSet<>();
 
 		for (Schedule schedule : scheduleService.getSchedulesByRole(userId,
-				"yo")) {
+				role)) {
 			groupNumbers.add(schedule.getGroup().getNumber());
 			groupLetters.add(schedule.getGroup().getLetter());
 			courses.add(schedule.getCourse().getCourseName());
@@ -122,16 +122,11 @@ public class JournalServiceImpl implements JournalService {
 		return studentsWithMarks;
 	}
 
-	/**
-	 * This method gets all marks, home tasks and events of some chosen student
-	 * by chosen schedules.
-	 * 
-	 * @param schedules
-	 * @param student
-	 * @return Set<MarkDTO>
-	 * @throws Exception
-	 */
-	private Set<MarkDTO> getStudentsMarks(List<Schedule> schedules,
+	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
+			Role.Secured.DIRECTOR, Role.Secured.ADMIN, Role.Secured.STUDENT,
+			Role.Secured.PARENT })
+	@Transactional
+	public Set<MarkDTO> getStudentsMarks(List<Schedule> schedules,
 			Student student) {
 		Set<MarkDTO> marks = new TreeSet<>();
 		for (Schedule schedule : schedules) {
