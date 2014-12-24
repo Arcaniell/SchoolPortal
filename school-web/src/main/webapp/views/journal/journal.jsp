@@ -9,6 +9,11 @@
 <link href="<c:url value="/resources/css/journal.css" />"
 	rel="stylesheet">
 
+<link href="<c:url value="/resources/css/token-input.css" />"
+	rel="stylesheet">
+<link href="<c:url value="/resources/css/token-input-facebook.css" />"
+	rel="stylesheet">
+
 <div class="journalTitle">
 	<h3>Journal</h3>
 </div>
@@ -145,7 +150,42 @@
 	</table>
 	<input id="clickSearchButton" type="hidden" value="${clickSearch}">
 </div>
+<div>
+	<input id="exception" value="${exception}" type="hidden">
+	<button class="errorbutton" data-toggle="modal"
+		data-target=".journal-error" hidden="hidden">error</button>
+</div>
 
+<div id="error-modal" class="modal fade journal-error" tabindex="-1" role="dialog"
+	aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+
+				<h4 class="modal-title">Error</h4>
+			</div>
+			<div id="errorBody" class="modal-body">
+				<table class="table">
+					<tr style="border: 0;">
+						<th>
+							<h3 class="errorDisc">Sorry, but there is no data for your
+								request</h3>
+						</th>
+					</tr>
+					<tr>
+						<td id="RightSideBarJournal" class="submitEditDateButton">
+							<button id="errorOK" type="button" class="btn btn-primary"
+								data-dismiss="modal" style="margin-left: 190px;">OK</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
 
 <div class="modal fade journal-add-mark-modal" tabindex="-1"
 	role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -274,3 +314,6 @@
 	type="text/javascript"></script>
 <jsp:include page="/views/profile/profile_information_runner.jsp" />
 <jsp:include page="/views/messages/compose.jsp" />
+<script src="<c:url value="/resources/js/compose.js" />"></script>
+<script src="<c:url value="/resources/js/jquery.autosize.js" />"></script>
+<script src="<c:url value="/resources/js/jquery.tokeninput.js" />"></script>

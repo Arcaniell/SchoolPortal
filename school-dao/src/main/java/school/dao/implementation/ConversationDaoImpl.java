@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import school.dao.ConversationDao;
 import school.dao.MessageDao;
 import school.model.Conversation;
-import school.model.Message;
 import school.model.User;
 
 @Repository
@@ -23,7 +22,7 @@ public class ConversationDaoImpl extends BaseDaoImpl<Conversation, Long>
 	public ConversationDaoImpl() {
 		super(Conversation.class);
 	}
-	
+
 	@Autowired
 	private MessageDao messageDao;
 
@@ -37,7 +36,7 @@ public class ConversationDaoImpl extends BaseDaoImpl<Conversation, Long>
 					.setParameter("user", user).getResultList();
 		} catch (NoResultException e) {
 			return list;
-		} 
+		}
 		return list;
 	}
 

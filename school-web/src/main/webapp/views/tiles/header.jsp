@@ -21,7 +21,7 @@
 				<li class="active"><a href="../messages" style="z-index: 8;"><spring:message
 							code="sidebar.messages" /></a></li>
 				<c:if test="${subject.length() > 10}">
-					<c:set var="tenMore" value="${fn:substring(subject, 0, 10)}" />
+					<c:set var="tenMore" value="${fn:substring(subject, 0, 10)}..." />
 					<li class="active"><a href="" style="z-index: 7;">${tenMore}</a></li>
 				</c:if>
 				<c:if test="${subject.length() < 10}">

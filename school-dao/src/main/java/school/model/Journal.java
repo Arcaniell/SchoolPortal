@@ -9,22 +9,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "JOURNAL")
-@NamedQueries({
-		@NamedQuery(name = Journal.FIND_BY_INTERVAL, query = "SELECT j FROM Journal j WHERE j.date BETWEEN :from AND :till"),
-		@NamedQuery(name = Journal.FIND_BY_STUDENT, query = "SELECT j FROM Journal j WHERE j.student.id = :studentId ORDER BY j.date ASC"),
-		@NamedQuery(name = Journal.FIND_BY_INTERVAL_AND_STUDENT, query = "SELECT j FROM Journal j WHERE j.student.id = :studentId AND j.date BETWEEN :from AND :till"),
-		@NamedQuery(name = Journal.FIND_BY_STUDENT_AND_SCHEDULE, query = "SELECT j FROM Journal j WHERE j.student.id = :studentId AND j.schedule.id = :scheduleId"), })
+@NamedQuery(name = Journal.FIND_BY_STUDENT_AND_SCHEDULE, query = "SELECT j FROM Journal j WHERE j.student.id = :studentId AND j.schedule.id = :scheduleId")
 public class Journal {
 
-	public static final String FIND_BY_INTERVAL = "Journal.findByInterval";
-	public static final String FIND_BY_STUDENT = "Journal.findByStudentId";
-	public static final String FIND_BY_INTERVAL_AND_STUDENT = "Journal.findByIntervalAndStudentId";
 	public static final String FIND_BY_STUDENT_AND_SCHEDULE = "Journal.findByStudentAndSchedule";
 
 	@Id

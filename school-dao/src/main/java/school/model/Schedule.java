@@ -29,7 +29,7 @@ import javax.persistence.Table;
     	@NamedQuery(name = Schedule.FIND_BY_ROOM, query = Schedule.FIND_BY_ROOM_QUERY),
 		
   //  	@NamedQuery(name = Schedule.FIND_BY_TEACHER_ID, query = Schedule.FIND_BY_TEACHER_ID_QUERY),
-		
+    	@NamedQuery(name = Schedule.FIND_BY_GROUP_DATE, query = Schedule.FIND_BY_GROUP_DATE_QUERY),
     	@NamedQuery(name = Schedule.FIND_BY_TEACHER_INTERVAL, query = Schedule.FIND_BY_TEACHER_INTERVAL_QUERY),
 		@NamedQuery(name = Schedule.FIND_BY_ROOM_INTERVAL, query = Schedule.FIND_BY_ROOM_INTERVAL_QUERY),
 		@NamedQuery(name = Schedule.FIND_BY_GROUP_INTERVAL, query = Schedule.FIND_BY_GROUP_INTERVAL_QUERY),
@@ -82,6 +82,9 @@ public class Schedule implements Comparable<Schedule> {
 
 	public static final String FIND_BY_GROUP_INTERVAL = "Schedule.findGroupInterval";
 	public static final String FIND_BY_GROUP_INTERVAL_QUERY = "SELECT sch FROM Schedule sch WHERE sch.group.id = :groupId AND sch.date  BETWEEN :from AND :till";
+	
+	public static final String FIND_BY_GROUP_DATE = "Schedule.findByGroupDate";
+	public static final String FIND_BY_GROUP_DATE_QUERY = "SELECT sch FROM Schedule sch WHERE sch.group.id = :groupId AND sch.date = :date";
 
 	// public static final String FIND_BY_COURSE_QUERY =
 	// "SELECT sch FROM Schedule sch WHERE sch.course = :course";

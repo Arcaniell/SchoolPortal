@@ -8,28 +8,38 @@ public class StudentWithMarksDTO implements Comparable<StudentWithMarksDTO> {
 	private long userId;
 	private long studentId;
 	private String studentName;
+	private int quarterMark;
 	private Date date;
 	private Set<MarkDTO> markList;
 
 	public StudentWithMarksDTO() {
 	}
 
-	public StudentWithMarksDTO(long studentId, String studentName, Date date,
-			Set<MarkDTO> markList) {
+	public StudentWithMarksDTO(long studentId, String studentName,
+			int quarterMark, Date date, Set<MarkDTO> markList) {
 		this.studentId = studentId;
 		this.studentName = studentName;
+		this.quarterMark = quarterMark;
 		this.date = date;
 		this.markList = markList;
 	}
 
 	public StudentWithMarksDTO(Long userId, long studentId, String studentName,
-			Date date, Set<MarkDTO> markList) {
-
+			int quarterMark, Date date, Set<MarkDTO> markList) {
 		this.userId = userId;
 		this.studentId = studentId;
 		this.studentName = studentName;
+		this.quarterMark = quarterMark;
 		this.date = date;
 		this.markList = markList;
+	}
+
+	public int getQuarterMark() {
+		return quarterMark;
+	}
+
+	public void setQuarterMark(int quarterMark) {
+		this.quarterMark = quarterMark;
 	}
 
 	public long getUserId() {

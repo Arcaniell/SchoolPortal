@@ -31,6 +31,10 @@ public class Event {
 	public Event() {
 	}
 
+	public Event(byte type) {
+		this.type = type;
+	}
+
 	public Event(Schedule schedule, byte type, String description) {
 		this.schedule = schedule;
 		this.type = type;

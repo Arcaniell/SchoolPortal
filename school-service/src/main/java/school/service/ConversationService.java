@@ -4,14 +4,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+
 import school.dto.message.ConversationDto;
 import school.model.Conversation;
 
 public interface ConversationService {
 
 	List<Conversation> findConversations(long id, String inboxOrSent);
-
-	/*List<String> getNames(List<Conversation> conversations);*/
 
 	List<Date> getDates(List<Conversation> conversations, long id);
 
@@ -21,12 +20,12 @@ public interface ConversationService {
 	void deleteConversations(String[] ids, long id);
 
 	Conversation findById(long id);
-	
-	void createConversation(String subject, long senderId, long receiverId, String text);
-	
-/*	boolean hasNewMessages(Conversation conversation, long userId);*/
+
+	void createConversation(String subject, long senderId, long receiverId,
+			String text);
 
 	boolean isGroup(String to);
 
-	void sendToGroup(String subject, Long principalId, String to, String text);
+	void createHeadConversation(String subject, Long principalId, String group,
+			String text, int hashCode);
 }

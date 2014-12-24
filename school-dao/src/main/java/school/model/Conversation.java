@@ -18,16 +18,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "CONVERSATION")
 @NamedQueries({
-		@NamedQuery(name = "Conversation.INBOX_CONVERSATIONS", query = 
-				  "SELECT c FROM Conversation c where (c.senderId = :user and "
-				  + "c.isAnsweredReceiver = true and c.isDeletedSender = false) or"
-				  + " (c.receiverId = :user and c.isDeletedReceiver = false) "
-				  + "or (c.senderId = :user and c.isDeletedReceiver = true and c.isDeletedSender = false) or "
-				  + "(c.senderId = :user and ((SELECT m from Message m where m.conversationId = c and "
-				  + "m.isFromSender = false and m.isDeletedSender = false) is not null))"),
+		@NamedQuery(name = "Conversation.INBOX_CONVERSATIONS", query = "SELECT c FROM Conversation c where (c.senderId = :user and "
+				+ "c.isAnsweredReceiver = true and c.isDeletedSender = false) or"
+				+ " (c.receiverId = :user and c.isDeletedReceiver = false) "
+				+ "or (c.senderId = :user and c.isDeletedReceiver = true and c.isDeletedSender = false) or "
+				+ "(c.senderId = :user and ((SELECT m from Message m where m.conversationId = c and "
+				+ "m.isFromSender = false and m.isDeletedSender = false) is not null))"),
 
-		@NamedQuery(name = "Conversation.SENT_CONVERSATIONS", query = 
-		          "SELECT c FROM Conversation c where (c.senderId = :user and "
+		@NamedQuery(name = "Conversation.SENT_CONVERSATIONS", query = "SELECT c FROM Conversation c where (c.senderId = :user and "
 				+ "c.isAnsweredSender = true and c.isDeletedSender = false) or "
 				+ "(c.receiverId = :user and c.isAnsweredReceiver = true and c.isDeletedReceiver = false)"),
 
@@ -54,6 +52,8 @@ public class Conversation {
 
 	@Column(nullable = false, length = 100)
 	private String subject;
+	private Integer hashCode;
+	private Integer countOfReceivers;
 
 	@Column(nullable = false)
 	private boolean isAnsweredReceiver;
@@ -66,26 +66,27 @@ public class Conversation {
 
 	@Column(nullable = false)
 	private boolean isDeletedSender;
-	private int countOfReceivers;
-	
+
 	@Column(nullable = false)
 	private boolean isNewForReceiver;
-	
+
 	@Column(nullable = false)
 	private boolean isNewForSender;
-	
+
 	@Column(nullable = false)
 	private String outcomeName;
-	
+
 	@Column(nullable = false)
 	private String incomeName;
-	
-	public Conversation() {}
 
-	public Conversation(User senderId, User receiverId, String subject, boolean isAnsweredReceiver,
-			boolean isAnsweredSender, boolean isDeletedReceiver,
-			boolean isDeletedSender,
-			boolean isNewForReceiver, boolean isNewForSender, String incomeName, String outcomeName) {
+	public Conversation() {
+	}
+
+	public Conversation(User senderId, User receiverId, String subject,
+			boolean isAnsweredReceiver, boolean isAnsweredSender,
+			boolean isDeletedReceiver, boolean isDeletedSender,
+			boolean isNewForReceiver, boolean isNewForSender,
+			String incomeName, String outcomeName) {
 		this.senderId = senderId;
 		this.receiverId = receiverId;
 		this.subject = subject;
@@ -99,10 +100,11 @@ public class Conversation {
 		this.outcomeName = outcomeName;
 	}
 
-	public Conversation(User senderId, User receiverId, String subject, boolean isAnsweredReceiver,
-			boolean isAnsweredSender, boolean isDeletedReceiver,
-			boolean isDeletedSender, int countOfReceivers,
-			boolean isNewForReceiver, boolean isNewForSender, String incomeName, String outcomeName) {
+	public Conversation(User senderId, User receiverId, String subject,
+			boolean isAnsweredReceiver, boolean isAnsweredSender,
+			boolean isDeletedReceiver, boolean isDeletedSender,
+			boolean isNewForReceiver, boolean isNewForSender,
+			String incomeName, String outcomeName, int hashCode, int countOfReceivers) {
 		this.senderId = senderId;
 		this.receiverId = receiverId;
 		this.subject = subject;
@@ -110,11 +112,12 @@ public class Conversation {
 		this.isAnsweredSender = isAnsweredSender;
 		this.isDeletedReceiver = isDeletedReceiver;
 		this.isDeletedSender = isDeletedSender;
-		this.countOfReceivers = countOfReceivers;
 		this.isNewForReceiver = isNewForReceiver;
 		this.isNewForSender = isNewForSender;
 		this.incomeName = incomeName;
 		this.outcomeName = outcomeName;
+		this.hashCode = hashCode;
+		this.countOfReceivers = countOfReceivers;
 	}
 
 	public long getId() {
@@ -189,14 +192,6 @@ public class Conversation {
 		this.isDeletedSender = isDeletedSender;
 	}
 
-	public int getCountOfReceivers() {
-		return countOfReceivers;
-	}
-
-	public void setCountOfReceivers(int countOfReceivers) {
-		this.countOfReceivers = countOfReceivers;
-	}
-
 	public boolean isNewForReceiver() {
 		return isNewForReceiver;
 	}
@@ -228,13 +223,31 @@ public class Conversation {
 	public void setIncomeName(String incomeName) {
 		this.incomeName = incomeName;
 	}
+	
+	public Integer getHashCode() {
+		return hashCode;
+	}
+
+	public void setHashCode(Integer hashCode) {
+		this.hashCode = hashCode;
+	}
+
+	public Integer getCountOfReceivers() {
+		return countOfReceivers;
+	}
+
+	public void setCountOfReceivers(Integer countOfReceivers) {
+		this.countOfReceivers = countOfReceivers;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + countOfReceivers;
+		result = prime * result + hashCode;
 		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result
+				+ ((incomeName == null) ? 0 : incomeName.hashCode());
 		result = prime * result + (isAnsweredReceiver ? 1231 : 1237);
 		result = prime * result + (isAnsweredSender ? 1231 : 1237);
 		result = prime * result + (isDeletedReceiver ? 1231 : 1237);
@@ -243,6 +256,8 @@ public class Conversation {
 		result = prime * result + (isNewForSender ? 1231 : 1237);
 		result = prime * result
 				+ ((messages == null) ? 0 : messages.hashCode());
+		result = prime * result
+				+ ((outcomeName == null) ? 0 : outcomeName.hashCode());
 		result = prime * result
 				+ ((receiverId == null) ? 0 : receiverId.hashCode());
 		result = prime * result
@@ -260,9 +275,14 @@ public class Conversation {
 		if (getClass() != obj.getClass())
 			return false;
 		Conversation other = (Conversation) obj;
-		if (countOfReceivers != other.countOfReceivers)
+		if (hashCode != other.hashCode)
 			return false;
 		if (id != other.id)
+			return false;
+		if (incomeName == null) {
+			if (other.incomeName != null)
+				return false;
+		} else if (!incomeName.equals(other.incomeName))
 			return false;
 		if (isAnsweredReceiver != other.isAnsweredReceiver)
 			return false;
@@ -280,6 +300,11 @@ public class Conversation {
 			if (other.messages != null)
 				return false;
 		} else if (!messages.equals(other.messages))
+			return false;
+		if (outcomeName == null) {
+			if (other.outcomeName != null)
+				return false;
+		} else if (!outcomeName.equals(other.outcomeName))
 			return false;
 		if (receiverId == null) {
 			if (other.receiverId != null)

@@ -7,7 +7,7 @@
 <div class="profile_buttons">
 	<table>
 	<tr><td><p id="profile_information">Information</p></td></tr>
-<!-- 	<tr><td><p id="profile_options">Options</p></td></tr> -->
+<!-- 	<tr><td><p id="profile_options">Edit profile</p></td></tr> -->
 	<tr><td><p id="profile_avatar">Avatar</p></td></tr>
 <!-- 	<tr><td><p id="profile_requests">Requests</p></td></tr> -->
 	</table>

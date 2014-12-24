@@ -9,6 +9,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
+<link href="<c:url value="/resources/css/token-input.css" />"
+	rel="stylesheet">
+<link href="<c:url value="/resources/css/token-input-facebook.css" />"
+	rel="stylesheet">
+
+<script src="<c:url value="/resources/js/jquery.autosize.js" />"></script>
+<script src="<c:url value="/resources/js/jquery.tokeninput.js" />"></script>
+
 <h2 align="center">${profile.profileName}</h2>
 
 <table class="profile_table">
@@ -17,22 +25,26 @@
 			src="<c:url value="/photo/${profile.profileId}" />" /></td>
 		<td>
 			<h4>Position: ${profile.profileRole}</h4>
-			<h4>Birthday: 11.11.1111</h4>
+			<h4>Birthday: ${profile.birthday }</h4>
 			<h4>Email: ${profile.profileEmail}</h4> <sec:authorize
 				access="hasRole('ROLE_PARENT')">
 				<c:set var="profileRole" value="${profile.profileRole}" />
 				<c:if test="${profileRole == 'Teacher'}">
-				<c:set var="namePlusEmail" value="${profile.profileName} - ${profile.profileEmail}" />
+					<c:set var="namePlusEmail"
+						value="${profile.profileName} - ${profile.profileEmail}" />
 					<input class="btn btn-sample" data-toggle="modal"
-						data-target="#composeModal" data-id="${namePlusEmail}" data-dismiss="modal" type="button" value="Write message"
+						data-target="#composeModal" data-id="${namePlusEmail}"
+						data-dismiss="modal" type="button" value="Write message"
 						id="profile_message_button">
 				</c:if>
 			</sec:authorize> <sec:authorize access="hasRole('ROLE_TEACHER')">
 				<c:set var="profileRole" value="${profile.profileRole}" />
 				<c:if test="${profileRole == 'Parent'}">
-				<c:set var="namePlusEmail" value="${profile.profileName} - ${profile.profileEmail}" />
+					<c:set var="namePlusEmail"
+						value="${profile.profileName} - ${profile.profileEmail}" />
 					<input class="btn btn-sample" data-toggle="modal"
-						data-target="#composeModal" data-id="${namePlusEmail}" data-dismiss="modal" type="button" value="Write message"
+						data-target="#composeModal" data-id="${namePlusEmail}"
+						data-dismiss="modal" type="button" value="Write message"
 						id="profile_message_button">
 				</c:if>
 			</sec:authorize>
@@ -71,8 +83,11 @@
 														<c:set var="profileRole"
 															value="${fn:substring(profileR, 0, 7)}" />
 														<c:if test="${profileRole == 'Student'}">
+															<c:set var="namePlusEmail"
+																value="${profile.profileName} - ${profile.profileEmail}" />
 															<input class="btn1 btn-sample1 " type="button"
-																data-toggle="modal" data-id="${namePlusEmail}" data-dismiss="modal" data-target="#composeModal"
+																data-toggle="modal" data-id="${namePlusEmail}"
+																data-dismiss="modal" data-target="#composeModal"
 																value="Write message" id="profile_message_button">
 														</c:if>
 													</sec:authorize>
@@ -96,18 +111,24 @@
 
 </table>
 <script>
-$(document).on("click", "#profile_message_button", function () {
-		var nameAndEmail = $(this).data('id');
-		$(".token-input-list-facebook").remove();
-		$(".token-input-token-facebook").remove();
-        $('#tokenfieldtypeahead').tokenInput(
-    			"${pageContext.request.contextPath}/emailInput", {
-    				theme : "facebook",
-    				queryParam : 'tagName',
-    				preventDuplicates : true,
-    				prePopulate: [{id: 999, name: nameAndEmail}]
-    			});
-        $('#tokenfieldtypeahead').html("123 - asd");
-});
+	$(document).on(
+			"click",
+			"#profile_message_button",
+			function() {
+				var nameAndEmail = $(this).data('id');
+				$(".token-input-list-facebook").remove();
+				$(".token-input-token-facebook").remove();
+				$('#tokenfieldtypeahead').tokenInput(
+						"${pageContext.request.contextPath}/emailInput", {
+							theme : "facebook",
+							queryParam : 'tagName',
+							preventDuplicates : true,
+							prePopulate : [ {
+								id : 999,
+								name : nameAndEmail
+							} ]
+						});
+				$('#tokenfieldtypeahead').html("123 - asd");
+			});
 </script>
 
