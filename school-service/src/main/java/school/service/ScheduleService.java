@@ -56,7 +56,10 @@ public interface ScheduleService {
 
 	public Set<String> intervalForHeader(List<Schedule> schedule, Locale loc);
 
-	public List<ScheduleDTO> getScheduleDto(List<Schedule> schedule, Locale loc);
+	public List<ScheduleDTO> getScheduleDto(List<Schedule> schedule, Locale loc, boolean isAvtor);
+
+
+
 
 	public List<SchedulePerGroupDTO> sortScheduleForTable(
 			List<ScheduleDTO> schDto, Set<String> dates);

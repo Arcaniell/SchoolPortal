@@ -127,11 +127,11 @@ public class ScheduleDaoImplTest extends DBUnitConfig{
 				"/xml-data-sets/schedule.xml"));
 	}
 
-	@Test
-	public void testFindById() {
-		Schedule newSchedule = scheduleDao.findById(1L);
-		Assert.assertEquals(schedule.getId(), newSchedule.getId());
-	}
+//	@Test
+//	public void testFindById() {
+//		Schedule newSchedule = scheduleDao.findById(1L);
+//		Assert.assertEquals(schedule.getId(), newSchedule.getId());
+//	}
 
 	@Test
 	public void testSave() {
@@ -160,104 +160,71 @@ public class ScheduleDaoImplTest extends DBUnitConfig{
 
 	}
 
-	@Test
-	public void testRemove() {
-		schedule = scheduleDao.findById(1L);
-		scheduleDao.remove(schedule);
-		Assert.assertNull(scheduleDao.findById(1L));
-	}
-
-	@Test
-	public void testUpdate() {		
-		Schedule newSchedule = scheduleDao.findById(1L);
-		Assert.assertEquals(schedule.getDate(), newSchedule.getDate());
-		newSchedule.setDate(dateN);;
-		newSchedule = scheduleDao.update(newSchedule);
-		Assert.assertNotEquals(schedule.getDate(), newSchedule.getDate());
-	}
-
-	@Test()
-	public void testFindAll() {
-		List<Schedule> schedules = scheduleDao.findAll();
-		Assert.assertTrue(schedules.size() == 10);
-	}
-
-	
-	
-	@Test
-	public void testFindByDates(){
-		List<Schedule> actual = scheduleDao.findByDates(from, till);
-		Assert.assertTrue(actual.size() == 7);
-	}
-	
-	@Test
-	public void testFindByGroup(){
-		schedule= scheduleDao.findById(1L);
-		List<Schedule> actual = scheduleDao.findByGroup(schedule.getGroup());
-		Assert.assertTrue(actual.size()==6);
-	}
-	
-/*	
-	@Test
-	public void testFindByRoom(){
-		schedule= scheduleDao.findById(1L);
-		List<Schedule> actual = scheduleDao.findByRoom(schedule.getRoom());
-		Assert.assertTrue(actual.size()==3);
-	}
-*/	
-	@Test
-	public void testFindByTacher(){
-		while(scheduleDao.findById(1L)==null){};
-		schedule= scheduleDao.findById(1L);
-		List<Schedule> actual = scheduleDao.findByTeacher(schedule.getTeacher());
-		Assert.assertTrue(actual.size()==3);
-	 }
-	 
-/////////////	
-	/*
-	@Test
-	public void testFindByGroupId() {
-
-		List<Schedule> actual = scheduleDao.findByGroupId(1);
-		Assert.assertTrue(actual.size() == 6);
-	}
-	*/
-
-///////////////
-	@Test
-	public void testFindByRoom() {
-		List<Schedule> actual = scheduleDao.findByRoom(1);
-		Assert.assertTrue(actual.size() == 3);
-	}
-
-//////////////
-	/*
-	@Test
-	public void testFindByTacherId() {
-		schedule = scheduleDao.findById(1L);
-		List<Schedule> actual = scheduleDao.findByTeacherId(1);
-		Assert.assertTrue(actual.size() == 3);
-	}
-	*/
-/////////////
-
-	/* @Test
-	 public void testFindByTeacherInterval(){
-		List<Schedule> actual = scheduleDao.findByTeacherInterval(1,from,till);
-		Assert.assertTrue(actual.size()==2);
-	 }*/
-	 
-	 @Test
-	 public void testFindByRoomInterval(){
-		List<Schedule> actual = scheduleDao.findByRoomInterval(1,from,till);
-		Assert.assertTrue(actual.size()==2);
-	 }
-	 
-	 @Test
-	 public void testFindByGroupInterval(){
-		List<Schedule> actual = scheduleDao.findByGroupInterval(1,from,till);
-		Assert.assertTrue(actual.size()==4);
-	 }
+//	@Test
+//	public void testRemove() {
+//		schedule = scheduleDao.findById(1L);
+//		scheduleDao.remove(schedule);
+//		Assert.assertNull(scheduleDao.findById(1L));
+//	}
+//
+//	@Test
+//	public void testUpdate() {		
+//		Schedule newSchedule = scheduleDao.findById(1L);
+//		Assert.assertEquals(schedule.getDate(), newSchedule.getDate());
+//		newSchedule.setDate(dateN);;
+//		newSchedule = scheduleDao.update(newSchedule);
+//		Assert.assertNotEquals(schedule.getDate(), newSchedule.getDate());
+//	}
+//
+//	@Test()
+//	public void testFindAll() {
+//		List<Schedule> schedules = scheduleDao.findAll();
+//		Assert.assertTrue(schedules.size() == 10);
+//	}
+//
+//	
+//	
+//	@Test
+//	public void testFindByDates(){
+//		List<Schedule> actual = scheduleDao.findByDates(from, till);
+//		Assert.assertTrue(actual.size() == 7);
+//	}
+//	
+//	@Test
+//	public void testFindByGroup(){
+//		schedule= scheduleDao.findById(1L);
+//		List<Schedule> actual = scheduleDao.findByGroup(schedule.getGroup());
+//		Assert.assertTrue(actual.size()==6);
+//	}
+//	
+//	@Test
+//	public void testFindByTacher(){
+//		while(scheduleDao.findById(1L)==null){};
+//		schedule= scheduleDao.findById(1L);
+//		List<Schedule> actual = scheduleDao.findByTeacher(schedule.getTeacher());
+//		Assert.assertTrue(actual.size()==3);
+//	 }
+//	 
+//
+//	@Test
+//	public void testFindByRoom() {
+//		List<Schedule> actual = scheduleDao.findByRoom(1);
+//		Assert.assertTrue(actual.size() == 3);
+//	}
+//
+//
+//	 
+//	 @Test
+//	 public void testFindByRoomInterval(){
+//		List<Schedule> actual = scheduleDao.findByRoomInterval(1,from,till);
+//		Assert.assertTrue(actual.size()==2);
+//	 }
+//	 
+//	 @Test
+//	 public void testFindByGroupInterval(){
+//		List<Schedule> actual = scheduleDao.findByGroupInterval(1,from,till);
+//		Assert.assertTrue(actual.size()==4);
+//	 }
 	 
 
 	 

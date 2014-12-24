@@ -1,5 +1,6 @@
 package school.controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -38,7 +39,9 @@ public class ScheduleController {
 	private static final String SCHEDULE_ROOM = "schedule-room";
 	private static final String SCHEDULE_SELECT = "schedule-select";
 	private static final String SCHEDULE_GROUP = "schedule-group";
+	private static final String CURRENT_PAGE_SCHEDULE = "schedule";
 	private static final String SCHEDULE = "schedule";
+	private final String CURRENT = "current";
 	@Autowired
 	private ScheduleService scheduleService;
 
@@ -56,6 +59,7 @@ public class ScheduleController {
 		model.addAttribute("teachers", teachers);
 		model.addAttribute("rooms", rooms);
 		model.addAttribute("groups", groups);
+		model.addAttribute(CURRENT, CURRENT_PAGE_SCHEDULE);
 		model.addAttribute("dateFrom", dateFrom);
 
 		return SCHEDULE;
@@ -76,8 +80,10 @@ public class ScheduleController {
 
 	@RequestMapping(value = SCHEDULE_SELECT)
 	public @ResponseBody List<SchedulePerGroupDTO> getTable(
-			@RequestBody ScheduleSearch json, HttpServletRequest request) {
+			@RequestBody ScheduleSearch json, HttpServletRequest request,
+			Principal principal) {
 
+		boolean isLoginned = false;
 		long teachID = ScheduleUtil.idLongStr(json.getTeacher());
 		int roomID = ScheduleUtil.idIntegStr(json.getRoom());
 		long groupID = ScheduleUtil.idLongStr(json.getGroup());
@@ -88,8 +94,17 @@ public class ScheduleController {
 
 		List<Schedule> schedules = scheduleService.current(teachID, roomID,
 				groupID, df, duratn);
-		List<ScheduleDTO> schedulesDto = scheduleService.getScheduleDto(
-				schedules, loc);
+		List<ScheduleDTO> schedulesDto;
+
+		if (principal == null) {
+
+			schedulesDto = scheduleService.getScheduleDto(schedules, loc,
+					isLoginned);
+		} else {
+
+			schedulesDto = scheduleService.getScheduleDto(schedules, loc,
+					!isLoginned);
+		}
 
 		Set<String> headerDate = scheduleService.intervalForHeader(schedules,
 				loc);
@@ -125,4 +140,5 @@ public class ScheduleController {
 		return scheduleService.getTeacherName(scheduleService.allTeacher(),
 				name);
 	}
+
 }

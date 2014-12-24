@@ -489,15 +489,19 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<ScheduleDTO> getScheduleDto(List<Schedule> schedules, Locale loc) {
+	public List<ScheduleDTO> getScheduleDto(List<Schedule> schedules, Locale loc, boolean isAvtor) {
 
 		List<ScheduleDTO> schedulesDto = new ArrayList<ScheduleDTO>();
 
 		ScheduleDTO schDto = null;
 		for (Schedule sch : schedules) {
+			
 			schDto = new ScheduleDTO();
+			schDto.setLoginned(isAvtor);
 			schDto.setGroup(new GroupScheduleDTO(sch.getGroup().getNumber(),
 					sch.getGroup().getLetter()));
+			schDto.setUserId(sch.getTeacher().getUser().getId());
+			schDto.setScheduleId(sch.getId());
 
 			schDto.setLesson(new LessonDTO(sch.getLesson().getId()));
 			schDto.setTeacher(new UserDTO(sch.getTeacher().getUser()
@@ -622,8 +626,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 		List<SchedulePerGroupDTO> result = new ArrayList<SchedulePerGroupDTO>();
 
 		List<ScheduleDTO> listBegin = new ArrayList<ScheduleDTO>();
-		List<ScheduleDTO> temp2 = new ArrayList<ScheduleDTO>();
-		List<ScheduleDTO> temp3 = new ArrayList<ScheduleDTO>();
+		List<ScheduleDTO> start_null = new ArrayList<ScheduleDTO>();
+		List<ScheduleDTO> start_zag = new ArrayList<ScheduleDTO>();
 
 		for (SchedulePerGroupDTO schedule : sch) {
 
@@ -658,17 +662,23 @@ public class ScheduleServiceImpl implements ScheduleService {
 					}
 				}
 				x = schLess.size();
-				temp2 = new ArrayList<ScheduleDTO>(schLessNull.subList(y,
+				start_null = new ArrayList<ScheduleDTO>(schLessNull.subList(y,
 						schLessNull.size()));
-				for (ScheduleDTO sortNull : temp2) {
+
+
+				for (ScheduleDTO sortNull : start_null) {
+
 					zagListG.add(sortNull);
 				}
 				y = schLessNull.size();
 			}
-			temp3 = new ArrayList<ScheduleDTO>(zagListG.subList(z,
+
+
+			start_zag = new ArrayList<ScheduleDTO>(zagListG.subList(z,
+
 					zagListG.size()));
-			result.add(new SchedulePerGroupDTO(schedule.getGroup(), temp3,
-					getListLess(temp3).size(), getListLess(temp3).size()
+			result.add(new SchedulePerGroupDTO(schedule.getGroup(), start_zag,
+					getListLess(start_zag).size(), getListLess(start_zag).size()
 							* rNuumb, lesson, dates));
 			z = zagListG.size();
 		}

@@ -153,6 +153,6 @@
 		};
 		setInterval(function() {
 			poll();
-		}, 20000000);
+		}, 20000);
 	})();
 </script>

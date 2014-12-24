@@ -2,11 +2,13 @@ package school.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import jms.InitJmsContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +27,6 @@ import school.model.User;
 import school.service.ConversationService;
 import school.service.MessagesService;
 import school.service.UserService;
-import school.service.utils.DateUtil;
 
 @Controller
 public class ConversationController {
@@ -43,7 +44,7 @@ public class ConversationController {
 	public @ResponseBody
 	List<ConversationDto> buildConversations(
 			@RequestBody MessageButton messageButton, Principal principal,
-			HttpServletRequest request) {
+			HttpServletRequest request, HttpServletResponse response) {
 
 		if (principal == null) {
 			List<ConversationDto> list = new ArrayList<ConversationDto>();
@@ -62,10 +63,8 @@ public class ConversationController {
 			conversations = conversationService.findConversations(principalId,
 					"sent");
 		}
-
 		List<ConversationDto> dtos = conversationService
 				.constructConversationDto(conversations, principalId, loc);
-		
 		return dtos;
 	}
 
@@ -116,20 +115,22 @@ public class ConversationController {
 			HttpServletRequest request, Principal principal) {
 
 		Long principalId = Long.valueOf(principal.getName());
+
 		String[] tokens = to.split(",");
 
-		for (String s : tokens) {
+		for (String token : tokens) {
 
-			if (!conversationService.isGroup(s)) {
+			if (!conversationService.isGroup(token)) {
 
-				String email = s.split("-")[1].trim();
+				String email = token.split("-")[1].trim();
 				User receiver = userService.findByEmail(email);
 				Long receiverId = receiver.getId();
 
 				conversationService.createConversation(subject, principalId,
 						receiverId, text);
 			} else {
-				conversationService.sendToGroup(subject, principalId, to, text);
+				InitJmsContext.initPublisher(token, principalId, subject, text,
+						conversationService);
 			}
 		}
 

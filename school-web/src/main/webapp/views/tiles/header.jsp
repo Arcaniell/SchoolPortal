@@ -21,7 +21,7 @@
 				<li class="active"><a href="../messages" style="z-index: 8;"><spring:message
 							code="sidebar.messages" /></a></li>
 				<c:if test="${subject.length() > 10}">
-					<c:set var="tenMore" value="${fn:substring(subject, 0, 10)}" />
+					<c:set var="tenMore" value="${fn:substring(subject, 0, 10)}..." />
 					<li class="active"><a href="" style="z-index: 7;">${tenMore}</a></li>
 				</c:if>
 				<c:if test="${subject.length() < 10}">
@@ -74,6 +74,10 @@
 				<c:if test="${current == 'diary'}">
 					<li class="active"><a href="journal" style="z-index: 8;"><spring:message
 								code="sidebar.diary" /></a></li>
+				</c:if>
+								<c:if test="${current == 'schedule'}">
+					<li class="active"><a href="schedule" style="z-index: 8;"><spring:message
+								code="sidebar.schedule" /></a></li>
 				</c:if>
 			</c:if>
 		</ul>

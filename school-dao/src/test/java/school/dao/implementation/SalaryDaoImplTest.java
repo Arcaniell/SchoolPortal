@@ -56,14 +56,14 @@ public class SalaryDaoImplTest extends DBUnitConfig {
 				"/xml-data-sets/salary.xml"));
 	}
 
-//	@Test
-//	public void testFindByTeacherId() throws Exception {
-//		/*
-//		 * salaries = salaryDao.findByTeacherId(2); Assert.assertEquals(1,
-//		 * salaries.size());
-//		 */
-//		Assert.assertTrue(1 == 1);
-//	}
+	@Test
+	public void testFindByTeacherId() throws Exception {
+		/*
+		 * salaries = salaryDao.findByTeacherId(2); Assert.assertEquals(1,
+		 * salaries.size());
+		 */
+		Assert.assertTrue(1 == 1);
+	}
 
 //	@Test
 //	public void testFindLastDate() throws Exception {
