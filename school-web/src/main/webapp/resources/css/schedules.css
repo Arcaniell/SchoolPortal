@@ -24,7 +24,7 @@
 .scrolling {
 	overflow:scroll; 
 	height: 460px; 
-	width: 975px;
+	width: auto;
 }
 
 .my th, .my td {
