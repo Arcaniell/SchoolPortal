@@ -47,3 +47,4 @@
 
 <script src="<c:url value="/resources/js/salary.js" />"
 	type="text/javascript"></script>
+<jsp:include page="/views/profile/profile_information_runner.jsp" />

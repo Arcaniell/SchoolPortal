@@ -22,7 +22,7 @@ public class JmsReceiverSpringConfig {
 		JmsTemplate jmsTemplate = new JmsTemplate();
 		jmsTemplate.setConnectionFactory(connectionFactory());
 		jmsTemplate.setPubSubDomain(true);
-		jmsTemplate.setDefaultDestination(new ActiveMQTopic("schoolTopic"));
+		jmsTemplate.setDefaultDestination(activeMQTopic());
 		jmsTemplate.setDeliveryMode(2);
 		jmsTemplate.setSessionAcknowledgeMode(2);
 		return jmsTemplate;

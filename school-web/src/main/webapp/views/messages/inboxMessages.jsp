@@ -41,7 +41,7 @@
 				<div>
 					<div style="float: left; padding-right: 7px;">
 						<img class="messageLogo"
-							src="<c:url value="/photo/${messageDto.userId}.png" />" />
+							src="<c:url value="/resources/img/photo/${messageDto.userId}.png" />" />
 					</div>
 					<div class="panel panel-default">
 						<div class="panel-heading">
