@@ -304,6 +304,7 @@ public class GroupServiceImpl implements GroupService {
 
     // HEAD TEACHER CONTROLLER CALL
     // remove group with id
+    @Transactional
     @Override
     public void removeGroup(Principal principal, long requestId) {
         Group group = groupDao.findById(requestId);
@@ -461,6 +462,7 @@ public class GroupServiceImpl implements GroupService {
 
     // HELP METHOD HEADTEACHER GROUP EDIT SERVICE
     // free group from students
+    @Transactional
     private void freeMainGroupFromStudents(Group group) {
         if (group != null) {
             List<Student> students = group.getStudent();
@@ -501,6 +503,7 @@ public class GroupServiceImpl implements GroupService {
 
     // HELP METHOD HEADTEACHER GROUP EDIT SERVICE
     // add to group students
+    @Transactional
     private void setMainGroup4Students(List<Student> students, Group group) {
         if (students != null) {
             for (Student student : students) {
@@ -514,6 +517,7 @@ public class GroupServiceImpl implements GroupService {
 
     // HELP METHOD HEADTEACHER GROUP EDIT SERVICE
     // add to group students
+    @Transactional
     private void setAdditionGroup4Students(List<Student> students, Group group) {
         if (students != null) {
             for (Student student : students) {
