@@ -197,14 +197,6 @@ public class ScheduleDaoImplTest extends DBUnitConfig{
 		Assert.assertTrue(actual.size()==6);
 	}
 	
-/*	
-	@Test
-	public void testFindByRoom(){
-		schedule= scheduleDao.findById(1L);
-		List<Schedule> actual = scheduleDao.findByRoom(schedule.getRoom());
-		Assert.assertTrue(actual.size()==3);
-	}
-*/	
 	@Test
 	public void testFindByTacher(){
 		while(scheduleDao.findById(1L)==null){};
@@ -213,39 +205,14 @@ public class ScheduleDaoImplTest extends DBUnitConfig{
 		Assert.assertTrue(actual.size()==3);
 	 }
 	 
-/////////////	
-	/*
-	@Test
-	public void testFindByGroupId() {
 
-		List<Schedule> actual = scheduleDao.findByGroupId(1);
-		Assert.assertTrue(actual.size() == 6);
-	}
-	*/
-
-///////////////
 	@Test
 	public void testFindByRoom() {
 		List<Schedule> actual = scheduleDao.findByRoom(1);
 		Assert.assertTrue(actual.size() == 3);
 	}
 
-//////////////
-	/*
-	@Test
-	public void testFindByTacherId() {
-		schedule = scheduleDao.findById(1L);
-		List<Schedule> actual = scheduleDao.findByTeacherId(1);
-		Assert.assertTrue(actual.size() == 3);
-	}
-	*/
-/////////////
 
-	/* @Test
-	 public void testFindByTeacherInterval(){
-		List<Schedule> actual = scheduleDao.findByTeacherInterval(1,from,till);
-		Assert.assertTrue(actual.size()==2);
-	 }*/
 	 
 	 @Test
 	 public void testFindByRoomInterval(){

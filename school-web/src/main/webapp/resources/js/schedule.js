@@ -1,4 +1,43 @@
-					$(function() {
+
+
+ $(document).ready(
+		 document.getElementById("select").value = "64",
+         $(".row_count").change()
+        
+
+		);
+
+
+
+
+$(document).on("click", ".person", function() {
+	var id = $(this).attr("id");
+	$.ajax({
+		type : "GET",
+		url : "profile/information",
+		data : "id=" + id,
+		headers : {
+			Accept : "text/plain; charset=utf-8",
+			"Content-Type" : "text/plain; charset=utf-8"
+		},
+		async : false,
+		success : function(response) {
+			$("#profile_modal_content").html(response);
+			$("#profileModalButton").click();
+		},
+		error : function(e) {
+			alert('Internal Server Error');
+		}
+	});
+});
+
+
+$(function() {
+
+	
+
+	
+	
 						$("#my_d").datepicker({
 							changeMonth : true,
 							changeYear : true,
@@ -112,7 +151,12 @@
 												$("#tch").html(content);
 											}
 										});
+	
 							});
+		
+			
+
+
 
 			$("#submit_ok")
 					.click(
@@ -168,7 +212,9 @@
 																+ schedule[0].tableDate[indexD]
 																+ "</th>";
 													}
-													container += "</tr></div></thead><tbody><div id=\"data_grid\">";
+													container += "</tr></div></thead>"
+													
+														+"<tbody><div id=\"data_grid\">";
 													for (index in schedule) {
 														container += "<tr><th rowspan=\""
 									  			+schedule[index].rowCount
@@ -205,7 +251,11 @@
 																	if (schedule[index].setLess[indexA].lessonNumb == schedule[index].listSchedule[indexC].lesson.lessonNumb) {
 
 																		if (schedule[index].tableDate[indexB] == schedule[index].listSchedule[indexC].date) {
-																			container += "<td";
+																			container += "<td id=\""
+																				+ schedule[index].listSchedule[indexC].scheduleId
+																				+"\" "
+																				+	"class=\"editable-area\""
+															        				+"\"";
 																			
 																			container	+="><p>";
 																			if (schedule[index].listSchedule[indexC].course != null) {
@@ -215,10 +265,29 @@
 																			}
 																			container += "</p>";
 																			if (schedule[index].listSchedule[indexC].teacher != null) {
+																			if(schedule[index].listSchedule[indexC].loginned  == false){
+																				
+																			
+																				
+																			}	else {
+																				
+																				container+= "<a class=\"person\" id=\"" +
+																				+ schedule[index].listSchedule[indexC].userId +
+																					//	+" " 
+																						"\u0022"
+																						+ ">";
+																				
+																			}
+
+																		
+																			
+																				
 																				container += schedule[index].listSchedule[indexC].teacher.lastName
 																				          +" "
 																				          + schedule[index].listSchedule[indexC].teacher.firstName.substring(0,1)
+																				          +"</a>"
 																				          +"., ";
+																				
 																			} else {
 																				container += " ";
 																			}
@@ -227,6 +296,8 @@
 																			} else {
 																				container += " ";
 																			}
+																			
+																			
 																			container += "</td>";
 																		}
 																	}
@@ -238,16 +309,25 @@
 															container += "</tr><tr></tr><tr></tr><tr></tr>";
 														}
 													}
-													container += "</td></div></tbody>";
+													container += "</td></div></tbody>"
+														;
 
 												
 												}
 												$("#comp").html(container);
-
+												
+												 document.getElementById("select").value = "64";
+										         $(".row_count").change();
+												
 											}
 										});
 							});
 			$("#submit_ok").click();
+
+		   
+
+			
+
 
 			$("#back").click(
 					function() {
@@ -314,4 +394,4 @@
 				$("select#tch").val("0");
 				$("select#rm").val("0");
 			});
-					
+			
