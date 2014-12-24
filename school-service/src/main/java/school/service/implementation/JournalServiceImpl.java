@@ -1,6 +1,5 @@
 package school.service.implementation;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -8,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,9 @@ import school.service.utils.JournalUtil;
 @Service
 public class JournalServiceImpl implements JournalService {
 
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(JournalServiceImpl.class);
+
 	@Autowired
 	private JournalDao journalDao;
 	@Autowired
@@ -103,16 +107,17 @@ public class JournalServiceImpl implements JournalService {
 			Role.Secured.DIRECTOR, Role.Secured.ADMIN })
 	@Transactional
 	public List<StudentWithMarksDTO> getMarksOfGroup(JournalSearch search) {
+
 		Group group = groupDao.findByNumberAndLetter(search.getGroupNumber(),
 				search.getGroupLetter());
 
+		LOGGER.info("getting marks of " + group.getNumber() + group.getLetter());
+
 		List<StudentWithMarksDTO> studentsWithMarks = new ArrayList<>();
 		for (Student student : group.getStudent()) {
-
 			Set<MarkDTO> marks = getStudentsMarks(
 					scheduleService.getSchedulesForStudentMarks(search, group),
 					student);
-
 			studentsWithMarks.add(new StudentWithMarksDTO(student.getUser()
 					.getId(), student.getId(), getWholeUserName(student
 					.getUser().getId()), JournalUtil.getQuarterMark(marks),
@@ -174,10 +179,14 @@ public class JournalServiceImpl implements JournalService {
 		if (editMarkDTO.getMark() == JournalUtil.NOTHING) {
 			journalDao.remove(journalDao.findByStudentAndSchedule(
 					student.getId(), schedule.getId()));
+			LOGGER.info("removed mark of "
+					+ getWholeUserName(student.getUser().getId()));
 		} else {
 			Event event = eventDao.findEventBySchedule(schedule.getId());
 			journalDao.save(new Journal(student, schedule, editMarkDTO
 					.getMark(), event.getType(), schedule.getDate()));
+			LOGGER.info("putting mark(" + editMarkDTO.getMark() + ") to "
+					+ getWholeUserName(student.getUser().getId()));
 		}
 		return reCalculateQuarterMark(editMarkDTO, student);
 	}
@@ -191,11 +200,16 @@ public class JournalServiceImpl implements JournalService {
 		if (editedDateDTO.getEventType() != JournalUtil.NOTHING) {
 			eventDao.save(new Event(schedule, editedDateDTO.getEventType(),
 					editedDateDTO.getEventDescription()));
+			LOGGER.info("putting event on " + schedule.getDate()
+					+ schedule.getCourse().getCourseName());
 		}
 		if (editedDateDTO.getHomeTask() != JournalUtil.EMPTY) {
 			homeTaskDao.save(new HomeTask(schedule.getGroup(), editedDateDTO
 					.getHomeTask(), schedule));
+			LOGGER.info("putting home task on " + schedule.getDate()
+					+ schedule.getCourse().getCourseName());
 		}
+
 	}
 
 	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
@@ -247,8 +261,7 @@ public class JournalServiceImpl implements JournalService {
 
 	@Secured({ Role.Secured.TEACHER })
 	@Transactional
-	public JournalSearch getDeafaultData(long userId, Date currentDate)
-			throws ParseException {
+	public JournalSearch getDeafaultData(long userId, Date currentDate) {
 		Teacher teacher = teacherDao.findByUserId(userId);
 		Date closestDate = getClosestDate(
 				JournalUtil.getDateWithoutHours(currentDate), teacher.getId());
@@ -260,8 +273,36 @@ public class JournalServiceImpl implements JournalService {
 				JournalUtil.getQuarterByDate(currentDate));
 	}
 
+	/**
+	 * This method gets closest date of teacher work to current date.
+	 * 
+	 * @param currentDate
+	 * @param teacherId
+	 * @return
+	 */
+	private Date getClosestDate(Date currentDate, long teacherId) {
+		Date from = DateUtil.addOrDelDays(currentDate, JournalUtil.DAYS_DEFORE);
+		Date to = DateUtil.addOrDelDays(currentDate, JournalUtil.DAYS_AFTER);
+		List<Long> datesValues = new ArrayList<>();
+		for (Schedule schedule : scheduleDao.findByTeacherInterval(teacherId,
+				from, to)) {
+			datesValues.add(schedule.getDate().getTime());
+		}
+		return new Date(JournalUtil.getClosestValue(currentDate.getTime(),
+				datesValues));
+	}
+
+	/**
+	 * This method gets the closest schedule of some closest date to current
+	 * time.
+	 * 
+	 * @param currentDate
+	 * @param closestDate
+	 * @param teacherId
+	 * @return
+	 */
 	private Schedule getClosestSchedule(Date currentDate, Date closestDate,
-			long teacherId) throws ParseException {
+			long teacherId) {
 		if (closestDate.before(JournalUtil.getDateWithoutHours(currentDate))) {
 			return scheduleDao.findByTeacherDateLesson(teacherId, closestDate,
 					getClosestLesson(8, closestDate, teacherId));
@@ -278,19 +319,6 @@ public class JournalServiceImpl implements JournalService {
 		}
 	}
 
-	private Date getClosestDate(Date currentDate, long teacherId) {
-
-		Date from = DateUtil.addOrDelDays(currentDate, JournalUtil.DAYS_DEFORE);
-		Date to = DateUtil.addOrDelDays(currentDate, JournalUtil.DAYS_AFTER);
-		List<Long> datesValues = new ArrayList<Long>();
-		for (Schedule schedule : scheduleDao.findByTeacherInterval(teacherId,
-				from, to)) {
-			datesValues.add(schedule.getDate().getTime());
-		}
-		return new Date(JournalUtil.getClosestValue(currentDate.getTime(),
-				datesValues));
-	}
-
 	private long getClosestLesson(long currentDate, Date closestDate,
 			long teacherId) {
 		List<Long> lessonsValues = new ArrayList<>();
@@ -301,13 +329,11 @@ public class JournalServiceImpl implements JournalService {
 		return JournalUtil.getClosestValue(currentDate, lessonsValues);
 	}
 
-	/**
-	 * This method unites user's first and last names to one string.
-	 * 
-	 * @param userId
-	 * @return String - user name
-	 */
-	private String getWholeUserName(long userId) {
+	@Secured({ Role.Secured.TEACHER, Role.Secured.HEAD_TEACHER,
+			Role.Secured.DIRECTOR, Role.Secured.ADMIN, Role.Secured.STUDENT,
+			Role.Secured.PARENT })
+	@Transactional
+	public String getWholeUserName(long userId) {
 		User user = userDao.findById(userId);
 		return user.getFirstName() + " " + user.getLastName();
 	}

@@ -1,6 +1,5 @@
 package school.service;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -54,7 +53,6 @@ public interface JournalService {
 	 * @param schedules
 	 * @param student
 	 * @return Set<MarkDTO>
-	 * @throws Exception
 	 */
 	Set<MarkDTO> getStudentsMarks(List<Schedule> schedules, Student student);
 
@@ -80,8 +78,15 @@ public interface JournalService {
 	 */
 	void deleteHomeTask(EditDateDTO editedDateDTO);
 
-	JournalSearch getDeafaultData(long userId, Date currentDate)
-			throws ParseException;
+	/**
+	 * This method gets founds the closest lesson of group to current date and
+	 * time. And return data to set into search selectors.
+	 * 
+	 * @param userId
+	 * @param currentDate
+	 * @return JournalSearch
+	 */
+	JournalSearch getDeafaultData(long userId, Date currentDate);
 
 	/**
 	 * This method gets appropriate group numbers to some selected subject.
@@ -109,4 +114,12 @@ public interface JournalService {
 	 */
 	Set<Character> getGroupLetters(long userId, String role, String subject,
 			byte number);
+
+	/**
+	 * This method unites user's first and last names to one string.
+	 * 
+	 * @param userId
+	 * @return String - user name
+	 */
+	String getWholeUserName(long userId);
 }

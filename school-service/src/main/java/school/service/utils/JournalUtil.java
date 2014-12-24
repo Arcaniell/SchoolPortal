@@ -42,19 +42,14 @@ public class JournalUtil {
 	public static final Date LAST_DAY_THIRD_QUARTER = new Date(1427749200000L);
 	public static final Date FIRST_DAY_FOURTH_QUARTER = new Date(1427835600000L);
 	public static final Date LAST_DAY_FOURTH_QUARTER = new Date(1433019600000L);
-	
+
 	public static final int DAYS_DEFORE = -5;
 	public static final int DAYS_AFTER = 5;
-	
-	public static List<Date> getWeek(Calendar date) throws ParseException {
-		SimpleDateFormat format = new SimpleDateFormat(DateUtil.UI_DATE_FORMAT);
-		String formatedDate = (date.get(Calendar.MONTH) + 1) + "/"
-				+ date.get(Calendar.DATE) + "/" + date.get(Calendar.YEAR);
-		Date d = format.parse(formatedDate);
-		date.setTime(d);
 
+	public static List<Date> getWeek(Calendar date) {
+		date.setTime(getDateWithoutHours(date.getTime()));
 		date.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-		List<Date> week = new ArrayList<Date>();
+		List<Date> week = new ArrayList<>();
 		for (int i = 0; i < Calendar.DAY_OF_WEEK; i++) {
 			week.add(date.getTime());
 			date.add(Calendar.DATE, 1);
@@ -62,14 +57,22 @@ public class JournalUtil {
 		return week;
 	}
 
-	public static Date getHoursOfDate(Date date) throws ParseException {
+	public static Date getHoursOfDate(Date date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(HOURS_OF_DATE);
-		return dateFormat.parse(dateFormat.format(date));
+		try {
+			return dateFormat.parse(dateFormat.format(date));
+		} catch (ParseException e) {
+			return date;
+		}
 	}
 
-	public static Date getDateWithoutHours(Date date) throws ParseException {
+	public static Date getDateWithoutHours(Date date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-		return dateFormat.parse(dateFormat.format(date));
+		try {
+			return dateFormat.parse(dateFormat.format(date));
+		} catch (ParseException e) {
+			return date;
+		}
 	}
 
 	public static long getClosestValue(long currentNumber, List<Long> numbers) {
