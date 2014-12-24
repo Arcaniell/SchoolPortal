@@ -3,6 +3,7 @@ package school.controller;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import school.service.utils.DateUtil;
 
 @Controller
 public class SalaryController {
+	private final String IS_CURRENT_MONTH = "check";
 	private final String PAYROLL = "payrolls";
 	private final int THREE_MONTHS_IN_DAYS = 90;
 	private final boolean FORWARD_TRUE = true;
@@ -48,7 +50,7 @@ public class SalaryController {
 	private final String URL_SALARY_CURRENT = "/salary";
 	private final String URL_SALARY_PAYROLL = "/payroll";
 	private final String URL_SALARY_PAYROLL_CONFIRMED = "/payrollConfirm";
-	
+
 	private SimpleDateFormat formatterDate = new SimpleDateFormat("MM/dd/yyyy");
 
 	@Autowired
@@ -62,31 +64,33 @@ public class SalaryController {
 		if ((principal == null || request.isUserInRole(Role.Secured.TEACHER)) != true) {
 			return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
 		}
-			Date from = DateUtil.dateProceed(dateFrom, formatterDate,
-					THREE_MONTHS_IN_DAYS, FORWARD_TRUE);
-			Date until = DateUtil.dateProceed(dateUntil, formatterDate,
-					0, FORWARD_FALSE);
-			if (from.after(until)) {
-				Date swap = from;
-				from = until;
-				until = swap;
-			}
-			List<SalaryHistoryDTO> list = salaryService.getHistoryInfo(
-					principal, from, until);
-			model.addAttribute(DATE_FROM, formatterDate.format(from));
-			model.addAttribute(DATE_UNTIL, formatterDate.format(until));
-			model.addAttribute(SALARIES, list);
-			model.addAttribute(CURRENT, CURRENT_PAGE_HISTORY);
-			return JSP_SALARY_HISTORY;
+		Date from = DateUtil.dateProceed(dateFrom, formatterDate,
+				THREE_MONTHS_IN_DAYS, FORWARD_TRUE);
+		Date until = DateUtil.dateProceed(dateUntil, formatterDate, 0,
+				FORWARD_FALSE);
+		if (from.after(until)) {
+			Date swap = from;
+			from = until;
+			until = swap;
+		}
+		List<SalaryHistoryDTO> list = salaryService.getHistoryInfo(principal,
+				from, until);
+		model.addAttribute(DATE_FROM, formatterDate.format(from));
+		model.addAttribute(DATE_UNTIL, formatterDate.format(until));
+		model.addAttribute(SALARIES, list);
+		model.addAttribute(CURRENT, CURRENT_PAGE_HISTORY);
+		return JSP_SALARY_HISTORY;
 	}
 
 	@RequestMapping(value = URL_SALARY_CURRENT)
 	public String getCurrent(Model model, HttpServletRequest request,
-			Principal principal) throws ParseException {
+			Principal principal) {
 		if ((principal == null || request.isUserInRole(Role.Secured.TEACHER)) != true) {
 			return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
 		}
-		SalaryDTO salary = salaryService.getCurrentMonthInfo(principal);
+		SalaryDTO salary = null;
+		salary = salaryService.getCurrentMonthInfo(principal);
+
 		List<SalaryCourseDTO> courses = salaryService
 				.getCourseOfTeacherInfo(principal);
 		model.addAttribute(CURRENT_MONTH, salary);
@@ -94,19 +98,22 @@ public class SalaryController {
 		model.addAttribute(CURRENT, CURRENT_PAGE_SALARY);
 		return JSP_SALARY_CURRENT;
 	}
-	
+
 	@RequestMapping(value = URL_SALARY_PAYROLL)
 	public String getPayrollInfo(Model model, HttpServletRequest request,
-			Principal principal) throws ParseException {
+			Principal principal) {
 		if ((principal == null || request.isUserInRole(Role.Secured.DIRECTOR) != true)) {
 			return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
 		}
-		List<SalaryPayrollDTO> payrolls = salaryService.getPayrollInfo();
+		List<SalaryPayrollDTO> payrolls = new ArrayList<SalaryPayrollDTO>();
+		payrolls = salaryService.getPayrollInfo();
+		Boolean check = salaryService.isCurrentMonth();
 		model.addAttribute(PAYROLL, payrolls);
+		model.addAttribute(IS_CURRENT_MONTH, check);
 		model.addAttribute(CURRENT, CURRENT_PAGE_PAYROLL);
 		return JSP_SALARY_PAYROLL;
 	}
-	
+
 	@RequestMapping(value = URL_SALARY_PAYROLL_CONFIRMED)
 	public String payrollConfirmed(Model model, HttpServletRequest request,
 			Principal principal) throws ParseException {
@@ -114,7 +121,8 @@ public class SalaryController {
 				|| request.isUserInRole(Role.Secured.DIRECTOR) != true) {
 			return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
 		}
-		String[] additionalPay = request.getParameterValues(INPUT_ADDITIONAL_PAY_ARRAY);
+		String[] additionalPay = request
+				.getParameterValues(INPUT_ADDITIONAL_PAY_ARRAY);
 		salaryService.addSalary(additionalPay);
 		return JSP_SALARY_PAYROLL_CONFIRMED;
 	}

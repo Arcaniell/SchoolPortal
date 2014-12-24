@@ -56,7 +56,7 @@ public class SalaryDaoImpl extends BaseDaoImpl<Salary, Long> implements
 	@Override
 	public Long findHoursByPeriod(long teacherId, Date from, Date until) {
 		try {
-			return 	 (Long) entityManager
+			return (Long) entityManager
 					.createNamedQuery(Salary.FIND_COUNT_OF_HOURS_BY_PERIOD)
 					.setParameter("id", teacherId).setParameter("from", from)
 					.setParameter("until", until).getSingleResult();
@@ -84,9 +84,21 @@ public class SalaryDaoImpl extends BaseDaoImpl<Salary, Long> implements
 		try {
 			return (Salary) entityManager
 					.createNamedQuery(Salary.FIND_BY_LAST_ISSUE_DATE)
-					.setParameter("id", teacherId).setMaxResults(1).getSingleResult();
+					.setParameter("id", teacherId).setMaxResults(1)
+					.getSingleResult();
 		} catch (NoResultException e) {
 			return null;
+		}
 	}
+	
+	@Override
+	public Date findLastDate() {
+		try {
+			return (Date) entityManager
+					.createNamedQuery(Salary.FIND_LAST_ISSUE_DATE)
+					.setMaxResults(1).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 }

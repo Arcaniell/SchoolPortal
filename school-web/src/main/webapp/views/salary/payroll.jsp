@@ -36,9 +36,11 @@
 			</table>
 		</div>
 		<br>
-		<button type="submit" class="btn btn-default">
+		<button id="${check}" type="submit" class="btn btn-default confirmpayroll">
 			<spring:message code="salary.payrollsubmit" />
 		</button>
+		<a class='my-tool-tip glyphicon glyphicon-question-sign' data-toggle="tooltip" data-placement="right" title="This option is available only once per month">
+                </a>
 	</form>
 </div>
 

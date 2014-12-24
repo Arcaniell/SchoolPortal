@@ -92,11 +92,18 @@ public class DateUtil {
 		return generatedDate;
 	}
 
+	/** Method to get current date */
 	public static Date getCurrentDate(SimpleDateFormat format)
-			throws ParseException {
+			 {
 		Calendar currentDate = Calendar.getInstance();
 		String modifiedDate = format.format(currentDate.getTime());
-		Date formattedCurrentDate = format.parse(modifiedDate);
+		Date formattedCurrentDate;
+		try {
+			formattedCurrentDate = format.parse(modifiedDate);
+			return formattedCurrentDate;
+		} catch (ParseException e) {
+			formattedCurrentDate = new Date();
+		}
 		return formattedCurrentDate;
 	}
 

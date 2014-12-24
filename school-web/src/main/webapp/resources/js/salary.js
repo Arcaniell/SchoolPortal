@@ -40,20 +40,30 @@ $(function() {
 	});
 });
 
+$("a.my-tool-tip").tooltip();
+
 $('#target').scroll(function() {
 });
+
+var check = $(".confirmpayroll").attr("id");
+if (check=="true") {
+	$(".confirmpayroll").prop('disabled', true);
+}
 
 
 var inputs = document.getElementsByName("inputArray");
 for (var int = 0; int < inputs.length; int++) {
 inputs[int].addEventListener('change', function(e) {
-	var num = parseInt(this.value, 10), min = 0, max = 5000;
-
+	
+	var num = parseInt(this.value, 10), min = -2000, max = 5000;
+	if (num < min) {
+		this.value = min;
+	}
+	if (num > max) {
+		this.value = max;
+	}
 	if (isNaN(num)) {
 		this.value = "";
 		return;
 	}
-
-	this.value = Math.max(num, min);
-	this.value = Math.min(num, max);
 })};
