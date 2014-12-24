@@ -5,6 +5,8 @@ import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import jms.InitJmsContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,11 +17,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import school.dao.ConversationDao;
+import school.dao.GroupDao;
+import school.dao.MessageDao;
+import school.dao.UserDao;
 import school.dto.RegistrationDTO;
 import school.model.RegistrationData;
 import school.model.User;
 import school.service.HomeService;
 import school.service.MessagesService;
+import school.service.ParentService;
 import school.service.UserService;
 
 @Controller
@@ -39,15 +46,35 @@ public class HomeController {
 	private UserService userService;
 	@Autowired
 	private MessagesService messagesService;
+	@Autowired
+	private UserDao userDao;
+	@Autowired
+	private ConversationDao conversationDao;
+	@Autowired
+	private ParentService parentService;
+	@Autowired
+	private GroupDao groupDao;
+	@Autowired
+	private MessageDao messageDao;
 
 	@RequestMapping(value = URLContainer.URL_HOME)
 	public String index(Model model, Principal principal,
-			HttpServletRequest request) {
+			HttpServletRequest request) throws NumberFormatException {
 		model.addAttribute(NEWS_LIST, homeService.findAllNews());
 		HttpSession session = request.getSession(false);
 		if (principal != null && session.getAttribute(USER_NAME) == null) {
 			User user = userService.loadUser(Integer.parseInt(principal
 					.getName()));
+
+			/* Initialize JmsSubscriber */
+			boolean isParent = request.isUserInRole("ROLE_PARENT");
+			if (isParent) {
+				String userName = user.getFirstName() + " "
+						+ user.getLastName();
+				InitJmsContext.initSubscriber(user, isParent, userName,
+						parentService, principal);
+			}
+
 			session.setAttribute(USER_NAME,
 					user.getFirstName() + " " + user.getLastName());
 			long userId = Long.valueOf(principal.getName());
@@ -96,24 +123,24 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = URLContainer.URL_FORGOTPASSWORD, method = RequestMethod.POST)
-	public @ResponseBody boolean forgotpassword(
-			@RequestBody RegistrationData registrationData,
+	public @ResponseBody
+	boolean forgotpassword(@RequestBody RegistrationData registrationData,
 			HttpServletRequest request) {
 		return homeService.forgotAPassword(registrationData,
 				request.getContextPath());
 	}
 
 	@RequestMapping(value = URLContainer.URL_REGISTRATION, method = RequestMethod.POST)
-	public @ResponseBody boolean registration(
-			@RequestBody RegistrationDTO registrationDTO,
+	public @ResponseBody
+	boolean registration(@RequestBody RegistrationDTO registrationDTO,
 			HttpServletRequest request) {
 		return homeService.registrateUser(registrationDTO,
 				request.getContextPath());
 	}
 
 	@RequestMapping(value = URLContainer.URL_EMAIL_CHECK, method = RequestMethod.GET)
-	public @ResponseBody boolean check(
-			@RequestParam(value = "email") String email) {
+	public @ResponseBody
+	boolean check(@RequestParam(value = "email") String email) {
 		return userService.isEmailAviable(email);
 	}
 

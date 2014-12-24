@@ -1,13 +1,16 @@
 package school.controller;
 
 import java.security.Principal;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import jms.publisher.Publisher;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +27,6 @@ import school.model.Conversation;
 import school.model.Message;
 import school.service.ConversationService;
 import school.service.MessagesService;
-import school.service.utils.DateUtil;
 
 @Controller
 public class MessagesController {
@@ -60,8 +62,10 @@ public class MessagesController {
 			messagesDto = messagesService.constructGroupMessagesDto(messages,
 					conversation.getSenderId().getId(), loc);
 		} else {
-			if(userId == conversation.getSenderId().getId()) conversation.setNewForSender(false);
-			else conversation.setNewForReceiver(false);
+			if (userId == conversation.getSenderId().getId())
+				conversation.setNewForSender(false);
+			else
+				conversation.setNewForReceiver(false);
 			messagesDto = messagesService.constructMessagesDto(messages,
 					conversation.getReceiverId().getId(), conversation
 							.getSenderId().getId(), loc);
@@ -103,12 +107,14 @@ public class MessagesController {
 			messagesDto = messagesService.constructGroupMessagesDto(messages,
 					conversation.getSenderId().getId(), loc);
 		} else {
-			if(userId == conversation.getSenderId().getId()) conversation.setNewForSender(false);
-			else conversation.setNewForReceiver(false);
+			if (userId == conversation.getSenderId().getId())
+				conversation.setNewForSender(false);
+			else
+				conversation.setNewForReceiver(false);
 			messagesDto = messagesService.constructMessagesDto(messages,
 					conversation.getReceiverId().getId(), conversation
 							.getSenderId().getId(), loc);
-			
+
 		}
 		model.addAttribute("messagesDto", messagesDto);
 		model.addAttribute("inboxSize", conversationsI.size());
@@ -123,7 +129,7 @@ public class MessagesController {
 	@RequestMapping(value = "delete-message", method = RequestMethod.POST)
 	public String deleteMessages(
 			@RequestParam(value = "messageId", required = false) String messageId,
-			Principal principal, HttpServletRequest request) {
+			Principal principal, HttpServletRequest request) throws NumberFormatException {
 		long id = Long.valueOf(principal.getName());
 		messagesService.deleteMessage(Long.valueOf(messageId), id);
 		String currentPage = (String) request.getSession().getAttribute(
@@ -135,28 +141,42 @@ public class MessagesController {
 	public String reply(
 			@RequestParam("messageId") String messageId,
 			@RequestParam(value = "replyText", required = false) String replyText,
-			HttpServletRequest request, Principal principal) {
+			HttpServletRequest request, Principal principal) throws NumberFormatException {
 
-		Message repliedMessage = messagesService.findById(Long.valueOf(messageId));
+		Message repliedMessage = messagesService.findById(Long
+				.valueOf(messageId));
 		Conversation conversation = conversationService.findById(repliedMessage
 				.getConversationId().getId());
 		long principalId = Long.valueOf(principal.getName());
-		long convId = conversation.getId();
 		int countReceivers = conversation.getCountOfReceivers();
 		if (countReceivers > 1) {
-			for (int i = 0; i < countReceivers; i++) {
-				messagesService.replyMessage(
-						conversationService.findById(convId), replyText,
-						principalId);
-				convId++;
-			}
-		} else {			
+
+			messagesService.replyMessage(conversation, replyText, principalId);
+
+			ApplicationContext ac = initApplContext();
+			Publisher publisher = (Publisher) ac.getBean("publisher");
+			publisher.setReply(true);
+			publisher.setConversation(conversation);
+			publisher.setHashCode(conversation.getHashCode());
+			publisher.setGroup(conversation.getOutcomeName().split(":")[1]
+					.trim());
+			publisher.sendMessage(replyText);
+
+		} else {
 			messagesService.replyMessage(conversation, replyText, principalId);
 		}
 
 		String currentPage = (String) request.getSession().getAttribute(
 				"currentPage");
 		return "redirect:/" + currentPage;
+	}
+
+	private ApplicationContext initApplContext() {
+		ApplicationContext ctx = null;
+		if (ctx == null) {
+			ctx = new ClassPathXmlApplicationContext("jmsPublisherConfig.xml");
+		}
+		return ctx;
 	}
 
 	@RequestMapping(value = "/emailInput", method = RequestMethod.POST)
@@ -172,7 +192,7 @@ public class MessagesController {
 
 	@RequestMapping(value = "/newMessages", method = RequestMethod.GET)
 	public @ResponseBody
-	NewMessagesObjectDTO getNewMessages(Principal principal) {
+	NewMessagesObjectDTO getNewMessages(Principal principal) throws NumberFormatException {
 		NewMessagesObjectDTO newMessagesObjectDTO;
 		if (principal != null) {
 			newMessagesObjectDTO = messagesService

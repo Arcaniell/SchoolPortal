@@ -107,6 +107,6 @@ src="<c:url value="/resources/img/logos/school-logo.jpg" />" />
 		};
 		setInterval(function() {
 			poll();
-		}, 2000);
+		}, 2000000);
 	})();
 </script>

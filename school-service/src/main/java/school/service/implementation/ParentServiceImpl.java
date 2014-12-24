@@ -8,16 +8,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import school.dao.GroupDao;
+import school.dao.ParentDao;
 import school.model.Group;
 import school.model.Parent;
 import school.model.Student;
+import school.model.User;
 import school.service.ParentService;
 
 @Service
 public class ParentServiceImpl implements ParentService {
-	
+
 	@Autowired
 	private GroupDao groupDao;
+	@Autowired
+	private ParentDao parentDao;
 
 	@Transactional
 	@Override
@@ -27,13 +31,17 @@ public class ParentServiceImpl implements ParentService {
 		Group ourGroup = groupDao.findByNumberAndLetter(number, letter);
 		List<Student> students = ourGroup.getStudent();
 		List<Parent> parents = new ArrayList<Parent>();
-		for(Student s:students) {
-			for(Parent p:s.getParents()) {
+		for (Student s : students) {
+			for (Parent p : s.getParents()) {
 				parents.add(p);
 			}
 		}
 		return parents;
 	}
-	
-	
+
+	@Override
+	public Parent findByUserId(User user) {
+		return parentDao.findByUserId(user.getId());
+	}
+
 }
