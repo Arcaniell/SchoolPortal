@@ -103,7 +103,7 @@ $("#inboxButton")
 											document.getElementById("select").value = "10";
 											$(".row_count").change();
 										} else {
-											document.getElementById("select").value = "15";
+											document.getElementById("select").value = "20";
 											$(".row_count").change();
 										}
 
@@ -224,7 +224,7 @@ $("#sentButton")
 											document.getElementById("select").value = "10";
 											$(".row_count").change();
 										} else {
-											document.getElementById("select").value = "15";
+											document.getElementById("select").value = "20";
 											$(".row_count").change();
 										}
 									} else {

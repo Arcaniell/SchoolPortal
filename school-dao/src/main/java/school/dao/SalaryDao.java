@@ -18,4 +18,7 @@ public interface SalaryDao extends BaseDao<Salary, Long> {
 	Long findHoursByPeriod(long teacherId, Date from, Date until);
 	
 	Salary findByLastIssueDate (long teacherId);
+
+	Date findLastDate();
+
 }

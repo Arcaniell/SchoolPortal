@@ -24,7 +24,9 @@ import javax.persistence.TemporalType;
 		@NamedQuery(name = Salary.FIND_BY_TEACHER_ID, query = Salary.FIND_BY_TEACHER_ID_QUERY),
 		@NamedQuery(name = Salary.FIND_COUNT_OF_HOURS_BY_PERIOD, query = Salary.FIND_COUNT_OF_HOURS_BY_PERIOD_QUERY),
 		@NamedQuery(name = Salary.FIND_BY_TEACHER_ID_AND_PERIOD, query = Salary.FIND_BY_TEACHER_ID_AND_PERIOD_QUERY),
-		@NamedQuery(name = Salary.FIND_BY_LAST_ISSUE_DATE, query = Salary.FIND_BY_LAST_ISSUE_DATE_QUERY) })
+		@NamedQuery(name = Salary.FIND_BY_LAST_ISSUE_DATE, query = Salary.FIND_BY_LAST_ISSUE_DATE_QUERY),
+		@NamedQuery(name = Salary.FIND_LAST_ISSUE_DATE, query = Salary.FIND_LAST_ISSUE_DATE_QUERY) }
+		)
 public class Salary {
 	public static final String FIND_BY_DATE = "Salary.findByDate";
 	public static final String FIND_BY_DATE_QUERY = "SELECT u FROM Salary u WHERE u.issueDate = :issueDate";
@@ -38,6 +40,9 @@ public class Salary {
 	public static final String FIND_BY_TEACHER_ID_AND_PERIOD_QUERY = "SELECT u FROM Salary u WHERE u.teacher.id = :id AND u.issueDate BETWEEN :from AND :until";
 	public static final String FIND_BY_LAST_ISSUE_DATE = "Salary.findByLastIssueDate";
 	public static final String FIND_BY_LAST_ISSUE_DATE_QUERY = "SELECT u FROM Salary u WHERE u.teacher.id = :id ORDER BY u.issueDate DESC";
+	public static final String FIND_LAST_ISSUE_DATE = "Salary.findLastIssueDate";
+	public static final String FIND_LAST_ISSUE_DATE_QUERY = "SELECT u.issueDate FROM Salary u ORDER BY u.issueDate DESC";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;

@@ -20,3 +20,13 @@
 .search_logo {
 	display: none;
 }
+
+.scrolling {
+	overflow:scroll; 
+	height: 460px; 
+	width: auto;
+}
+
+.my th, .my td {
+	width : 148px;
+}

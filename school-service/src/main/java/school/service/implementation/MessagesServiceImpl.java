@@ -76,30 +76,34 @@ public class MessagesServiceImpl implements MessagesService {
 			long principalId) {
 		Message message;
 		if (conversation.getReceiverId().getId() == principalId) {
-			message = new Message(conversation, false, text, new Date(), false, false);
+			message = new Message(conversation, false, text, new Date(), false,
+					false);
 			ConversationUtils.markReceiversConversationAsNew(conversation);
 			message.setReadSender(false);
-			
+
 			if (conversation.getCountOfReceivers() == -1) {
 				List<Conversation> sentConversationsOfSender = conversationDao
 						.findSentConversations(conversation.getSenderId());
-				long idOfHeadConversion = 0;
+
 				for (Conversation c : sentConversationsOfSender) {
-					if (c.getCountOfReceivers() > 1) idOfHeadConversion = c.getId();
-					if (c.getId() == conversation.getId()) {
-						Conversation conversationChild = conversationDao
-								.findById(idOfHeadConversion);
+
+					if (c.getHashCode() != null
+							&& c.getHashCode().equals(
+									conversation.getHashCode())
+							&& c.getCountOfReceivers() > 1) {
+
 						Message messageClone = ConversationUtils
 								.createMessageClone(conversation,
-										sentConversationsOfSender, text,
-										conversationChild);
+										sentConversationsOfSender, text, c);
 						messageDao.save(messageClone);
 						message.setReadSender(true);
 					}
 				}
+
 			}
 		} else {
-			message = new Message(conversation, true, text, new Date(), false, false);
+			message = new Message(conversation, true, text, new Date(), false,
+					false);
 			ConversationUtils.markSendersConversationAsNew(conversation);
 			message.setReadReceiver(false);
 		}
@@ -116,7 +120,7 @@ public class MessagesServiceImpl implements MessagesService {
 					.getId()), names.get(i), DateUtil.getFormattedDate(messages
 					.get(i).getDateTime(), DateUtil.MESSAGE_DATE_FORMAT, loc),
 					messages.get(i).getText());
-			
+
 			if (messages.get(i).isFromSender()) {
 				dto.setUserId(senderId);
 			} else
@@ -241,17 +245,16 @@ public class MessagesServiceImpl implements MessagesService {
 		if (usersOrGroups.size() > 0) {
 			if (usersOrGroups.get(0) instanceof User) {
 				for (Object u : usersOrGroups) {
-					emailObjectDTOs.add(new EmailObjectDTO(((User) u)
-							.getFirstName()
-							+ " "
-							+ ((User) u).getLastName()
-							+ " - " + ((User) u).getEmail(), ((User) u).getId()));
+					emailObjectDTOs
+							.add(new EmailObjectDTO(((User) u).getFirstName()
+									+ " " + ((User) u).getLastName() + " - "
+									+ ((User) u).getEmail(), ((User) u).getId()));
 				}
 			} else if (usersOrGroups.get(0) instanceof Group) {
 				for (Object g : usersOrGroups) {
-					emailObjectDTOs
-							.add(new EmailObjectDTO(((Group) g).getNumber()
-									+ " - " + ((Group) g).getLetter(), ((Group) g).getId()));
+					emailObjectDTOs.add(new EmailObjectDTO(((Group) g)
+							.getNumber() + " - " + ((Group) g).getLetter(),
+							((Group) g).getId()));
 				}
 			}
 		}

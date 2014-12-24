@@ -3,10 +3,21 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<link href="<c:url value="/resources/css/profile.css" />"
+	rel="stylesheet">
 <link href="<c:url value="/resources/css/bootstrap-select.min.css" />"
 	rel="stylesheet">
+<link href="<c:url value="/resources/css/schedules.css" />"
+	rel="stylesheet">
+<link href="<c:url value="/resources/css/base-pagination.css" />"
+	rel="stylesheet">
 
-<h3>Schedule for the Academic Year 2014/2015</h3>
+
+
+
+<h3>
+	<spring:message code="schedule.description" />
+</h3>
 
 
 
@@ -65,12 +76,7 @@
 
 					</td>
 				</div>
-				<td><div id="col2">
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-
-					</div></td>
+				<td width="172"><div id="col2"></div></td>
 				<div id="col3">
 					<td><select id="rm" name="roomy"
 						style="height: 34px; width: 90px;">
@@ -116,32 +122,36 @@
 
 <!-- TABLE -->
 
-<div class="table-responsive ">
+<div class="table-responsive scrolling">
 
 
 	<table id="comp"
-		class="table  table-bordered default_table table-hover">
+		class="table  table-bordered default_table table-hover paginated  my">
+
 
 	</table>
+	<img class="weekend_logo"
+		src="<c:url value="/resources/img/photo/weekend.png"/>" /> <img
+		class="search_logo"
+		src="<c:url value="/resources/img/photo/search.png"/>" />
+
+
 </div>
-<img class="weekend_logo"
-	src="<c:url value="/resources/img/photo/weekend.png"/>" />
-<img class="search_logo"
-	src="<c:url value="/resources/img/photo/search.png"/>" />
 
 
+<!-- Pagination footer -->
+<div class="context-footer">
+	<select id="select" class="form-control row_count">
+		<option value="16">4</option>
+		<option value="32">8</option>
+		<option value="48">12</option>
+		<option value="64">16</option>
+	</select>
+	<div class="pages"></div>
+</div>
+<!-- Pagination footer -->
 
 
-
-
-
-
-
-
-
-<jsp:include page="/views/schedule/editing.jsp" />
-<link href="<c:url value="/resources/css/schedules.css" />"
-	rel="stylesheet">
 
 
 <script src="<c:url value="https://code.jquery.com/jquery-1.10.2.js" />">
@@ -159,6 +169,10 @@
 <script src="<c:url value="/resources/js/schedule.js" />"
 	type="text/javascript"></script>
 
+<jsp:include page="/views/profile/profile_information_runner.jsp" />
+
+<script src="<c:url value="/resources/js/utils/pagination.js" />"
+	type="text/javascript"></script>
 
 
 

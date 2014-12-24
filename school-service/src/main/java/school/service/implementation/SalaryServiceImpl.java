@@ -26,9 +26,16 @@ import school.service.SalaryService;
 import school.service.utils.DateUtil;
 import school.service.utils.SalaryUtil;
 
+/**
+ * This class realizes all salary methods from SalaryService interface.
+ * 
+ * @author Roman Zherebetskyi
+ * 
+ */
 @Service
 public class SalaryServiceImpl implements SalaryService {
-	private final SimpleDateFormat formatterDate = new SimpleDateFormat("MM/dd/yyyy");
+	private final SimpleDateFormat formatterDate = new SimpleDateFormat(
+			"MM/dd/yyyy");
 	private final String ISSUE_DAY = "/10/";
 	private final int INITIAL_RATE = 15;
 	@Autowired
@@ -36,18 +43,59 @@ public class SalaryServiceImpl implements SalaryService {
 	@Autowired
 	private TeacherDao teacherDao;
 
-	public int getHours(Date lastSalaryDate, Teacher teacher)
-			throws ParseException {
+	@Override
+	public int getHours(Date lastSalaryDate, Teacher teacher) {
 		Date currentDate = DateUtil.getCurrentDate(formatterDate);
 		long hours = salaryDao.findHoursByPeriod(teacher.getId(),
 				lastSalaryDate, currentDate);
 		return (int) hours;
 	}
 
+	@Override
+	public Boolean isCurrentMonth() {
+		Calendar lastSalaryDate = Calendar.getInstance();
+		lastSalaryDate.setTime(salaryDao.findLastDate());
+		int lastSalaryMonth = lastSalaryDate.get(Calendar.MONTH);
+		int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
+		return (lastSalaryMonth == currentMonth);
+	}
+
+	@Override
+	public Date predictNextMonth(int lastSalaryMonth, int currentMonth,
+			Calendar currentDate) {
+		Date nextCalculationDate = new Date();
+		if (lastSalaryMonth != 11) {
+			if (lastSalaryMonth == currentMonth) {
+				try {
+					nextCalculationDate = formatterDate.parse(""
+							+ (currentMonth + 2) + ISSUE_DAY
+
+							+ currentDate.get(Calendar.YEAR));
+				} catch (ParseException e) {
+
+				}
+			} else if (lastSalaryMonth < currentMonth)
+				try {
+					nextCalculationDate = formatterDate.parse(""
+							+ (currentMonth + 1) + ISSUE_DAY
+							+ currentDate.get(Calendar.YEAR));
+				} catch (ParseException e) {
+
+				}
+		} else
+			try {
+				nextCalculationDate = formatterDate.parse(""
+						+ (Calendar.JANUARY + 1) + ISSUE_DAY
+						+ (currentDate.get(Calendar.YEAR) + 1));
+			} catch (ParseException e) {
+
+			}
+		return nextCalculationDate;
+	}
+
 	@Transactional
 	@Override
-	public SalaryDTO getCurrentMonthInfo(Principal principal)
-			throws ParseException {
+	public SalaryDTO getCurrentMonthInfo(Principal principal) {
 		long userId = Long.parseLong(principal.getName());
 		Teacher teacher = teacherDao.findByUserId(userId);
 		if (teacher == null)
@@ -55,31 +103,16 @@ public class SalaryServiceImpl implements SalaryService {
 
 		Date lastSalaryDateDate = salaryDao
 				.findByLastIssueDate(teacher.getId()).getIssueDate();
-
 		Calendar currentDate = Calendar.getInstance();
 		int hours = (int) getHours(lastSalaryDateDate, teacher);
 		int balance = hours * INITIAL_RATE * teacher.getRate();
-
 		int currentMonth = currentDate.get(Calendar.MONTH);
 		Calendar lastSalaryDate = Calendar.getInstance();
 		lastSalaryDate.setTime(lastSalaryDateDate);
 		int lastSalaryMonth = lastSalaryDate.get(Calendar.MONTH);
-		Date nextCalculationDate = new Date();
-		if (lastSalaryMonth != 11) {
-			if (lastSalaryMonth == currentMonth) {
-				nextCalculationDate = formatterDate.parse(""
-						+ (currentMonth + 2) + ISSUE_DAY
-						+ currentDate.get(Calendar.YEAR));
-			} else if (lastSalaryMonth < currentMonth)
-				nextCalculationDate = formatterDate.parse(""
-						+ (currentMonth + 1) + ISSUE_DAY
-						+ currentDate.get(Calendar.YEAR));
-		} else
-			nextCalculationDate = formatterDate.parse(""
-					+ (Calendar.JANUARY + 1) + ISSUE_DAY
-					+ (currentDate.get(Calendar.YEAR) + 1));
+		Date nextCalculationDate = predictNextMonth(lastSalaryMonth,
+				currentMonth, currentDate);
 		String nextCalculation = formatterDate.format(nextCalculationDate);
-
 		return new SalaryDTO(hours, balance, nextCalculation);
 	}
 
@@ -130,7 +163,7 @@ public class SalaryServiceImpl implements SalaryService {
 
 	@Transactional
 	@Override
-	public List<SalaryPayrollDTO> getPayrollInfo() throws ParseException {
+	public List<SalaryPayrollDTO> getPayrollInfo() {
 		List<SalaryPayrollDTO> payrolls = new ArrayList<SalaryPayrollDTO>();
 		List<Teacher> teachers = teacherDao.findAll();
 		for (Teacher teacher : teachers) {
@@ -151,16 +184,15 @@ public class SalaryServiceImpl implements SalaryService {
 		}
 		return payrolls;
 	}
-	
+
 	@Transactional
 	@Override
-	public void addSalary(String[] additionalPay) throws ParseException {
+	public void addSalary(String[] additionalPay) {
 		List<SalaryPayrollDTO> payrolls = getPayrollInfo();
 		int i = 0;
 		for (SalaryPayrollDTO payroll : payrolls) {
 			Date currentDate = DateUtil.getCurrentDate(formatterDate);
-			int additional = Integer.parseInt(additionalPay[i]);
-			i++;
+			int additional = Integer.parseInt(additionalPay[i++]);
 			int salary = payroll.getSalary();
 			int hours = payroll.getHours();
 			int sum = salary + additional;

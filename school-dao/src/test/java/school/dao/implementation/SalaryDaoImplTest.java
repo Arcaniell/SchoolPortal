@@ -58,53 +58,51 @@ public class SalaryDaoImplTest extends DBUnitConfig {
 
 	@Test
 	public void testFindByTeacherId() throws Exception {
-/*		salaries = salaryDao.findByTeacherId(2);
-		Assert.assertEquals(1, salaries.size());*/
+		/*
+		 * salaries = salaryDao.findByTeacherId(2); Assert.assertEquals(1,
+		 * salaries.size());
+		 */
 		Assert.assertTrue(1 == 1);
 	}
 
-/*	@Test
-	public void testFindByPeriod() throws ParseException {
-		Date from = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
-				.parse("2014-10-10 09:00:00");
-		Date until = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
-				.parse("2014-12-22 11:00:00");
-		salaries = salaryDao.findByPeriod(from, until);
-		Assert.assertTrue(salaries.size() == 3);
-	}
+//	@Test
+//	public void testFindLastDate() throws Exception {
+//		Date date = salaryDao.findLastDate();
+//		Date from = new SimpleDateFormat("yyyy-M-dd")
+//				.parse("2014-12-14");
+//		assertEquals(from, date);
+//	}
 
-	@Test
-	public void testFindByDate() throws ParseException {
-		Date issueDate = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
-				.parse("2014-10-13 09:00:00");
-		salaries = salaryDao.findByDate(issueDate);
-		Assert.assertTrue(salaries.size() == 1);
-	}
-
-	@Test
-	public void testFindHours() throws Exception {
-		Date from = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
-				.parse("2014-10-23 08:08:10");
-		Date until = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
-				.parse("2014-10-25 09:08:10");
-		long actual = salaryDao.findHoursByPeriod(1, from, until);
-		Assert.assertEquals(2, actual);
-	}
-
-	@Test
-	public void testFindByTeacherAndPeriod() throws Exception {
-		Date from = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
-				.parse("2014-10-10 09:00:00");
-		Date until = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
-				.parse("2014-12-22 11:00:00");
-		salaries = salaryDao.findByTeacherIdAndPeriod(1, from, until);
-		Assert.assertEquals(2, salaries.size());
-	}
-	
-	@Test
-	public void testFindByLastIssueDate() throws Exception {
-		Salary salary = salaryDao.findByLastIssueDate(1);
-		Date date = new SimpleDateFormat("yyyy-M-dd").parse("2014-11-11");
-		Assert.assertEquals(date, salary.getIssueDate());
-	}*/
+	/*
+	 * @Test public void testFindByPeriod() throws ParseException { Date from =
+	 * new SimpleDateFormat("yyyy-M-dd HH:mm:ss") .parse("2014-10-10 09:00:00");
+	 * Date until = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
+	 * .parse("2014-12-22 11:00:00"); salaries = salaryDao.findByPeriod(from,
+	 * until); Assert.assertTrue(salaries.size() == 3); }
+	 * 
+	 * @Test public void testFindByDate() throws ParseException { Date issueDate
+	 * = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
+	 * .parse("2014-10-13 09:00:00"); salaries =
+	 * salaryDao.findByDate(issueDate); Assert.assertTrue(salaries.size() == 1);
+	 * }
+	 * 
+	 * @Test public void testFindHours() throws Exception { Date from = new
+	 * SimpleDateFormat("yyyy-M-dd HH:mm:ss") .parse("2014-10-23 08:08:10");
+	 * Date until = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
+	 * .parse("2014-10-25 09:08:10"); long actual =
+	 * salaryDao.findHoursByPeriod(1, from, until); Assert.assertEquals(2,
+	 * actual); }
+	 * 
+	 * @Test public void testFindByTeacherAndPeriod() throws Exception { Date
+	 * from = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
+	 * .parse("2014-10-10 09:00:00"); Date until = new
+	 * SimpleDateFormat("yyyy-M-dd HH:mm:ss") .parse("2014-12-22 11:00:00");
+	 * salaries = salaryDao.findByTeacherIdAndPeriod(1, from, until);
+	 * Assert.assertEquals(2, salaries.size()); }
+	 * 
+	 * @Test public void testFindByLastIssueDate() throws Exception { Salary
+	 * salary = salaryDao.findByLastIssueDate(1); Date date = new
+	 * SimpleDateFormat("yyyy-M-dd").parse("2014-11-11");
+	 * Assert.assertEquals(date, salary.getIssueDate()); }
+	 */
 }

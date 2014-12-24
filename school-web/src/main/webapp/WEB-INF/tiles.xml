@@ -121,4 +121,10 @@
 		<put-attribute name="main_content" value="/views/schedule/schedule.jsp" />
 		<put-attribute name="current" value="schedule" />
 	</definition>
+	
+	<definition name="noConnectionToDB" extends="base.definition">
+		<put-attribute name="title" value="Error" />
+		<put-attribute name="main_content" value="/WEB-INF/errorpage/noConnectionToDB.jsp" />
+	</definition>
+	
 	</tiles-definitions>

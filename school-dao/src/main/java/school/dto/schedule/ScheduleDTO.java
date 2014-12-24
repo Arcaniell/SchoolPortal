@@ -4,6 +4,62 @@ public class ScheduleDTO {
 
 	private GroupScheduleDTO group;
 	private UserDTO teacher;
+	private long userId;
+	private long scheduleId;
+	public ScheduleDTO(GroupScheduleDTO group, UserDTO teacher, long userId,
+			long scheduleId, boolean loginned, CourseScheduleDTO course,
+			RoomDTO room, LessonDTO lesson, String date) {
+		super();
+		this.group = group;
+		this.teacher = teacher;
+		this.userId = userId;
+		this.scheduleId = scheduleId;
+		this.loginned = loginned;
+		this.course = course;
+		this.room = room;
+		this.lesson = lesson;
+		this.date = date;
+	}
+
+	public boolean isLoginned() {
+		return loginned;
+	}
+
+	public void setLoginned(boolean loginned) {
+		this.loginned = loginned;
+	}
+
+	private boolean loginned;
+	public ScheduleDTO(GroupScheduleDTO group, UserDTO teacher, long userId,
+			long scheduleId, CourseScheduleDTO course, RoomDTO room,
+			LessonDTO lesson, String date) {
+		super();
+		this.group = group;
+		this.teacher = teacher;
+		this.userId = userId;
+		this.scheduleId = scheduleId;
+		this.course = course;
+		this.room = room;
+		this.lesson = lesson;
+		this.date = date;
+	}
+
+	public long getScheduleId() {
+		return scheduleId;
+	}
+
+	public void setScheduleId(long scheduleId) {
+		this.scheduleId = scheduleId;
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
 	private CourseScheduleDTO course;
 	private RoomDTO room;
 	private LessonDTO lesson;
@@ -25,6 +81,21 @@ public class ScheduleDTO {
 
 		this.date = dateOfLesson;
 	}
+
+	public ScheduleDTO(GroupScheduleDTO group, UserDTO teacher, long userId,
+			CourseScheduleDTO course, RoomDTO room, LessonDTO lesson,
+			String date) {
+		super();
+		this.group = group;
+		this.teacher = teacher;
+		this.userId = userId;
+		this.course = course;
+		this.room = room;
+		this.lesson = lesson;
+		this.date = date;
+	}
+
+
 
 	public ScheduleDTO(GroupScheduleDTO groupNeme, UserDTO teacherName,
 			CourseScheduleDTO courseName, RoomDTO roomNumb,
@@ -96,7 +167,9 @@ public class ScheduleDTO {
 		result = prime * result + ((group == null) ? 0 : group.hashCode());
 		result = prime * result + ((lesson == null) ? 0 : lesson.hashCode());
 		result = prime * result + ((room == null) ? 0 : room.hashCode());
+		result = prime * result + (int) (scheduleId ^ (scheduleId >>> 32));
 		result = prime * result + ((teacher == null) ? 0 : teacher.hashCode());
+		result = prime * result + (int) (userId ^ (userId >>> 32));
 		return result;
 	}
 
@@ -134,19 +207,24 @@ public class ScheduleDTO {
 				return false;
 		} else if (!room.equals(other.room))
 			return false;
+		if (scheduleId != other.scheduleId)
+			return false;
 		if (teacher == null) {
 			if (other.teacher != null)
 				return false;
 		} else if (!teacher.equals(other.teacher))
+			return false;
+		if (userId != other.userId)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "ScheduleDTO [groupNeme=" + group + ", teacherName=" + teacher
-				+ ", courseName=" + course + ", roomNumb=" + room
-				+ ", lessonNumb=" + lesson + ", dateOfLesson=" + date + "]";
+		return "ScheduleDTO [group=" + group + ", teacher=" + teacher
+				+ ", userId=" + userId + ", scheduleId=" + scheduleId
+				+ ", course=" + course + ", room=" + room + ", lesson="
+				+ lesson + ", date=" + date + "]";
 	}
 
 }

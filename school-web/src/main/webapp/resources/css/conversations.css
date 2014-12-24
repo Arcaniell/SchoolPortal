@@ -10,7 +10,7 @@
 	width: 150px;
 	left: 415.5px;
 	position: inherit;
-	top: 31px;
+	top: 32px;
 	z-index: 1;
 	padding: 0px;
 	height: 30px !important;
@@ -365,7 +365,7 @@ h1,.h1,h2,.h2,h3,.h3 {
 }
 
 .row_count {
-	width: 65px;
+	width: 75px;
 	margin: 10px;
 	float: right;
 }

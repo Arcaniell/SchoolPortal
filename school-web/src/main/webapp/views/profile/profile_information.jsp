@@ -22,7 +22,7 @@
 <table class="profile_table">
 	<tr>
 		<td><img class="logo"
-			src="<c:url value="/photo/${profile.profileId}" />" /></td>
+			src="<c:url value="/resources/img/photo/${profile.profileId}.png" />" /></td>
 		<td>
 			<h4>Position: ${profile.profileRole}</h4>
 			<h4>Birthday: ${profile.birthday }</h4>

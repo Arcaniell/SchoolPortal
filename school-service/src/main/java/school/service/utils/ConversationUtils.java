@@ -62,7 +62,7 @@ public class ConversationUtils {
 		conversation.setDeletedSender(false);
 		conversation.setNewForSender(true);
 	}
-	
+
 	public static void markSendersConversationAsNew(Conversation conversation) {
 		conversation.setAnsweredReceiver(true);
 		conversation.setDeletedSender(false);
@@ -71,14 +71,17 @@ public class ConversationUtils {
 
 	public static List<Conversation> removeDoubledConversations(
 			List<Conversation> conversations, long receiverId) {
+
 		Iterator<Conversation> i = conversations.iterator();
 		while (i.hasNext()) {
 			Conversation c = i.next();
 			if (c.getCountOfReceivers() == -1
-					&& c.getReceiverId().getId() != receiverId) {
+					&& c.getReceiverId().getId() != receiverId
+					&& c.getCountOfReceivers() != null) {
 				i.remove();
 			}
 		}
+
 		return conversations;
 	}
 
