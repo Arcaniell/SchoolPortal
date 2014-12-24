@@ -16,10 +16,10 @@ import school.dao.MessageDao;
 import school.model.Conversation;
 import school.model.Message;
 import school.service.MessagesService;
-
+/*
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/META-INF/service-context.xml"})
-@TestExecutionListeners( { DependencyInjectionTestExecutionListener.class })
+@TestExecutionListeners( { DependencyInjectionTestExecutionListener.class })*/
 public class MessageServiceImplTest {
 
 	@Autowired

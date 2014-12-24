@@ -19,7 +19,6 @@ import school.controller.URLContainer;
 import school.dto.journal.EditMarkDTO;
 import school.dto.journal.EditDateDTO;
 import school.dto.journal.JournalSearch;
-import school.dto.journal.JournalStaffDTO;
 import school.dto.journal.StudentWithMarksDTO;
 import school.model.Role;
 import school.service.JournalService;
@@ -47,10 +46,9 @@ public class JournalController {
 			model.addAttribute(JournalUtil.MOD_ATT_SEARCH_DATA, searchData);
 		}
 
-		JournalStaffDTO staff = journalService.getStaffInfo(userId,
-				getHighestRole(request));
+		model.addAttribute(JournalUtil.MOD_ATT_STAFF,
+				journalService.getStaffInfo(userId, getHighestRole(request)));
 
-		model.addAttribute(JournalUtil.MOD_ATT_STAFF, staff);
 		model.addAttribute(URLContainer.JSP_OUTPUT_CURRENT_PAGE,
 				URLContainer.URL_JOURNAL);
 		return URLContainer.URL_JOURNAL;
@@ -58,7 +56,7 @@ public class JournalController {
 
 	@RequestMapping(value = URLContainer.URL_JOURNAL_MARKS)
 	public @ResponseBody List<StudentWithMarksDTO> getByGroup(
-			@RequestBody JournalSearch journalSearch) throws ParseException {
+			@RequestBody JournalSearch journalSearch) {
 
 		List<StudentWithMarksDTO> groupMarks = journalService
 				.getMarksOfGroup(journalSearch);
@@ -67,11 +65,10 @@ public class JournalController {
 	}
 
 	@RequestMapping(value = URLContainer.URL_JOURNAL_EDIT_MARK)
-	public @ResponseBody byte editMark(@RequestBody EditMarkDTO editMarkDTO) {
-
-		journalService.editMark(editMarkDTO);
-
-		return editMarkDTO.getMark();
+	public @ResponseBody EditMarkDTO editMark(
+			@RequestBody EditMarkDTO editMarkDTO) {
+		
+		return journalService.editMark(editMarkDTO);
 
 	}
 

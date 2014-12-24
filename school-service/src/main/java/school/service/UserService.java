@@ -16,6 +16,13 @@ public interface UserService {
 	
 	User createUser(User user);
 
+	@Secured(Role.Secured.IS_AUTHENTICATED_FULLY)
+	void changeUserName(User user);
+	@Secured(Role.Secured.IS_AUTHENTICATED_FULLY)
+	void changeSex(User user);
+	@Secured(Role.Secured.IS_AUTHENTICATED_FULLY)
+	void changePassword(User user);
+	
 	User findByEmail(String email);
 
 	@Secured(Role.Secured.IS_AUTHENTICATED_FULLY)

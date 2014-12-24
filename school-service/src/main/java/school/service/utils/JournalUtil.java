@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
-public class JournalUtil extends SchoolUtil {
+import school.dto.journal.MarkDTO;
+
+public class JournalUtil {
 
 	public static final String MOD_ATT_DATES = "dates";
 	public static final String MOD_ATT_GROUP_MARKS = "groupMarks";
@@ -26,29 +29,27 @@ public class JournalUtil extends SchoolUtil {
 	public static final String EMPTY = "";
 	public static final int NOTHING = 0;
 
-	public static final int REGULAR_MARK = 1;
-
 	public static final String SPLITTER = "j";
 
-	public static final int FIRST_AND_LAST_DATE_OF_QUARTER = 2;
 	public static final int FIRST_DATE_OF_QUARTER = 0;
 	public static final int LAST_DATE_OF_QUARTER = 1;
 
-	public static final String FIRST_DAY_FIRST_QUARTER = "09/01/2014";
-	public static final String LAST_DAY_FIRST_QUARTER = "10/31/2014";
-	public static final String FIRST_DAY_SECOND_QUARTER = "11/01/2014";
-	public static final String LAST_DAY_SECOND_QUARTER = "12/31/2014";
-	public static final String FIRST_DAY_THIRD_QUARTER = "02/01/2015";
-	public static final String LAST_DAY_THIRD_QUARTER = "03/31/2015";
-	public static final String FIRST_DAY_FOURTH_QUARTER = "04/01/2015";
-	public static final String LAST_DAY_FOURTH_QUARTER = "05/31/2015";
-
+	public static final Date FIRST_DAY_FIRST_QUARTER = new Date(1409518800000L);
+	public static final Date LAST_DAY_FIRST_QUARTER = new Date(1414706400000L);
+	public static final Date FIRST_DAY_SECOND_QUARTER = new Date(1414792800000L);
+	public static final Date LAST_DAY_SECOND_QUARTER = new Date(1419976800000L);
+	public static final Date FIRST_DAY_THIRD_QUARTER = new Date(1422741600000L);
+	public static final Date LAST_DAY_THIRD_QUARTER = new Date(1427749200000L);
+	public static final Date FIRST_DAY_FOURTH_QUARTER = new Date(1427835600000L);
+	public static final Date LAST_DAY_FOURTH_QUARTER = new Date(1433019600000L);
+	
+	public static final int DAYS_DEFORE = -5;
+	public static final int DAYS_AFTER = 5;
+	
 	public static List<Date> getWeek(Calendar date) throws ParseException {
-
-		SimpleDateFormat format = new SimpleDateFormat(UI_DATE_FORMAT);
+		SimpleDateFormat format = new SimpleDateFormat(DateUtil.UI_DATE_FORMAT);
 		String formatedDate = (date.get(Calendar.MONTH) + 1) + "/"
 				+ date.get(Calendar.DATE) + "/" + date.get(Calendar.YEAR);
-
 		Date d = format.parse(formatedDate);
 		date.setTime(d);
 
@@ -61,17 +62,76 @@ public class JournalUtil extends SchoolUtil {
 		return week;
 	}
 
-	public static long getClosestValue(long currentNumber, List<Long> numbers) {
+	public static Date getHoursOfDate(Date date) throws ParseException {
+		SimpleDateFormat dateFormat = new SimpleDateFormat(HOURS_OF_DATE);
+		return dateFormat.parse(dateFormat.format(date));
+	}
 
+	public static Date getDateWithoutHours(Date date) throws ParseException {
+		SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+		return dateFormat.parse(dateFormat.format(date));
+	}
+
+	public static long getClosestValue(long currentNumber, List<Long> numbers) {
 		long distance = Math.abs(numbers.get(0) - currentNumber);
 		int idx = 0;
-		for (int c = 1; c < numbers.size(); c++) {
-			long cdistance = Math.abs(numbers.get(c) - currentNumber);
+		for (int i = 1; i < numbers.size(); i++) {
+			long cdistance = Math.abs(numbers.get(i) - currentNumber);
 			if (cdistance < distance) {
-				idx = c;
+				idx = i;
 				distance = cdistance;
 			}
 		}
 		return numbers.get(idx);
 	}
+
+	public static int getQuarterMark(Set<MarkDTO> marks) {
+		int markSum = NOTHING;
+		int size = NOTHING;
+		for (MarkDTO markDTO : marks) {
+			if (markDTO.getMark() > NOTHING) {
+				markSum += markDTO.getMark() * markDTO.getMarkCoefficient();
+				size += markDTO.getMarkCoefficient();
+			}
+		}
+		try {
+			return Math.round((float) markSum / size);
+		} catch (ArithmeticException ae) {
+			return NOTHING;
+		}
+	}
+
+	public static String getQuarterByDate(Date date) {
+		if (date.before(FIRST_DAY_SECOND_QUARTER)) {
+			return FIRST_QUARTER;
+		} else if (date.after(LAST_DAY_FIRST_QUARTER)
+				&& date.before(FIRST_DAY_THIRD_QUARTER)) {
+			return SECOND_QUARTER;
+		} else if (date.after(LAST_DAY_SECOND_QUARTER)
+				&& date.before(FIRST_DAY_FOURTH_QUARTER)) {
+			return THIRD_QUARTER;
+		} else if (date.after(LAST_DAY_THIRD_QUARTER)) {
+			return FOURTH_QUARTER;
+		}
+		return null;
+	}
+
+	public static Date[] getDatesByQuarter(String quarter) {
+		switch (quarter) {
+		case JournalUtil.FIRST_QUARTER:
+			return new Date[] { JournalUtil.FIRST_DAY_FIRST_QUARTER,
+					JournalUtil.LAST_DAY_FIRST_QUARTER };
+		case JournalUtil.SECOND_QUARTER:
+			return new Date[] { JournalUtil.FIRST_DAY_SECOND_QUARTER,
+					JournalUtil.LAST_DAY_SECOND_QUARTER };
+		case JournalUtil.THIRD_QUARTER:
+			return new Date[] { JournalUtil.FIRST_DAY_THIRD_QUARTER,
+					JournalUtil.LAST_DAY_THIRD_QUARTER };
+		case JournalUtil.FOURTH_QUARTER:
+			return new Date[] { JournalUtil.FIRST_DAY_FOURTH_QUARTER,
+					JournalUtil.LAST_DAY_FOURTH_QUARTER };
+		}
+		return null;
+	}
+
 }

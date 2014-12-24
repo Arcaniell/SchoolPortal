@@ -67,21 +67,6 @@ public class UserDaoImplTest extends DBUnitConfig {
 	}
 
 	@Test
-	public void testSave() {
-		User newUser = new User();
-		newUser.setEmail("testemail6@gmail.com");
-		newUser.setFirstName("Anna");
-		newUser.setLastName("Petrova");
-		newUser.setPassword("password");
-		newUser.setRegistration(new Date());
-		newUser.setSex(User.SexType.FEMALE);
-		newUser.setConfirmed(User.ConfirmType.CONFIRMED);
-		userDao.save(newUser);
-		List<User> users = userDao.findAll();
-		Assert.assertTrue(users.size() == 6);
-	}
-
-	@Test
 	public void testRemove() {
 		userDao.remove(user);
 	}
@@ -119,6 +104,21 @@ public class UserDaoImplTest extends DBUnitConfig {
 		User newUser = userDao.findByEmailAndPassword(user.getEmail(),
 				user.getPassword());
 		Assert.assertEquals(user.getEmail(), newUser.getEmail());
+	}
+	
+	@Test
+	public void testSave() {
+		User newUser = new User();
+		newUser.setEmail("testemail6@gmail.com");
+		newUser.setFirstName("Anna");
+		newUser.setLastName("Petrova");
+		newUser.setPassword("password");
+		newUser.setRegistration(new Date());
+		newUser.setSex(User.SexType.FEMALE);
+		newUser.setConfirmed(User.ConfirmType.CONFIRMED);
+		userDao.save(newUser);
+		List<User> users = userDao.findAll();
+		Assert.assertTrue(users.size() == 6);
 	}
 
 }

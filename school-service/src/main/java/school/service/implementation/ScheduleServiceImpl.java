@@ -21,6 +21,7 @@ import school.dao.RoomDao;
 import school.dao.ScheduleDao;
 import school.dao.TeacherDao;
 import school.dao.UserDao;
+import school.dto.journal.JournalSearch;
 import school.dto.schedule.CourseScheduleDTO;
 import school.dto.schedule.GroupScheduleDTO;
 import school.dto.schedule.LessonDTO;
@@ -29,11 +30,13 @@ import school.dto.schedule.ScheduleDTO;
 import school.dto.schedule.SchedulePerGroupDTO;
 import school.dto.schedule.UserDTO;
 import school.model.Group;
+import school.model.Role;
 import school.model.Room;
 import school.model.Schedule;
 import school.model.Teacher;
 import school.service.ScheduleService;
 import school.service.utils.DateUtil;
+import school.service.utils.JournalUtil;
 import school.service.utils.ScheduleUtil;
 
 @Service
@@ -607,7 +610,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		String tailDate = null;
 		List<ScheduleDTO> scheduleG = new ArrayList<ScheduleDTO>();
 		int flag = 0;
-		
+
 		int x = 0;
 		int y = 0;
 		int z = 0;
@@ -629,61 +632,45 @@ public class ScheduleServiceImpl implements ScheduleService {
 			lesson = getListLess(scheduleG);
 
 			for (LessonDTO less : lesson) {
-
 				for (ScheduleDTO schG : scheduleG) {
 					if (less.equals(schG.getLesson())) {
 						schLess.add(schG);
-
 					}
 				}
-
 				listBegin = new ArrayList<ScheduleDTO>(schLess.subList(x,
 						schLess.size()));
-
 				for (String date : array) {
 
 					for (ScheduleDTO sor : listBegin) {
 						dateFromSch = sor.getDate().substring(0, 2);
-
 						if (date.equals(dateFromSch)) {
 							schLessNull.add(sor);
-
 							flag = 1;
-
 						} else {
-
 							tailDate = sor.getDate().substring(2);
 						}
 					}
-
 					if (flag != 1) {
-
 						schLessNull.add(new ScheduleDTO(schedule.getGroup(),
 								less, (date + tailDate)));
 					} else {
 						flag = 0;
 					}
-
 				}
 				x = schLess.size();
 				temp2 = new ArrayList<ScheduleDTO>(schLessNull.subList(y,
 						schLessNull.size()));
-
 				for (ScheduleDTO sortNull : temp2) {
 					zagListG.add(sortNull);
 				}
-
 				y = schLessNull.size();
-
 			}
-
 			temp3 = new ArrayList<ScheduleDTO>(zagListG.subList(z,
 					zagListG.size()));
 			result.add(new SchedulePerGroupDTO(schedule.getGroup(), temp3,
 					getListLess(temp3).size(), getListLess(temp3).size()
 							* rNuumb, lesson, dates));
 			z = zagListG.size();
-
 		}
 		return result;
 	}
@@ -695,5 +682,73 @@ public class ScheduleServiceImpl implements ScheduleService {
 		}
 
 		return uniqueLesson;
+	}
+
+	/**
+	 * @author Ihor Uksta
+	 * 
+	 *         This method gets all schedules from DB by role and some chosen
+	 *         subject. For teacher gets only schedules that include chosen
+	 *         subject and teacher involves in. For other staff gets all school
+	 *         schedules by chosen subject.
+	 * 
+	 * @param userId
+	 * @param role
+	 * @param subject
+	 * @return
+	 */
+	public List<Schedule> getSchedulesByRoleAndSubject(long userId,
+			String role, String subject) {
+		if (role.equals(Role.Secured.TEACHER)) {
+			return scheduleDao.findByTeacherAndCourse(
+					teacherDao.findByUserId(userId).getId(), subject);
+		}
+		if (role.equals(Role.Secured.HEAD_TEACHER)
+				|| role.equals(Role.Secured.DIRECTOR)) {
+			return scheduleDao.findByCourse(subject);
+		}
+		return null;
+	}
+
+	/**
+	 * @author Ihor Uksta
+	 * 
+	 *         This method gets all schedules from DB by role. For teacher gets
+	 *         only schedules that teacher involves in. For other staff gets all
+	 *         school schedules.
+	 * 
+	 * @param userId
+	 * @param role
+	 * @return
+	 */
+	public List<Schedule> getSchedulesByRole(long userId, String role) {
+
+		if (role.equals(Role.Secured.TEACHER)) {
+			return scheduleDao.findByTeacher(teacherDao.findByUserId(userId));
+		} else if (role.equals(Role.Secured.HEAD_TEACHER)
+				|| role.equals(Role.Secured.DIRECTOR)) {
+			return scheduleDao.findAll();
+		}
+		return null;
+	}
+
+	/**
+	 * @author Ihor Uksta
+	 * 
+	 *         This method gets all schedules by some chosen period, group, and
+	 *         subject.
+	 * 
+	 * @param search
+	 * @param group
+	 * @return List<Schedule>
+	 */
+	public List<Schedule> getSchedulesForStudentMarks(JournalSearch search,
+			Group group) {
+		Date[] quarterDates = JournalUtil
+				.getDatesByQuarter(search.getQuarter());
+		return scheduleDao.findByGroupCourseInterval(group.getId(),
+				search.getSubject(),
+				quarterDates[JournalUtil.FIRST_DATE_OF_QUARTER],
+				quarterDates[JournalUtil.LAST_DATE_OF_QUARTER]);
 	}
 }

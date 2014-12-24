@@ -47,9 +47,9 @@
 		groupId="2" lessonId="1" roomId="1" teacherId="2" />
 
 	<JOURNAL id="1" studentId="1" scheduleId="1" mark="10"
-		coefficient="2" date="2014-10-21 10:00:00" />
+		coefficient="1" date="2014-10-21 00:00:00" />
 	<JOURNAL id="2" studentId="2" scheduleId="2" mark="10"
-		coefficient="2" date="2014-10-22 10:00:00" />
+		coefficient="1" date="2014-10-22 00:00:00" />
 
 	<student_addition_group_ref studentId="3"
 		groupId="4" />

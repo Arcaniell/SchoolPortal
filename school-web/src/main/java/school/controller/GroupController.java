@@ -118,7 +118,8 @@ public class GroupController {
                 model.addAttribute(JSP_OUTPUT_CURRENT_PAGE, JSP_OUTPUT_CURRENT_PAGE_VALUE);
                 model.addAttribute(JSP_OUTPUT_SYMBOL_LIST, groupService.getSymbols());
                 model.addAttribute(JSP_OUTPUT_YEAR_LIST, groupService.getYears());
-                model.addAttribute(JSP_OUTPUT_NOT_CURATORS, groupService.getNotCurators());
+                model.addAttribute(JSP_OUTPUT_NOT_CURATORS,
+                        groupService.getTeachers(GroupServiceImpl.SELECTOR_FLAG_NOT_CURATORS));
                 return TILES_VIEW_GROUP_HEAD_TEACHER;
             }
         }
@@ -137,9 +138,24 @@ public class GroupController {
         if (principal == null || request.isUserInRole(Role.Secured.HEAD_TEACHER) != true) {
             return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
         }
-        if (courseIdStr != null) {
-            groupService.createNewGroup(Byte.parseByte(yearString), symbolString,
-                    Long.parseLong(curatorIdString), Long.parseLong(courseIdStr), branch);
+        Byte year = null;
+        Long curatorId = null;
+        try {
+            year = Byte.parseByte(yearString);
+            curatorId = Long.parseLong(curatorIdString);
+        } catch (NumberFormatException e) {
+            return URLContainer.URL_REDIRECT + URL_GROUP_HEADTEACHER;
+        }
+        Long courseId = null;
+        if (branch != null) {
+            try {
+                courseId = Long.parseLong(courseIdStr);
+            } catch (NumberFormatException e) {
+                return URLContainer.URL_REDIRECT + URL_GROUP_HEADTEACHER;
+            }
+            groupService.createNewGroup(principal, year, symbolString, curatorId, courseId, branch);
+        } else {
+            groupService.createNewGroup(principal, year, symbolString, curatorId, courseId, branch);
         }
         return URLContainer.URL_REDIRECT + URL_GROUP_HEADTEACHER;
 
@@ -158,7 +174,7 @@ public class GroupController {
                 try {
                     requestId = Long.parseLong(checkboxNamesList[i]);
                     if (requestId > 0) {
-                        groupService.removeGroup(requestId);
+                        groupService.removeGroup(principal, requestId);
                     }
                 } catch (NumberFormatException e) {
                     // nothing critical, continue
@@ -180,9 +196,9 @@ public class GroupController {
             @RequestParam(value = JSP_INPUT_CHECKBOX, required = false) String branch) {
         int intBranch = Integer.parseInt(branch);
         if (intBranch == JSP_INPUT_CHECKBOX_CHECKED) {
-            return groupService.getAllTeachers();
+            return groupService.getTeachers(GroupServiceImpl.SELECTOR_FLAG_ALL_TEACHERS);
         } else {
-            return groupService.getNotCurators();
+            return groupService.getTeachers(GroupServiceImpl.SELECTOR_FLAG_NOT_CURATORS);
         }
     }
 

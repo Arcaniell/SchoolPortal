@@ -1,16 +1,11 @@
 package school.dao.implementation;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +24,6 @@ public class JournalDaoImplTest extends DBUnitConfig {
 
 	@Autowired
 	private JournalDao journalDao;
-	private List<Journal> journals;
 
 	public JournalDaoImplTest() {
 		super("JournalDaoImplTest");
@@ -55,29 +49,9 @@ public class JournalDaoImplTest extends DBUnitConfig {
 	}
 
 	@Test
-	public void testFindByStudentId() {
-		journals = journalDao.findByStudentId(1L);
-		Assert.assertTrue(journals.size() == 1);
-	}
-
-	@Test
-	public void testFindByInterval() throws ParseException {
-		Date from = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
-				.parse("2014-10-21 09:00:00");
-		Date till = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
-				.parse("2014-10-22 11:00:00");
-		journals = journalDao.findByInterval(from, till);
-		Assert.assertTrue(journals.size() == 2);
-	}
-
-	@Test
-	public void testFindByIntervalAndStudentId() throws ParseException {
-		Date from = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
-				.parse("2014-10-21 09:00:00");
-		Date till = new SimpleDateFormat("yyyy-M-dd HH:mm:ss")
-				.parse("2014-10-22 11:00:00");
-		journals = journalDao.findByIntervalAndStudentId(1, from, till);
-		Assert.assertTrue(journals.size() == 1);
+	public void testFindByStudentAndSchedule() {
+		Journal journal = journalDao.findByStudentAndSchedule(1, 1);
+		Assert.assertTrue(journal.getMark() == 10);
 	}
 
 }

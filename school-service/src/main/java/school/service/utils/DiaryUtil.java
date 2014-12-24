@@ -1,6 +1,6 @@
 package school.service.utils;
 
-public class DiaryUtil extends SchoolUtil {
+public class DiaryUtil {
 
 	public static final String MOD_ATT_KIDS = "kids";
 

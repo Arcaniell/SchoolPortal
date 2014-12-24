@@ -35,6 +35,18 @@ public class ScheduleDaoImpl extends BaseDaoImpl<Schedule, Long> implements
 
 	@SuppressWarnings("unchecked")
 	@Transactional
+	public List<Schedule> findByGroupDate(long groupId, Date date) {
+		try {
+			return entityManager.createNamedQuery(Schedule.FIND_BY_GROUP_DATE)
+					.setParameter("groupId", groupId)
+					.setParameter("date", date).getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Transactional
 	public List<Schedule> findByTeacher(Teacher teacher) {
 		try {
 			return (List<Schedule>) entityManager
