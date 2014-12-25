@@ -138,7 +138,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 	 * @param groupId
 	 * @param strDate
 	 * @param duration
-	 * @return List<Schedule>
+	 * @return  List<Schedule>
 	 */
 	@Transactional
 	public List<Schedule> current(long teacherId, int roomId, long groupId,
