@@ -1,7 +1,6 @@
 package school.controller;
 
 import java.security.Principal;
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -30,16 +29,15 @@ public class DiaryController {
 	private DiaryService diaryService;
 
 	@RequestMapping(value = URLContainer.URL_DIARY)
-	public String getDiaryByCurrentWeek(Principal user, Model model,
-			HttpServletRequest request) throws ParseException {
+	public String getDiaryByCurrentWeek(Principal principal, Model model,
+			HttpServletRequest request) {
 
-		if (user == null) {
+		if (principal == null) {
 			return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
 		}
-
 		if (request.isUserInRole(Role.Secured.PARENT)) {
 			model.addAttribute(DiaryUtil.MOD_ATT_KIDS,
-					diaryService.getKids(user.getName()));
+					diaryService.getKids(principal.getName()));
 		}
 
 		model.addAttribute(URLContainer.JSP_OUTPUT_CURRENT_PAGE,
@@ -51,19 +49,11 @@ public class DiaryController {
 	@RequestMapping(value = URLContainer.URL_DIARY_MARK)
 	public @ResponseBody List<StudentWithMarksDTO> getCurrentWeekMarks(
 			@RequestBody DiarySearchDTO diarySearchDTO, Principal principal,
-			HttpServletRequest request) throws ParseException {
+			HttpServletRequest request) {
 
-		long userId = 0;
-		if (request.isUserInRole(Role.Secured.PARENT)) {
-			userId = diarySearchDTO.getUserId();
-		} else {
-			userId = Long.parseLong(principal.getName());
-		}
-
-		Calendar currentDate = Calendar.getInstance();
-		List<Date> currentWeek = JournalUtil.getWeek(currentDate);
+		List<Date> currentWeek = JournalUtil.getWeek(Calendar.getInstance());
 		List<StudentWithMarksDTO> diaryMarks = diaryService.getDiaryMarks(
-				userId, currentWeek);
+				getId(request, principal, diarySearchDTO), currentWeek);
 
 		return diaryMarks;
 	}
@@ -71,14 +61,7 @@ public class DiaryController {
 	@RequestMapping(value = URLContainer.URL_CHANGE_WEEK)
 	public @ResponseBody List<StudentWithMarksDTO> changeWeek(
 			@RequestBody DiarySearchDTO diarySearchDTO, Principal principal,
-			HttpServletRequest request) throws ParseException {
-
-		long userId = 0;
-		if (request.isUserInRole(Role.Secured.PARENT)) {
-			userId = diarySearchDTO.getUserId();
-		} else {
-			userId = Long.parseLong(principal.getName());
-		}
+			HttpServletRequest request) {
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(diarySearchDTO.getDate());
@@ -91,9 +74,25 @@ public class DiaryController {
 
 		List<Date> currentWeek = JournalUtil.getWeek(calendar);
 		List<StudentWithMarksDTO> diaryMarks = diaryService.getDiaryMarks(
-				userId, currentWeek);
+				getId(request, principal, diarySearchDTO), currentWeek);
 
 		return diaryMarks;
 	}
 
+	/**
+	 * This method gets id of parent or student depending on the role.
+	 * 
+	 * @param request
+	 * @param principal
+	 * @param diarySearchDTO
+	 * @return
+	 */
+	private long getId(HttpServletRequest request, Principal principal,
+			DiarySearchDTO diarySearchDTO) {
+		if (request.isUserInRole(Role.Secured.PARENT)) {
+			return diarySearchDTO.getUserId();
+		} else {
+			return Long.parseLong(principal.getName());
+		}
+	}
 }

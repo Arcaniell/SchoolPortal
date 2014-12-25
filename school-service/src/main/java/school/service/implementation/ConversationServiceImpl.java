@@ -134,7 +134,7 @@ public class ConversationServiceImpl implements ConversationService {
 		Conversation conversation = new Conversation(senderUser, receiverUser,
 				subject, false, true, false, false, true, false, "From: "
 						+ constructName(senderUser), "To: "
-						+ constructName(receiverUser));
+						+ constructName(receiverUser), 0, 1);
 		conversationDao.save(conversation);
 		messagesService.createNewMessage(conversation, text);
 	}

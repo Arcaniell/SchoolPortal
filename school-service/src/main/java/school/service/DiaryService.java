@@ -8,8 +8,22 @@ import school.model.Student;
 
 public interface DiaryService {
 
-	List<StudentWithMarksDTO> getDiaryMarks(long studentId, List<Date> currentWeek);
+	/**
+	 * This method gets marks of some chosen student and chosen week.
+	 * 
+	 * @param studentId
+	 * @param currentWeek
+	 * @return
+	 */
+	List<StudentWithMarksDTO> getDiaryMarks(long studentId,
+			List<Date> currentWeek);
 
+	/**
+	 * This method gets parent kids.
+	 * 
+	 * @param id
+	 * @return
+	 */
 	List<Student> getKids(String id);
 
 }

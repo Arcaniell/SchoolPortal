@@ -22,7 +22,6 @@ import school.dto.journal.StudentWithMarksDTO;
 import school.model.Parent;
 import school.model.Role;
 import school.model.Student;
-import school.model.User;
 import school.service.DiaryService;
 import school.service.JournalService;
 import school.service.utils.JournalUtil;
@@ -54,11 +53,12 @@ public class DiaryServiceImpl implements DiaryService {
 		Student student = studentDao.findByUserId(userId);
 		List<StudentWithMarksDTO> diaryMarksDTO = new ArrayList<>();
 		for (Date date : currentWeek) {
-			Set<MarkDTO> marks = journalService.getStudentsMarks(scheduleDao.findByGroupDate(student
-					.getGroup().getId(), date), student);
+			Set<MarkDTO> marks = journalService
+					.getStudentsMarks(scheduleDao.findByGroupDate(student
+							.getGroup().getId(), date), student);
 			diaryMarksDTO.add(new StudentWithMarksDTO(student.getId(),
-					getWholeUserName(userId),
-					JournalUtil.getQuarterMark(marks), date, marks));
+					journalService.getWholeUserName(userId), JournalUtil
+							.getQuarterMark(marks), date, marks));
 		}
 		return diaryMarksDTO;
 	}
@@ -68,10 +68,5 @@ public class DiaryServiceImpl implements DiaryService {
 		long userId = Long.parseLong(id);
 		Parent parent = parentDao.findByUserId(userId);
 		return parent.getStudents();
-	}
-
-	private String getWholeUserName(long userId) {
-		User user = userDao.findById(userId);
-		return user.getFirstName() + " " + user.getLastName();
 	}
 }

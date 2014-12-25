@@ -1,7 +1,6 @@
 package school.controller;
 
 import java.security.Principal;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -32,20 +31,13 @@ public class JournalController {
 
 	@RequestMapping(value = URLContainer.URL_JOURNAL)
 	public String index(Principal principal, Model model,
-			HttpServletRequest request) throws ParseException {
-
-		if (principal == null) {
-			return URLContainer.URL_REDIRECT + URLContainer.URL_LOGIN;
-		}
-
+			HttpServletRequest request) {
 		long userId = Long.parseLong(principal.getName());
-
 		if (request.isUserInRole(Role.Secured.TEACHER)) {
 			JournalSearch searchData = journalService.getDeafaultData(userId,
 					new Date());
 			model.addAttribute(JournalUtil.MOD_ATT_SEARCH_DATA, searchData);
 		}
-
 		model.addAttribute(JournalUtil.MOD_ATT_STAFF,
 				journalService.getStaffInfo(userId, getHighestRole(request)));
 
@@ -56,25 +48,24 @@ public class JournalController {
 
 	@RequestMapping(value = URLContainer.URL_JOURNAL_MARKS)
 	public @ResponseBody List<StudentWithMarksDTO> getByGroup(
-			@RequestBody JournalSearch journalSearch) {
+			@RequestBody JournalSearch search, Principal principal) {
 
 		List<StudentWithMarksDTO> groupMarks = journalService
-				.getMarksOfGroup(journalSearch);
+				.getMarksOfGroup(search);
 
 		return groupMarks;
 	}
 
 	@RequestMapping(value = URLContainer.URL_JOURNAL_EDIT_MARK)
 	public @ResponseBody EditMarkDTO editMark(
-			@RequestBody EditMarkDTO editMarkDTO) {
-		
-		return journalService.editMark(editMarkDTO);
+			@RequestBody EditMarkDTO editMarkDTO, Principal principal) {
 
+		return journalService.editMark(editMarkDTO);
 	}
 
 	@RequestMapping(value = URLContainer.URL_JOURNAL_EDIT_DATE)
 	public @ResponseBody EditDateDTO addEvent(
-			@RequestBody EditDateDTO editedDateDTO) {
+			@RequestBody EditDateDTO editedDateDTO, Principal principal) {
 
 		journalService.editDate(editedDateDTO);
 
@@ -121,6 +112,12 @@ public class JournalController {
 				journalSearch.getSubject(), journalSearch.getGroupNumber());
 	}
 
+	/**
+	 * This method gets the highest role of user.
+	 * 
+	 * @param request
+	 * @return
+	 */
 	private String getHighestRole(HttpServletRequest request) {
 
 		String role = null;
