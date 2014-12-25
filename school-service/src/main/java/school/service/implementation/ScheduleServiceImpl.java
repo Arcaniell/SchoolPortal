@@ -46,9 +46,9 @@ import school.service.Strategy;
 /**
  *This class provide such functionality
  *- finding information for comboboxs
- *- searching schedules according to chose intreval
+ *- searching schedules according to chose interval
  *- searching schedules according three possible states: current? previous and future 
- *- additional function which help in process of reprezentation of schedule information
+ *- additional function which help in process of representation of schedule information
  *
  * @author Natalya Kalynka
  * 
@@ -132,7 +132,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 
 	/**
-	 * This method searches  schedules for current time duration according to typed date and selected teacher, room, group.
+	 * This method searches  schedules for select time duration according to typed date and selected teacher, room, group.
 	 * @param teacherId
 	 * @param roomId
 	 * @param groupId

@@ -6,14 +6,13 @@ import java.util.Set;
 public class SchedulePerGroupDTO {
 	private GroupScheduleDTO group;
 	private List<ScheduleDTO> listSchedule;
-	
+
 	private int lessCount;
 	private int rowCount;
 	private Set<LessonDTO> setLess;
-//
+
 	private Set<String> tableDate;
-	
-	
+
 	public Set<String> getTableDate() {
 		return tableDate;
 	}
@@ -24,11 +23,12 @@ public class SchedulePerGroupDTO {
 
 	public SchedulePerGroupDTO() {
 		super();
-	
+
 	}
-	
-	public SchedulePerGroupDTO(GroupScheduleDTO group, List<ScheduleDTO> listSchedule,
-			int lessCount, int rowCount, Set<LessonDTO> setLess, Set<String> tableDate) {
+
+	public SchedulePerGroupDTO(GroupScheduleDTO group,
+			List<ScheduleDTO> listSchedule, int lessCount, int rowCount,
+			Set<LessonDTO> setLess, Set<String> tableDate) {
 		super();
 		this.group = group;
 		this.listSchedule = listSchedule;
@@ -38,68 +38,45 @@ public class SchedulePerGroupDTO {
 		this.tableDate = tableDate;
 	}
 
-
 	public Set<LessonDTO> getSetLess() {
 		return setLess;
 	}
-
 
 	public void setSetLess(Set<LessonDTO> setLess) {
 		this.setLess = setLess;
 	}
 
-
-
-	
-	
-
-
-
 	public int getLessCount() {
 		return lessCount;
 	}
-
 
 	public void setLessCount(int lessCount) {
 		this.lessCount = lessCount;
 	}
 
-
 	public int getRowCount() {
 		return rowCount;
 	}
-
 
 	public void setRowCount(int rowCount) {
 		this.rowCount = rowCount;
 	}
 
-
-
-
-
-
-
-
 	public GroupScheduleDTO getGroup() {
 		return group;
 	}
-
 
 	public void setGroup(GroupScheduleDTO group) {
 		this.group = group;
 	}
 
-
 	public List<ScheduleDTO> getListSchedule() {
 		return listSchedule;
 	}
 
-
 	public void setListSchedule(List<ScheduleDTO> listSchedule) {
 		this.listSchedule = listSchedule;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -115,7 +92,6 @@ public class SchedulePerGroupDTO {
 				+ ((tableDate == null) ? 0 : tableDate.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -153,7 +129,6 @@ public class SchedulePerGroupDTO {
 		return true;
 	}
 
-
 	@Override
 	public String toString() {
 		return "SchedulePerGroupDTO [group=" + group + ", listSchedule="
@@ -161,8 +136,5 @@ public class SchedulePerGroupDTO {
 				+ rowCount + ", setLess=" + setLess + ", tableDate="
 				+ tableDate + "]";
 	}
-	
-	
-	
 
 }

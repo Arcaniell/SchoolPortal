@@ -6,6 +6,7 @@ public class ScheduleDTO {
 	private UserDTO teacher;
 	private long userId;
 	private long scheduleId;
+
 	public ScheduleDTO(GroupScheduleDTO group, UserDTO teacher, long userId,
 			long scheduleId, boolean loginned, CourseScheduleDTO course,
 			RoomDTO room, LessonDTO lesson, String date) {
@@ -30,6 +31,7 @@ public class ScheduleDTO {
 	}
 
 	private boolean loginned;
+
 	public ScheduleDTO(GroupScheduleDTO group, UserDTO teacher, long userId,
 			long scheduleId, CourseScheduleDTO course, RoomDTO room,
 			LessonDTO lesson, String date) {
@@ -94,8 +96,6 @@ public class ScheduleDTO {
 		this.lesson = lesson;
 		this.date = date;
 	}
-
-
 
 	public ScheduleDTO(GroupScheduleDTO groupNeme, UserDTO teacherName,
 			CourseScheduleDTO courseName, RoomDTO roomNumb,

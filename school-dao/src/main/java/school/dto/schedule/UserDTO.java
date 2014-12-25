@@ -4,6 +4,7 @@ public class UserDTO {
 	private String firstName;
 	private String lastName;
 	private Long id;
+
 	public UserDTO(String firstName, String lastName, Long id) {
 		super();
 		this.firstName = firstName;
@@ -20,11 +21,11 @@ public class UserDTO {
 	}
 
 	public UserDTO() {
-		 firstName = "";
-		 lastName = "";
+		firstName = "";
+		lastName = "";
 		id = new Long(0);
 	}
-	
+
 	public UserDTO(String firstName, String lastName) {
 		super();
 		this.firstName = firstName;
@@ -34,15 +35,19 @@ public class UserDTO {
 	public String getFirstName() {
 		return firstName;
 	}
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+
 	public String getLastName() {
 		return lastName;
 	}
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -54,6 +59,7 @@ public class UserDTO {
 				+ ((lastName == null) ? 0 : lastName.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -80,13 +86,11 @@ public class UserDTO {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "UserDTO [firstName=" + firstName + ", lastName=" + lastName
 				+ ", id=" + id + "]";
 	}
-	
-	
-	
 
 }
