@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -38,6 +40,19 @@ import school.service.ScheduleService;
 import school.service.utils.DateUtil;
 import school.service.utils.JournalUtil;
 import school.service.utils.ScheduleUtil;
+import school.service.Strategy;
+
+
+/**
+ *This class provide such functionality
+ *- finding information for comboboxs
+ *- searching schedules according to chose intreval
+ *- searching schedules according three possible states: current? previous and future 
+ *- additional function which help in process of reprezentation of schedule information
+ *
+ * @author Natalya Kalynka
+ * 
+ */
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
@@ -50,6 +65,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public static final String NEXT = "next";
 	public static final String BACK = "back";
 	public static final String ALL = "ALL";
+	public static final String WEEK = "week";
+	public static final String DAY = "day";
+	public static final String MONTH = "month";
+	public static final String NONE = null;
+	public static final int FROM = 0;
+	public static final int TILL = 1;
+	public static final int WEEKDAYS = 6;
+	public static final int  RNUMB = 4;
 
 	@Autowired
 	private ScheduleDao scheduleDao;
@@ -72,275 +95,138 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Autowired
 	private UserDao userDao;
 
-	interface Strategy {
-		String[] findStartDuration(String[] dayDuration, String way, Locale loc);
-	}
-
-	class DayDurationStrategy implements Strategy {
-		public String[] findStartDuration(String[] dayDuration, String way,
-				Locale loc) {
-			String reportDate = "";
-			String df = ScheduleUtil.getDateForSch(dayDuration[0]);
-			String[] arr = df.split("-");
-			String str = arr[0] + "-" + arr[1] + "-" + arr[2];
-
-			try {
-
-				Date date = DateUtil.getFormattedDate(str,
-						DateUtil.SCHEDULE_DATE_FORMAT);
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(date);
-
-				if (way.equals(NEXT)) {
-					cal.add(Calendar.DATE, +1);
-				} else if (way.equals(BACK)) {
-
-					cal.add(Calendar.DATE, -1);
-				}
-				Date dt = cal.getTime();
-
-				reportDate = DateUtil.getFormattedDate(dt,
-						DateUtil.SCHEDULE_DATEPICKER_FORMAT, loc);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			dayDuration[0] = reportDate;
-			return dayDuration;
-		}
-	}
-
-	class WeekDurationStrategy implements Strategy {
-		public String[] findStartDuration(String[] dayDuration, String way,
-				Locale loc) {
-			String reportDate = "";
-			String df = ScheduleUtil.getDateForSch(dayDuration[0]);
-
-			String[] arr = df.split("-");
-			String str = arr[0] + "-" + arr[1] + "-" + arr[2];
-
-			try {
-
-				Date date = DateUtil.getFormattedDate(str,
-						DateUtil.SCHEDULE_DATE_FORMAT);
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(date);
-
-				if (way.equals(NEXT)) {
-					cal.add(Calendar.DATE, +7);
-				} else if (way.equals(BACK)) {
-
-					cal.add(Calendar.DATE, -7);
-				}
-				Date dt = cal.getTime();
-
-				reportDate = DateUtil.getFormattedDate(dt,
-						DateUtil.SCHEDULE_DATEPICKER_FORMAT, loc);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			dayDuration[0] = reportDate;
-			return dayDuration;
-		}
-	}
-
-	class MonthDurationStrategy implements Strategy {
-		public String[] findStartDuration(String[] dayDuration, String way,
-				Locale loc) {
-
-			String reportDate = "";
-			String df = ScheduleUtil.getDateForSch(dayDuration[0]);
-
-			String[] arr = df.split("-");
-			String str = arr[0] + "-" + arr[1] + "-" + arr[2];
-
-			try {
-
-				Date date = DateUtil.getFormattedDate(str,
-						DateUtil.SCHEDULE_DATE_FORMAT);
-
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(date);
-				Calendar cal1 = Calendar.getInstance();
-				cal1.setTime(date);
-				if (way.equals(NEXT)) {
-					cal1.add(Calendar.MONTH, +1);
-				} else if (way.equals(BACK)) {
-					cal1.add(Calendar.MONTH, -1);
-				}
-				int daysInMonth = cal1.getActualMaximum(Calendar.DAY_OF_MONTH);
-				if (way.equals(NEXT)) {
-					cal.add(Calendar.DATE, +(daysInMonth));
-				} else if (way.equals(BACK)) {
-					cal.add(Calendar.DATE, -(daysInMonth));
-				}
-
-				Date dt = cal.getTime();
-
-				reportDate = DateUtil.getFormattedDate(dt,
-						DateUtil.SCHEDULE_DATEPICKER_FORMAT, loc);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			dayDuration[0] = reportDate;
-			return dayDuration;
-		}
-	}
-
-	class Context {
-		private Strategy strategy;
-
-		public Context() {
-		}
-
-		public void setStrategy(Strategy strategy) {
-			this.strategy = strategy;
-		}
-
-		public String[] executeStrategy(String[] dayDuration, String way,
-				Locale loc) {
-
-			return strategy.findStartDuration(dayDuration, way, loc);
-		}
-	}
-
+	/**
+	 * 
+	 * @param dayDuration
+	 * @param way
+	 * @param loc 
+	 * @return String[]
+	 */
 	public String[] getScheduleWithWay(String[] dayDuration, String way,
 			Locale loc) {
 		String[] result;
 		Context context = new Context();
+		Map<String, Strategy> strategyMap = new HashMap<String, Strategy>();
+		strategyMap.put(NONE, new WeekDurationStrategy());
+		strategyMap.put(WEEK, new WeekDurationStrategy());
+		strategyMap.put(DAY, new DayDurationStrategy());
+		strategyMap.put(MONTH, new MonthDurationStrategy());
 
-		if (dayDuration[1] == null) {
-			dayDuration[1] = "week";
-		}
-		if (dayDuration[1].equals("week")) {
-			context.setStrategy(new WeekDurationStrategy());
-
-		} else if (dayDuration[1].equals("day")) {
-			context.setStrategy(new DayDurationStrategy());
-		} else if (dayDuration[1].equals("month")) {
-			context.setStrategy(new MonthDurationStrategy());
-		}
+		context.setStrategy(strategyMap.get(dayDuration[ScheduleUtil.day]));
 
 		result = context.executeStrategy(dayDuration, way, loc);
 		return result;
+
 	}
 
-	@Transactional
-	public void addSchedule(Schedule schedule) {
-		scheduleDao.save(schedule);
-	}
-
+	/**
+	 * This method searches schedules in pointed out interval.
+	 * @param from
+	 * @param till
+	 * @return List<Schedule>
+	 */
 	@Transactional
 	public List<Schedule> findByDates(Date from, Date till) {
 		return scheduleDao.findByDates(from, till);
 	}
 
-	@Transactional
-	public void deleteSchedule(Schedule schedule) {
-		scheduleDao.remove(schedule);
 
-	}
-
-	@Transactional
-	public Schedule updateSchedule(Schedule schedule) {
-		return scheduleDao.update(schedule);
-
-	}
-
+	/**
+	 * This method searches  schedules for current time duration according to typed date and selected teacher, room, group.
+	 * @param teacherId
+	 * @param roomId
+	 * @param groupId
+	 * @param strDate
+	 * @param duration
+	 * @return List<Schedule>
+	 */
 	@Transactional
 	public List<Schedule> current(long teacherId, int roomId, long groupId,
 			String strDate, Duration duration) {
-
-		Date till = null;
-		Date from = null;
-		List<Schedule> schedule = null;
 		List<Date> interv = fromTillDay(strDate, duration);
-		from = interv.get(0);
-		till = interv.get(1);
+		Date till = interv.get(TILL);
+		Date from = interv.get(FROM);
 
-		schedule = button(teacherId, roomId, groupId, from, till);
+		List<Schedule> schedule = button(teacherId, roomId, groupId, from, till);
 
 		return schedule;
 
 	}
 
+	/**
+	 * This method searches interval in which we will be search schedules.
+	 * @param strDate
+	 * @param duration
+	 * @return List<Date> 
+	 */
 	@Transactional
 	private List<Date> fromTillDay(String strDate, Duration duration) {
-		Date till = null;
-		Date from = null;
+
+		Calendar first = activeDate(strDate);
+		Calendar last = null;
+
 		List<Date> interval = new ArrayList<Date>();
 
 		if (duration == Duration.day) {
-			try {
-
-				till = DateUtil.getFormattedDate(strDate,
-						DateUtil.SCHEDULE_DATE_FORMAT);
-				from = till;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			last = first;
 
 		} else if (duration == Duration.month) {
-
-			try {
-
-				Date date = DateUtil.getFormattedDate(strDate,
-						DateUtil.SCHEDULE_DATE_FORMAT);
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(date);
-				Calendar first = (Calendar) cal.clone();
-				first.set(Calendar.DAY_OF_MONTH,
-						first.getActualMaximum(Calendar.DAY_OF_MONTH));
-				Calendar last = (Calendar) cal.clone();
-				last.set(Calendar.DAY_OF_MONTH,
-						last.getActualMinimum(Calendar.DAY_OF_MONTH));
-
-				till = first.getTime();
-
-				from = last.getTime();
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			last = activeDate(strDate);
+			last.set(Calendar.DAY_OF_MONTH,
+					first.getActualMaximum(Calendar.DAY_OF_MONTH));
+			first.set(Calendar.DAY_OF_MONTH,
+					last.getActualMinimum(Calendar.DAY_OF_MONTH));
 
 		} else if (duration == Duration.week) {
 
-			try {
-
-				Date date = DateUtil.getFormattedDate(strDate,
-						DateUtil.SCHEDULE_DATE_FORMAT);
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(date);
-
-				Calendar first = (Calendar) cal.clone();
-				first.add(Calendar.DAY_OF_WEEK, first.getFirstDayOfWeek()
-						- first.get(Calendar.DAY_OF_WEEK));
-
-				Calendar last = (Calendar) first.clone();
-				last.add(Calendar.DAY_OF_YEAR, 6);
-
-				from = first.getTime();
-				till = last.getTime();
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			first.add(Calendar.DAY_OF_WEEK,
+					first.getFirstDayOfWeek() - first.get(Calendar.DAY_OF_WEEK));
+			last = (Calendar) first.clone();
+			last.add(Calendar.DAY_OF_YEAR, WEEKDAYS);
 
 		}
-		interval.add(from);
-		interval.add(till);
+
+		interval.add(first.getTime());
+		interval.add(last.getTime());
 
 		return interval;
 	}
 
+	/**
+	 * This method finds date for start counting an interal for schedules.
+	 * @param strDate
+	 * @return Calendar 
+	 */
+	private Calendar activeDate(String strDate) {
+		Date date = null;
+		Calendar calendar = Calendar.getInstance();
+
+		try {
+			date = DateUtil.getFormattedDate(strDate,
+					DateUtil.SCHEDULE_DATE_FORMAT);
+			calendar.setTime(date);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return calendar;
+
+	}
+	
+
+	/**
+	 * This method finds list of teachers of school.
+	 * @return List<Teacher>
+	 */
 	@Transactional
 	public List<Teacher> allTeacher() {
 		return teacherDao.findAll();
 
 	}
 
+	/**
+	 * This method finds list of groups of school.
+	 * @return  List<Group>
+	 */
 	@Transactional
 	public List<Group> allGroup() {
 		List<Group> listGroup = groupDao.findAll();
@@ -349,132 +235,228 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	}
 
+	/**
+	 * This method form DTO objects for Group checkbox
+	 * @param groups
+	 * @param id
+	 * @return List<GroupScheduleDTO>
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<GroupScheduleDTO> getGroupName(List<Group> groups, String id) {
 		List<GroupScheduleDTO> listGroup = new ArrayList<GroupScheduleDTO>();
-		Group selectGroup;
-		Long groupId;
-		if (id.equals(ALL) || id.equals("Group")) {
-			groupId = new Long(0);
-			selectGroup = null;
+		Long groupId = idDefaultValue(id);
+		if (groupId == 0) {
+			listGroup = noneSelect(groups);
 		} else {
-			groupId = Long.parseLong(id);
-
-			selectGroup = groupDao.findById(groupId);
+			listGroup = madeSelect(groups, groupDao.findById(groupId));
 		}
-
-		if (selectGroup == null) {
-			listGroup.add(0, new GroupScheduleDTO((byte) 0, 'o', new Long(0)));
-			for (Group group : groups) {
-				listGroup.add(new GroupScheduleDTO(group.getNumber(), group
-						.getLetter(), group.getId()));
-			}
-		} else {
-			for (Group group : groups) {
-				if (selectGroup.equals(group)) {
-					listGroup.add(0, new GroupScheduleDTO(group.getNumber(),
-							group.getLetter(), group.getId()));
-				}
-
-				else {
-
-					listGroup.add(new GroupScheduleDTO(group.getNumber(), group
-							.getLetter(), group.getId()));
-				}
-			}
-			listGroup.add(listGroup.size(), new GroupScheduleDTO((byte) 0, 'o',
-					new Long(0)));
-		}
-
 		return listGroup;
 	}
 
+	
+	/**
+	 * This method create  list with default selected option of combobox on top.
+	 * @param groups
+	 * @return List<GroupScheduleDTO>
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS)
+	private List<GroupScheduleDTO> noneSelect(List<Group> groups) {
+		List<GroupScheduleDTO> listGroup = new ArrayList<GroupScheduleDTO>();
+		listGroup.add(0, new GroupScheduleDTO());
+		for (Group group : groups) {
+			listGroup.add(new GroupScheduleDTO(group.getNumber(), group
+					.getLetter(), group.getId()));
+		}
+		return listGroup;
+
+	}
+
+	
+	/**
+	 * This method create  list with selected option of combobox on top.
+	 * @param groups
+	 * @param selectGroup
+	 * @return List<GroupScheduleDTO>
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS)
+	private List<GroupScheduleDTO> madeSelect(List<Group> groups,
+			Group selectGroup) {
+		List<GroupScheduleDTO> listGroup = new ArrayList<GroupScheduleDTO>();
+		for (Group group : groups) {
+			if (selectGroup.equals(group)) {
+				listGroup.add(
+						0,
+						new GroupScheduleDTO(group.getNumber(), group
+								.getLetter(), group.getId()));
+			} else {
+
+				listGroup.add(new GroupScheduleDTO(group.getNumber(), group
+						.getLetter(), group.getId()));
+			}
+		}
+		listGroup.add(listGroup.size(), new GroupScheduleDTO());
+		return listGroup;
+
+	}
+ 
+	/**
+	 * This method sets id for default and just selected option of comboboxs 
+	 * @param id
+	 * @return long
+	 */
+	private long idDefaultValue(String id) {
+		switch (id) {
+		case "Group":
+		case "Room":
+		case "Teacher":
+		case ALL:
+			return 0;
+		default:
+			return Long.parseLong(id);
+
+		}
+	}
+
+	/**
+	 * This method form DTO objects for Room checkbox
+	 * @param room
+	 * @param id
+	 * @return List<RoomDTO>
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<RoomDTO> getRoomName(List<Room> room, String id) {
 		List<RoomDTO> listRooms = new ArrayList<RoomDTO>();
-		Integer roomId;
-		Room selectRoom;
-		if (id.equals(ALL) || id.equals("Room")) {
-			roomId = new Integer(0);
-			selectRoom = null;
+		Integer roomId = (int) idDefaultValue(id);
+		if (roomId == 0) {
+			listRooms = noneSelect(roomDao.findAll(), roomId);
 		} else {
-			roomId = Integer.parseInt(id);
-			selectRoom = roomDao.findById(roomId);
-		}
-		List<Room> rooms = roomDao.findAll();
-
-		if (selectRoom == null) {
-			listRooms.add(0, new RoomDTO(roomId, 0));
-			for (Room rom : rooms) {
-
-				listRooms.add(new RoomDTO(rom.getRoomNumber(), rom.getId()));
-			}
-		} else {
-
-			for (Room rom : rooms) {
-				if (selectRoom.equals(rom)) {
-					listRooms.add(0,
-							new RoomDTO(rom.getRoomNumber(), rom.getId()));
-				} else {
-					listRooms
-							.add(new RoomDTO(rom.getRoomNumber(), rom.getId()));
-				}
-
-			}
-			listRooms.add(listRooms.size(), new RoomDTO(0, 0));
+			listRooms = madeSelect(roomDao.findAll(), roomDao.findById(roomId));
 		}
 
 		return listRooms;
 	}
 
+	/**
+	 * This method create  list with default selected option of combobox on top.
+	 * @param rooms
+	 * @param roomId
+	 * @return List<RoomDTO>
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS)
+	private List<RoomDTO> noneSelect(List<Room> rooms, Integer roomId) {
+		List<RoomDTO> listRooms = new ArrayList<RoomDTO>();
+		listRooms.add(0, new RoomDTO(roomId, 0));
+		for (Room rom : rooms) {
+			listRooms.add(new RoomDTO(rom.getRoomNumber(), rom.getId()));
+		}
+		return listRooms;
+
+	}
+
+	
+	/**
+	 * This method create  list with selected option of combobox on top.
+	 * @param rooms
+	 * @param selectRoom
+	 * @return List<RoomDTO>
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS)
+	private List<RoomDTO> madeSelect(List<Room> rooms, Room selectRoom) {
+		List<RoomDTO> listRooms = new ArrayList<RoomDTO>();
+		for (Room rom : rooms) {
+			if (selectRoom.equals(rom)) {
+				listRooms.add(0, new RoomDTO(rom.getRoomNumber(), rom.getId()));
+			} else {
+				listRooms.add(new RoomDTO(rom.getRoomNumber(), rom.getId()));
+			}
+
+		}
+		listRooms.add(listRooms.size(), new RoomDTO(0, 0));
+		return listRooms;
+
+	}
+
+	
+	/**
+	 * This method form DTO objects for Teacher checkbox
+	 * @param teacher
+	 * @param id
+	 * @return List<UserDTO>
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<UserDTO> getTeacherName(List<Teacher> teacher, String id) {
 		List<UserDTO> listTeachers = new ArrayList<UserDTO>();
-		Long teacherId;
-		Teacher selectTeacher;
-
-		if (id.equals(ALL) || id.equals("Teacher")) {
-			teacherId = new Long(0);
-			selectTeacher = null;
+		Long teacherId= idDefaultValue(id);
+		if (teacherId == 0) {
+			listTeachers = noneSelect(teacherDao.findAll(), teacherId);
 		} else {
-			teacherId = Long.parseLong(id);
-			selectTeacher = teacherDao.findById(teacherId);
+			listTeachers = madeSelect(teacherDao.findAll(),teacherDao.findById(teacherId) );
 		}
+	
+		return listTeachers;
+		
+	}
+	
+	/**
+	 * This method create  list with default selected option of combobox on top.
+	 * @param teachers
+	 * @param teacherId
+	 * @return List<UserDTO>
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS)
+	private List<UserDTO> noneSelect(List<Teacher> teachers, Long teacherId) {
+		List<UserDTO> listTeachers = new ArrayList<UserDTO>();
+		listTeachers.add(0, new UserDTO());
+		for (Teacher tch : teachers) {
 
-		List<Teacher> teachers = teacherDao.findAll();
-
-		if (selectTeacher == null) {
-			listTeachers.add(0, new UserDTO("", "", new Long(0)));
-			for (Teacher tch : teachers) {
-
-				listTeachers.add(new UserDTO(tch.getUser().getFirstName(), tch
-						.getUser().getLastName(), tch.getId()));
-			}
-
-		} else {
-			for (Teacher tch : teachers) {
-				if (selectTeacher.equals(tch)) {
-					listTeachers.add(0,
-							new UserDTO(tch.getUser().getFirstName(), tch
-									.getUser().getLastName(), tch.getId()));
-				} else {
-					listTeachers.add(new UserDTO(tch.getUser().getFirstName(),
-							tch.getUser().getLastName(), tch.getId()));
-				}
-			}
-			listTeachers.add(listTeachers.size(), new UserDTO("", "", new Long(
-					0)));
+			listTeachers.add(new UserDTO(tch.getUser().getFirstName(), tch
+					.getUser().getLastName(), tch.getId()));
 		}
 		return listTeachers;
 
 	}
 
+	/**
+	 * This method create  list with selected option of combobox on top.
+	 * @param teachers
+	 * @param selectTeacher
+	 * @return List<UserDTO>
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS)
+	private List<UserDTO> madeSelect(List<Teacher> teachers, Teacher selectTeacher) {
+		List<UserDTO> listTeachers = new ArrayList<UserDTO>();
+		for (Teacher tch : teachers) {
+			if (selectTeacher.equals(tch)) {
+				listTeachers.add(0,
+						new UserDTO(tch.getUser().getFirstName(), tch
+								.getUser().getLastName(), tch.getId()));
+			} else {
+				listTeachers.add(new UserDTO(tch.getUser().getFirstName(),
+						tch.getUser().getLastName(), tch.getId()));
+			}
+		}
+		listTeachers.add(listTeachers.size(), new UserDTO());
+		return listTeachers;
+
+	}
+
+	/**
+	 * This method create  list of all rooms in school.
+	 * @return  List<Room>
+	 */
 	@Transactional
 	public List<Room> allRoom() {
 		return roomDao.findAll();
 
 	}
 
+	
+	/**
+	 * This method creates  interval of dates for header of schedule table.
+	 * @param schedules
+	 * @param loc
+	 * @return  Set<String>
+	 */
 	@Transactional
 	public Set<String> intervalForHeader(List<Schedule> schedules, Locale loc) {
 		Set<String> headerDate = new TreeSet<String>();
@@ -488,14 +470,23 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return headerDate;
 	}
 
+	/**
+	 * Method which form DTO of schedule with mentioned is person who look at schedule is avtorized
+	 * @param schedules
+	 * @param loc
+	 * @param isAvtor
+	 * @return List<ScheduleDTO>
+	 */
+
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<ScheduleDTO> getScheduleDto(List<Schedule> schedules, Locale loc, boolean isAvtor) {
+	public List<ScheduleDTO> getScheduleDto(List<Schedule> schedules,
+			Locale loc, boolean isAvtor) {
 
 		List<ScheduleDTO> schedulesDto = new ArrayList<ScheduleDTO>();
 
 		ScheduleDTO schDto = null;
 		for (Schedule sch : schedules) {
-			
+
 			schDto = new ScheduleDTO();
 			schDto.setLoginned(isAvtor);
 			schDto.setGroup(new GroupScheduleDTO(sch.getGroup().getNumber(),
@@ -520,6 +511,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return schedulesDto;
 	}
 
+	/**
+	 * Method get range of Date from schedule
+	 * @param schedules
+	 * @param loc
+	 * @return List<String>
+	 */
+	 
 	@Transactional
 	public List<String> getDates(List<Schedule> schedules, Locale loc) {
 		List<String> dates = new ArrayList<String>();
@@ -534,7 +532,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 		return dates;
 	}
-
+	
+	/**
+	 * Method gets schedules for selected group from income list of schedules
+	 * @param sch
+	 * @param groupId
+	 * @return List<Schedule>
+	 */
 	@Transactional
 	private List<Schedule> getGroupSchedule(List<Schedule> sch, long groupId) {
 		if (groupId != 0) {
@@ -545,6 +549,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return sch;
 	}
 
+	
+	/**
+	 * Method gets schedules for selected teacher from income list of schedules
+	 * @param sch
+	 * @param teacherId
+	 * @return List<Schedule>
+	 */
 	@Transactional
 	private List<Schedule> getTeacherSchedule(List<Schedule> sch, long teachId) {
 		if (teachId != 0) {
@@ -555,6 +566,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return sch;
 	}
 
+	/**
+	 * Method gets schedules for selected room from income list of schedules
+	 * @param sch
+	 * @param roomId
+	 * @return List<Schedule>
+	 */
 	@Transactional
 	private List<Schedule> getRoomSchedule(List<Schedule> sch, int roomId) {
 		if (roomId != 0) {
@@ -564,6 +581,15 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return sch;
 	}
 
+	/**
+	 * Method gets schedules for combination of selected options of schedule form.
+	 * @param teacherId
+	 * @param groupId
+	 * @param roomId
+	 * @param from
+	 * @param till
+	 * @return List<Schedule>
+	 */
 	@Transactional
 	private List<Schedule> button(long teacherId, int roomId, long groupId,
 			Date from, Date till) {
@@ -574,39 +600,60 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return scheduleRoom;
 	}
 
+	/**
+	 * Method gets schedules according to group.
+	 * @param schDto
+	 * @param dates
+	 * @return List<SchedulePerGroupDTO>
+	 */
 	public List<SchedulePerGroupDTO> sortScheduleForTable(
 			List<ScheduleDTO> schDto, Set<String> dates) {
-		Set<GroupScheduleDTO> uniqueGroups = new TreeSet<GroupScheduleDTO>();
 
 		List<ScheduleDTO> listSch = new ArrayList<ScheduleDTO>();
 		List<SchedulePerGroupDTO> result = new ArrayList<SchedulePerGroupDTO>();
-		List<ScheduleDTO> temp = new ArrayList<ScheduleDTO>();
+		List<ScheduleDTO> schForGroup = new ArrayList<ScheduleDTO>();
 		Set<LessonDTO> lesson = new TreeSet<LessonDTO>();
-		int k = 0;
-		int rNuumb = 4;
-		for (ScheduleDTO sch : schDto) {
-			uniqueGroups.add(sch.getGroup());
-		}
-		for (GroupScheduleDTO group : uniqueGroups) {
+		int startNewGroup = 0;
+
+		for (GroupScheduleDTO group : uniqGroups(schDto)) {
 			for (ScheduleDTO sch : schDto) {
 				if ((sch.getGroup()).equals(group)) {
 					listSch.add(sch);
 				}
 			}
 
-			temp = new ArrayList<ScheduleDTO>(
-					listSch.subList(k, listSch.size()));
+			schForGroup = new ArrayList<ScheduleDTO>(
+					listSch.subList(startNewGroup, listSch.size()));
 
-			lesson = getListLess(temp);
-			result.add(new SchedulePerGroupDTO(group, temp, getListLess(temp)
-					.size(), getListLess(temp).size() * rNuumb, lesson, dates));
+			lesson = getListLess(schForGroup);
+			result.add(new SchedulePerGroupDTO(group, schForGroup, getListLess(schForGroup)
+					.size(), getListLess(schForGroup).size() * RNUMB, lesson, dates));
 
-			k = listSch.size();
+			startNewGroup = listSch.size();
 
 		}
 		return addNullField(result, dates);
 	}
+	
+	/**
+	 * Method gets unique groups for schedule table.
+	 * @param schDto
+	 * @return Set<GroupScheduleDTO>
+	 */
+	 private Set<GroupScheduleDTO> uniqGroups(List<ScheduleDTO> schDto){
+			Set<GroupScheduleDTO> rezult = new TreeSet<GroupScheduleDTO>();
+			for (ScheduleDTO sch : schDto) {
+				rezult.add(sch.getGroup());
+			}
+		 return rezult;
+	 }
 
+		/**
+		 * Method gets schedules for group in full interval of dates. It replaced absent dates with null.
+		 * @param sch
+		 * @param dates 
+		 * @return List<SchedulePerGroupDTO>
+		 */
 	private List<SchedulePerGroupDTO> addNullField(
 			List<SchedulePerGroupDTO> sch, Set<String> dates) {
 		List<ScheduleDTO> zagListG = new ArrayList<ScheduleDTO>();
@@ -614,11 +661,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 		String tailDate = null;
 		List<ScheduleDTO> scheduleG = new ArrayList<ScheduleDTO>();
 		int flag = 0;
-
 		int x = 0;
 		int y = 0;
 		int z = 0;
-		int rNuumb = 4;
+	
 		Set<LessonDTO> lesson = new TreeSet<LessonDTO>();
 
 		List<ScheduleDTO> schLess = new ArrayList<ScheduleDTO>();
@@ -665,7 +711,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 				start_null = new ArrayList<ScheduleDTO>(schLessNull.subList(y,
 						schLessNull.size()));
 
-
 				for (ScheduleDTO sortNull : start_null) {
 
 					zagListG.add(sortNull);
@@ -673,18 +718,25 @@ public class ScheduleServiceImpl implements ScheduleService {
 				y = schLessNull.size();
 			}
 
-
 			start_zag = new ArrayList<ScheduleDTO>(zagListG.subList(z,
 
-					zagListG.size()));
+			zagListG.size()));
 			result.add(new SchedulePerGroupDTO(schedule.getGroup(), start_zag,
-					getListLess(start_zag).size(), getListLess(start_zag).size()
-							* rNuumb, lesson, dates));
+					getListLess(start_zag).size(), getListLess(start_zag)
+							.size() * RNUMB, lesson, dates));
 			z = zagListG.size();
 		}
 		return result;
 	}
 
+	
+
+	
+	/**
+	 * Method gets unique lessons numbers for schedule table.
+	 * @param schedules
+	 * @return Set<LessonDTO
+	 */
 	private Set<LessonDTO> getListLess(List<ScheduleDTO> schedules) {
 		Set<LessonDTO> uniqueLesson = new TreeSet<LessonDTO>();
 		for (ScheduleDTO sch : schedules) {

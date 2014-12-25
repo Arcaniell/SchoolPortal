@@ -11,9 +11,9 @@ import school.service.ScheduleService.Duration;
 
 
 public class ScheduleUtil {
-	private static int month = 0;
-	private static int day = 1;
-	private static int year = 2;
+	public static int month = 0;
+	public static int day = 1;
+	public static int year = 2;
 	private static final String[] select={"Room", "Group", "Teacher", "All"};
 	
 	public static DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");

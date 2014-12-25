@@ -25,11 +25,12 @@
 
 
 <form method="POST" action="schedule">
-	<table>
+	
 		<div id="navigation_bar">
-			<tr>
+		<div style=" width:100%; height:1px; clear:both;">.</div>
+		
 				<div id="col1">
-					<td>
+			
 						<!-- NAVIGATION-->
 						<div class="btn-group" style="height: 100%">
 							<input id="back" type="button" class="btn btn-sample"
@@ -74,11 +75,14 @@
 
 						</div>
 
-					</td>
+				
 				</div>
-				<td width="172"><div id="col2"></div></td>
-				<div id="col3">
-					<td><select id="rm" name="roomy"
+			
+		
+				<div id="col2" class="checker">
+		
+					
+					<select id="rm" name="roomy"
 						style="height: 34px; width: 90px;">
 
 
@@ -112,11 +116,12 @@
 						<button id="refresh" type="button" class="btn btn-sample">Refresh</button>
 
 
-					</td>
+			
 				</div>
-			</tr>
+	
 		</div>
-	</table>
+
+	<div style=" width:100%; height:1px; clear:both;">.</div>
 </form>
 
 

@@ -273,7 +273,7 @@ $(function() {
 																				
 																				container+= "<a class=\"person\" id=\"" +
 																				+ schedule[index].listSchedule[indexC].userId +
-																					//	+" " 
+																					
 																						"\u0022"
 																						+ ">";
 																				
@@ -346,8 +346,6 @@ $(function() {
 							'data' : JSON.stringify(before),
 							'dataType' : 'json',
 							success : function(befor) {
-								//		alert("hi");
-
 								$('#my_d').datepicker();
 								$('#my_d').datepicker('setDate', befor[0]);
 
@@ -376,8 +374,7 @@ $(function() {
 							'data' : JSON.stringify(before),
 							'dataType' : 'json',
 							success : function(befor) {
-								//		alert("hi");
-
+								
 								$('#my_d').datepicker();
 								$('#my_d').datepicker('setDate', befor[0]);
 

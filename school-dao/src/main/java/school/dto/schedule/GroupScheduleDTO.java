@@ -6,7 +6,9 @@ public class GroupScheduleDTO implements Comparable<GroupScheduleDTO> {
 	private Long id;
 
 	public GroupScheduleDTO() {
-
+letter ='o';
+number = (byte)0;
+id =new Long(0);
 	}
 
 	public GroupScheduleDTO(byte number, char letter) {

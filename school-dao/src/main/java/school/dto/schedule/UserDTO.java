@@ -20,7 +20,9 @@ public class UserDTO {
 	}
 
 	public UserDTO() {
-
+		 firstName = "";
+		 lastName = "";
+		id = new Long(0);
 	}
 	
 	public UserDTO(String firstName, String lastName) {

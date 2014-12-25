@@ -42,6 +42,8 @@ public class ScheduleController {
 	private static final String CURRENT_PAGE_SCHEDULE = "schedule";
 	private static final String SCHEDULE = "schedule";
 	private final String CURRENT = "current";
+	private static final String NEXT = "next";
+	private static final String BACK = "back";
 	@Autowired
 	private ScheduleService scheduleService;
 
@@ -109,17 +111,17 @@ public class ScheduleController {
 		Set<String> headerDate = scheduleService.intervalForHeader(schedules,
 				loc);
 
-		List<SchedulePerGroupDTO> my = scheduleService.sortScheduleForTable(
-				schedulesDto, headerDate);
+		List<SchedulePerGroupDTO> rezult = scheduleService
+				.sortScheduleForTable(schedulesDto, headerDate);
 
-		return my;
+		return rezult;
 
 	}
 
 	@RequestMapping(value = SCHEDULE_BACK)
 	public @ResponseBody String[] getPreviousTable(
 			@RequestBody String[] before, HttpServletRequest request) {
-		String way = "back";
+		String way = BACK;
 		Locale loc = RequestContextUtils.getLocale(request);
 		return scheduleService.getScheduleWithWay(before, way, loc);
 
@@ -128,7 +130,7 @@ public class ScheduleController {
 	@RequestMapping(value = SCHEDULE_NEXT)
 	public @ResponseBody String[] getNextTable(@RequestBody String[] before,
 			HttpServletRequest request) {
-		String way = "next";
+		String way = NEXT;
 		Locale loc = RequestContextUtils.getLocale(request);
 		return scheduleService.getScheduleWithWay(before, way, loc);
 

@@ -22,11 +22,29 @@
 }
 
 .scrolling {
-	overflow:scroll; 
-	height: 460px; 
-	width: 975px;
+	overflow: scroll;
+	height: 460px;
+	width: auto;
 }
 
 .my th, .my td {
-	width : 148px;
+	width: 148px;
+}
+
+.checker {
+	float: right;
+}
+
+
+
+#liniya {
+	float: left;
+}
+
+#col1 {
+	float: left;
+}
+
+#col2 {
+	float: rght;
 }
